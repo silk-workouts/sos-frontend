@@ -1,0 +1,133 @@
+//styles/partials/_fonts.scss
+
+@use "@/styles/partials/_variables" as *;
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;800&family=Monomaniac+One&family=Anta&family=Montserrat:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap");
+
+//colors
+.text__secondary--color {
+	color: $color-secondary;
+}
+
+// Font Styles
+.h1 {
+	font-family: $font-secondary;
+	font-size: $font-size-h1;
+	font-weight: $font-weight-regular;
+	line-height: 1.2;
+}
+
+.homehero {
+	&_title {
+		font-family: "Anta", sans-serif;
+		font-style: normal;
+		font-weight: 400;
+		font-size: 64px;
+		line-height: 0.96;
+		text-transform: uppercase;
+		text-align: center;
+		color: $color-white;
+	}
+	&_subtitle {
+		font-family: "Montserrat", sans-serif; // Ensure font is loaded
+		font-style: normal;
+		font-weight: 300;
+		font-size: 54px;
+		line-height: 0.96; // 96% is equivalent to 0.96
+		letter-spacing: 0.25em;
+		text-align: center;
+		margin-top: 8px;
+
+		color: rgba(255, 255, 255, 0.55);
+	}
+}
+
+// .h2-light {
+//   font-family: $font-primary;
+//   font-size: $font-size-h2;
+//   font-weight: $font-weight-light;
+//   line-height: 1.3;
+// }
+
+// .h2-extrabold {
+//   font-family: $font-primary;
+//   font-size: $font-size-h2;
+//   font-weight: $font-weight-extrabold;
+//   line-height: 1.3;
+// }
+
+.h2-title {
+	font-family: "Montserrat", sans-serif;
+	font-style: normal;
+	font-size: 48px;
+	line-height: 58px;
+	color: #000000;
+	font-weight: 300;
+	padding-bottom: $desktop-padding * 2;
+
+	.bold {
+		font-weight: 800; // Extrabold for "The"
+	}
+}
+
+.h3 {
+	font-family: $font-secondary;
+	font-size: $font-size-h3;
+	font-weight: $font-weight-regular;
+	line-height: 1.4;
+}
+
+.h3_title {
+	font-family: "Anta", sans-serif; // Ensure Anta is imported
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 24px; // Matches the box height
+	text-transform: uppercase;
+
+	&--accent {
+		color: $color-red;
+	}
+}
+
+.body1 {
+	font-family: "Montserrat", sans-serif;
+	font-style: normal;
+	font-weight: 400; // Regular weight
+	font-size: 20px;
+	line-height: 24px;
+	padding-bottom: 1rem;
+}
+
+.body2 {
+	font-family: $font-primary;
+	font-size: $font-size-body2;
+	font-weight: $font-weight-regular;
+	line-height: 1.6;
+}
+
+.button {
+	font-family: $font-primary;
+	font-size: $font-size-button;
+	font-weight: $font-weight-regular;
+	text-transform: uppercase;
+}
+
+.link {
+	font-family: "Montserrat", sans-serif;
+	font-size: 20px;
+	line-height: 24px;
+	font-weight: 400;
+	color: $link-color;
+	text-decoration: none;
+
+	&:hover {
+		// text-decoration: underline;
+		color: $link-hover-color;
+	}
+}
+
+.text-small {
+	font-family: "Montserrat", sans-serif;
+	font-size: 0.875rem;
+	text-transform: capitalize;
+}

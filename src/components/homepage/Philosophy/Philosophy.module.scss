@@ -1,0 +1,44 @@
+@use "styles/partials/variables" as *;
+
+.philosophy {
+  display: flex;
+  gap: 4rem;
+  padding: 0 2.5rem;
+  margin-top: $gutter-desktop * 6;
+
+  .founder {
+    position: relative;
+
+    &__name {
+      position: absolute;
+      top: 62%;
+      right: -37%;
+
+      &::before {
+        content: "";
+        display: inline-block;
+        position: relative;
+        top: 6px;
+        left: -8px;
+        width: 1.5625rem;
+        height: 1.5625rem;
+        background-color: $color-red;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4.5rem;
+    padding-top: 0.9375rem;
+  }
+
+  &__info {
+    padding-left: 5.625rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}

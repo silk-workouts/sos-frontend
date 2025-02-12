@@ -1,0 +1,78 @@
+@use "styles/partials/variables" as *;
+
+.footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1.25rem 2.5rem;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	&__logo-container {
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	&__logo-link {
+		text-decoration: none;
+		color: $color-black;
+		font-family: "Anta";
+		font-size: 1.5rem;
+		text-transform: capitalize;
+	}
+
+	&__logo {
+		width: 6.4375rem;
+		height: 2.1875rem;
+	}
+
+	.socials {
+		display: flex;
+		gap: 2rem;
+
+		&__icon-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 2.5rem;
+			height: 2.5rem;
+			border: 1px solid $color-black;
+			border-radius: 50%;
+		}
+
+		&__link {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		&__icon {
+			width: 1.5rem;
+			height: 1.5rem;
+
+			&--twitter {
+				width: 0.875rem;
+				height: 0.875rem;
+			}
+		}
+	}
+
+	&__list {
+		display: flex;
+		list-style: none;
+		text-transform: capitalize;
+	}
+
+	&__item {
+		border-right: 1px solid $color-black;
+		padding: 0.375rem 0.75rem;
+
+		&:last-child {
+			border: none;
+			padding-right: 0;
+		}
+	}
+}

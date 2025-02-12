@@ -1,0 +1,25 @@
+.about {
+	display: flex;
+	gap: 4rem;
+
+	&-container {
+		align-self: center;
+		display: flex;
+		flex-direction: column;
+		gap: 4.5rem;
+	}
+
+	&__info {
+		padding-left: 2.5rem;
+	}
+
+	&__subHeading {
+		text-transform: capitalize;
+		margin-bottom: 1.5rem;
+	}
+
+	&__message {
+		width: 90%;
+		padding-bottom: 3.125rem;
+	}
+}

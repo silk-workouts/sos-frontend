@@ -1,0 +1,25 @@
+@use "@/styles/partials/_variables" as *;
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 838px; // almost full viewport height for the hero section
+  background-image: url("/assets/images/hero-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &__overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-white;
+    height: 45vh;
+  }
+}

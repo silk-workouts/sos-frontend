@@ -1,0 +1,157 @@
+@use "@/styles/partials/_variables" as *;
+
+.elements {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	gap: $gutter-desktop * 2;
+	align-items: stretch;
+	margin: 2rem;
+	padding: calc(#{$gutter-desktop} * 6);
+	border-radius: 52px;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	height: 100%;
+	max-width: 1440px;
+
+	> div {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		position: relative;
+		gap: $gutter-desktop;
+	}
+
+	h3 {
+		position: absolute;
+		top: 0;
+		left: -$gutter-desktop * 3;
+	}
+	.align-end {
+		position: absolute;
+		bottom: 0;
+		left: 0; // Aligns the button to the left edge
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: #e5e4e4;
+		opacity: 0.5;
+		border-radius: 52px;
+		z-index: 0;
+	}
+
+	> * {
+		position: relative;
+		z-index: 1;
+	}
+}
+
+.element-box {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	grid-template-rows: repeat(2, auto);
+	gap: 8px;
+	justify-content: center;
+	align-items: start;
+	margin: 0 auto;
+	width: max-content;
+}
+
+//----------what works for you section
+.whatworks {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: $gutter-desktop * 2;
+	align-items: stretch;
+	margin: 2rem;
+	padding: calc(#{$gutter-desktop} * 6) 0 0 calc(#{$gutter-desktop} * 6);
+	border-radius: 52px;
+	//   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	// height: 90vh;
+
+	&__title {
+		position: absolute;
+		top: $gutter-desktop;
+		left: $gutter-desktop * 3;
+	}
+
+	&__body {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__message {
+		width: 25rem;
+		font-size: 2rem;
+		line-height: 2.5rem;
+	}
+
+	&__cards-container {
+		display: flex;
+		gap: 1rem;
+		width: 50rem;
+		height: 21.4375rem;
+	}
+}
+
+.card {
+	flex: 1;
+	background-color: #efefef;
+	border-radius: 2.1875rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	padding: 2.25rem 1rem;
+	height: 100%;
+	overflow: hidden;
+	transition: all 0.4s ease;
+
+	&:hover {
+		flex: 2;
+		background-color: $color-red;
+		cursor: pointer;
+
+		.card__title {
+			font-size: 3.75rem;
+		}
+
+		.card__body {
+			color: $color-white;
+		}
+
+		.card__body--sentence {
+			display: unset;
+		}
+	}
+
+	&__title {
+		font-family: "Anta", sans-serif;
+		font-weight: 400;
+		font-size: 8rem;
+		text-transform: uppercase;
+		color: $color-white;
+		text-shadow: 0px -1px 1.3px $color-white,
+			0px 0px 4px rgba($color-black, 0.56),
+			0px 1px 0.4px rgba($color-black, 0.47);
+		transition: font-size 0.5s ease;
+	}
+
+	&__body {
+		font-size: 2rem;
+		line-height: 2.5rem;
+		text-transform: capitalize;
+
+		&--sentence {
+			text-transform: lowercase;
+			display: none;
+		}
+	}
+}
