@@ -30,7 +30,7 @@ export default function TheWorkouts() {
               Designed by former professional boxer, Michael Olajide Jr.
             </p>
             <Button variant="secondary" className={styles.workout__cta}>
-              Start 7-day free trial
+              Start a 7-day free trial
             </Button>
           </div>
         </div>
