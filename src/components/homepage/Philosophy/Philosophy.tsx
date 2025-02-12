@@ -16,7 +16,7 @@ export default function Philosophy() {
         <div className={styles.philosophy__info}>
           <h4 className="h2-title">Do It Different</h4>
           <p className="body1">
-            When you think different, your results are different. They&apos;re
+            When you think different, your results are different. They&#39;re
             greater.
             <br />
             Leave the machines behind.
