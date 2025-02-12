@@ -1,5 +1,5 @@
-import Image from "next/image";
-import styles from "./page.module.scss";
+import Image from 'next/image';
+import styles from './page.module.scss';
 
 export default function About() {
   return (
@@ -17,7 +17,7 @@ export default function About() {
               <span className="bold">The Silk</span> Experience
             </h2>
             <p className="body1">
-              Michael “Silk” Olajide is fitness’s single most influential
+              Michael “Silk” Olajide is fitness&#39;s single most influential
               trainer having ushered in the age of the boxer. Michael began
               teaching boxing for fitness in 1991 and having been featured in
               Vogue, GQ, Sports Illustrated, and Time magazine, Michael is
@@ -26,7 +26,7 @@ export default function About() {
             <p className="body1">
               Michael’s concept of boxing for fitness and his gym Aerospace
               High-Performance Center were the driving concept for all the
-              boxing fitness Gym’s you see all over the world today.
+              boxing fitness Gym&#39;s you see all over the world today.
             </p>
           </div>
         </div>
@@ -56,7 +56,7 @@ export default function About() {
             alt="Feature Image"
             width={620}
             height={822}
-          />{" "}
+          />{' '}
           <div className={styles.textContainer}>
             <h2 className={`h2-title ${styles.about__copy}`}>
               <span className="bold">More</span> about Michael

@@ -1,8 +1,8 @@
-import Image from "next/image";
-import Button from "@/components/Button/Button";
-import Element from "@/components/Element/Element";
-import styles from "./page.module.scss";
-import Accordion from "@/components/Accordion/Accordion";
+import Image from 'next/image';
+import Button from '@/components/Button/Button';
+import Element from '@/components/Element/Element';
+import styles from './page.module.scss';
+import Accordion from '@/components/Accordion/Accordion';
 
 export default function TheWorkouts() {
   return (
@@ -19,15 +19,15 @@ export default function TheWorkouts() {
             alt="Feature Image"
             width={745}
             height={745}
-          />{" "}
+          />{' '}
           <div className={styles.textContainer}>
             <h2 className={`h2-title ${styles.workout__copy}`}>
-              <span className="bold">What's</span> the System of Silk?
+              <span className="bold">What&#39;s</span> the System of Silk?
             </h2>
             <p className="body1">
               The only boxing fitness program that will enhance a professional
-              boxer’s fight and the non-boxer’s level of fitness. Designed by
-              former professional boxer, Michael Olajide Jr.
+              boxer&#39;s fight and the non-boxer&#39;s level of fitness.
+              Designed by former professional boxer, Michael Olajide Jr.
             </p>
             <Button variant="secondary" className={styles.workout__cta}>
               Start 7-day free trial
@@ -60,7 +60,7 @@ export default function TheWorkouts() {
           <Accordion
             title="Building a workout"
             description="Workouts are playlists built by adding exercise videos into a queue, or they are preset progressions. Save them to your library to track progress."
-          />{" "}
+          />{' '}
           <Accordion
             title="Equipment"
             description="Basic equipment is vital to achieving maximum success. All you need are light weights, an exercise band, and jump rope to reach your full potential."
@@ -68,7 +68,7 @@ export default function TheWorkouts() {
         </div>
         <div className={`${styles.workout__accordionSubtitle}`}>
           <p className={styles.workout__accordionSubtitleCopy}>
-            Use System of Silk to produce radical change through the forces of{" "}
+            Use System of Silk to produce radical change through the forces of{' '}
             <span className={styles.boldRed}>
               atheletics, energy, & intent.
             </span>
