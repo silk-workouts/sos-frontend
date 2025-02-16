@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import Button from '@/components/Button/Button';
+import Button from '@/components/ui/Button/Button';
 import Element from '@/components/Element/Element';
 import styles from './page.module.scss';
-import Accordion from '@/components/Accordion/Accordion';
+import Accordion from '@/components/ui/Accordion/Accordion';
 
 export default function TheWorkouts() {
   return (
