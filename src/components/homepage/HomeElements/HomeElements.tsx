@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import styles from './HomeElements.module.scss';
 import Element from '../../Element/Element';

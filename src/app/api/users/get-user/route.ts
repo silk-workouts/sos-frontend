@@ -9,10 +9,13 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    const [user] = await db.execute(
+    const result = await db.execute(
       'SELECT id, email, is_verified FROM users WHERE email = ?',
       [email]
     );
+
+    // ✅ Extract the row from the result
+    const user = result.rows?.[0]; // Ensure we're accessing the correct property
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
@@ -20,6 +23,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(user, { status: 200 });
   } catch (error) {
+    console.error(`Error: ${error}`);
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 }

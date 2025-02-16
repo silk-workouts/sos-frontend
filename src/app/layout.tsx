@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import Header from '../components/layout/Header/Header';
 import Footer from '@/components/layout/Footer/Footer';
-import '../styles/globals.scss';
+import '@/styles/globals.scss';
 
 export const metadata: Metadata = {
   title: 'System of Silk',

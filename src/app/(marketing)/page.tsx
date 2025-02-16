@@ -1,4 +1,3 @@
-'use client'; // Mark this as a Client Component
 import styles from './page.module.scss';
 import HomeElements from '@/components/homepage/HomeElements/HomeElements';
 import HomeHero from '@/components/homepage/HomeHero/HomeHero';
@@ -12,18 +11,18 @@ export default function Home() {
       <HomeHero />
       <Philosophy />
       <HomeElements />
-      <div className={styles.slogan}>
-        <span className={styles.slogan__message}>
-          100% Silk fitness is key. 100% Silk fitness is key. 100% Silk fitness
-          is key. 100% Silk fitness is key. 100% Silk fitness is key.
-        </span>
-        <span
-          className={`${styles.slogan__message} ${styles['slogan__message--bottom']}`}
-        >
-          100% Silk fitness is key. 100% Silk fitness is key. 100% Silk fitness
-          is key. 100% Silk fitness is key. 100% Silk fitness is key.
-        </span>
-      </div>
+      {/* {/* <div className={styles.slogan}> */}
+      <span className={styles.slogan__message}>
+        100% Silk fitness is key. 100% Silk fitness is key. 100% Silk fitness is
+        key. 100% Silk fitness is key. 100% Silk fitness is key.
+      </span>
+      <span
+        className={`${styles.slogan__message} ${styles['slogan__message--bottom']}`}
+      >
+        100% Silk fitness is key. 100% Silk fitness is key. 100% Silk fitness is
+        key. 100% Silk fitness is key. 100% Silk fitness is key.
+      </span>
+
       <About />
       <GetStarted />
     </>

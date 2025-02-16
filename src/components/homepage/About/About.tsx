@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import silkHeadshot from '/public/assets/images/silk_headshot_1.jpg';

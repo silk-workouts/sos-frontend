@@ -31,6 +31,7 @@ export async function middleware(req: NextRequest) {
     );
 
     // ✅ Extract the rows property from the result
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rows = (result as any).rows as { is_paid_user: number }[];
 
     // ✅ Extract the first user from the rows array

@@ -5,7 +5,7 @@ import minusIcon from '/public/assets/icons/minus.svg';
 import closeIcon from '/public/assets/icons/close.svg';
 import PageTitleHeader from '@/components/ui/PageTitleHeader/PageTitleHeader';
 import Button from '@/components/ui/Button/Button';
-import styles from 'styles/pages/contact.module.scss';
+import styles from './page.module.scss';
 import { useState } from 'react';
 
 export default function Contact() {

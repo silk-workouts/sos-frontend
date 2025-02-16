@@ -1,5 +1,5 @@
 import PageTitleHeader from '@/components/ui/PageTitleHeader/PageTitleHeader';
-import styles from 'styles/pages/PrivacyPolicy.module.scss';
+import styles from './page.module.scss';
 
 export default function PrivacyPolicy() {
   return (

@@ -28,6 +28,8 @@ export async function sendVerificationEmail(email: string, token: string) {
     const data = JSON.parse(text);
     console.log('EmailJS parsed response:', data);
   } catch (error) {
+    console.error(`Error: ${error}`);
+
     console.error('Failed to parse EmailJS response:', text);
     return;
   }
