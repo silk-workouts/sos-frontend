@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import jumpRopeImage from '/public/assets/images/jumpRope.jpg';
 import styles from './Philosophy.module.scss';

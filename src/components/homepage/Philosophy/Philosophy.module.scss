@@ -1,4 +1,4 @@
-@use "styles/partials/variables" as *;
+@use '@/styles/partials/variables' as *;
 
 .philosophy {
   display: flex;
@@ -15,7 +15,7 @@
       right: -37%;
 
       &::before {
-        content: "";
+        content: '';
         display: inline-block;
         position: relative;
         top: 6px;
