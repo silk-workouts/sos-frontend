@@ -1,11 +1,12 @@
 @use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/_mixins" as *;
 
-.about {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  &__hero {
+  .heroSection {
     width: 100%;
     max-width: 1440px;
     height: 783px;
@@ -31,46 +32,50 @@
     }
   }
 
-  &__heroTitle {
-    width: 90%;
-    max-width: 671px;
-    font-family: "Anta";
-    font-style: normal;
-    font-weight: 400;
-    font-size: clamp(48px, 8vw, 96px);
-    line-height: 1.2;
-    text-transform: uppercase;
-    color: $color-white;
-    z-index: 2;
-  }
-
-  &__silkExperience {
+  .experienceSection {
     position: relative;
-    // border: 2px solid black;
-    height: 575px;
+    height: 600px;
     width: 100%;
-    max-width: $content-container-maximum;
+    max-width: 100vw;
+    padding: $padding-xl $padding-small;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 40px;
+    // justify-content: center;
+    gap: $mobile-gutter;
+
+    //   @include desktop {
+    //     position: relative;
+    //     max-width: $content-container-maximum;
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: center;
+    //     padding: 40px;
+    //   }
   }
 
-  &__silkExperienceCopy {
-    margin-left: $desktop-gutter;
-    // border: 2px solid black;
-    height: 350px;
-    width: 100%;
-    max-width: 681px;
+  .experienceContent {
+    @include desktop {
+      height: 350px;
+      width: 100%;
+      max-width: 600px;
+    }
   }
 
-  &__accentImage {
+  .accentImage {
     position: absolute;
-    bottom: -200px;
-    right: 0;
-    width: 491px;
-    height: 575px;
-    // border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 272px;
+    height: 337px;
+    border-radius: 35px;
+    bottom: -125px;
+
+    //   @include desktop {
+    //     bottom: -200px;
+    //     right: $padding-large;
+    //     width: 491px;
+    //     height: 575px;
 
     img {
       width: 100%;
@@ -79,20 +84,53 @@
     }
   }
 
-  &__moreMichael {
-    // border: 2px solid black;
+  .featuredImage {
+    height: 592px;
     width: 100%;
-    max-width: $content-container-maximum;
-    height: 1000px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    object-fit: cover;
+    //   max-width: 90rem;
+    //   max-height: 200vw;
   }
 
-  &__moreMichaelContent {
-    gap: $desktop-gutter * 5;
+  .newsImage {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
+    align-self: center;
+    width: 255px;
+    height: 338px;
+    //   border-radius: 35px;
+
+    //   @include desktop {
+    //     width: 38.75rem;
+    //     height: 51.375rem;
+    //   }
+  }
+
+  .bioSection {
+    display: flex;
+    flex-direction: column;
+    //   @include desktop {
+    //     height: 1000px;
+    //     display: flex;
+    //     flex-direction: row;
+    //     align-items: center;
+    //     justify-content: center;
+    //   }
+  }
+
+  .bioContent {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: $mobile-gutter;
+    width: 100vw;
+    padding: $padding-xl $padding-small;
+
+    // @include desktop {
+    //   gap: $padding-xl;
+    //   width: calc($content-container-maximum - $padding-xl);
+    //   display: flex;
+    //   flex-direction: row;
+    //   align-items: flex-start;
+    // }
   }
 }
