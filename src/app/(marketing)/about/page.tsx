@@ -38,13 +38,9 @@ export default function About() {
           alt="Accent Image"
         />
       </section>
-
-      <Image
-        className={styles.featuredImage}
-        src={featureImage}
-        alt="Featured Image"
-      />
-
+      <section className={styles.featuredImage}>
+        <Image src={featureImage} alt="Featured Image" />
+      </section>
       <section className={styles.bioSection}>
         <div className={styles.bioContent}>
           <Image
