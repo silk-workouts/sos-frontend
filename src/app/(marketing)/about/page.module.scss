@@ -57,7 +57,7 @@
   }
 
   &__silkExperienceCopy {
-    margin-left: $desktop-padding;
+    margin-left: $desktop-gutter;
     // border: 2px solid black;
     height: 350px;
     width: 100%;
@@ -90,7 +90,7 @@
   }
 
   &__moreMichaelContent {
-    gap: $gutter-desktop * 5;
+    gap: $desktop-gutter * 5;
     display: flex;
     flex-direction: row;
     align-items: flex-start;

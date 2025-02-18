@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import styles from './page.module.scss';
+import Image from "next/image";
+import styles from "./page.module.scss";
 
 export default function About() {
   return (
@@ -56,7 +56,7 @@ export default function About() {
             alt="Feature Image"
             width={620}
             height={822}
-          />{' '}
+          />{" "}
           <div className={styles.textContainer}>
             <h2 className={`h2-title ${styles.about__copy}`}>
               <span className="bold">More</span> about Michael

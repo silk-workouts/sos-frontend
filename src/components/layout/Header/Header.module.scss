@@ -1,112 +1,176 @@
-@use '@/styles/partials/_variables' as *;
-
+@use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/_mixins" as *;
 .header {
   position: fixed;
-  padding: 20px 0;
+  width: 100%;
+  max-width: 100vw;
   top: 0;
   left: 0;
-  width: 100%;
   z-index: 1000;
-  background-color: $background-color;
-  box-shadow: 0px 4px 62.3px rgba(0, 0, 0, 0.25); // Optional: Adds shadow
+  background: #ffffff;
+  box-shadow: 0px 4px 62.3px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 
   .headerContent {
-    max-width: 1440px;
-    margin: 0 auto;
     display: flex;
-    gap: $gutter-desktop * 4;
     align-items: center;
     justify-content: space-between;
-    padding: 0 $desktop-padding;
+    padding: 6px 16px;
+    width: 100%;
+    // max-width: 100vw;
+    height: 64px;
   }
 
   .logo {
+    // width: 104px;
+    height: 36px;
     display: flex;
-    align-items: center;
-    height: 44px;
-    width: 101px;
-    object-fit: scale-down;
-    cursor: pointer;
+    justify-content: left;
+    // margin: 0 auto;
   }
 
   .navLinks {
-    display: flex;
-    flex-direction: row;
-    gap: $gutter-desktop;
-
-    a {
-      text-decoration: none;
-    }
+    display: none;
   }
 
-  .navLinkActive {
-    position: relative;
-    text-decoration: none;
-    color: inherit;
-    &::after {
-      content: ''; // Required for the pseudo-element to render
-      position: absolute;
-      bottom: -2px; // Positions the line 2px below the text
-      left: 0;
-      width: 100%; // Spans the entire width of the text
-      height: 2px;
-      background-color: $color-red;
-    }
-  }
-
-  .authButtons {
-    margin-left: auto;
-    display: flex;
-    gap: 10px;
-  }
-
-  /* Profile & Auth Section */
-  .authSection {
+  .mobileActions {
     display: flex;
     align-items: center;
-    position: relative; /* ✅ Needed for dropdown positioning */
+    gap: 8px;
   }
 
-  /* Profile Button */
-  .profileButton {
+  // .trialButton {
+  //   display: flex;
+  //   align-items: center;
+  //   padding: 4px 8px;
+  //   gap: 8px;
+  //   // width: 105px;
+  //   height: 23px;
+  //   border: 1px solid #000000;
+  //   border-radius: 35px;
+  //   font-family: "Montserrat", sans-serif;
+  //   font-size: 12px;
+  //   font-weight: 400;
+  //   color: #000000;
+  // }
+
+  .hamburger {
+    width: 24px;
+    height: 24px;
     background: none;
     border: none;
+    font-size: 24px;
     cursor: pointer;
   }
-
-  /* Dropdown Menu */
-  .dropdownMenu {
+  .menuContainer {
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+  }
+  .mobileMenu {
+    display: none;
     position: absolute;
-    top: 50px;
-    right: 0;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    width: 150px;
+    right: 16px;
+    top: 64px;
+    width: 194px;
+    background: #ffffff;
+    box-shadow: 0px 4px 62.3px rgba(0, 0, 0, 0.25);
+    padding: 16px;
+    border-radius: 8px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+
+    &.open {
+      display: flex;
+    }
+
+    .menuItem {
+      font-family: "Montserrat", sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #000000;
+      text-align: right;
+      width: 100%;
+      padding: 8px 0;
+
+      &:hover {
+        color: $color-red;
+        font-weight: bold;
+      }
+    }
   }
 
-  .dropdownMenu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  @include tablet {
+    // .headerContent {
+    //   // padding: 6px 40px;
+    //   // width: 768px;
+    // }
+
+    // .trialButton {
+    //   // width: 183px;
+    //   height: 40px;
+    //   font-size: 20px;
+    // }
+
+    .hamburger {
+      width: 48px;
+      height: 48px;
+    }
+
+    .mobileMenu {
+      width: 239px;
+      padding: 16px;
+    }
   }
 
-  .dropdownMenu li {
-    padding: 10px;
-    cursor: pointer;
-  }
+  @include desktop {
+    .headerContent {
+      padding: 6px 40px;
+      width: $content-container-maximum;
+    }
 
-  .dropdownMenu li:hover {
-    background: #f0f0f0;
-  }
+    .navLinks {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
 
-  .loginButton,
-  .signupButton {
-    padding: 8px 12px;
-    background: #0070f3;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
+    .activeLink {
+      color: $color-red;
+      font-weight: bolder;
+    }
+
+    .menuItem {
+      font-size: 20px;
+      font-weight: 400;
+      &:hover {
+        color: $color-red;
+        font-weight: bold;
+      }
+    }
+
+    // .signupButton {
+    //   // width: 212px;
+    //   height: 40px;
+    //   font-size: 20px;
+    //   font-weight: 500;
+    //   border: 1px solid #000000;
+    //   border-radius: 35px;
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    // }
+
+    .mobileActions {
+      display: none;
+    }
+
+    .mobileMenu {
+      display: none;
+    }
   }
 }
