@@ -41,8 +41,12 @@ $button-hover-bg-color: $color-grey-light;
 $button-hover-text-color: $color-black;
 
 // Layout and Spacing
-$content-container-maximum: 1280px; // Max container width
+$content-container-maximum: 1440px; // Max container width
 $gutter-desktop: 16px;
 
 // Padding
 $desktop-padding: 1.5rem;
+
+//screen sizes
+$tablet-breakpoint: 768px;
+$desktop-breakpoint: 1280px;

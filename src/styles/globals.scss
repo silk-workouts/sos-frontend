@@ -1,26 +1,26 @@
-@use './partials/_variables' as *;
-@use './partials/_fonts' as *;
+@use "./partials/_variables" as *;
+@use "./partials/_fonts" as *;
 
 // Global Reset
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  font-family: $font-primary;
-  color: $color-black;
-  background-color: $color-white;
-  padding-top: 44px; // Match the height of your Header
-  padding-bottom: 5rem; // Match the height of your the footer
-  min-height: 100vh;
-  position: relative;
+	font-family: $font-primary;
+	color: $color-black;
+	background-color: $color-white;
+	padding-top: 84px; // Match the height of your Header
+	padding-bottom: 5rem; // Match the height of your the footer
+	min-height: 100vh;
+	position: relative;
 }
 
 :root {
-  animation-play-state: paused;
-  animation-delay: calc(var(--scroll) * -1s);
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
+	animation-play-state: paused;
+	animation-delay: calc(var(--scroll) * -1s);
+	animation-iteration-count: 1;
+	animation-fill-mode: both;
 }

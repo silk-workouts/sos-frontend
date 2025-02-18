@@ -1,19 +1,69 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
 .body {
-	padding: 4.5rem 12.5rem;
+	padding: 3rem 1rem;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 2.5rem;
+
+	@include tablet {
+		padding: 4rem 1.5rem;
+	}
+
+	@include desktop {
+		padding: 4.5rem 8.0625rem;
+	}
+}
+
+.section {
+	max-width: $content-container-maximum;
 }
 
 .title {
-	font-size: 2rem;
-	font-weight: 400;
+	font-size: 1.25rem;
+	font-weight: 600;
+	line-height: 2rem;
+
+	@include tablet {
+		font-size: 2rem;
+		line-height: 2.5rem;
+	}
 }
 
 .content {
-	margin-top: 1.5rem;
+	margin-top: 1rem;
+
+	@include tablet {
+		margin-top: 1.5rem;
+	}
+}
+
+.content,
+.list {
+	font-size: 1rem;
+	line-height: 1.75rem;
+
+	@include tablet {
+		font-size: 1.25rem;
+		line-height: 2.25rem;
+	}
 }
 
 .list {
 	padding: 1.5rem 2rem 0rem;
+
+	li {
+		padding-bottom: 0.5rem;
+
+		@include tablet {
+			padding-bottom: 1rem;
+		}
+	}
+}
+
+.link {
+	color: $color-red;
+	text-decoration: none;
 }
