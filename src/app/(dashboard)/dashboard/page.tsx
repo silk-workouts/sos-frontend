@@ -1,8 +1,12 @@
+'use client';
+
+import { Suspense } from 'react';
+import DashboardPageContent from '@/components/dashboard/DashboardPageContent/DashboardPageContent';
+
 export default function DashboardPage() {
   return (
-    <div>
-      <h1>Welcome to Your Dashboard</h1>
-      <p>You now have access to all premium content.</p>
-    </div>
+    <Suspense fallback={<div>Loading dashboard...</div>}>
+      <DashboardPageContent />
+    </Suspense>
   );
 }
