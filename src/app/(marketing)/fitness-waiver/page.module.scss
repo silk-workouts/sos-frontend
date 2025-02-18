@@ -3,10 +3,6 @@
 
 .body {
 	padding: 3rem 1rem;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 2.5rem;
 
 	@include tablet {
 		padding: 4rem 1.5rem;
@@ -14,11 +10,19 @@
 
 	@include desktop {
 		padding: 4.5rem 8.0625rem;
+		align-items: center;
 	}
 }
 
-.section {
+.content-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
 	max-width: $content-container-maximum;
+
+	@include desktop {
+		margin: 0 auto;
+	}
 }
 
 .title {
