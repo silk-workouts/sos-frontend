@@ -8,24 +8,33 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 export async function POST(req: NextRequest) {
+  console.log('🔄 Incoming request to Stripe checkout API');
   try {
     const tokenCookie = req.cookies.get('auth_token');
+    console.log('🍪 Token Cookie:', tokenCookie);
     const token = tokenCookie?.value;
 
     if (!token) {
+      console.error('❌ No auth token found');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    console.log('🔑 Verifying JWT Token...');
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
       id: string;
     };
+    console.log('✅ Decoded JWT:', decoded);
+
     const userId = decoded.id;
+    console.log('🆔 User ID:', userId);
 
     // ✅ Fix: Properly extract rows from the database result
     const result = await db.execute(
       'SELECT email, stripe_customer_id FROM users WHERE id = ?',
       [userId]
     );
+
+    console.log('📊 Raw Database Response:', result);
 
     const rows = (
       result as unknown as {
@@ -46,18 +55,20 @@ export async function POST(req: NextRequest) {
 
     // ✅ Ensure user is properly defined before accessing properties
     if (!user || !user.email) {
-      console.error('❌ User object is undefined or missing email.');
+      console.error('❌ User data is invalid or missing email.');
       return NextResponse.json({ error: 'Invalid user data' }, { status: 500 });
     }
 
     // If user doesn't have a Stripe Customer ID, create one
     let stripeCustomerId = user.stripe_customer_id;
     if (!stripeCustomerId) {
+      console.log('🆕 Creating new Stripe customer...');
       const customer = await stripe.customers.create({
         email: user.email,
       });
 
       stripeCustomerId = customer.id;
+      console.log('✅ Stripe Customer Created:', stripeCustomerId);
 
       // ✅ Store Stripe Customer ID in the database
       await db.execute('UPDATE users SET stripe_customer_id = ? WHERE id = ?', [
@@ -67,6 +78,8 @@ export async function POST(req: NextRequest) {
 
       console.log('✅ Stripe customer ID saved:', stripeCustomerId);
     }
+
+    console.log('💳 Creating Stripe Checkout Session...');
 
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
@@ -79,10 +92,11 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?refresh=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
     });
 
+    console.log('✅ Stripe Checkout Session Created:', session.url);
     return NextResponse.json({ url: session.url });
   } catch (error) {
     console.error('❌ Stripe Checkout Error:', error);

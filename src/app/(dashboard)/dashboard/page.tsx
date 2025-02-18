@@ -1,8 +1,17 @@
+'use client';
+
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
 export default function DashboardPage() {
-  return (
-    <div>
-      <h1>Welcome to Your Dashboard</h1>
-      <p>You now have access to all premium content.</p>
-    </div>
-  );
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (searchParams.get('refresh')) {
+      router.replace('/dashboard'); // Remove refresh param and reload
+    }
+  }, [searchParams, router]);
+
+  return <div>Dashboard</div>;
 }
