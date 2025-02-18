@@ -15,6 +15,7 @@
     justify-content: flex-start;
     align-items: center;
     padding-left: 10%;
+    transition: all 0.3s ease-in-out;
 
     &::before {
       content: "";
@@ -34,35 +35,31 @@
 
   .experienceSection {
     position: relative;
-    height: 600px;
     width: 100%;
     max-width: 100vw;
+    height: 600px;
     padding: $padding-xl $padding-small;
     display: flex;
     flex-direction: column;
-    // justify-content: center;
     gap: $mobile-gutter;
+    transition: all 0.3s ease-in-out;
 
     @include tablet {
       flex-direction: row;
       height: fit-content;
-      padding: $padding-xl $padding-small;
     }
 
     @include desktop {
-      position: relative;
-      padding: $padding-xl;
       max-width: $content-container-maximum;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      padding: $padding-xl $padding-small $padding-xl $padding-xl;
+
+      justify-content: start;
     }
   }
 
   .experienceContent {
     @include desktop {
       height: 350px;
-      width: 100%;
       max-width: 600px;
     }
   }
@@ -70,12 +67,12 @@
   .accentImage {
     position: absolute;
     display: flex;
-    flex-direction: column;
     align-self: center;
     width: 272px;
     height: 337px;
     border-radius: 35px;
     bottom: -125px;
+    transition: all 0.3s ease-in-out;
 
     @include tablet {
       position: revert;
@@ -85,7 +82,7 @@
 
     @include desktop {
       position: absolute;
-      bottom: -200px;
+      bottom: -150px;
       right: $padding-large;
       width: 491px;
       height: 575px;
@@ -97,15 +94,18 @@
       }
     }
   }
+
   .featuredImage {
     width: 100%;
+    max-width: 1440px;
     height: 592px;
+    transition: all 0.3s ease-in-out;
 
     @include tablet {
       height: 348px;
     }
 
-    @include tablet {
+    @include desktop {
       height: 592px;
     }
 
@@ -114,17 +114,14 @@
       height: 100%;
       object-fit: cover;
     }
-    //   max-width: 90rem;
-    //   max-height: 200vw;
   }
 
   .newsImage {
     display: flex;
-    flex-direction: column;
     align-self: center;
     width: 255px;
     height: 338px;
-    //   border-radius: 35px;
+    transition: all 0.3s ease-in-out;
 
     @include desktop {
       width: 38.75rem;
@@ -135,33 +132,20 @@
   .bioSection {
     display: flex;
     flex-direction: column;
-    //   @include desktop {
-    //     height: 1000px;
-    //     display: flex;
-    //     flex-direction: row;
-    //     align-items: center;
-    //     justify-content: center;
-    //   }
+    max-width: $content-container-maximum;
   }
 
   .bioContent {
     display: flex;
     flex-direction: column-reverse;
     gap: $mobile-gutter;
-    width: 100vw;
+    width: 100%;
     padding: $padding-xl $padding-small;
+    transition: all 0.3s ease-in-out;
 
     @include tablet {
       flex-direction: row;
       gap: $desktop-gutter;
     }
-
-    // @include desktop {
-    //   gap: $padding-xl;
-    //   width: calc($content-container-maximum - $padding-xl);
-    //   display: flex;
-    //   flex-direction: row;
-    //   align-items: flex-start;
-    // }
   }
 }
