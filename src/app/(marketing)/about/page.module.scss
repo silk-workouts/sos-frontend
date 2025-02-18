@@ -33,6 +33,14 @@
     }
   }
 
+  .title {
+    max-width: 250px;
+
+    @include desktop {
+      max-width: none;
+    }
+  }
+
   .experienceSection {
     position: relative;
     width: 100%;
