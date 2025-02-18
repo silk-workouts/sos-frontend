@@ -1,17 +1,12 @@
 'use client';
 
-import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { Suspense } from 'react';
+import DashboardPageContent from '@/components/dashboard/DashboardPageContent/DashboardPageContent';
 
 export default function DashboardPage() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (searchParams.get('refresh')) {
-      router.replace('/dashboard'); // Remove refresh param and reload
-    }
-  }, [searchParams, router]);
-
-  return <div>Dashboard</div>;
+  return (
+    <Suspense fallback={<div>Loading dashboard...</div>}>
+      <DashboardPageContent />
+    </Suspense>
+  );
 }
