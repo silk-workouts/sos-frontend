@@ -149,7 +149,7 @@ export default function Header() {
             >
               Login
             </Link>
-            <Link
+            {/* <Link
               href="/auth/signup"
               className={`${styles.menuItem} ${
                 pathname === "/auth/signup" ? styles.activeLink : ""
@@ -157,7 +157,7 @@ export default function Header() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Sign Up
-            </Link>
+            </Link> */}
           </div>
         </nav>
       </div>
