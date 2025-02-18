@@ -34,7 +34,7 @@
   }
 
   .title {
-    max-width: 250px;
+    max-width: 300px;
 
     @include desktop {
       max-width: none;
@@ -73,7 +73,7 @@
   }
 
   .accentImage {
-    position: absolute;
+    position: initial;
     display: flex;
     align-self: center;
     width: 272px;
