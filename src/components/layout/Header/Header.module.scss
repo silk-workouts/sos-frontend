@@ -19,16 +19,14 @@
     justify-content: space-between;
     padding: 6px 16px;
     width: 100%;
-    // max-width: 100vw;
+
     height: 64px;
   }
 
   .logo {
-    // width: 104px;
     height: 36px;
     display: flex;
     justify-content: left;
-    // margin: 0 auto;
   }
 
   .navLinks {
@@ -40,21 +38,6 @@
     align-items: center;
     gap: 8px;
   }
-
-  // .trialButton {
-  //   display: flex;
-  //   align-items: center;
-  //   padding: 4px 8px;
-  //   gap: 8px;
-  //   // width: 105px;
-  //   height: 23px;
-  //   border: 1px solid #000000;
-  //   border-radius: 35px;
-  //   font-family: "Montserrat", sans-serif;
-  //   font-size: 12px;
-  //   font-weight: 400;
-  //   color: #000000;
-  // }
 
   .hamburger {
     width: 24px;
@@ -99,23 +82,12 @@
 
       &:hover {
         color: $color-red;
-        font-weight: bold;
+        font-weight: $font-weight-medium;
       }
     }
   }
 
   @include tablet {
-    // .headerContent {
-    //   // padding: 6px 40px;
-    //   // width: 768px;
-    // }
-
-    // .trialButton {
-    //   // width: 183px;
-    //   height: 40px;
-    //   font-size: 20px;
-    // }
-
     .hamburger {
       width: 48px;
       height: 48px;
@@ -131,39 +103,31 @@
     .headerContent {
       padding: 6px 40px;
       width: $content-container-maximum;
+      gap: $padding-xl;
     }
 
     .navLinks {
       display: flex;
       align-items: center;
       gap: 36px;
+      width: 100%;
+      & > :last-child {
+        margin-left: auto;
+      }
     }
 
     .activeLink {
       color: $color-red;
-      font-weight: bolder;
+      font-weight: $font-weight-extrabold;
     }
 
     .menuItem {
       font-size: 20px;
-      font-weight: 400;
       &:hover {
         color: $color-red;
-        font-weight: bold;
+        font-weight: $font-weight-extrabold;
       }
     }
-
-    // .signupButton {
-    //   // width: 212px;
-    //   height: 40px;
-    //   font-size: 20px;
-    //   font-weight: 500;
-    //   border: 1px solid #000000;
-    //   border-radius: 35px;
-    //   display: flex;
-    //   align-items: center;
-    //   justify-content: center;
-    // }
 
     .mobileActions {
       display: none;

@@ -84,13 +84,13 @@ export default function Header() {
             Shop
           </a>
           <Button variant="secondary" className={styles.signupButton}>
-            <Link href="/auth/signup">7-Day Free Trial</Link>
+            <Link href="/auth/signup">Sign up/Log in</Link>
           </Button>
         </nav>
 
         {/* Mobile Menu Button & 7-Day Free Trial Button */}
         <div className={styles.mobileActions}>
-          <Button variant="secondary" className={styles.trialButton}>
+          <Button variant="tertiary" className={styles.trialButton}>
             <Link href="/auth/signup">7-Day Free Trial</Link>
           </Button>
           <button
