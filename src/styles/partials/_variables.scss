@@ -1,19 +1,28 @@
 //styles/partials/_variables.scss
 // Font Families
-$font-primary: "Lato", sans-serif;
-$font-secondary: "Monomaniac One", sans-serif;
+$font-primary: "Montserrat", sans-serif;
+$font-accent: "Anta", sans-serif;
 
-// Font Sizes
-$font-size-h1: 64px;
-$font-size-h2: 48px;
-$font-size-h3: 24px;
-$font-size-body1: 32px;
-$font-size-body2: 20px;
-$font-size-button: 20px;
+// Desktop Font Sizes
+$font-size-h1-desktop: 4rem; // 64px
+$font-size-h2-desktop: 3rem; // 48px
+$font-size-h3-desktop: 1.25rem; // 20px
+$font-size-body1-desktop: 2rem; // 32px
+$font-size-body2-desktop: 1.25rem; // 20px
+$font-size-button-desktop: 1.25rem; // 20px
+
+//Mobile Font Sizes
+$font-size-h1-mobile: 3rem; // 48px
+$font-size-h2-mobile: 2rem; // 32px
+$font-size-h3-mobile: 2rem; // 32px
+$font-size-body1-mobile: 1.5rem; // 24px
+$font-size-body2-mobile: 1rem; // 16px
+$font-size-button-mobile: 1.25rem; // 20px
 
 // Font Weights
-$font-weight-regular: 400;
 $font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
 $font-weight-extrabold: 800;
 
 // Color Palette
@@ -22,16 +31,16 @@ $color-white: #ffffff;
 $color-grey: #808080;
 $color-red: #b51c24;
 // Shades of Grey
-$color-grey-light: #d3d3d3;
+$color-grey-light: #d9d9d9;
 $color-grey-dark: #505050;
 
 // Utility Colors
 $color-primary: $color-red; // Red as primary
 $color-secondary: $color-grey; // Grey as secondary
-$background-color: #fff;
+$background-color: $color-white;
 
 // Colors for Links
-$link-color: #000000;
+$link-color: $color-black;
 $link-hover-color: $color-red; // Slightly darker on hover
 
 // Button Colors
@@ -41,12 +50,15 @@ $button-hover-bg-color: $color-grey-light;
 $button-hover-text-color: $color-black;
 
 // Layout and Spacing
-$content-container-maximum: 1440px; // Max container width
-$gutter-desktop: 16px;
+$content-container-maximum: 90rem; // 1440px Max container width
 
 // Padding
-$desktop-padding: 1.5rem;
+$padding-base: 0.5rem; // 8px
+$padding-small: 1rem; // 16px
+$padding-medium: 2rem; // 32px
+$padding-large: 3rem; // 48px
+$padding-xl: 6rem; // 96px
 
-//screen sizes
-$tablet-breakpoint: 768px;
-$desktop-breakpoint: 1280px;
+// Gutter
+$desktop-gutter: 1.5rem; // 24px
+$mobile-gutter: 1rem; // 16px

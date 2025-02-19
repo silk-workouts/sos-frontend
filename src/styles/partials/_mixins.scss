@@ -1,13 +1,25 @@
-@use "./variables" as *;
+//styles/partials/_mixins.scss
+
+//  Breakpoint Variables
+$breakpoint-mobile: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1280px;
+
+// Breakpoint Mixins
+@mixin mobile {
+	@media (min-width: $breakpoint-mobile) {
+		@content;
+	}
+}
 
 @mixin tablet {
-	@media (min-width: $tablet-breakpoint) {
+	@media (min-width: $breakpoint-tablet) {
 		@content;
 	}
 }
 
 @mixin desktop {
-	@media (min-width: $desktop-breakpoint) {
+	@media (min-width: $breakpoint-desktop) {
 		@content;
 	}
 }

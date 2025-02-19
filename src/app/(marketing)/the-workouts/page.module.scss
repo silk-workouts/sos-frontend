@@ -73,7 +73,7 @@
   &__formula {
     width: 1392px;
     height: 436px;
-    padding: $desktop-padding * 4;
+    padding: $desktop-gutter * 4;
 
     background: rgba(239, 239, 239, 0.8);
     /* 3D shadow */
@@ -146,7 +146,7 @@
     flex-direction: column;
     justify-content: center;
     // align-items: center;
-    padding-left: $desktop-padding * 4;
+    padding-left: $desktop-gutter * 4;
   }
 
   .boldRed {
