@@ -69,7 +69,7 @@ export default function SignupPage() {
       {/* ✅ Left panel with navigation */}
       <div className={styles.panelLeft}>
         <Link href="/" className={styles.backLink}>
-          ⬅️ Back to Site
+          Back to Site
         </Link>
         <h1 className={styles.title}>Become a part of the System of Silk</h1>
       </div>
