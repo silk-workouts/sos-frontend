@@ -80,7 +80,7 @@ export default function SignupPage() {
           {/* ✅ Link to login for existing users */}
           <p className={styles.footerText}>
             Already have an account?{" "}
-            <Link className="link--emphasis" href="/login">
+            <Link className="link--emphasis" href="/auth/login">
               Log in
             </Link>
           </p>
