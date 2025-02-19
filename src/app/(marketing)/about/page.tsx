@@ -1,23 +1,24 @@
-import Image from 'next/image';
-import styles from './page.module.scss';
+import Image from "next/image";
+import accentImage from "/public/assets/images/about-ringwin.png";
+import featureImage from "/public/assets/images/about-speedbag.png";
+import newspaperImage from "/public/assets/images/about-newspaper.png";
+import styles from "./page.module.scss";
 
 export default function About() {
   return (
-    <div className={styles.about}>
-      <section className={styles.about__hero}>
-        <h1 className={styles.about__heroTitle}>
-          The Godfather of Boxing for Fitness
-        </h1>
+    <div className={styles.container}>
+      <section className={styles.heroSection}>
+        <h1 className="heroTitle">The Godfather of Boxing for Fitness</h1>
       </section>
 
-      <section className={styles.about__silkExperience}>
-        <div className={styles.about__silkExperienceCopy}>
-          <div className={styles.textContainer}>
-            <h2 className={`h2-title ${styles.about__copy}`}>
+      <section className={styles.experienceSection}>
+        <div className={styles.experienceContent}>
+          <div className={styles.textBlock}>
+            <h2 className={`h2-title ${styles.title}`}>
               <span className="bold">The Silk</span> Experience
             </h2>
             <p className="body1">
-              Michael “Silk” Olajide is fitness&#39;s single most influential
+              Michael “Silk” Olajide is fitness’s single most influential
               trainer having ushered in the age of the boxer. Michael began
               teaching boxing for fitness in 1991 and having been featured in
               Vogue, GQ, Sports Illustrated, and Time magazine, Michael is
@@ -26,47 +27,37 @@ export default function About() {
             <p className="body1">
               Michael’s concept of boxing for fitness and his gym Aerospace
               High-Performance Center were the driving concept for all the
-              boxing fitness Gym&#39;s you see all over the world today.
+              boxing fitness gyms you see all over the world today.
             </p>
           </div>
         </div>
 
         <Image
-          className={styles.about__accentImage}
-          src="/assets/images/about-ringwin.png"
-          alt="Feature Image"
-          width={491}
-          height={575}
+          className={styles.accentImage}
+          src={accentImage}
+          alt="Accent Image"
         />
       </section>
-
-      <Image
-        className={styles.about__featureImage}
-        src="/assets/images/about-speedbag.png"
-        alt="Feature Image"
-        width={1440}
-        height={592}
-      />
-
-      <section className={styles.about__moreMichael}>
-        <div className={styles.about__moreMichaelContent}>
+      <section className={styles.featuredImage}>
+        <Image src={featureImage} alt="Featured Image" />
+      </section>
+      <section className={styles.bioSection}>
+        <div className={styles.bioContent}>
           <Image
-            className={styles.about__featureImage}
-            src="/assets/images/about-newspaper.png"
-            alt="Feature Image"
-            width={620}
-            height={822}
-          />{' '}
-          <div className={styles.textContainer}>
-            <h2 className={`h2-title ${styles.about__copy}`}>
+            className={styles.newsImage}
+            src={newspaperImage}
+            alt="Newspaper Image"
+          />
+          <div className={styles.textBlock}>
+            <h2 className={`h2-title ${styles.title}`}>
               <span className="bold">More</span> about Michael
             </h2>
             <p className="body1">
               Currently, with his unrivaled knowledge of boxing, movement and
-              teaching non boxers how to box, Michael is the boxing
+              teaching non-boxers how to box, Michael is the boxing
               choreographer helping to bring “ALI THE MUSICAL” to Broadway in
-              2025. But it was at 16 years of age, that Michael “Silk” Olajide
-              Jr., began his career as a PROFESSIONAL BOXER. He was a highly
+              2025. But it was at 16 years of age that Michael “Silk” Olajide
+              Jr. began his career as a PROFESSIONAL BOXER. He was a highly
               respected championship boxer whose fights were televised
               internationally. In 1991, Michael STOPPED BOXING. Since then, he
               has choreographed major film and theater projects, working with

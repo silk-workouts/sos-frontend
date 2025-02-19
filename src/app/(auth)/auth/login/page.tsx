@@ -1,15 +1,31 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Button from '@/components/ui/Button/Button';
+import styles from './page.module.scss';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
 
   async function handleLogin(event: React.FormEvent) {
     event.preventDefault();
+
+    let newErrors: { [key: string]: string } = {};
+    if (!email) newErrors.email = '⚠️ Required';
+    if (!password) newErrors.password = '⚠️ Required';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
 
     const res = await fetch('/api/auth/login', {
       method: 'POST',
@@ -52,22 +68,83 @@ export default function LoginPage() {
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <h1>Login</h1>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Log In</button>
-      <p>{message}</p>
-    </form>
+    <div className={styles.loginContainer}>
+      {/* ✅ Left panel with login options */}
+      <div className={styles.panelLeft}>
+        <Link href="/" className={styles.backLink}>
+          Back to Site
+        </Link>
+        <h1 className={styles.title}>Introducing Ballet</h1>
+      </div>
+
+      {/* ✅ Right panel containing the login form */}
+      <div className={styles.panelRight}>
+        <form onSubmit={handleLogin} className={styles.loginForm}>
+          <h1 className={styles.heading}>Welcome Back!</h1>
+          <p className={styles.subtitle}>
+            Don’t have an account yet?{' '}
+            <Link className="link--emphasis" href="/auth/signup">
+              Sign up now
+            </Link>
+          </p>
+          {/* ✅ Email input field */}
+          <div className={styles.inputGroup}>
+            <label>Email Address</label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            {errors.email && (
+              <span className={styles.errorMessage}>{errors.email}</span>
+            )}
+          </div>
+
+          {/* ✅ Password input field */}
+          <div className={styles.inputGroup}>
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            {errors.password && (
+              <span className={styles.errorMessage}>{errors.password}</span>
+            )}
+          </div>
+
+          {/* ✅ Remember me and forgot password options */}
+          <div className={styles.optionsGroup}>
+            <label className={styles.checkboxContainer}>
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
+              Remember me
+            </label>
+            <Link href="/auth/forgot-password" className="link--emphasis">
+              Forgot password?
+            </Link>
+          </div>
+
+          {/* ✅ Login button using the tertiary variant */}
+          <Button
+            type="submit"
+            variant="secondary"
+            className={styles.loginButton}
+          >
+            Log In
+          </Button>
+
+          {/* ✅ Display messages */}
+          <p className={styles.message}>{message}</p>
+        </form>
+      </div>
+    </div>
   );
 }
