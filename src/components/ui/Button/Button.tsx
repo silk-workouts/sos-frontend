@@ -21,7 +21,7 @@ export default function Button({
   return (
     <button
       type={type}
-      className={`${styles.button} ${
+      className={`button ${styles.button} ${
         styles[`button--${variant}`]
       } ${className}`}
       onClick={onClick}

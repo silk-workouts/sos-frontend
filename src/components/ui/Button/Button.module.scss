@@ -1,4 +1,5 @@
 @use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/_mixins" as *;
 
 .button {
   font-family: $font-primary;
@@ -97,7 +98,7 @@
   }
 
   &--secondary {
-    font-size: $font-size-body2-desktop;
+    // font-size: $font-size-body2-desktop;
     text-transform: capitalize;
     padding: 8px 16px;
     gap: 8px;
@@ -108,6 +109,10 @@
     height: 30px;
     background-color: transparent;
     color: $color-black;
+
+    @include desktop {
+      padding: 20px 16px;
+    }
 
     &:hover {
       background-color: $color-red; // Red background on hover
@@ -128,7 +133,7 @@
 
   // Tertiary Button
   &--tertiary {
-    font-size: $font-size-body2-desktop;
+    // font-size: $font-size-body2-desktop;
     text-transform: capitalize;
     padding: 8px 16px;
     background-color: transparent;
@@ -167,7 +172,7 @@
 
   // Disabled State
   &--disabled {
-    font-size: $font-size-body2-desktop;
+    // font-size: $font-size-body2-desktop;
     background-color: $color-grey-light;
     color: $color-grey-dark;
     cursor: not-allowed;

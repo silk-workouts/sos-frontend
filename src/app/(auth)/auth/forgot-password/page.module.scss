@@ -11,7 +11,7 @@
   background: $background-color;
 
   @include tablet {
-    flex-direction: row;
+    flex-direction: row-reverse;
   }
 }
 

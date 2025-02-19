@@ -90,7 +90,7 @@ export default function Header() {
 
         {/* Mobile Menu Button & 7-Day Free Trial Button */}
         <div className={styles.mobileActions}>
-          <Button variant="tertiary" className={styles.trialButton}>
+          <Button variant="secondary" className={styles.trialButton}>
             <Link href="/auth/signup">7-Day Free Trial</Link>
           </Button>
           <button
