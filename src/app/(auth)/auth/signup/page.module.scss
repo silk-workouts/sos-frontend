@@ -1,0 +1,126 @@
+@use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/_mixins" as *;
+@use "@/styles/partials/_fonts" as *;
+
+.signupContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background: $background-color;
+
+  @include tablet {
+    flex-direction: row;
+  }
+}
+
+// ✅ Left panel for branding & navigation
+.panelLeft {
+  width: 100%;
+  height: fit-content;
+  background: $color-grey-light;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $padding-medium;
+
+  @include tablet {
+    max-width: 472px;
+    width: 40%;
+  }
+
+  .backLink {
+    align-self: flex-start;
+    @extend .link;
+    margin-bottom: $padding-small;
+  }
+
+  .title {
+    @extend .h1;
+    text-align: center;
+  }
+}
+
+// ✅ Right panel for the signup form
+.panelRight {
+  width: 100%;
+  max-width: 968px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $padding-medium;
+
+  @include tablet {
+    width: 60%;
+  }
+}
+
+// ✅ Signup form styling
+.signupForm {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $padding-medium;
+
+  .heading {
+    @extend .h2-title;
+    text-align: center;
+  }
+
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 330px;
+    height: 104px;
+    position: relative;
+
+    label {
+      font-family: $font-primary;
+      font-weight: $font-weight-regular;
+      font-size: 20px;
+      line-height: 24px;
+      color: $color-black;
+      width: 100%;
+    }
+
+    input {
+      width: 330px;
+      height: 72px;
+      background: $color-grey-light;
+      border-radius: 18px;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      font-family: $font-primary;
+      outline: none;
+      transition: all 0.3s ease-in-out;
+
+      &:focus {
+        border: 2px solid $color-black;
+      }
+    }
+
+    .errorMessage {
+      position: absolute;
+      bottom: -1.5rem;
+      left: 0;
+      font-size: 14px;
+      font-weight: $font-weight-medium;
+      color: $color-red;
+      padding-right: 8px;
+    }
+  }
+
+  .message {
+    text-align: center;
+    @extend .body2;
+    color: $color-red;
+  }
+}

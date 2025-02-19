@@ -116,27 +116,6 @@
   color: $button-text-color;
 }
 
-/* Remove default link styles */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Ensure visited links don't change color */
-a:visited {
-  color: inherit;
-}
-
-/* Remove hover underline */
-a:hover {
-  text-decoration: none;
-}
-
-/* Remove focus outline unless needed for accessibility */
-a:focus {
-  outline: none;
-}
-
 .link {
   font-family: $font-primary;
   font-size: clamp($font-size-body2-mobile, 1.5vw, $font-size-body2-desktop);
@@ -147,6 +126,15 @@ a:focus {
 
   &:hover {
     color: $link-hover-color;
+  }
+
+  &--emphasis {
+    font-family: $font-primary;
+    font-size: clamp($font-size-body2-mobile, 1.5vw, $font-size-body2-desktop);
+    font-weight: $font-weight-regular;
+    line-height: clamp(1.25rem, 2vw, 1.5rem);
+    color: $link-hover-color !important;
+    text-decoration: underline;
   }
 }
 
