@@ -74,10 +74,7 @@ export async function POST(req: NextRequest) {
           [stripeCustomerId]
         );
 
-        console.log(
-          '✅ Recurring payment received, user remains active:',
-          result
-        );
+        console.log('Recurring payment received, user remains active:', result);
         break;
       }
 
