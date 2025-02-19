@@ -91,10 +91,10 @@
   align-items: center;
   gap: $padding-medium;
 
-  @include desktop {
-    width: 100%;
-    max-width: none;
-  }
+  //   @include desktop {
+  //     width: 100%;
+  //     max-width: none;
+  //   }
 
   .heading {
     @extend .h2-title;
@@ -106,7 +106,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-    width: 330px;
+    width: 100%;
     height: 104px;
     position: relative;
 
@@ -124,7 +124,7 @@
     }
 
     input {
-      width: 330px;
+      width: 100%;
       height: 72px;
       background: $color-grey-light;
       border-radius: 18px;
@@ -180,23 +180,6 @@
       font-weight: $font-weight-medium;
     }
   }
-
-  //   .loginButton {
-  //     width: 100%;
-  //     height: 50px;
-  //     background: $color-black;
-  //     color: $color-white;
-  //     border: none;
-  //     border-radius: 35px;
-  //     @extend .button;
-  //     cursor: pointer;
-  //     transition: all 0.3s ease-in-out;
-
-  //     &:hover {
-  //       background: $button-hover-bg-color;
-  //       color: $button-hover-text-color;
-  //     }
-  //   }
 
   .message {
     text-align: center;

@@ -68,7 +68,7 @@ export default function LoginPage() {
           <h1 className={styles.heading}>Welcome Back!</h1>
           <p className={styles.subtitle}>
             Don’t have an account yet?{" "}
-            <Link className="link--emphasis" href="/signup">
+            <Link className="link--emphasis" href="/auth/signup">
               Sign up now
             </Link>
           </p>
