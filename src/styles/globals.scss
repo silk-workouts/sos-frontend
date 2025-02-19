@@ -1,5 +1,6 @@
-@use "./partials/_variables" as *;
-@use "./partials/_fonts" as *;
+@use "./partials/variables" as *;
+@use "./partials/mixins" as *;
+@use "./partials/fonts" as *;
 
 // Global Reset
 * {
@@ -13,9 +14,13 @@ body {
 	color: $color-black;
 	background-color: $color-white;
 	padding-top: 84px; // Match the height of your Header
-	padding-bottom: 5rem; // Match the height of your the footer
+	padding-bottom: 13.75rem; // Match the height of your the footer
 	min-height: 100vh;
 	position: relative;
+
+	@include tablet {
+		padding-bottom: 10rem;
+	}
 }
 
 :root {
