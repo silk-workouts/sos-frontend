@@ -2,20 +2,26 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
 export async function middleware(req: NextRequest) {
-  const token = req.cookies.get('auth_token')?.value;
+  const token = req.headers
+    .get('cookie')
+    ?.split('; ')
+    .find((c) => c.startsWith('auth_token='))
+    ?.split('=')[1];
 
   if (!token) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 
   try {
-    // ✅ Use full URL for API call
     const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/verify-token`;
 
     const res = await fetch(verifyUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token }),
+      method: 'GET', // Use GET method to align with the verify-token route
+      headers: {
+        'Content-Type': 'application/json',
+        Cookie: `auth_token=${token}`,
+      },
+      credentials: 'include', // Ensure cookies are sent
     });
 
     if (!res.ok) {
@@ -24,17 +30,12 @@ export async function middleware(req: NextRequest) {
 
     const { userId } = await res.json();
 
-    // ✅ Fetch user’s payment status from the database
     const result = await db.execute(
       'SELECT is_paid_user FROM users WHERE id = ?',
       [userId]
     );
 
-    // ✅ Extract the rows property from the result
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rows = (result as any).rows as { is_paid_user: number }[];
-
-    // ✅ Extract the first user from the rows array
     const user = rows.length > 0 ? rows[0] : undefined;
 
     if (!user) {
@@ -42,7 +43,6 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/auth/login', req.url));
     }
 
-    // Ensure is_paid_user is a boolean
     const isPaidUser = Boolean(user.is_paid_user);
 
     if (!isPaidUser) {
@@ -63,5 +63,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: ['/dashboard/:path*'], // Only match dashboard routes
 };

@@ -1,26 +1,52 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import Cookies from 'js-cookie';
 import styles from './Header.module.scss';
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isPaidUser, setIsPaidUser] = useState(false); // ✅ New: Track paid status
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
-    //  Check auth_token whenever pathname changes
-    const token = Cookies.get('auth_token');
-    setIsLoggedIn(!!token);
-  }, [pathname]); // Runs every time the route changes
+    async function checkAuthStatus() {
+      try {
+        const res = await fetch('/api/auth/verify-token', {
+          method: 'GET',
+          credentials: 'include', // ✅ Ensure cookies are sent
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!res.ok) {
+          console.warn('❌ Auth check failed, user not logged in.');
+          setIsLoggedIn(false);
+          setIsPaidUser(false);
+          return;
+        }
+
+        const data = await res.json();
+
+        setIsLoggedIn(true);
+        setIsPaidUser(data.isPaidUser ?? false); // ✅ Update paid status
+      } catch (error) {
+        console.error('❌ Auth verification error:', error);
+        setIsLoggedIn(false);
+        setIsPaidUser(false);
+      }
+    }
+
+    checkAuthStatus();
+  }, [pathname]);
 
   async function handleLogout() {
     await fetch('/api/auth/logout', { method: 'GET' });
     setIsLoggedIn(false);
+    setIsPaidUser(false);
     setIsDropdownOpen(false);
     router.push('/');
   }
@@ -28,7 +54,6 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
-        {/* Left Side: Logo */}
         <div className={styles.logo}>
           <Link href="/">
             <Image
@@ -41,7 +66,6 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Center: Navigation Links */}
         <nav aria-label="primary" className={styles.navLinks}>
           <Link
             href="/the-workouts"
@@ -65,11 +89,9 @@ export default function Header() {
           </a>
         </nav>
 
-        {/* Right Side: Profile Dropdown / Login */}
         <div className={styles.authSection}>
           {isLoggedIn ? (
             <div className={styles.profileMenu} role="menu">
-              {/* Profile Icon (Dropdown Trigger) */}
               <button
                 className={styles.profileButton}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -84,13 +106,13 @@ export default function Header() {
                 />
               </button>
 
-              {/* Dropdown Menu */}
               {isDropdownOpen && (
                 <nav className={styles.dropdownMenu} role="menu">
                   <ul>
                     <li>
                       <Link href="/dashboard">Dashboard</Link>
                     </li>
+
                     <li>
                       <button onClick={handleLogout}>Logout</button>
                     </li>

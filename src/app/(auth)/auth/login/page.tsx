@@ -15,16 +15,37 @@ export default function LoginPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
+      credentials: 'include', // Ensure cookies are sent and received
     });
 
     const data = await res.json();
 
+    //   if (res.ok) {
+    //     setMessage('✅ Login successful!');
+    //     document.cookie = `auth_token=${data.token}; path=/;`;
+    //     setTimeout(() => {
+    //       router.push('/dashboard');
+    //     }, 1000);
+    //   } else {
+    //     setMessage(`❌ ${data.error || 'Login failed'}`);
+    //   }
+    // }
+
     if (res.ok) {
       setMessage('✅ Login successful!');
-      document.cookie = `auth_token=${data.token}; path=/;`;
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 1000);
+      // ✅ Immediately call /api/auth/verify-token after login
+      const verifyRes = await fetch('/api/auth/verify-token', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (verifyRes.ok) {
+        setTimeout(() => {
+          router.push('/dashboard'); // ✅ Redirect after auth verification
+        }, 1000);
+      } else {
+        console.warn('❌ Auth verification failed after login.');
+      }
     } else {
       setMessage(`❌ ${data.error || 'Login failed'}`);
     }

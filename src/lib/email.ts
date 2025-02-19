@@ -1,9 +1,6 @@
 export async function sendVerificationEmail(email: string, token: string) {
   const confirmationLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/verify-email?token=${token}`;
 
-  console.log('Sending email to:', email);
-  console.log('Confirmation link:', confirmationLink);
-
   const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
     method: 'POST',
     headers: {
@@ -22,7 +19,6 @@ export async function sendVerificationEmail(email: string, token: string) {
 
   // Log full response body before attempting to parse it as JSON
   const text = await response.text();
-  console.log('EmailJS raw response:', text);
 
   try {
     const data = JSON.parse(text);
