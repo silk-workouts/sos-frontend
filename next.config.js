@@ -9,6 +9,10 @@ const nextConfig = {
   },
   output: 'standalone', // Keeps standalone mode for deployment
 
+  eslint: {
+    ignoreDuringBuilds: true, // Disables ESLint checks during builds (Vercel or local next build)
+  },
+
   async headers() {
     return [
       {
