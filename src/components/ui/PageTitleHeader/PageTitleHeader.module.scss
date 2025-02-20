@@ -3,8 +3,8 @@
 
 .header {
 	background-color: $color-red;
-	color: $color-white;
 	padding: 2.75rem 1rem 2rem;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		padding: 6.25rem 1.5rem 3.625rem;
@@ -19,22 +19,13 @@
 		max-width: $content-container-maximum;
 	}
 
-	&__title {
-		font-family: "Anta";
-		font-weight: 400;
-		font-size: 3rem;
-		text-transform: uppercase;
-
-		@include tablet {
-			font-size: 6rem;
-		}
-	}
-
 	&__subHeading {
 		font-family: "Montserrat";
 		font-weight: 400;
 		font-size: 1.5rem;
 		text-transform: capitalize;
+		color: $color-white;
+		transition: all 0.3s ease-in-out;
 
 		@include tablet {
 			font-size: 2rem;

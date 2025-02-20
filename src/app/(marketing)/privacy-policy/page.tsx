@@ -5,7 +5,7 @@ export default function PrivacyPolicy() {
 	return (
 		<>
 			<PageTitleHeader title="privacy" subHeading="privacy policy" />
-			<div className={`body1 ${styles.body}`}>
+			<div className={`body2 ${styles.body}`}>
 				<div className={styles["content-wrapper"]}>
 					<section>
 						<h3 className={styles.title}>who we are</h3>

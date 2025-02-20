@@ -3,6 +3,7 @@
 
 .body {
 	padding: 3rem 1rem;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		padding: 4rem 1.5rem;
@@ -29,6 +30,7 @@
 	font-size: 1.25rem;
 	font-weight: 600;
 	line-height: 2rem;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		font-size: 2rem;
@@ -38,20 +40,10 @@
 
 .content {
 	margin-top: 1rem;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		margin-top: 1.5rem;
-	}
-}
-
-.content,
-.list {
-	font-size: 1rem;
-	line-height: 1.75rem;
-
-	@include tablet {
-		font-size: 1.25rem;
-		line-height: 2.25rem;
 	}
 }
 
@@ -60,6 +52,7 @@
 
 	li {
 		padding-bottom: 0.5rem;
+		transition: all 0.3s ease-in-out;
 
 		@include tablet {
 			padding-bottom: 1rem;
@@ -67,7 +60,8 @@
 	}
 }
 
-.link {
+a.link,
+a.link:visited {
 	color: $color-red;
 	text-decoration: none;
 }

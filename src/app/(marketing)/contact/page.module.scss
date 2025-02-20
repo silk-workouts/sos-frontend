@@ -3,6 +3,7 @@
 
 .body {
 	padding: 3rem 1rem;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		padding: 4.5rem 1.5rem;
@@ -21,64 +22,12 @@
 }
 
 .accordionGroup {
-	margin-top: 1.875rem;
 	border-top: 1px solid $color-black;
 	padding: 1.875rem 0;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		padding: 1.875rem 1.5rem;
-	}
-}
-
-.accordion-button {
-	background-color: $color-white;
-	border: none;
-	margin-bottom: 0.5rem;
-	cursor: pointer;
-
-	@include desktop {
-		margin-bottom: 1rem;
-	}
-}
-
-.accordion__title {
-	font-size: 1rem;
-	text-align: left;
-	display: flex;
-	align-items: center;
-	gap: 1rem;
-
-	@include tablet {
-		font-size: 1.25rem;
-		align-items: unset;
-		gap: 2rem;
-	}
-}
-
-.accordion-panel {
-	font-size: 1rem;
-	margin-left: 2.5rem;
-	max-height: 0px;
-	overflow: hidden;
-	opacity: 0;
-	pointer-events: none;
-	transition: all 0.5s ease;
-
-	@include tablet {
-		margin-left: 3.5rem;
-		font-size: 1.25rem;
-	}
-
-	@include desktop {
-		margin-left: 3.3125rem;
-	}
-
-	&.expanded {
-		display: block;
-		max-height: 1000px;
-		opacity: 1;
-		margin-bottom: 2rem;
-		pointer-events: auto;
 	}
 }
 
@@ -86,6 +35,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		margin: 1rem 0;
@@ -94,96 +44,15 @@
 	@include desktop {
 		flex-direction: row;
 		justify-content: center;
-		align-items: baseline;
+		align-items: center;
 		gap: 3.625rem;
 	}
 
 	&__title {
 		text-align: center;
-	}
-}
 
-.dialog {
-	padding: 1.5rem;
-	border-radius: 2.1875rem;
-	background-color: $color-white;
-	width: 49.5625rem;
-
-	&-container {
-		position: fixed;
-		inset: 0;
-		background-color: rgba($color-black, 0.7);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		z-index: 2000;
-	}
-
-	&__header {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 3rem;
-	}
-	&__closeButton {
-		border: none;
-		background-color: $color-white;
-		cursor: pointer;
-	}
-}
-
-.form {
-	&__fields-wrapper {
-		display: flex;
-		gap: 1rem;
-		margin-bottom: 2rem;
-
-		.form__input-container {
-			flex: 1;
+		@include desktop {
+			padding-bottom: 0;
 		}
-	}
-
-	&__input-container {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-
-	&__label {
-		text-transform: capitalize;
-
-		&::after {
-			content: "*";
-			color: $color-red;
-		}
-	}
-
-	&__input {
-		background-color: #d9d9d9;
-		border: none;
-		border-radius: 1.125rem;
-		padding: 1rem;
-		font-family: "Montserrat", sans-serif;
-		font-size: 1rem;
-		height: 4.5rem;
-
-		&--textarea {
-			height: 14.0625rem;
-			resize: none;
-		}
-	}
-
-	&__button-container {
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		gap: 3rem;
-		margin-top: 3rem;
-	}
-
-	&__button {
-		border: none;
-		padding: 0;
-		background-color: $color-white;
-		cursor: pointer;
 	}
 }

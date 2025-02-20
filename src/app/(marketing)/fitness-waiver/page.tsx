@@ -8,10 +8,10 @@ export default function FitnessWaiver() {
 				title="terms"
 				subHeading="fitness waiver terms & conditions"
 			/>
-			<div className={`body1 ${styles.body}`}>
+			<div className={`body2 ${styles.body}`}>
 				<div className={styles["content-wrapper"]}>
 					<section>
-						<h2 className={styles.title}>Terms of Use</h2>
+						<h3 className={styles.title}>Terms of Use</h3>
 						<p className={styles.content}>
 							These Terms of Use (hereinafter, the &quot;Agreement&quot;) are a
 							legal contract between 100% SILK LLC , (hereinafter, &quot;100%
