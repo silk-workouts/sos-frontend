@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
+// import { cookies } from 'next/headers';
 
-console.log('🟢 verify-token API loaded!');
-
-export async function POST(req: NextRequest) {
-  console.log('📩 Received request to verify token...');
-
+export async function GET(req: NextRequest) {
   try {
-    const { token } = await req.json();
-    console.log('🔑 Token received:', token);
+    const cookieHeader = req.headers.get('cookie');
+
+    const token = cookieHeader
+      ?.split('; ')
+      .find((cookie) => cookie.startsWith('auth_token='))
+      ?.split('=')[1];
 
     if (!token) {
       console.log('❌ No token provided!');
@@ -21,7 +22,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
 
-    console.log('✅ Token verified! User ID:', decoded.id);
     return NextResponse.json({ userId: decoded.id });
   } catch (error) {
     console.error('❌ API Error:', error);

@@ -3,6 +3,8 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
+import './DashboardPageContent.scss';
+
 export default function DashboardPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -13,5 +15,5 @@ export default function DashboardPageContent() {
     }
   }, [searchParams, router]);
 
-  return <div>Dashboard</div>;
+  return <div className="dashboard">Paid user main page</div>;
 }

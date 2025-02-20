@@ -1,23 +1,53 @@
-"use client";
-import { useRef, useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import Cookies from "js-cookie";
-import Button from "@/components/ui/Button/Button";
-import styles from "./Header.module.scss";
+'use client';
+
+import { useRef, useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import Button from '@/components/ui/Button/Button';
+import styles from './Header.module.scss';
 
 export default function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const token = Cookies.get("auth_token");
-    setIsLoggedIn(!!token);
+    async function checkAuthStatus() {
+      try {
+        const res = await fetch('/api/auth/verify-token', {
+          method: 'GET',
+          credentials: 'include', // ✅ Ensure cookies are sent
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!res.ok) {
+          console.warn('❌ Auth check failed, user not logged in.');
+          setIsLoggedIn(false);
+          return;
+        }
+
+        // const data = await res.json();
+
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error('❌ Auth verification error:', error);
+        setIsLoggedIn(false);
+      }
+    }
+
+    checkAuthStatus();
   }, [pathname]);
+
+  async function handleLogout() {
+    await fetch('/api/auth/logout', { method: 'GET' });
+    setIsLoggedIn(false);
+    setIsDropdownOpen(false);
+    router.push('/');
+  }
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -26,17 +56,11 @@ export default function Header() {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  async function handleLogout(): Promise<void> {
-    await fetch("/api/auth/logout", { method: "GET" });
-    setIsLoggedIn(false);
-    router.push("/");
-  }
 
   return (
     <header className={styles.header}>
@@ -46,6 +70,7 @@ export default function Header() {
             <Image
               src="/assets/images/logo.png"
               alt="System of Silk Logo"
+              className={styles.logoImage}
               width={104}
               height={36}
             />
@@ -57,7 +82,7 @@ export default function Header() {
           <Link
             href="/the-workouts"
             className={`${styles.menuItem} ${
-              pathname === "/the-workouts" ? styles.activeLink : ""
+              pathname === '/the-workouts' ? styles.activeLink : ''
             }`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -66,7 +91,7 @@ export default function Header() {
           <Link
             href="/about"
             className={`${styles.menuItem} ${
-              pathname === "/about" ? styles.activeLink : ""
+              pathname === '/about' ? styles.activeLink : ''
             }`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -77,7 +102,7 @@ export default function Header() {
             target="_blank"
             rel="noopener noreferrer"
             className={`${styles.menuItem} ${
-              pathname === "/shop" ? styles.activeLink : ""
+              pathname === '/shop' ? styles.activeLink : ''
             }`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -107,14 +132,14 @@ export default function Header() {
         <nav
           ref={menuRef}
           className={`${styles.mobileMenu} ${
-            isMobileMenuOpen ? styles.open : ""
+            isMobileMenuOpen ? styles.open : ''
           }`}
         >
           <div className={styles.menuContainer}>
             <Link
               href="/the-workouts"
               className={`${styles.menuItem} ${
-                pathname === "/the-workouts" ? styles.activeLink : ""
+                pathname === '/the-workouts' ? styles.activeLink : ''
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -123,7 +148,7 @@ export default function Header() {
             <Link
               href="/about"
               className={`${styles.menuItem} ${
-                pathname === "/about" ? styles.activeLink : ""
+                pathname === '/about' ? styles.activeLink : ''
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -134,7 +159,7 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               className={`${styles.menuItem} ${
-                pathname === "/shop" ? styles.activeLink : ""
+                pathname === '/shop' ? styles.activeLink : ''
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -143,7 +168,7 @@ export default function Header() {
             <Link
               href="/auth/login"
               className={`${styles.menuItem} ${
-                pathname === "/auth/login" ? styles.activeLink : ""
+                pathname === '/auth/login' ? styles.activeLink : ''
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -160,6 +185,52 @@ export default function Header() {
             </Link> */}
           </div>
         </nav>
+
+        {/* USE AS CODE REFERENCE TO REFACTOR FOR LOGGED IN OR OR LOGGED OUT USER
+				------------------------------------------------------------------ */}
+        <div className={styles.authSection} data-type="CODE-REFERENCE">
+          {isLoggedIn ? (
+            <div className={styles.profileMenu} role="menu">
+              <button
+                className={styles.profileButton}
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                aria-expanded={isDropdownOpen}
+                aria-haspopup="true"
+              >
+                <Image
+                  src="/assets/images/jumpRope.png"
+                  alt="User Profile"
+                  width={40}
+                  height={40}
+                />
+              </button>
+
+              {isDropdownOpen && (
+                <nav className={styles.dropdownMenu} role="menu">
+                  <ul>
+                    <li>
+                      <Link href="/dashboard">Dashboard</Link>
+                    </li>
+
+                    <li>
+                      <button onClick={handleLogout}>Logout</button>
+                    </li>
+                  </ul>
+                </nav>
+              )}
+            </div>
+          ) : (
+            <nav className={styles.authButtons}>
+              <Link href="/auth/login" className={styles.loginButton}>
+                Login
+              </Link>
+              <Link href="/auth/signup" className={styles.signupButton}>
+                Sign Up
+              </Link>
+            </nav>
+          )}
+        </div>
+        {/* -------------------------------------------------------- */}
       </div>
     </header>
   );
