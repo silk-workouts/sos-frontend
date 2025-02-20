@@ -2,7 +2,7 @@
 @use "@/styles/partials/mixins" as *;
 
 .body {
-	padding: 3rem 1rem;
+	padding: 3rem $padding-small;
 	transition: all 0.3s ease-in-out;
 
 	@include tablet {
@@ -10,7 +10,7 @@
 	}
 
 	@include desktop {
-		padding: 6rem 8.0625rem;
+		padding: 6rem $padding-xl;
 	}
 }
 
