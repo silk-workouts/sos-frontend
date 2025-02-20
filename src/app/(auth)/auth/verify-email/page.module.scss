@@ -1,0 +1,109 @@
+@use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/_mixins" as *;
+@use "@/styles/partials/_fonts" as *;
+
+.verifyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background: $background-color;
+
+  @include tablet {
+    flex-direction: row;
+  }
+}
+
+// ✅ Left panel for branding & navigation
+.panelLeft {
+  width: 100%;
+  height: fit-content;
+  background: $color-grey-light;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $padding-medium;
+  gap: $padding-medium;
+
+  @include tablet {
+    max-width: 472px;
+    width: 40%;
+    height: 100vh;
+    justify-content: left;
+  }
+
+  .backLink {
+    align-self: flex-start;
+    @extend .link;
+    margin-bottom: $padding-small;
+  }
+
+  .title {
+    @extend .h2-title;
+    text-align: center;
+
+    @include tablet {
+      text-align: left;
+    }
+  }
+}
+
+// ✅ Right panel for verification message
+.panelRight {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $padding-medium;
+
+  @include tablet {
+    width: 60%;
+  }
+
+  @include desktop {
+    width: 100%;
+    max-width: 968px;
+    padding: 0 $padding-xl;
+  }
+}
+
+// ✅ Verification message styling
+.verifyMessage {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $padding-medium;
+
+  @include desktop {
+    width: 100%;
+    max-width: none;
+  }
+
+  .heading {
+    @extend .h2-title;
+    text-align: center;
+  }
+
+  .message {
+    @extend .body1;
+    color: $color-black;
+  }
+
+  .errorMessage {
+    color: $color-red;
+    font-weight: $font-weight-medium;
+  }
+
+  .buttonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: $padding-medium;
+  }
+}

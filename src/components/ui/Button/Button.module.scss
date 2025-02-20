@@ -1,0 +1,187 @@
+@use "@/styles/partials/_variables" as *;
+
+.button {
+  font-family: $font-primary;
+  font-weight: $font-weight-regular;
+  text-transform: uppercase;
+  // line-height: 1.4;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: transparent;
+
+  &:hover {
+    box-shadow: 0px 2px 0px 0px rgba($color-black, 0.25);
+  }
+
+  &__text {
+    display: inline-block;
+  }
+
+  &__arrow {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    // margin-left: 4px;
+    background-image: url("/assets/icons/arrow-right.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transition: transform 0.3s ease, filter 0.3s ease;
+
+    // Default arrow color (black)
+    filter: brightness(0) invert(0);
+  }
+
+  &--primary {
+    box-sizing: border-box;
+
+    /* Layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    gap: 12.6px;
+
+    /* Border and Radius */
+    border: 1.575px solid $color-white;
+    border-radius: 55.125px;
+
+    /* Typography */
+    text-transform: capitalize;
+    font-size: 20px; /* Closest to 31.5px */
+    line-height: 38px; /* Matches provided height */
+    color: $color-white; /* Text color */
+
+    /* Background */
+    background-color: transparent;
+
+    /* Arrow Icon */
+    .button__arrow {
+      width: 2.5rem;
+      height: 2.5rem;
+      margin-left: auto;
+      background-image: url("/assets/icons/arrow-right.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      transition: transform 0.3s ease;
+
+      /* Default to white arrow */
+      filter: brightness(0) invert(1);
+    }
+
+    /* Hover Styles */
+    &:hover {
+      background-color: $color-primary; /* Red background */
+      color: $color-white; /* Keep text white */
+      border: $color-red;
+
+      .button__arrow {
+        transform: translateX(4px); /* Move arrow to the right */
+        /* Arrow remains white */
+      }
+    }
+
+    &:focus {
+      outline: 2px solid $color-primary;
+      outline-offset: 2px;
+    }
+  }
+
+  &--secondary {
+    font-size: $font-size-body2-desktop;
+    text-transform: capitalize;
+    padding: 8px 16px;
+    gap: 8px;
+    border: 1px solid $color-black;
+    border-radius: 35px;
+    width: 100%;
+    max-width: fit-content;
+    height: 30px;
+    background-color: transparent;
+    color: $color-black;
+
+    &:hover {
+      background-color: $color-red; // Red background on hover
+      color: $color-white; // Ensure white text on hover
+      border: $color-red;
+
+      .button__arrow {
+        filter: brightness(0) invert(1); // Makes the arrow white on hover
+        transform: translateX(4px); // Move arrow to the right
+      }
+    }
+
+    &:focus {
+      outline: 2px solid $color-primary;
+      outline-offset: 2px;
+    }
+  }
+
+  // Tertiary Button
+  &--tertiary {
+    font-size: $font-size-body2-desktop;
+    text-transform: capitalize;
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 1px solid $color-black;
+    color: $color-black;
+    border-radius: 2.1875rem;
+
+    &:hover {
+      background-color: $color-red;
+      color: $color-white;
+      border-color: $color-red;
+    }
+
+    &:focus {
+      outline: 2px solid $color-primary;
+      outline-offset: 2px;
+    }
+  }
+
+  // Delete Button
+  &--delete {
+    // font-size: $font-size-button;
+    padding: 10px 20px;
+    background-color: $color-red;
+    color: $color-white;
+
+    &:hover {
+      background-color: rgba($color-red, 0.9);
+    }
+
+    &:focus {
+      outline: 2px solid $color-primary;
+      outline-offset: 2px;
+    }
+  }
+
+  // Disabled State
+  &--disabled {
+    font-size: $font-size-body2-desktop;
+    background-color: $color-grey-light;
+    color: $color-grey-dark;
+    cursor: not-allowed;
+    pointer-events: none;
+
+    &:hover {
+      background-color: $color-grey-light;
+      color: $color-grey-dark;
+    }
+  }
+
+  // Full Width Variant
+  &--full-width {
+    width: 100%;
+    justify-content: center;
+  }
+}
