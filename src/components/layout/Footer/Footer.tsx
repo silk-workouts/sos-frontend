@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import logo from "/public/assets/logo/logo.png";
+import logo from "/public/assets/images/logo.png";
 import facebookIcon from "/public/assets/icons/facebook.svg";
 import instagramIcon from "/public/assets/icons/instagram.svg";
 import twitterIcon from "/public/assets/icons/twitter.svg";
@@ -10,7 +10,9 @@ export default function Footer() {
 	return (
 		<footer className={styles.footer}>
 			<div className={styles.header}>
-				<Image src={logo} alt="System of Silk logo" className={styles.logo} />
+				<Link href="/">
+					<Image src={logo} alt="System of Silk logo" className={styles.logo} />
+				</Link>
 				<div className={styles.socials}>
 					<a
 						href="https://www.instagram.com/aerospacenyc"

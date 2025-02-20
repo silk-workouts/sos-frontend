@@ -11,6 +11,7 @@
 	flex-direction: column;
 	gap: 1.25rem;
 	box-shadow: 0px -2px 10px 0px rgba($color-black, 0.25);
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		padding: 1rem 1.5rem;
@@ -18,12 +19,14 @@
 
 	@include desktop {
 		padding: 1rem 2.5rem;
+		align-items: center;
 	}
 }
 
 .header {
 	display: flex;
 	justify-content: space-between;
+	width: 100%;
 
 	@include desktop {
 		max-width: $content-container-maximum;
@@ -32,6 +35,8 @@
 
 .logo {
 	width: 5.25rem;
+	height: auto;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		width: 8.125rem;
@@ -50,6 +55,7 @@
 		height: 1.5rem;
 		border: 1px solid $color-black;
 		border-radius: 50%;
+		transition: all 0.3s ease-in-out;
 
 		@include tablet {
 			width: 2.25rem;
@@ -66,6 +72,7 @@
 	&__icon {
 		width: 0.9rem;
 		height: 0.9rem;
+		transition: all 0.3s ease-in-out;
 
 		@include tablet {
 			width: 1.35rem;
@@ -75,6 +82,7 @@
 		&--twitter {
 			width: 0.525rem;
 			height: 0.525rem;
+			transition: all 0.3s ease-in-out;
 
 			@include tablet {
 				width: 0.7875rem;
@@ -115,6 +123,7 @@
 
 	&__link {
 		font-size: 0.75rem;
+		transition: all 0.3s ease-in-out;
 
 		@include tablet {
 			font-size: 0.875rem;
@@ -125,6 +134,7 @@
 .copyright {
 	font-family: "Montserrat";
 	font-size: 0.625rem;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		align-self: center;
