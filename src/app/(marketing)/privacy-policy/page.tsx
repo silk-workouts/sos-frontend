@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
 						<p className={styles.content}>
 							{" "}
 							When visitors leave comments on the site we collect the data shown
-							in the comments form, and also the visitor&apos;s IP address and
+							in the comments form, and also the visitor&#39;s IP address and
 							browser user agent string to help spam detection. An anonymized
 							string created from your email address (also called a hash) may be
 							provided to the Gravatar service to see if you are using it. The

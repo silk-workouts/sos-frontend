@@ -1,0 +1,83 @@
+@use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.container {
+	padding: 4rem $padding-small;
+	display: flex;
+	flex-direction: column;
+	gap: 4.5rem;
+	transition: all 0.3s ease-in-out;
+
+	@include tablet {
+		padding: 4rem 1.5rem;
+	}
+
+	@include desktop {
+		padding: $padding-xl;
+	}
+}
+
+.hero {
+	width: 100%;
+	max-width: 1440px;
+	height: 783px;
+	position: relative;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding-left: 10%;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100%;
+		max-width: 1440px;
+		height: 100%;
+		background: url("/assets/images/workouts-hero-background.png") no-repeat
+			center center;
+		background-size: cover;
+		z-index: 1;
+
+		/* Dark overlay */
+		background-blend-mode: multiply;
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+}
+
+.hero__title {
+	width: 90%;
+	// max-width: 671px;
+	font-family: "Anta";
+	font-style: normal;
+	font-weight: 400;
+	font-size: clamp(48px, 8vw, 96px);
+	line-height: 1.2;
+	text-transform: uppercase;
+	color: $color-white;
+	z-index: 2;
+}
+
+.element {
+	display: flex;
+	flex-direction: column;
+	gap: 3.5rem;
+
+	.content {
+		margin-bottom: 1rem;
+	}
+}
+
+.elementCards {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+
+.buildWorkout {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}

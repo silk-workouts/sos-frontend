@@ -81,7 +81,7 @@ export default function FitnessWaiver() {
 							the consent of your parent or legal guardian who has agreed to
 							this Agreement. If you are a parent or legal guardian agreeing to
 							this Agreement for the benefit of a Minor, you are fully
-							responsible for the Minor&apos;s use of the 100% SILK Platform,
+							responsible for the Minor&#39;s use of the 100% SILK Platform,
 							including all legal liability he or she may incur. If you are not
 							at least 13 years old, you may not use the 100% SILK Platform.
 						</p>
@@ -184,7 +184,7 @@ export default function FitnessWaiver() {
 								image, or other content that is unlawful, harmful, threatening,
 								abusive, harassing, tortuous, defamatory, vulgar, obscene,
 								libelous, or otherwise objectionable which may invade
-								another&apos;s right of privacy or publicity;
+								another&#39;s right of privacy or publicity;
 							</li>
 							<li>
 								impersonate any person or entity, including without limitation,
@@ -202,10 +202,10 @@ export default function FitnessWaiver() {
 								feature;
 							</li>
 							<li>
-								use of any 100% SILK Platform&apos;s communications features in
-								a manner that adversely affects the availability of its
-								resources to other users (e.g., excessive shouting, use of all
-								caps, or flooding continuous postings of repetitive text);
+								use of any 100% SILK Platform&#39;s communications features in a
+								manner that adversely affects the availability of its resources
+								to other users (e.g., excessive shouting, use of all caps, or
+								flooding continuous postings of repetitive text);
 							</li>
 							<li>
 								post or transmit any unsolicited advertising, promotional
@@ -241,8 +241,8 @@ export default function FitnessWaiver() {
 								use the 100% SILK Platform for any purpose that is unlawful or
 								prohibited by this Agreement. You may not use the 100% SILK
 								Platform in any manner that could damage, disable, overburden or
-								impair 100% SILK&apos;s servers or networks, or interfere with
-								any other user&apos;s use and enjoyment of the 100% SILK
+								impair 100% SILK&#39;s servers or networks, or interfere with
+								any other user&#39;s use and enjoyment of the 100% SILK
 								Platform. Furthermore, you may not attempt to gain unauthorized
 								access to any of the 100% SILK Platform, accounts, computer
 								systems or networks connected to 100% SILK through hacking,
@@ -306,7 +306,7 @@ export default function FitnessWaiver() {
 								ethnically, religiously, or otherwise biased or offensive,
 								unlawfully threatening, or unlawfully harassing to any
 								individual, partnership, or corporation, vulgar, pornographic,
-								obscene, or invasive of another&apos;s privacy;
+								obscene, or invasive of another&#39;s privacy;
 							</li>
 							<li>
 								You were not and will not be compensated or granted any
@@ -617,8 +617,8 @@ export default function FitnessWaiver() {
 							sure you fully understand exactly how we use that information.
 							Please review our privacy policy (the &quot;Privacy Policy&quot;),
 							which further explains how 100% SILK collects and uses the
-							information that we obtain through users&apos; use of the 100%
-							SILK Platform.
+							information that we obtain through users&#39; use of the 100% SILK
+							Platform.
 						</p>
 					</section>
 
@@ -743,7 +743,7 @@ export default function FitnessWaiver() {
 							FAILURE TO BACK UP, OR ALTERATION OF ANY CONTENT OR MATERIALS ON
 							OR ACCESSIBLE THROUGH THE 100% SILK Platform, OR (vii) ANY OTHER
 							MATTER RELATING TO THE 100% SILK Platform. IN NO EVENT SHALL 100%
-							SILK&apos;S TO100% SILKL LIABILITY TO YOU FOR ANY AND ALL DAMAGES,
+							SILK&#39;S TO100% SILKL LIABILITY TO YOU FOR ANY AND ALL DAMAGES,
 							LOSSES, AND CAUSES OF ACTION (WHETHER IN CONTRACT, TORT,
 							STATUTORY, OR OTHERWISE) EXCEED THE AMOUNT PAID BY YOU, IF ANY,
 							FOR USING ANY THE 100% SILK Platform AND MATERIALS.
@@ -891,15 +891,15 @@ export default function FitnessWaiver() {
 							subsidiaries, affiliates, officers, directors, agents, co-branders
 							or other partners, employees, and representatives harmless from
 							and against any and all claims, damages, losses, costs or expenses
-							(including reasonable attorneys&apos; fees and disbursements)
-							which arise directly or indirectly out of or from (i) your breach
-							of this Agreement, (ii) any allegation that any User Submissions
-							or other materials that you submit to 100% SILK or post on any
-							forums (e.g., support groups, chat rooms) infringe or otherwise
-							violate the copyright, trade secret, trademark or other
-							intellectual property rights of a third party, and (iii) your
-							access or use of the 100% SILK Platform. This Section shall
-							survive in the event this Agreement is terminated for any reason.
+							(including reasonable attorneys&#39; fees and disbursements) which
+							arise directly or indirectly out of or from (i) your breach of
+							this Agreement, (ii) any allegation that any User Submissions or
+							other materials that you submit to 100% SILK or post on any forums
+							(e.g., support groups, chat rooms) infringe or otherwise violate
+							the copyright, trade secret, trademark or other intellectual
+							property rights of a third party, and (iii) your access or use of
+							the 100% SILK Platform. This Section shall survive in the event
+							this Agreement is terminated for any reason.
 						</p>
 					</section>
 
@@ -990,7 +990,7 @@ export default function FitnessWaiver() {
 							opportunity to be heard by a judge or jury. There is no judge or
 							jury in arbitration, and court review of an arbitration award is
 							limited. The arbitrator must follow this Agreement and can award
-							the same damages and relief as a court (including attorney&apos;s
+							the same damages and relief as a court (including attorney&#39;s
 							fees).
 						</p>
 						<p className={styles.content}>
@@ -1009,7 +1009,7 @@ export default function FitnessWaiver() {
 							below). &quot;Dispute&quot; is to be given the broadest possible
 							meaning that will be enforced, and shall include any claims
 							against other parties relating to services or products provided or
-							billed to you (such as 100% SILK&apos;s licensors, suppliers,
+							billed to you (such as 100% SILK&#39;s licensors, suppliers,
 							dealers or third-party vendors) whenever you also assert claims
 							against us in the same proceeding.
 						</p>
@@ -1081,10 +1081,10 @@ export default function FitnessWaiver() {
 						</p>
 						<p className={styles.content}>
 							For arbitration before AAA, for Disputes of less than $75,000, the
-							AAA&apos;s Supplementary Procedures for Consumer-Related Disputes
-							will apply; for Disputes involving $75,000 or more, the AAA&apos;s
+							AAA&#39;s Supplementary Procedures for Consumer-Related Disputes
+							will apply; for Disputes involving $75,000 or more, the AAA&#39;s
 							Commercial Arbitration Rules will apply. In either instance, the
-							AAA&apos;s Optional Rules For Emergency Measures Of Protection
+							AAA&#39;s Optional Rules For Emergency Measures Of Protection
 							shall apply. The AAA rules are available at www.adr.org or by
 							calling 1-800-778-7879. For arbitration before JAMS, the JAMS
 							Comprehensive Arbitration Rules & Procedures and the JAMS
@@ -1124,7 +1124,7 @@ export default function FitnessWaiver() {
 						<p className={styles.content}>
 							Payment of Arbitration Fees and Costs – 100% SILK will pay all
 							arbitration filing fees and AAA or JAMS hearing fees and any
-							arbitrator&apos;s hearing fees, costs and expenses upon your
+							arbitrator&#39;s hearing fees, costs and expenses upon your
 							written request to the arbitrator given at or before the first
 							evidentiary hearing in the arbitration. You are responsible for
 							all additional fees and costs that you incur in the arbitration,
@@ -1135,8 +1135,8 @@ export default function FitnessWaiver() {
 							with 100% SILK as provided in the section above titled
 							&quot;Pre-Arbitration Claim Resolution&quot; and the arbitrator
 							concludes that you are the prevailing party in the arbitration,
-							you will be entitled to recover reasonable attorney&apos;s fees
-							and costs as determined by the arbitrator.
+							you will be entitled to recover reasonable attorney&#39;s fees and
+							costs as determined by the arbitrator.
 						</p>
 					</section>
 
@@ -1144,7 +1144,7 @@ export default function FitnessWaiver() {
 						<h3 className={styles.title}>Class Action Waiver</h3>
 						<p className={styles.content}>
 							Except as otherwise provided in this Provision, the arbitrator may
-							not consolidate more than one person&apos;s claims, and may not
+							not consolidate more than one person&#39;s claims, and may not
 							otherwise preside over any form of a class or representative
 							proceeding or claims (such as a class action, consolidated action,
 							representative action, or private attorney general action) unless
@@ -1153,7 +1153,7 @@ export default function FitnessWaiver() {
 							your Dispute in court by opting out of the Arbitration Provision,
 							as specified above, this Class Action Waiver will not apply to
 							you. Except to the extent that representative claims under
-							California&apos;s Private Attorney General Act (&quot;PAGA&quot;)
+							California&#39;s Private Attorney General Act (&quot;PAGA&quot;)
 							are excluded from this Agreement (if PAGA is applicable), neither
 							you, nor any other user of the 100% SILK Platform can be a class
 							representative, class member, or otherwise participate in a class,

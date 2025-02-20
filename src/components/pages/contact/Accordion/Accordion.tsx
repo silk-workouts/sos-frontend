@@ -4,11 +4,11 @@ import plusIcon from "/public/assets/icons/plus.svg";
 import minusIcon from "/public/assets/icons/minus.svg";
 import styles from "./Accordion.module.scss";
 
-type AccordionSection = {
+interface AccordionSection {
 	title: string;
 	content: string;
 	position: string;
-};
+}
 
 export default function Accordion({
 	title,
