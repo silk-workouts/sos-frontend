@@ -128,10 +128,12 @@ function InstructionCard({
 // imageAlt,
 InstructionInfo) {
 	return (
-		<article>
-			<h3>step {number}</h3>
-			<h4>{title}</h4>
-			<p>{content}</p>
+		<article className={styles.card}>
+			<div className={styles.card__content}>
+				<h3 className={styles.card__title}>step {number}</h3>
+				<h4 className={styles.card__subHeading}>{title}</h4>
+				<p>{content}</p>
+			</div>
 			{/* <Image src={imageSrc} alt={imageAlt} /> */}
 			<div></div>
 		</article>
