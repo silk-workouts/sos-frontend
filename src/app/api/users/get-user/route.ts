@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import pool from '@/lib/db';
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    const result = await db.execute(
+    const result = await pool.execute(
       'SELECT id, email, is_verified FROM users WHERE email = ?',
       [email]
     );
