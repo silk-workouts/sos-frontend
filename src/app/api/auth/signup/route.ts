@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import { db } from '@/lib/db';
+import { ResultSetHeader } from 'mysql2';
 import { randomUUID } from 'crypto';
+import bcrypt from 'bcryptjs';
+import pool from '@/lib/db';
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,21 +27,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ✅ Generate UUID for user ID
+    const userId = randomUUID();
+
+    // ✅ Check if email already exists
+    const [existingUser] = await pool.execute(
+      'SELECT id FROM users WHERE email = ?',
+      [email]
+    );
+
+    if ((existingUser as any[]).length > 0) {
+      console.error(`❌ Email already exists: ${email}`);
+      return NextResponse.json(
+        { error: 'Email already exists' },
+        { status: 409 }
+      );
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = randomUUID();
 
-    const result = await db.execute(
-      'INSERT INTO users (email, password, verification_token) VALUES (?, ?, ?)',
-      [email, hashedPassword, verificationToken]
+    // ✅ Insert new user and cast result as ResultSetHeader
+    await pool.execute<ResultSetHeader>(
+      'INSERT INTO users (id, email, password, verification_token) VALUES (?, ?, ?, ?)',
+      [userId, email, hashedPassword, verificationToken]
     );
-
-    const userId = result.insertId;
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Failed to create user' },
-        { status: 500 }
-      );
-    }
 
     return NextResponse.json({
       message: 'User registered successfully!',

@@ -1,32 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { db } from '@/lib/db';
+import pool from '@/lib/db';
+import { RowDataPacket } from 'mysql2';
+
+interface User extends RowDataPacket {
+  id: string;
+  email: string;
+  password: string;
+  is_verified: boolean;
+}
 
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
 
-    // ✅ Fetch user from database
-    const result = await db.execute('SELECT * FROM users WHERE email = ?', [
-      email,
-    ]);
-    const rows = result as unknown as {
-      rows: {
-        id: string;
-        email: string;
-        password: string;
-        is_verified: boolean;
-      }[];
-    };
+    if (!email || !password) {
+      return NextResponse.json(
+        { error: 'Email and password are required' },
+        { status: 400 }
+      );
+    }
 
-    if (!rows.rows.length) {
+    // ✅ Type-safe query with User[]
+    const [rows] = await pool.execute<User[]>(
+      'SELECT id, email, password, is_verified FROM users WHERE email = ?',
+      [email]
+    );
+
+    if (!rows || rows.length === 0) {
       return NextResponse.json({ error: 'User not found' }, { status: 401 });
     }
 
-    const user = rows.rows[0];
+    const user = rows[0];
 
-    // ✅ Check if user is verified
     if (!user.is_verified) {
       return NextResponse.json(
         { error: 'Email not verified' },
@@ -34,54 +41,36 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ✅ Verify password
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
     }
 
-    // ✅ Load environment variables
     const JWT_SECRET = process.env.JWT_SECRET;
-    const APP_ENV = process.env.APP_ENV || 'local';
-    const isProduction = process.env.NODE_ENV === 'production';
-    const isDevelop = APP_ENV === 'develop';
-
     if (!JWT_SECRET) {
-      console.warn(
-        '⚠️ Warning: JWT_SECRET is not defined in environment variables.'
-      );
+      console.error('❌ JWT_SECRET not defined.');
       return NextResponse.json(
         { error: 'Internal server error' },
         { status: 500 }
       );
     }
 
-    // ✅ Generate JWT token
     const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
       expiresIn: '7d',
     });
 
-    // ✅ Set secure cookie based on environment
     const response = NextResponse.json({ message: 'Login successful' });
-
     response.cookies.set('auth_token', token, {
       httpOnly: true,
-      secure: isProduction, // HTTPS only in production
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/',
-      maxAge: 7 * 24 * 60 * 60, // 7 days
+      maxAge: 7 * 24 * 60 * 60,
     });
-
-    // ✅ Development-specific logging
-    if (isDevelop) {
-      console.log('🛠 Running in "develop" environment.');
-      console.log(`👤 Logged in user: ${user.email}`);
-      console.log(`🔑 JWT Token: ${token}`);
-    }
 
     return response;
   } catch (error) {
-    console.error('⚠️ Login Error:', error);
+    console.error('❌ Login Error:', error);
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 }
