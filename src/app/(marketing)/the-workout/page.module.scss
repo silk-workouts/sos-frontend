@@ -2,18 +2,14 @@
 @use "@/styles/partials/mixins" as *;
 
 .container {
-	padding: 4rem $padding-small;
 	display: flex;
 	flex-direction: column;
-	gap: 4.5rem;
+	gap: 6rem;
+	padding-top: 4rem;
 	transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		padding: 4rem 1.5rem;
-	}
-
 	@include desktop {
-		padding: $padding-xl;
+		padding-top: $padding-xl;
 	}
 }
 
@@ -60,38 +56,72 @@
 	z-index: 2;
 }
 
-.element {
+.element,
+.buildWorkout,
+.equipment {
 	display: flex;
 	flex-direction: column;
-	gap: 3.5rem;
+	padding: 0 $padding-small;
+	gap: 4.5rem;
 
+	@include tablet {
+		padding: 0 1.5rem;
+	}
+
+	@include desktop {
+		padding: 0 $padding-xl;
+	}
+}
+
+.element {
 	.content {
 		margin-bottom: 1rem;
 	}
 }
 
-.elementCards {
+.elementCards,
+.instructions,
+.equipments {
 	display: flex;
 	flex-direction: column;
 	gap: 3rem;
+
+	@include desktop {
+		gap: 4rem;
+	}
 }
 
-.buildWorkout {
-	display: flex;
-	flex-direction: column;
-	gap: 2rem;
-}
+.equipment {
+	background-color: rgba(91, 91, 91, 1);
+	color: $color-white;
+	padding-top: 4rem;
+	padding-bottom: 4rem;
 
-.card {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
+	@include desktop {
+		padding-top: $padding-xl;
+		padding-bottom: $padding-xl;
+	}
 
 	&__title {
-		font-family: $font-accent;
-		font-size: 16px;
-		color: $color-red;
-		font-weight: $font-weight-regular;
-		text-transform: uppercase;
+		color: $color-white;
+	}
+
+	&__button {
+		align-self: center;
+		width: max-content;
+	}
+}
+
+.equipments {
+	align-items: center;
+
+	@include tablet {
+		flex-direction: row;
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	@include tablet {
+		gap: 1.5rem;
 	}
 }

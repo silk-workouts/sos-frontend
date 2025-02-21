@@ -1,11 +1,17 @@
 "use client";
-import Image, { StaticImageData } from "next/image";
 import upperBandsImage from "/public/assets/images/upperBands.jpg";
+import jumpRope from "/public/assets/images/jumpRopeShop.png";
 import ElementCard from "@/components/pages/theWorkout/ElementCard/ElementCard";
+import InstructionCard from "@/components/pages/theWorkout/InstructionCard/InstructionCard";
+import EquipmentCard from "@/components/pages/theWorkout/EquipmentCard/EquipmentCard";
 import Button from "@/components/ui/Button/Button";
 import styles from "./page.module.scss";
 
 export default function TheWorkout() {
+	const handleOpenShop = () => {
+		window.open(`https://shop.systemofsilk.com/`, "_blank");
+	};
+
 	return (
 		<>
 			<div className={styles.hero}>
@@ -81,89 +87,69 @@ export default function TheWorkout() {
 							goals.{" "}
 						</p>
 					</div>
-					<div>
+					<div className={styles.instructions}>
 						<InstructionCard
 							number="1"
 							title="browse"
 							content="Explore each individual element or check out Michael&#39;s curated Prescription Programs."
 						/>
-					</div>
-				</section>
-				<section>
-					<h2>recommended equipment</h2>
-					<p>
-						All of the exercises within this System of Sleek can be done without
-						any equipment whatsoever. In fact, I highly recommend allowing your
-						body to adapt to this new way of working out, without any of the
-						tools: Rope, bands or weights.
-					</p>
-					<div>
-						<EquipmentCard
-							link=""
-							title=""
-							content=""
-							imageSrc={upperBandsImage}
-							imageAlt=""
+						<InstructionCard
+							number="2"
+							title="select"
+							content="Add videos to your queue to build a customized workout, or play them instantly for a focused workout."
+						/>
+						<InstructionCard
+							number="3"
+							title="watch"
+							content="Once you have your queue built or playlist selected, seamlessly watch your videos back to back."
+						/>
+						<InstructionCard
+							number="4"
+							title="save"
+							content="Save your queue and Prescription Programs as playlists to your library."
 						/>
 					</div>
 				</section>
+				<section className={styles.equipment}>
+					<div>
+						<h2 className={`h2-title ${styles.equipment__title}`}>
+							<span className="bold">Recommended</span> Equipment
+						</h2>
+						<p>
+							All of the exercises within this System of Silk can be done
+							without any equipment whatsoever. In fact, I highly recommend
+							allowing your body to adapt to this new way of working out,
+							without any of the tools: Rope, bands or weights.
+						</p>
+					</div>
+					<div className={styles.equipments}>
+						<EquipmentCard
+							link="https://shop.systemofsilk.com/"
+							title="handweights"
+							content="Can be used in various different exercises and easy to adapt."
+							imageSrc={jumpRope}
+							imageAlt="A picture with two jump ropes"
+						/>
+						<EquipmentCard
+							link="https://shop.systemofsilk.com/"
+							title="Jump Rope"
+							content="Can be used in various different exercises and easy to adapt."
+							imageSrc={jumpRope}
+							imageAlt="A picture with two jump ropes"
+						/>
+						<EquipmentCard
+							link="https://shop.systemofsilk.com/"
+							title="bands"
+							content="Can be used in various different exercises and easy to adapt."
+							imageSrc={jumpRope}
+							imageAlt="A picture with two jump ropes"
+						/>
+					</div>
+					<Button onClick={handleOpenShop} className={styles.equipment__button}>
+						view shop
+					</Button>
+				</section>
 			</div>
 		</>
-	);
-}
-
-interface InstructionInfo {
-	number: string;
-	title: string;
-	content: string;
-	// imageSrc: StaticImageData;
-	// imageAlt: string;
-}
-
-function InstructionCard({
-	number,
-	title,
-	content,
-}: // imageSrc,
-// imageAlt,
-InstructionInfo) {
-	return (
-		<article className={styles.card}>
-			<div className={styles.card__content}>
-				<h3 className={styles.card__title}>step {number}</h3>
-				<h4 className={styles.card__subHeading}>{title}</h4>
-				<p>{content}</p>
-			</div>
-			{/* <Image src={imageSrc} alt={imageAlt} /> */}
-			<div></div>
-		</article>
-	);
-}
-
-interface EquipmentInfo {
-	imageSrc: StaticImageData;
-	imageAlt: string;
-	title: string;
-	content: string;
-	link: string;
-}
-
-function EquipmentCard({
-	link,
-	title,
-	content,
-	imageSrc,
-	imageAlt,
-}: EquipmentInfo) {
-	const handleOpenShop = () => {
-		window.open(`${link}`, "_blank");
-	};
-	return (
-		<article>
-			<Image src={imageSrc} alt={imageAlt} />
-			<h3>{title}</h3>
-			<p>{content}</p>
-			<Button onClick={handleOpenShop}>shop</Button>
-		</article>
 	);
 }

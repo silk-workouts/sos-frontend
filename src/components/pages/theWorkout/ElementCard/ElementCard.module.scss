@@ -8,6 +8,12 @@
 
 	@include tablet {
 		flex-direction: row-reverse;
+		justify-content: center;
+		gap: unset;
+	}
+
+	@include desktop {
+		gap: 5rem;
 	}
 
 	&--alternate {
@@ -22,7 +28,22 @@
 		align-items: center;
 
 		@include tablet {
+			flex-direction: column;
+			align-items: flex-start;
 			gap: 1.5rem;
+		}
+	}
+
+	&__message {
+		font-size: 0.875rem;
+
+		@include tablet {
+			max-width: 18.75rem;
+			font-size: 1.25rem;
+		}
+
+		@include tablet {
+			max-width: 26.875rem;
 		}
 	}
 

@@ -28,7 +28,7 @@ export default function ElementCard({
 					letter={element.letter}
 					name={element.name}
 				/>
-				<p>{content}</p>
+				<p className={styles.card__message}>{content}</p>
 			</div>
 			<Image src={imageSrc} alt={imageAlt} className={styles.card__image} />
 		</article>
