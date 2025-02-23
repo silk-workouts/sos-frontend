@@ -1,0 +1,52 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.accordion-button {
+	background-color: $color-white;
+	border: none;
+	margin-bottom: 0.5rem;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+
+	@include desktop {
+		margin-bottom: 1rem;
+	}
+}
+
+.accordion__title {
+	text-align: left;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	transition: all 0.3s ease-in-out;
+
+	@include tablet {
+		align-items: unset;
+		gap: 2rem;
+	}
+}
+
+.accordion-panel {
+	margin-left: 2.5rem;
+	max-height: 0px;
+	overflow: hidden;
+	opacity: 0;
+	pointer-events: none;
+	transition: all 0.5s ease;
+
+	@include tablet {
+		margin-left: 3.5rem;
+	}
+
+	@include desktop {
+		margin-left: 3.3125rem;
+	}
+
+	&.expanded {
+		display: block;
+		max-height: 1000px;
+		opacity: 1;
+		margin-bottom: 2rem;
+		pointer-events: auto;
+	}
+}
