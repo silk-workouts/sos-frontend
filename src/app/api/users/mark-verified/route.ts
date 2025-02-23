@@ -9,13 +9,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Token is required' }, { status: 400 });
     }
 
-    const result = await pool.execute(
+    // Execute the query and get the result
+    const [rows] = (await pool.execute(
       'SELECT id FROM users WHERE verification_token = ?',
       [token]
-    );
+    )) as [Array<{ id: string }>, any];
 
     // ✅ Extract the user correctly
-    const user = result.rows?.[0]; // Ensure we access the first row
+    const user = rows?.[0]; // Access the first row
 
     if (!user) {
       return NextResponse.json(
@@ -24,6 +25,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Update the user as verified and clear the token
     await pool.execute(
       'UPDATE users SET is_verified = true, verification_token = NULL WHERE verification_token = ?',
       [token]
