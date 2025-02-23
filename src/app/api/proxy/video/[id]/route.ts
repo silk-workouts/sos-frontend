@@ -4,9 +4,9 @@ const VIMEO_API_TOKEN = process.env.VIMEO_API_TOKEN;
 
 export async function GET(
   request: NextRequest, // Unused, but here for consistency
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await context.params;
+  const id = (await params).id;
 
   if (!id) {
     return NextResponse.json(
