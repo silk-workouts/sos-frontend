@@ -1,0 +1,87 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.dialog {
+	padding: 1.5rem;
+	border-radius: 2.1875rem;
+	background-color: $color-white;
+	width: 49.5625rem;
+
+	&-container {
+		position: fixed;
+		inset: 0;
+		background-color: rgba($color-black, 0.7);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 2000;
+	}
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 3rem;
+	}
+	&__closeButton {
+		border: none;
+		background-color: $color-white;
+		cursor: pointer;
+	}
+}
+
+.form {
+	&__fields-wrapper {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 2rem;
+
+		.form__input-container {
+			flex: 1;
+		}
+	}
+
+	&__input-container {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	&__label {
+		text-transform: capitalize;
+
+		&::after {
+			content: "*";
+			color: $color-red;
+		}
+	}
+
+	&__input {
+		background-color: #d9d9d9;
+		border: none;
+		border-radius: 1.125rem;
+		padding: 1rem;
+		font-family: "Montserrat", sans-serif;
+		font-size: 1rem;
+		height: 4.5rem;
+
+		&--textarea {
+			height: 14.0625rem;
+			resize: none;
+		}
+	}
+
+	&__button-container {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 3rem;
+		margin-top: 3rem;
+	}
+
+	&__button {
+		border: none;
+		padding: 0;
+		background-color: $color-white;
+		cursor: pointer;
+	}
+}
