@@ -15,7 +15,9 @@ export async function GET(req: NextRequest) {
   try {
     // ✅ Fetch showcase details
     const [showcaseRows] = (await pool.execute(
-      'SELECT id, vimeo_showcase_id, name, description, thumbnail_url, vimeo_link, created_at FROM showcases WHERE vimeo_showcase_id = ?',
+      `SELECT id, vimeo_showcase_id, name, description, thumbnail_url, vimeo_link, created_at 
+       FROM showcases 
+       WHERE vimeo_showcase_id = ?`,
       [showcaseId]
     )) as [
       Array<{
@@ -40,14 +42,15 @@ export async function GET(req: NextRequest) {
 
     const showcase = showcaseRows[0];
 
-    // ✅ Fetch associated videos via join table
+    // ✅ Fetch associated videos, sorted by position
     const [videoRows] = (await pool.execute(
       `
-      SELECT v.id, v.vimeo_video_id, v.title, v.description, v.thumbnail_url, v.duration, v.created_at
+      SELECT v.id, v.vimeo_video_id, v.title, v.description, v.thumbnail_url, v.duration, v.created_at, sv.position
       FROM videos v
-      JOIN showcase_video_associations sva
-      ON v.vimeo_video_id = sva.vimeo_video_id
-      WHERE sva.vimeo_showcase_id = ?
+      JOIN showcase_videos sv
+      ON v.vimeo_video_id = sv.vimeo_video_id
+      WHERE sv.vimeo_showcase_id = ?
+      ORDER BY sv.position ASC;
       `,
       [showcaseId]
     )) as [Array<any>, any];
