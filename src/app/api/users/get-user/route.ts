@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/db';
+import { RowDataPacket } from 'mysql2';
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,13 +10,14 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    const result = await pool.execute(
+    // Properly destructure the result from pool.execute
+    const [rows] = await pool.execute<RowDataPacket[]>(
       'SELECT id, email, is_verified FROM users WHERE email = ?',
       [email]
     );
 
-    // ✅ Extract the row from the result
-    const user = result.rows?.[0]; // Ensure we're accessing the correct property
+    // Check if the user exists in the returned rows
+    const user = rows[0];
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
