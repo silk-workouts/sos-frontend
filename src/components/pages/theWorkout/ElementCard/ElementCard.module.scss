@@ -5,12 +5,11 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 1rem;
-	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		flex-direction: row-reverse;
 		justify-content: center;
-		gap: unset;
+		gap: 2rem;
 	}
 
 	@include desktop {
@@ -37,14 +36,14 @@
 
 	&__message {
 		font-size: 0.875rem;
-		transition: all 0.3s ease-in-out;
+		transition: font-size 0.3s ease-in-out;
 
 		@include tablet {
 			max-width: 18.75rem;
 			font-size: 1.25rem;
 		}
 
-		@include tablet {
+		@include desktop {
 			max-width: 26.875rem;
 		}
 	}
@@ -52,7 +51,7 @@
 	&__image {
 		width: 11.4375rem;
 		height: auto;
-		transition: all 0.3s ease-in-out;
+		transition: width 0.3s ease-in-out;
 
 		@include tablet {
 			width: 14.25rem;

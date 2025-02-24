@@ -10,6 +10,7 @@
 	display: flex;
 	align-items: center;
 	padding: $padding-small;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		height: 95vh;
@@ -47,6 +48,7 @@
 	text-transform: uppercase;
 	color: $color-white;
 	z-index: 2;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		font-size: 6rem;
@@ -59,7 +61,6 @@
 	flex-direction: column;
 	gap: 6rem;
 	padding-top: 4rem;
-	transition: all 0.3s ease-in-out;
 
 	@include desktop {
 		padding-top: $padding-xl;
@@ -74,7 +75,6 @@
 	flex-direction: column;
 	padding: 0 $padding-small;
 	gap: 4.5rem;
-	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		padding: 0 1.5rem;
@@ -85,10 +85,8 @@
 	}
 }
 
-.element {
-	.content {
-		margin-bottom: 1rem;
-	}
+.content {
+	margin-bottom: 1rem;
 }
 
 .elementCards,
