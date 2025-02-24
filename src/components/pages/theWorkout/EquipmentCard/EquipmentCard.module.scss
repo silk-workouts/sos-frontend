@@ -1,0 +1,38 @@
+@use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.card {
+	background-color: $color-white;
+	border-radius: 2.1875rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1.5rem;
+	padding: 1.5rem;
+	color: $color-black;
+	max-width: 15.625rem;
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	&__title {
+		font-weight: $font-weight-regular;
+		text-transform: capitalize;
+		transition: font-size 0.3s ease-in-out;
+
+		@include tablet {
+			font-size: 1.25rem;
+		}
+	}
+
+	&__description {
+		font-size: 0.875rem;
+	}
+
+	&__button {
+		width: 100%;
+	}
+}

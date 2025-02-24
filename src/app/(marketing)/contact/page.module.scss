@@ -1,137 +1,58 @@
-@use '@/styles/partials/_variables' as *;
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .body {
-  padding: 6rem 8.875rem 31.6875rem;
+	padding: 3rem $padding-small;
+	transition: all 0.3s ease-in-out;
+
+	@include tablet {
+		padding: 4.5rem 1.5rem;
+	}
+
+	@include desktop {
+		padding: 6rem $padding-xl;
+	}
+}
+
+.wrapper {
+	@include desktop {
+		max-width: $content-container-maximum;
+		margin: 0 auto;
+	}
 }
 
 .accordionGroup {
-  margin-top: 1.875rem;
-  border-top: 1px solid $color-black;
-  padding: 1.875rem 0;
-}
+	border-top: 1px solid $color-black;
+	padding: 1.875rem 0;
+	transition: all 0.3s ease-in-out;
 
-.accordion-button {
-  background-color: $color-white;
-  border: none;
-  margin-bottom: 2.5rem;
-  cursor: pointer;
-}
-
-.accordion__title {
-  position: relative;
-  padding-left: 3.3125rem;
-}
-
-.accordion__icon {
-  position: absolute;
-  left: 0;
-}
-
-.accordion-panel {
-  margin-left: 3.3125rem;
-  max-height: 0px;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.5s ease;
-
-  &.expanded {
-    display: block;
-    max-height: 1000px;
-    opacity: 1;
-    margin-bottom: 2rem;
-    pointer-events: auto;
-  }
+	@include tablet {
+		padding: 1.875rem 1.5rem;
+	}
 }
 
 .contact {
-  padding: 3.125rem 7.375rem 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: all 0.3s ease-in-out;
 
-.dialog {
-  padding: 1.5rem;
-  border-radius: 2.1875rem;
-  background-color: $color-white;
-  width: 49.5625rem;
+	@include tablet {
+		margin: 1rem 0;
+	}
 
-  &-container {
-    position: fixed;
-    inset: 0;
-    background-color: rgba($color-black, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-  }
+	@include desktop {
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 3.625rem;
+	}
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 3rem;
-  }
-  &__closeButton {
-    border: none;
-    background-color: $color-white;
-    cursor: pointer;
-  }
-}
+	&__title {
+		text-align: center;
 
-.form {
-  &__fields-wrapper {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-
-    .form__input-container {
-      flex: 1;
-    }
-  }
-
-  &__input-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  &__label {
-    text-transform: capitalize;
-
-    &::after {
-      content: '*';
-      color: $color-red;
-    }
-  }
-
-  &__input {
-    background-color: #d9d9d9;
-    border: none;
-    border-radius: 1.125rem;
-    padding: 1rem;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    height: 4.5rem;
-
-    &--textarea {
-      height: 14.0625rem;
-      resize: none;
-    }
-  }
-
-  &__button-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 3rem;
-    margin-top: 3rem;
-  }
-
-  &__button {
-    border: none;
-    padding: 0;
-    background-color: $color-white;
-    cursor: pointer;
-  }
+		@include desktop {
+			padding-bottom: 0;
+		}
+	}
 }

@@ -1,37 +1,58 @@
-@use '@/styles/partials/_variables' as *;
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .body {
-  padding: 4.5rem 12.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+	padding: 3rem $padding-small;
+	transition: all 0.3s ease-in-out;
+
+	@include tablet {
+		padding: 4rem 1.5rem;
+	}
+
+	@include desktop {
+		padding: 4.5rem $padding-xl;
+		align-items: center;
+	}
+}
+
+.content-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+	max-width: $content-container-maximum;
+
+	@include desktop {
+		margin: 0 auto;
+	}
+}
+
+.title {
+	font-size: 1.25rem;
+	font-weight: 600;
+	line-height: 2rem;
+	transition: all 0.3s ease-in-out;
+
+	&::first-letter {
+		text-transform: capitalize;
+	}
+
+	@include tablet {
+		font-size: 2rem;
+		line-height: 2.5rem;
+	}
 }
 
 .content {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+	margin-top: 1rem;
+	transition: all 0.3s ease-in-out;
 
-  &__title {
-    font-family: 'Montserrat';
-    font-weight: 400;
-    font-size: 2rem;
-
-    &::first-letter {
-      text-transform: capitalize;
-    }
-  }
+	@include tablet {
+		margin-top: 1.5rem;
+	}
 }
 
-.link {
-  text-decoration: none;
-  color: $color-black;
-
-  &--accent {
-    color: $color-red;
-  }
-
-  &:visited {
-    font-weight: 600;
-  }
+a.link,
+a.link:visited {
+	text-decoration: none;
+	color: $color-red;
 }

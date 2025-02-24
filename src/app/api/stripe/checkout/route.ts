@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { db } from '@/lib/db';
+import pool from '@/lib/db';
 import jwt from 'jsonwebtoken';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -23,49 +23,38 @@ export async function POST(req: NextRequest) {
 
     const userId = decoded.id;
 
-    // ✅ Fix: Properly extract rows from the database result
-    const result = await db.execute(
+    // ✅ Fetch user from database
+    const [rows] = (await pool.execute(
       'SELECT email, stripe_customer_id FROM users WHERE id = ?',
       [userId]
-    );
+    )) as [Array<{ email: string; stripe_customer_id: string | null }>, any];
 
-    const rows = (
-      result as unknown as {
-        rows: Array<{ email: string; stripe_customer_id: string | null }>;
-      }
-    ).rows;
-
-    //  Check if a user was found
+    // ✅ Check if user was found
     if (!rows || rows.length === 0) {
       console.error('❌ No user found with this ID:', userId);
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const user = rows[0] as {
-      email: string;
-      stripe_customer_id: string | null;
-    };
+    // ✅ Destructure user data
+    const { email, stripe_customer_id } = rows[0];
 
-    //  Ensure user is properly defined before accessing properties
-    if (!user || !user.email) {
+    if (!email) {
       console.error('❌ User data is invalid or missing email.');
       return NextResponse.json({ error: 'Invalid user data' }, { status: 500 });
     }
 
-    // If user doesn't have a Stripe Customer ID, create one
-    let stripeCustomerId = user.stripe_customer_id;
-    if (!stripeCustomerId) {
-      const customer = await stripe.customers.create({
-        email: user.email,
-      });
+    // ✅ If user doesn't have a Stripe Customer ID, create one
+    let stripeCustomerId = stripe_customer_id;
 
+    if (!stripeCustomerId) {
+      const customer = await stripe.customers.create({ email });
       stripeCustomerId = customer.id;
 
       // ✅ Store Stripe Customer ID in the database
-      await db.execute('UPDATE users SET stripe_customer_id = ? WHERE id = ?', [
-        stripeCustomerId,
-        userId,
-      ]);
+      await pool.execute(
+        'UPDATE users SET stripe_customer_id = ? WHERE id = ?',
+        [stripeCustomerId, userId]
+      );
     }
 
     // Create Stripe Checkout Session
