@@ -3,6 +3,7 @@
 .hero {
   position: relative;
   width: 100%;
+  min-width: fit-content;
   height: 838px; // almost full viewport height for the hero section
   background-image: url("/assets/images/hero-background.jpg");
   background-size: cover;
@@ -19,7 +20,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: $color-white;
     height: 45vh;
   }
 }
