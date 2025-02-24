@@ -1,4 +1,5 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .philosophy {
   display: flex;
@@ -6,14 +7,38 @@
   padding: 0 2.5rem;
   margin-top: $desktop-gutter * 6;
 
+  @include mobile {
+    flex-direction: column-reverse;
+  }
+
   .founder {
     position: relative;
+    @include mobile {
+      position: initial;
+    }
+
+    img {
+      @include mobile {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+    .lineBreak {
+      display: none; // Default: no break
+
+      @include mobile {
+        display: block; // Mobile: force line break
+      }
+    }
 
     &__name {
       position: absolute;
       top: 62%;
       right: -37%;
-
+      @include mobile {
+        top: 86%;
+        right: 20%;
+      }
       &::before {
         content: "";
         display: inline-block;
@@ -33,6 +58,10 @@
     flex-direction: column;
     gap: 4.5rem;
     padding-top: 0.9375rem;
+
+    @include mobile {
+      gap: 0;
+    }
   }
 
   &__info {
@@ -40,5 +69,8 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    @include mobile {
+      padding-left: 0;
+    }
   }
 }
