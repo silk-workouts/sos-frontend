@@ -5,7 +5,7 @@
   font-weight: $font-weight-regular;
   text-transform: uppercase;
   // width: 100%;
-  // min-width: fit-content;
+  max-width: fit-content;
   // line-height: 1.4;
   border-radius: 4px;
   cursor: pointer;
@@ -46,7 +46,7 @@
 
   &--primary {
     box-sizing: border-box;
-    width: 100% !important;
+    // width: 100% !important;
 
     /* Layout */
     display: flex;
@@ -109,7 +109,7 @@
     gap: 8px;
     border: 1px solid $color-black;
     border-radius: 35px;
-    width: 100%;
+    // width: 100%;
     max-width: fit-content;
     height: 30px;
     background-color: transparent;
