@@ -1,37 +1,33 @@
 @use "@/styles/partials/_variables" as *;
 @use "@/styles/partials/mixins" as *;
 
-.container {
-	display: flex;
-	flex-direction: column;
-	gap: 6rem;
-	padding-top: 4rem;
-	transition: all 0.3s ease-in-out;
-
-	@include desktop {
-		padding-top: $padding-xl;
-	}
-}
-
 .hero {
-	width: 100%;
 	max-width: 1440px;
-	height: 783px;
+	height: 40vh;
+	min-height: 11.25rem;
+	max-height: 48.75rem;
 	position: relative;
 	display: flex;
-	justify-content: flex-start;
 	align-items: center;
-	padding-left: 10%;
+	padding: $padding-small;
+
+	@include tablet {
+		height: 95vh;
+		min-height: 16.25rem;
+		padding: 1.5rem;
+	}
+
+	@include desktop {
+		padding: $padding-xl;
+		min-height: 26.25rem;
+		margin: 0 auto;
+	}
 
 	&::before {
 		content: "";
 		position: absolute;
-		top: 0;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 100%;
+		inset: 0;
 		max-width: 1440px;
-		height: 100%;
 		background: url("/assets/images/workouts-hero-background.png") no-repeat
 			center center;
 		background-size: cover;
@@ -44,16 +40,31 @@
 }
 
 .hero__title {
-	width: 90%;
-	// max-width: 671px;
 	font-family: "Anta";
 	font-style: normal;
 	font-weight: 400;
-	font-size: clamp(48px, 8vw, 96px);
-	line-height: 1.2;
+	font-size: 2rem;
 	text-transform: uppercase;
 	color: $color-white;
 	z-index: 2;
+
+	@include tablet {
+		font-size: 6rem;
+	}
+}
+
+.container {
+	max-width: $content-container-maximum;
+	display: flex;
+	flex-direction: column;
+	gap: 6rem;
+	padding-top: 4rem;
+	transition: all 0.3s ease-in-out;
+
+	@include desktop {
+		padding-top: $padding-xl;
+		margin: 0 auto;
+	}
 }
 
 .element,
