@@ -24,6 +24,7 @@
 		font-weight: $font-weight-regular;
 		text-transform: uppercase;
 		margin-bottom: 1.5rem;
+		transition: all 0.3s ease-in-out;
 
 		@include tablet {
 			font-size: 1.25rem;
@@ -39,6 +40,7 @@
 		font-size: 1.5rem;
 		text-transform: capitalize;
 		margin-bottom: 1rem;
+		transition: all 0.3s ease-in-out;
 
 		@include tablet {
 			font-size: 2rem;
@@ -52,6 +54,7 @@
 	&__image {
 		height: 12.5rem;
 		background-color: rgba(217, 217, 217, 1);
+		transition: all 0.3s ease-in-out;
 
 		@include tablet {
 			flex: 1;
