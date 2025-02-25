@@ -1,0 +1,32 @@
+@use "@/styles/partials/variables" as *;
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.video {
+	height: 4.625rem;
+	width: 8.25rem;
+	background-color: rgba(187, 187, 187);
+	border-radius: 1rem;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 0.25rem;
+}
+
+.title {
+	font-size: 0.75rem;
+	font-weight: $font-weight-regular;
+}
+
+.menuButton {
+	background-color: $color-white;
+	border: none;
+	cursor: pointer;
+}
