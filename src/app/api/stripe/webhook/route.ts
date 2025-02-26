@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { db } from '@/lib/db';
+import pool from '@/lib/db';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-01-27.acacia',
@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
   const sig = req.headers.get('stripe-signature');
 
   if (!sig) {
+    console.error('❌ Missing Stripe signature');
     return NextResponse.json(
       { error: 'Missing Stripe signature' },
       { status: 400 }
@@ -24,6 +25,7 @@ export async function POST(req: NextRequest) {
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
+    console.log('✅ Webhook verified successfully.');
   } catch (err) {
     console.error(`❌ Webhook verification failed: ${err}`);
     return NextResponse.json(
@@ -46,13 +48,41 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        // Update user in the database
-        const result = await db.execute(
+        // ✅ Log user before update
+        const [user] = (await pool.execute(
+          'SELECT id, email, is_paid_user FROM users WHERE stripe_customer_id = ?',
+          [stripeCustomerId]
+        )) as [
+          Array<{ id: string; email: string; is_paid_user: boolean }>,
+          any
+        ];
+
+        if (!user || user.length === 0) {
+          console.error(
+            `❌ No user found with Stripe Customer ID: ${stripeCustomerId}`
+          );
+          return NextResponse.json(
+            { error: 'User not found' },
+            { status: 404 }
+          );
+        }
+
+        // ✅ Update user in the database
+        const [result] = (await pool.execute(
           'UPDATE users SET is_paid_user = 1 WHERE stripe_customer_id = ?',
           [stripeCustomerId]
-        );
+        )) as [{ affectedRows: number }, any];
 
-        console.log('✅ Payment successful, user updated:', result);
+        if (result.affectedRows === 0) {
+          console.error(
+            `❌ Failed to update user for customer ID: ${stripeCustomerId}`
+          );
+          return NextResponse.json(
+            { error: 'User not updated' },
+            { status: 404 }
+          );
+        }
+
         break;
       }
 
@@ -69,12 +99,11 @@ export async function POST(req: NextRequest) {
         }
 
         // Ensure user remains active after recurring payment
-        const result = await db.execute(
+        const [result] = (await pool.execute(
           'UPDATE users SET is_paid_user = 1 WHERE stripe_customer_id = ?',
           [stripeCustomerId]
-        );
+        )) as [{ affectedRows: number }, any];
 
-        console.log('Recurring payment received, user remains active:', result);
         break;
       }
 
@@ -93,17 +122,15 @@ export async function POST(req: NextRequest) {
         }
 
         // Mark user as not paid
-        const result = await db.execute(
+        const [result] = (await pool.execute(
           'UPDATE users SET is_paid_user = 0 WHERE stripe_customer_id = ?',
           [stripeCustomerId]
-        );
+        )) as [{ affectedRows: number }, any];
 
-        console.log('✅ Subscription canceled, user downgraded:', result);
         break;
       }
 
       default:
-        console.log(`ℹ️ Unhandled event type: ${event.type}`);
     }
   } catch (error) {
     console.error('❌ Error processing webhook:', error);
@@ -113,5 +140,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  console.log('✅ Webhook processed successfully.');
   return NextResponse.json({ received: true });
 }
