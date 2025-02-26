@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { db } from '@/lib/db';
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await pool.execute(
+    await db.execute(
       'UPDATE users SET age = ?, gender = ?, location = ?, fitness_level = ? WHERE id = ?',
       [age, gender, location, fitnessLevel, userId]
     );
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error(`Error: ${error}`);
+		console.error(`Error: ${error}`)
 
     return NextResponse.json(
       { error: 'Internal server error' },

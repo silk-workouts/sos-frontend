@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { db } from '@/lib/db';
 
 // Define a TypeScript type for the user
 interface User {
@@ -9,18 +9,15 @@ interface User {
 
 // Function to safely extract query results
 async function getUserByToken(token: string): Promise<User | null> {
-  const result = await pool.execute(
+  const result = await db.execute(
     'SELECT id, is_verified FROM users WHERE verification_token = ?',
     [token]
   );
 
   // Fix: Ensure TypeScript knows the correct result structure
-  const [rows] = (await pool.execute(
-    'SELECT id, email, is_verified FROM users WHERE verification_token = ?',
-    [token]
-  )) as [User[], any];
+  const rows = result as unknown as { rows: User[] };
 
-  return rows.length > 0 ? rows[0] : null;
+  return rows.rows.length > 0 ? rows.rows[0] : null;
 }
 
 export async function GET(req: NextRequest) {
@@ -48,10 +45,10 @@ export async function GET(req: NextRequest) {
   }
 
   // Mark user as verified
-  await pool.execute('UPDATE users SET is_verified = ? WHERE id = ?', [
-    true,
-    user.id,
-  ]);
+  await db.execute(
+    'UPDATE users SET is_verified = 1, verification_token = NULL WHERE id = ?',
+    [user.id]
+  );
 
   return NextResponse.json({ message: 'Email verified successfully' });
 }

@@ -15,6 +15,8 @@ export async function sendVerificationEmail(email: string, token: string) {
       templateParams,
       process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
     );
+
+    console.log('✅ Email sent successfully:', response);
   } catch (error) {
     console.error('❌ Error sending email:', error);
   }

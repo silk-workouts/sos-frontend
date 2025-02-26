@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { db } from '@/lib/db';
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,14 +9,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Token is required' }, { status: 400 });
     }
 
-    // Execute the query and get the result
-    const [rows] = (await pool.execute(
+    const result = await db.execute(
       'SELECT id FROM users WHERE verification_token = ?',
       [token]
-    )) as [Array<{ id: string }>, any];
+    );
 
     // ✅ Extract the user correctly
-    const user = rows?.[0]; // Access the first row
+    const user = result.rows?.[0]; // Ensure we access the first row
 
     if (!user) {
       return NextResponse.json(
@@ -25,8 +24,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Update the user as verified and clear the token
-    await pool.execute(
+    await db.execute(
       'UPDATE users SET is_verified = true, verification_token = NULL WHERE verification_token = ?',
       [token]
     );
