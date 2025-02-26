@@ -38,7 +38,7 @@ export default function TheWorkout() {
 					<div className={styles.elementCards}>
 						<ElementCard
 							element={{ number: "1", letter: "B", name: "Boxing" }}
-							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
+							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit. "
 							imageSrc={upperBandsImage}
 							imageAlt="A picture of Michael doing the boxing workout"
 						/>
