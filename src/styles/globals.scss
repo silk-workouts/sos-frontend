@@ -1,52 +1,47 @@
-@use "./partials/variables" as *;
-@use "./partials/mixins" as *;
-@use "./partials/fonts" as *;
+@use "./partials/_variables" as *;
+@use "./partials/_fonts" as *;
 
 // Global Reset
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-	font-family: $font-primary;
-	color: $color-black;
-	background-color: $color-white;
-	padding-top: 84px; // Match the height of your Header
-	padding-bottom: 13.75rem; // Match the height of your the footer
-	min-height: 100vh;
-	position: relative;
-
-	@include tablet {
-		padding-bottom: 10rem;
-	}
+  font-family: $font-primary;
+  color: $color-black;
+  background-color: $color-white;
+  padding-top: 44px; // Match the height of your Header
+  padding-bottom: 5rem; // Match the height of your the footer
+  min-height: 100vh;
+  position: relative;
 }
 
 :root {
-	animation-play-state: paused;
-	animation-delay: calc(var(--scroll) * -1s);
-	animation-iteration-count: 1;
-	animation-fill-mode: both;
+  animation-play-state: paused;
+  animation-delay: calc(var(--scroll) * -1s);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
 
-	/* Remove default link styles */
-	a {
-		text-decoration: none;
-		color: inherit;
-	}
+  /* Remove default link styles */
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 
-	/* Ensure visited links don't change color */
-	a:visited {
-		color: inherit;
-	}
+  /* Ensure visited links don't change color */
+  a:visited {
+    color: inherit;
+  }
 
-	/* Remove hover underline */
-	a:hover {
-		text-decoration: none;
-	}
+  /* Remove hover underline */
+  a:hover {
+    text-decoration: none;
+  }
 
-	/* Remove focus outline unless needed for accessibility */
-	a:focus {
-		outline: none;
-	}
+  /* Remove focus outline unless needed for accessibility */
+  a:focus {
+    outline: none;
+  }
 }
