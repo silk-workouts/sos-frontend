@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { edgeDb } from '@/lib/edge-db';
 
 export async function middleware(req: NextRequest) {
   const token = req.headers
@@ -30,7 +30,7 @@ export async function middleware(req: NextRequest) {
 
     const { userId } = await res.json();
 
-    const result = await db.execute(
+    const result = await edgeDb.execute(
       'SELECT is_paid_user FROM users WHERE id = ?',
       [userId]
     );
