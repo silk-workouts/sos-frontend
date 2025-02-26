@@ -6,6 +6,8 @@
   gap: 4rem;
   padding: 0 2.5rem;
   margin-top: $desktop-gutter * 6;
+  flex-direction: row;
+  justify-content: center;
 
   @include mobile {
     flex-direction: column-reverse;
@@ -36,8 +38,15 @@
       top: 62%;
       right: -37%;
       @include mobile {
-        top: 86%;
-        right: 20%;
+        position: relative;
+        top: -50px;
+        // right: 20%;
+      }
+
+      @include desktop {
+        position: relative;
+        top: -50px;
+        // right: 20%;
       }
       &::before {
         content: "";

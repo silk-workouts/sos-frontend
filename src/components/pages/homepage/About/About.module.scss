@@ -1,25 +1,49 @@
+@use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/_mixins" as *;
 .about {
-	display: flex;
-	gap: 4rem;
+  display: flex;
+  gap: 4rem;
 
-	&-container {
-		align-self: center;
-		display: flex;
-		flex-direction: column;
-		gap: 4.5rem;
-	}
+  @include mobile {
+    flex-direction: column-reverse;
+    padding: $padding-small;
 
-	&__info {
-		padding-left: 2.5rem;
-	}
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
 
-	&__subHeading {
-		text-transform: capitalize;
-		margin-bottom: 1.5rem;
-	}
+  &-container {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4.5rem;
 
-	&__message {
-		width: 90%;
-		padding-bottom: 3.125rem;
-	}
+    @include mobile {
+      gap: 0;
+    }
+  }
+
+  &__info {
+    padding-left: 2.5rem;
+
+    @include mobile {
+      padding-left: 0;
+    }
+  }
+
+  &__subHeading {
+    text-transform: capitalize;
+    margin-bottom: 1.5rem;
+
+    @include mobile {
+      margin-bottom: 0;
+    }
+  }
+
+  &__message {
+    width: 90%;
+    padding-bottom: 3.125rem;
+  }
 }
