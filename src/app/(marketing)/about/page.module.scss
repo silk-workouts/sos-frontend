@@ -17,6 +17,11 @@
     padding-left: 10%;
     transition: all 0.3s ease-in-out;
 
+    @include mobile {
+      padding-left: $padding-small;
+      height: 337px;
+    }
+
     &::before {
       content: "";
       position: absolute;
@@ -51,6 +56,10 @@
     flex-direction: column;
     gap: $mobile-gutter;
     transition: all 0.3s ease-in-out;
+
+    @include mobile {
+      height: 750px;
+    }
 
     @include tablet {
       flex-direction: row;

@@ -87,6 +87,15 @@
     }
   }
 
+  .authSection {
+    display: none; // Default state
+
+    // Show only when user is logged in
+    &.is-logged-in {
+      display: block;
+    }
+  }
+
   @include tablet {
     .hamburger {
       width: 48px;

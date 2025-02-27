@@ -8,173 +8,173 @@ import Button from "@/components/ui/Button/Button";
 import styles from "./Header.module.scss";
 
 export default function Header() {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-	const pathname = usePathname();
-	const router = useRouter();
-	const menuRef = useRef<HTMLDivElement | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const pathname = usePathname();
+  const router = useRouter();
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
-	useEffect(() => {
-		async function checkAuthStatus() {
-			try {
-				const res = await fetch("/api/auth/verify-token", {
-					method: "GET",
-					credentials: "include", // ✅ Ensure cookies are sent
-					headers: { "Content-Type": "application/json" },
-				});
+  useEffect(() => {
+    async function checkAuthStatus() {
+      try {
+        const res = await fetch("/api/auth/verify-token", {
+          method: "GET",
+          credentials: "include", // ✅ Ensure cookies are sent
+          headers: { "Content-Type": "application/json" },
+        });
 
-				if (!res.ok) {
-					console.warn("❌ Auth check failed, user not logged in.");
-					setIsLoggedIn(false);
-					return;
-				}
+        if (!res.ok) {
+          console.warn("❌ Auth check failed, user not logged in.");
+          setIsLoggedIn(false);
+          return;
+        }
 
-				// const data = await res.json();
+        // const data = await res.json();
 
-				setIsLoggedIn(true);
-			} catch (error) {
-				console.error("❌ Auth verification error:", error);
-				setIsLoggedIn(false);
-			}
-		}
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error("❌ Auth verification error:", error);
+        setIsLoggedIn(false);
+      }
+    }
 
-		checkAuthStatus();
-	}, [pathname]);
+    checkAuthStatus();
+  }, [pathname]);
 
-	async function handleLogout() {
-		await fetch("/api/auth/logout", { method: "GET" });
-		setIsLoggedIn(false);
-		setIsDropdownOpen(false);
-		router.push("/");
-	}
+  async function handleLogout() {
+    await fetch("/api/auth/logout", { method: "GET" });
+    setIsLoggedIn(false);
+    setIsDropdownOpen(false);
+    router.push("/");
+  }
 
-	useEffect(() => {
-		function handleClickOutside(event: MouseEvent) {
-			if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-				setIsMobileMenuOpen(false);
-			}
-		}
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false);
+      }
+    }
 
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
-	}, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
-	return (
-		<header className={styles.header}>
-			<div className={styles.headerContent}>
-				<div className={styles.logo}>
-					<Link href="/">
-						<Image
-							src="/assets/images/logo.png"
-							alt="System of Silk Logo"
-							className={styles.logoImage}
-							width={104}
-							height={36}
-						/>
-					</Link>
-				</div>
+  return (
+    <header className={styles.header}>
+      <div className={styles.headerContent}>
+        <div className={styles.logo}>
+          <Link href="/">
+            <Image
+              src="/assets/images/logo.png"
+              alt="System of Silk Logo"
+              className={styles.logoImage}
+              width={104}
+              height={36}
+            />
+          </Link>
+        </div>
 
-				{/* Desktop Navigation */}
-				<nav className={styles.navLinks}>
-					<Link
-						href="/the-workout"
-						className={`${styles.menuItem} ${
-							pathname === "/the-workout" ? styles.activeLink : ""
-						}`}
-						onClick={() => setIsMobileMenuOpen(false)}
-					>
-						The Workout
-					</Link>
-					<Link
-						href="/about"
-						className={`${styles.menuItem} ${
-							pathname === "/about" ? styles.activeLink : ""
-						}`}
-						onClick={() => setIsMobileMenuOpen(false)}
-					>
-						About
-					</Link>
-					<a
-						href="https://shop.systemofsilk.com/"
-						target="_blank"
-						rel="noopener noreferrer"
-						className={`${styles.menuItem} ${
-							pathname === "/shop" ? styles.activeLink : ""
-						}`}
-						onClick={() => setIsMobileMenuOpen(false)}
-					>
-						Shop
-					</a>
-					<Button variant="secondary" className={styles.signupButton}>
-						<Link href="/auth/signup">Sign up/Log in</Link>
-					</Button>
-				</nav>
+        {/* Desktop Navigation */}
+        <nav className={styles.navLinks}>
+          <Link
+            href="/the-workout"
+            className={`${styles.menuItem} ${
+              pathname === "/the-workout" ? styles.activeLink : ""
+            }`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            The Workout
+          </Link>
+          <Link
+            href="/about"
+            className={`${styles.menuItem} ${
+              pathname === "/about" ? styles.activeLink : ""
+            }`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            About
+          </Link>
+          <a
+            href="https://shop.systemofsilk.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${styles.menuItem} ${
+              pathname === "/shop" ? styles.activeLink : ""
+            }`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Shop
+          </a>
+          <Button variant="secondary" className={styles.signupButton}>
+            <Link href="/auth/signup">Sign up/Log in</Link>
+          </Button>
+        </nav>
 
-				{/* Mobile Menu Button & 7-Day Free Trial Button */}
-				<div className={styles.mobileActions}>
-					<Button variant="tertiary" className={styles.trialButton}>
-						<Link href="/auth/signup">7-Day Free Trial</Link>
-					</Button>
-					<button
-						className={styles.hamburger}
-						onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-						aria-expanded={isMobileMenuOpen}
-						aria-label="Toggle navigation menu"
-					>
-						☰
-					</button>
-				</div>
+        {/* Mobile Menu Button & 7-Day Free Trial Button */}
+        <div className={styles.mobileActions}>
+          <Button variant="tertiary" className={styles.trialButton}>
+            <Link href="/auth/signup">7-Day Free Trial</Link>
+          </Button>
+          <button
+            className={styles.hamburger}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-expanded={isMobileMenuOpen}
+            aria-label="Toggle navigation menu"
+          >
+            ☰
+          </button>
+        </div>
 
-				{/* Mobile Dropdown Menu */}
-				<nav
-					ref={menuRef}
-					className={`${styles.mobileMenu} ${
-						isMobileMenuOpen ? styles.open : ""
-					}`}
-				>
-					<div className={styles.menuContainer}>
-						<Link
-							href="/the-workout"
-							className={`${styles.menuItem} ${
-								pathname === "/the-workout" ? styles.activeLink : ""
-							}`}
-							onClick={() => setIsMobileMenuOpen(false)}
-						>
-							The Workout
-						</Link>
-						<Link
-							href="/about"
-							className={`${styles.menuItem} ${
-								pathname === "/about" ? styles.activeLink : ""
-							}`}
-							onClick={() => setIsMobileMenuOpen(false)}
-						>
-							About
-						</Link>
-						<a
-							href="https://shop.systemofsilk.com/"
-							target="_blank"
-							rel="noopener noreferrer"
-							className={`${styles.menuItem} ${
-								pathname === "/shop" ? styles.activeLink : ""
-							}`}
-							onClick={() => setIsMobileMenuOpen(false)}
-						>
-							Shop
-						</a>
-						<Link
-							href="/auth/login"
-							className={`${styles.menuItem} ${
-								pathname === "/auth/login" ? styles.activeLink : ""
-							}`}
-							onClick={() => setIsMobileMenuOpen(false)}
-						>
-							Login
-						</Link>
-						{/* <Link
+        {/* Mobile Dropdown Menu */}
+        <nav
+          ref={menuRef}
+          className={`${styles.mobileMenu} ${
+            isMobileMenuOpen ? styles.open : ""
+          }`}
+        >
+          <div className={styles.menuContainer}>
+            <Link
+              href="/the-workout"
+              className={`${styles.menuItem} ${
+                pathname === "/the-workout" ? styles.activeLink : ""
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              The Workout
+            </Link>
+            <Link
+              href="/about"
+              className={`${styles.menuItem} ${
+                pathname === "/about" ? styles.activeLink : ""
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </Link>
+            <a
+              href="https://shop.systemofsilk.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${styles.menuItem} ${
+                pathname === "/shop" ? styles.activeLink : ""
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Shop
+            </a>
+            <Link
+              href="/auth/login"
+              className={`${styles.menuItem} ${
+                pathname === "/auth/login" ? styles.activeLink : ""
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Login
+            </Link>
+            {/* <Link
               href="/auth/signup"
               className={`${styles.menuItem} ${
                 pathname === "/auth/signup" ? styles.activeLink : ""
@@ -183,55 +183,56 @@ export default function Header() {
             >
               Sign Up
             </Link> */}
-					</div>
-				</nav>
+          </div>
+        </nav>
 
-				{/* USE AS CODE REFERENCE TO REFACTOR FOR LOGGED IN OR OR LOGGED OUT USER
+        {/* USE AS CODE REFERENCE TO REFACTOR FOR LOGGED IN OR OR LOGGED OUT USER
 				------------------------------------------------------------------ */}
-				<div className={styles.authSection} data-type="CODE-REFERENCE">
-					{isLoggedIn ? (
-						<div className={styles.profileMenu} role="menu">
-							<button
-								className={styles.profileButton}
-								onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-								aria-expanded={isDropdownOpen}
-								aria-haspopup="true"
-							>
-								<Image
-									src="/assets/images/jumpRope.png"
-									alt="User Profile"
-									width={40}
-									height={40}
-								/>
-							</button>
+        <div
+          className={`${styles.authSection} ${
+            isLoggedIn ? styles["is-logged-in"] : ""
+          }`}
+          data-type="CODE-REFERENCE"
+        >
+          {isLoggedIn ? (
+            <div className={styles.profileMenu} role="menu">
+              <button
+                className={styles.profileButton}
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                aria-expanded={isDropdownOpen}
+                aria-haspopup="true"
+              >
+                <Image
+                  src="/assets/images/jumpRope.png"
+                  alt="User Profile"
+                  width={40}
+                  height={40}
+                />
+              </button>
 
-							{isDropdownOpen && (
-								<nav className={styles.dropdownMenu} role="menu">
-									<ul>
-										<li>
-											<Link href="/dashboard">Dashboard</Link>
-										</li>
+              {isDropdownOpen && (
+                <nav className={styles.dropdownMenu} role="menu">
+                  <ul>
+                    <li>
+                      <Link href="/dashboard">Dashboard</Link>
+                    </li>
+                    <li>
+                      <Link href="/about">About</Link>
+                    </li>
 
-										<li>
-											<button onClick={handleLogout}>Logout</button>
-										</li>
-									</ul>
-								</nav>
-							)}
-						</div>
-					) : (
-						<nav className={styles.authButtons}>
-							<Link href="/auth/login" className={styles.loginButton}>
-								Login
-							</Link>
-							<Link href="/auth/signup" className={styles.signupButton}>
-								Sign Up
-							</Link>
-						</nav>
-					)}
-				</div>
-				{/* -------------------------------------------------------- */}
-			</div>
-		</header>
-	);
+                    <li>
+                      <button onClick={handleLogout}>Logout</button>
+                    </li>
+                  </ul>
+                </nav>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        {/* -------------------------------------------------------- */}
+      </div>
+    </header>
+  );
 }
