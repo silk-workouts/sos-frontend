@@ -13,6 +13,12 @@
     padding: $padding-medium;
     align-items: center;
   }
+  @include tablet {
+    flex-direction: row;
+    padding: $padding-medium;
+
+    align-items: center;
+  }
 
   &__imageContainer {
     display: flex;
@@ -58,6 +64,10 @@
     @include mobile {
       padding-left: 0;
       text-align: left;
+    }
+
+    @include tablet {
+      padding-left: 0;
     }
   }
 
