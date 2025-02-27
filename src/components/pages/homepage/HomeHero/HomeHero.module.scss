@@ -31,6 +31,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     height: auto; // Allow flexible height adjustment
+    gap: $padding-xl;
 
     @include mobile {
       position: relative; // Prevent absolute positioning on mobile
