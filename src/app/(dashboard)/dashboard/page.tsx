@@ -8,6 +8,16 @@ import styles from "./page.module.scss";
 
 const url = process.env.NEXT_PUBLIC_APP_URL;
 
+export interface Showcase {
+	id: number;
+	vimeo_showcase_id: string;
+	name: "string";
+	description: string;
+	thumbnail_url: string;
+	vimeo_link: string;
+	created_at: string;
+}
+
 export default function DashboardPage() {
 	const [showcases, setShowcases] = useState([]);
 	const [isSelected, setIsSelected] = useState({
@@ -39,18 +49,8 @@ export default function DashboardPage() {
 		getShowcases();
 	}, []);
 
-	interface showcase {
-		id: number;
-		vimeo_showcase_id: string;
-		name: "string";
-		description: string;
-		thumbnail_url: string;
-		vimeo_link: string;
-		created_at: string;
-	}
-
 	//filter showcase videos by element or prescription programs
-	const filteredShowcases = showcases.filter((video: showcase) =>
+	const filteredShowcases = showcases.filter((video: Showcase) =>
 		isSelected.program
 			? video.name.toLowerCase().includes("prescription")
 			: !video.name.toLowerCase().includes("prescription")

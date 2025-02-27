@@ -1,1 +1,10 @@
+@use "@/styles/partials/variables" as *;
 
+.listItem {
+	padding: 1.5rem $padding-small;
+	border-bottom: 1px solid rgb(202, 202, 202);
+
+	&:last-child {
+		border: none;
+	}
+}

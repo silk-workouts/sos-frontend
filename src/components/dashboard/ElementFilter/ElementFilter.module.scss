@@ -19,4 +19,8 @@
 	&:hover {
 		cursor: pointer;
 	}
+
+	&--selected {
+		background-color: grey;
+	}
 }

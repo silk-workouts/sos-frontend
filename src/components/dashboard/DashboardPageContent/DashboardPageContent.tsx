@@ -2,14 +2,39 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Showcase } from "src/app/(dashboard)/dashboard/page";
 import ElementFilter from "../ElementFilter/ElementFilter";
 import VideoList from "../VideoList/VideoList";
 import styles from "./DashboardPageContent.module.scss";
 
-export default function DashboardPageContent({ showcases, type }) {
+interface ContentProps {
+	showcases: Showcase[];
+	type: string;
+}
+export default function DashboardPageContent({
+	showcases,
+	type,
+}: ContentProps) {
 	const searchParams = useSearchParams();
 	const router = useRouter();
-	//const [elementFilter, setElementFilter] = useState([]);
+	const [elementFilter, setElementFilter] = useState(new Set());
+
+	function handleFilter(filter: string) {
+		if (elementFilter.has(filter)) {
+			setElementFilter(new Set([...elementFilter].filter((x) => x !== filter)));
+		} else {
+			setElementFilter(new Set([...elementFilter, filter]));
+		}
+	}
+
+	let filteredShowcases = showcases;
+	if (elementFilter.size > 0) {
+		filteredShowcases = showcases.filter((video) =>
+			[...elementFilter].some((filter) =>
+				video.name.toLowerCase().includes(filter)
+			)
+		);
+	}
 
 	useEffect(() => {
 		if (searchParams.get("refresh")) {
@@ -19,18 +44,22 @@ export default function DashboardPageContent({ showcases, type }) {
 
 	return (
 		<>
-			<h1>{showcases.length}</h1>
-			{/* <ElementFilter />
+			{type === "element" && (
+				<ElementFilter
+					elementFilter={elementFilter}
+					handleFilter={handleFilter}
+				/>
+			)}
 			<ul>
-				{showcases.map((video) => {
+				{filteredShowcases.map((video) => {
 					return (
-						<li key={video.id}>
+						<li key={video.id} className={styles.listItem}>
 							{" "}
 							<VideoList video={video} />
 						</li>
 					);
 				})}
-			</ul> */}
+			</ul>
 		</>
 	);
 }
