@@ -20,7 +20,7 @@ export default function Header() {
       try {
         const res = await fetch("/api/auth/verify-token", {
           method: "GET",
-          credentials: "include", // ✅ Ensure cookies are sent
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
         });
 
@@ -29,8 +29,6 @@ export default function Header() {
           setIsLoggedIn(false);
           return;
         }
-
-        // const data = await res.json();
 
         setIsLoggedIn(true);
       } catch (error) {
@@ -46,6 +44,7 @@ export default function Header() {
     await fetch("/api/auth/logout", { method: "GET" });
     setIsLoggedIn(false);
     setIsDropdownOpen(false);
+    setIsMobileMenuOpen(false); // Close mobile menu upon logout
     router.push("/");
   }
 
@@ -77,124 +76,11 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className={styles.navLinks}>
-          <Link
-            href="/the-workout"
-            className={`${styles.menuItem} ${
-              pathname === "/the-workout" ? styles.activeLink : ""
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
+        {isLoggedIn ? (
+          <div
+            className={`${styles.authSection} ${styles["is-logged-in"]}`}
+            data-type="CODE-REFERENCE"
           >
-            The Workout
-          </Link>
-          <Link
-            href="/about"
-            className={`${styles.menuItem} ${
-              pathname === "/about" ? styles.activeLink : ""
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            About
-          </Link>
-          <a
-            href="https://shop.systemofsilk.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${styles.menuItem} ${
-              pathname === "/shop" ? styles.activeLink : ""
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Shop
-          </a>
-          <Button variant="secondary" className={styles.signupButton}>
-            <Link href="/auth/signup">Sign up/Log in</Link>
-          </Button>
-        </nav>
-
-        {/* Mobile Menu Button & 7-Day Free Trial Button */}
-        <div className={styles.mobileActions}>
-          <Button variant="tertiary" className={styles.trialButton}>
-            <Link href="/auth/signup">7-Day Free Trial</Link>
-          </Button>
-          <button
-            className={styles.hamburger}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-expanded={isMobileMenuOpen}
-            aria-label="Toggle navigation menu"
-          >
-            ☰
-          </button>
-        </div>
-
-        {/* Mobile Dropdown Menu */}
-        <nav
-          ref={menuRef}
-          className={`${styles.mobileMenu} ${
-            isMobileMenuOpen ? styles.open : ""
-          }`}
-        >
-          <div className={styles.menuContainer}>
-            <Link
-              href="/the-workout"
-              className={`${styles.menuItem} ${
-                pathname === "/the-workout" ? styles.activeLink : ""
-              }`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              The Workout
-            </Link>
-            <Link
-              href="/about"
-              className={`${styles.menuItem} ${
-                pathname === "/about" ? styles.activeLink : ""
-              }`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              About
-            </Link>
-            <a
-              href="https://shop.systemofsilk.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${styles.menuItem} ${
-                pathname === "/shop" ? styles.activeLink : ""
-              }`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Shop
-            </a>
-            <Link
-              href="/auth/login"
-              className={`${styles.menuItem} ${
-                pathname === "/auth/login" ? styles.activeLink : ""
-              }`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Login
-            </Link>
-            {/* <Link
-              href="/auth/signup"
-              className={`${styles.menuItem} ${
-                pathname === "/auth/signup" ? styles.activeLink : ""
-              }`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Sign Up
-            </Link> */}
-          </div>
-        </nav>
-
-        {/* USE AS CODE REFERENCE TO REFACTOR FOR LOGGED IN OR OR LOGGED OUT USER
-				------------------------------------------------------------------ */}
-        <div
-          className={`${styles.authSection} ${
-            isLoggedIn ? styles["is-logged-in"] : ""
-          }`}
-          data-type="CODE-REFERENCE"
-        >
-          {isLoggedIn ? (
             <div className={styles.profileMenu} role="menu">
               <button
                 className={styles.profileButton}
@@ -219,7 +105,6 @@ export default function Header() {
                     <li>
                       <Link href="/about">About</Link>
                     </li>
-
                     <li>
                       <button onClick={handleLogout}>Logout</button>
                     </li>
@@ -227,11 +112,97 @@ export default function Header() {
                 </nav>
               )}
             </div>
-          ) : (
-            ""
-          )}
-        </div>
-        {/* -------------------------------------------------------- */}
+          </div>
+        ) : (
+          <>
+            <nav className={styles.navLinks}>
+              <Link
+                href="/the-workout"
+                className={`${styles.menuItem} ${
+                  pathname === "/the-workout" ? styles.activeLink : ""
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                The Workout
+              </Link>
+              <Link
+                href="/about"
+                className={`${styles.menuItem} ${
+                  pathname === "/about" ? styles.activeLink : ""
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                About
+              </Link>
+              <a
+                href="https://shop.systemofsilk.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.menuItem} ${
+                  pathname === "/shop" ? styles.activeLink : ""
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Shop
+              </a>
+              <Button variant="secondary" className={styles.signupButton}>
+                <Link href="/auth/signup">Sign up/Log in</Link>
+              </Button>
+            </nav>
+
+            <div className={styles.mobileActions}>
+              <Button variant="tertiary" className={styles.trialButton}>
+                <Link href="/auth/signup">7-Day Free Trial</Link>
+              </Button>
+              <button
+                className={styles.hamburger}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-expanded={isMobileMenuOpen}
+                aria-label="Toggle navigation menu"
+              >
+                ☰
+              </button>
+            </div>
+
+            <nav
+              ref={menuRef}
+              className={`${styles.mobileMenu} ${
+                isMobileMenuOpen ? styles.open : ""
+              }`}
+            >
+              <div className={styles.menuContainer}>
+                <Link
+                  href="/the-workout"
+                  className={styles.menuItem}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  The Workout
+                </Link>
+                <Link
+                  href="/about"
+                  className={styles.menuItem}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  About
+                </Link>
+                <a
+                  href="https://shop.systemofsilk.com/"
+                  className={styles.menuItem}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Shop
+                </a>
+                <Link
+                  href="/auth/login"
+                  className={styles.menuItem}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              </div>
+            </nav>
+          </>
+        )}
       </div>
     </header>
   );

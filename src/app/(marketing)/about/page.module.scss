@@ -9,7 +9,7 @@
   .heroSection {
     width: 100%;
     max-width: 1440px;
-    height: 783px;
+    height: 337px;
     position: relative;
     display: flex;
     justify-content: flex-start;
@@ -17,9 +17,9 @@
     padding-left: 10%;
     transition: all 0.3s ease-in-out;
 
-    @include mobile {
+    @include tablet {
       padding-left: $padding-small;
-      height: 337px;
+      height: 783px;
     }
 
     &::before {
