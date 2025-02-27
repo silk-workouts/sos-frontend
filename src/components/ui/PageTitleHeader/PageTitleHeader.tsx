@@ -1,9 +1,9 @@
 import styles from "./PageTitleHeader.module.scss";
 
-type pageHeader = {
+interface pageHeader {
 	title: string;
 	subHeading: string;
-};
+}
 
 export default function PageTitleHeader({ title, subHeading }: pageHeader) {
 	return (

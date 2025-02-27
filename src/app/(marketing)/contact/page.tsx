@@ -1,8 +1,8 @@
 "use client";
 import PageTitleHeader from "@/components/ui/PageTitleHeader/PageTitleHeader";
 import Button from "@/components/ui/Button/Button";
-import Accordion from "@/components/contact/Accordion/Accordion";
-import ContactFormModal from "@/components/contact/ContactFormModal/ContactFormModal";
+import Accordion from "@/components/pages/contact/Accordion/Accordion";
+import ContactFormModal from "@/components/pages/contact/ContactFormModal/ContactFormModal";
 import styles from "./page.module.scss";
 import { useState } from "react";
 
