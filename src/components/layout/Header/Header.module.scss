@@ -12,21 +12,32 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
 
   .headerContent {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     padding: 6px 16px;
     width: 100%;
-
     height: 64px;
+
+    @include desktop {
+      align-items: center;
+    }
   }
 
   .logo {
     height: 36px;
     display: flex;
     justify-content: left;
+    img {
+      @include mobile {
+        max-width: 64px;
+        height: auto;
+        align-self: center;
+      }
+    }
   }
 
   .navLinks {
@@ -35,8 +46,10 @@
 
   .mobileActions {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 8px;
+    height: 100%;
   }
 
   .hamburger {
@@ -46,6 +59,11 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
+    padding-bottom: 30px;
+
+    @include tablet {
+      padding-bottom: 0;
+    }
   }
   .menuContainer {
     height: fit-content;
@@ -87,6 +105,15 @@
     }
   }
 
+  .authSection {
+    display: none; // Default state
+
+    // Show only when user is logged in
+    &.is-logged-in {
+      display: block;
+    }
+  }
+
   @include tablet {
     .hamburger {
       width: 48px;
@@ -111,6 +138,7 @@
       align-items: center;
       gap: 36px;
       width: 100%;
+      height: 100%;
       & > :last-child {
         margin-left: auto;
       }
