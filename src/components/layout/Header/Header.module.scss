@@ -35,7 +35,8 @@
 
   .mobileActions {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    align-items: baseline;
     gap: 8px;
   }
 
