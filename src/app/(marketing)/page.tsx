@@ -5,6 +5,7 @@ import Philosophy from "@/components/pages/homepage/Philosophy/Philosophy";
 import About from "@/components/pages/homepage/About/About";
 import GetStarted from "@/components/pages/homepage/GetStarted/GetStarted";
 import WhatsSOS from "@/components/pages/homepage/WhatsSOS/WhatsSOS";
+import Testimonials from "@/components/pages/homepage/Testimonials/Testimonials";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <About />
       <WhatsSOS />
       <HomeElements />
+      <Testimonials />
       <GetStarted />
     </>
   );
