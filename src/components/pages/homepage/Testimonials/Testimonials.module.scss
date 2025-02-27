@@ -50,6 +50,19 @@
     font-size: 16px;
     text-align: center;
     color: #000000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 8px; // Added spacing between icon and name
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 1.5625rem;
+      height: 1.5625rem;
+      background: url("/assets/icons/s-single.svg") no-repeat center;
+      background-size: contain;
+    }
   }
 
   @include mobile {
