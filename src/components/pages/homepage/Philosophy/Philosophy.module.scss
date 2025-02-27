@@ -13,6 +13,14 @@
     flex-direction: column-reverse;
   }
 
+  @include tablet {
+    gap: $padding-medium;
+  }
+
+  @include desktop {
+    gap: $padding-xl;
+  }
+
   .founder {
     display: flex;
     flex-direction: column;
@@ -23,6 +31,11 @@
         max-height: 400px;
         width: auto;
         max-width: 100%;
+      }
+
+      @include tablet {
+        max-height: 400px;
+        width: auto;
       }
     }
     .lineBreak {
@@ -43,10 +56,14 @@
         right: 0;
       }
 
+      @include tablet {
+        position: static;
+      }
+
       @include desktop {
         position: relative;
         top: -50px;
-        // right: 20%;
+        right: -20%;
       }
       &::before {
         content: "";
@@ -68,6 +85,10 @@
     @include mobile {
       gap: 0;
     }
+
+    @include tablet {
+      gap: 0;
+    }
   }
 
   &__info {
@@ -75,6 +96,9 @@
     display: flex;
     flex-direction: column;
     @include mobile {
+      padding-left: 0;
+    }
+    @include tablet {
       padding-left: 0;
     }
   }

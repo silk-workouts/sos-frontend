@@ -30,6 +30,10 @@
     align-items: center;
     gap: 0.5rem;
     position: relative;
+    @include tablet {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   .align-end {
@@ -53,6 +57,14 @@
       flex-direction: row;
       justify-content: center;
       margin-top: $padding-medium;
+    }
+  }
+
+  .element-container2 {
+    @include tablet {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
     }
   }
 }

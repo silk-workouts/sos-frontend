@@ -14,6 +14,12 @@
     align-items: center;
   }
 
+  @include tablet {
+    flex-direction: row-reverse;
+    align-items: end;
+    padding: $padding-medium;
+  }
+
   &__imageContainer {
     display: flex;
     flex-direction: column;
@@ -47,6 +53,9 @@
     @include mobile {
       gap: 0;
     }
+    @include tablet {
+      gap: 0;
+    }
   }
 
   &__info {
@@ -55,6 +64,9 @@
     @include mobile {
       padding-left: 0;
       text-align: left;
+    }
+    @include tablet {
+      padding-left: 0;
     }
   }
 

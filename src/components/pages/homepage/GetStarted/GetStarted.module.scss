@@ -10,6 +10,9 @@
   gap: 24px;
   background: $color-red;
   width: 100%;
+  @include tablet {
+    padding: $padding-xl $padding-medium;
+  }
 
   .container {
     display: flex;
@@ -18,12 +21,29 @@
     gap: 24px;
     width: 100%;
     max-width: 320px;
+    @include tablet {
+      display: flex;
+      flex-direction: row;
+      min-width: 100%;
+    }
+    @include desktop {
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .mainTitle {
     text-align: center;
     color: #ffffff;
     max-width: 250px;
+    @include tablet {
+      text-align: left;
+      max-width: 50%;
+    }
+    @include desktop {
+      text-align: left;
+      max-width: 35%;
+    }
   }
 
   .priceCardContainer {
@@ -33,11 +53,15 @@
     justify-content: center;
     width: 100%;
     // min-width: 288px;
-  }
 
-  @include mobile {
-    .container {
-      // max-width: 320px;
+    @include desktop {
+      max-width: 50%;
     }
   }
+
+  // @include mobile {
+  //   .container {
+  //     // max-width: 320px;
+  //   }
+  // }
 }

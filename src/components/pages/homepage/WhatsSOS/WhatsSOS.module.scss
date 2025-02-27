@@ -47,6 +47,9 @@
     @include mobile {
       gap: 0;
     }
+    @include tablet {
+      gap: 0;
+    }
   }
 
   &__info {
