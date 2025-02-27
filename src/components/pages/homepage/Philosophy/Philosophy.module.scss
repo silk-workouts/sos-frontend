@@ -40,7 +40,7 @@
       @include mobile {
         position: relative;
         top: -40px;
-        right: -15%;
+        right: 0;
       }
 
       @include desktop {
@@ -51,13 +51,10 @@
       &::before {
         content: "";
         display: inline-block;
-        position: relative;
-        top: 6px;
-        left: -8px;
         width: 1.5625rem;
         height: 1.5625rem;
-        background-color: $color-red;
-        border-radius: 50%;
+        background: url("/assets/icons/s-single.svg") no-repeat center;
+        background-size: contain;
       }
     }
   }

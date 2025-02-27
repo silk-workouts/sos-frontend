@@ -94,10 +94,12 @@
     gap: 8px;
 
     &::before {
-      content: "✔";
-      color: #e2211c;
-      font-size: 16px;
-      font-weight: bold;
+      content: "";
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: url("/assets/icons/checkmark-red.svg") no-repeat center;
+      background-size: contain;
     }
   }
 }

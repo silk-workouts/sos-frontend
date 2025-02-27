@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Button from '@/components/ui/Button/Button';
-import { useRouter } from 'next/navigation'; // For navigation
+import React from "react";
+import Button from "@/components/ui/Button/Button";
+import { useRouter } from "next/navigation"; // For navigation
 
-import styles from './HomeHero.module.scss';
+import styles from "./HomeHero.module.scss";
 
 export default function HomeHero() {
   const router = useRouter();
 
   const handleNavigate = () => {
-    router.push('/free-trial');
+    router.push("/signup");
   };
 
   return (
