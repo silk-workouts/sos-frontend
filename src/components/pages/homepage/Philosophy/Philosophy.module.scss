@@ -1,29 +1,77 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .philosophy {
   display: flex;
-  gap: 4rem;
-  padding: 0 2.5rem;
-  margin-top: $desktop-gutter * 6;
+  gap: $desktop-gutter;
+  padding: 0 $padding-medium;
+  margin-top: $padding-xl;
+  flex-direction: row;
+  justify-content: center;
+
+  @include mobile {
+    flex-direction: column-reverse;
+  }
+
+  @include tablet {
+    gap: $padding-medium;
+  }
+
+  @include desktop {
+    gap: $padding-xl;
+  }
 
   .founder {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      @include mobile {
+        max-height: 400px;
+        width: auto;
+        max-width: 100%;
+      }
+
+      @include tablet {
+        max-height: 400px;
+        width: auto;
+      }
+    }
+    .lineBreak {
+      display: none; // Default: no break
+
+      @include mobile {
+        display: block; // Mobile: force line break
+      }
+    }
 
     &__name {
       position: absolute;
       top: 62%;
       right: -37%;
+      @include mobile {
+        position: relative;
+        top: -40px;
+        right: 0;
+      }
 
+      @include tablet {
+        position: static;
+      }
+
+      @include desktop {
+        position: relative;
+        top: -50px;
+        right: -20%;
+      }
       &::before {
         content: "";
         display: inline-block;
-        position: relative;
-        top: 6px;
-        left: -8px;
         width: 1.5625rem;
         height: 1.5625rem;
-        background-color: $color-red;
-        border-radius: 50%;
+        background: url("/assets/icons/s-single.svg") no-repeat center;
+        background-size: contain;
       }
     }
   }
@@ -33,12 +81,25 @@
     flex-direction: column;
     gap: 4.5rem;
     padding-top: 0.9375rem;
+
+    @include mobile {
+      gap: 0;
+    }
+
+    @include tablet {
+      gap: 0;
+    }
   }
 
   &__info {
     padding-left: 5.625rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    @include mobile {
+      padding-left: 0;
+    }
+    @include tablet {
+      padding-left: 0;
+    }
   }
 }

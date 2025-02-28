@@ -13,11 +13,11 @@
     padding: $padding-medium;
     align-items: center;
   }
-
   @include tablet {
-    flex-direction: row-reverse;
-    align-items: flex-end;
+    flex-direction: row;
     padding: $padding-medium;
+
+    align-items: center;
   }
 
   &__imageContainer {
@@ -29,7 +29,7 @@
   }
 
   &__image {
-    max-width: 100%;
+    max-width: 150%;
     height: auto;
     border-radius: $radius-1;
   }
@@ -65,6 +65,7 @@
       padding-left: 0;
       text-align: left;
     }
+
     @include tablet {
       padding-left: 0;
     }

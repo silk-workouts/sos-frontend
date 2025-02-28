@@ -1,25 +1,67 @@
-@use '@/styles/partials/variables' as *;
+@use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/_mixins" as *;
 
 .getStarted {
-  background-color: $color-red;
-  text-align: center;
-  margin: 3.125rem 0;
-  box-shadow: 0px 9px 18.8px rgba($color-black, 0.59);
-  padding: 6.875rem 0;
-
-  &__mainTitle {
-    color: $color-white;
-    text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $padding-xl 0;
+  gap: 24px;
+  background: $color-red;
+  width: 100%;
+  @include tablet {
+    padding: $padding-xl $padding-medium;
   }
 
-  &__subHeading {
-    color: $color-white;
-  }
-
-  &__pricePlans {
-    margin-top: 3.75rem;
+  .container {
     display: flex;
-    justify-content: center;
-    gap: 4.75rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 320px;
+    @include tablet {
+      display: flex;
+      flex-direction: row;
+      min-width: 100%;
+    }
+    @include desktop {
+      align-items: center;
+      justify-content: center;
+    }
   }
+
+  .mainTitle {
+    text-align: center;
+    color: #ffffff;
+    max-width: 250px;
+    @include tablet {
+      text-align: left;
+      max-width: 50%;
+    }
+    @include desktop {
+      text-align: left;
+      max-width: 35%;
+    }
+  }
+
+  .priceCardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    // min-width: 288px;
+
+    @include desktop {
+      max-width: 50%;
+    }
+  }
+
+  // @include mobile {
+  //   .container {
+  //     // max-width: 320px;
+  //   }
+  // }
 }

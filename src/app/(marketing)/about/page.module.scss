@@ -9,13 +9,18 @@
   .heroSection {
     width: 100%;
     max-width: 1440px;
-    height: 783px;
+    height: 337px;
     position: relative;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding-left: 10%;
+    padding-left: $padding-small;
     transition: all 0.3s ease-in-out;
+
+    @include tablet {
+      padding-left: 10%;
+      height: 783px;
+    }
 
     &::before {
       content: "";
@@ -51,6 +56,10 @@
     flex-direction: column;
     gap: $mobile-gutter;
     transition: all 0.3s ease-in-out;
+
+    @include mobile {
+      height: 750px;
+    }
 
     @include tablet {
       flex-direction: row;
