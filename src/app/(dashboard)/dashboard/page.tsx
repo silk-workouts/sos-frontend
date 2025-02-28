@@ -1,7 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 import DashboardPageContent from "@/components/dashboard/DashboardPageContent/DashboardPageContent";
 import styles from "./page.module.scss";
@@ -55,6 +54,8 @@ export default function DashboardPage() {
 			? video.name.toLowerCase().includes("prescription")
 			: !video.name.toLowerCase().includes("prescription")
 	);
+
+	filteredShowcases.sort((a, b) => (a.name > b.name ? 1 : -1));
 
 	return (
 		<Suspense fallback={<div>Loading dashboard...</div>}>

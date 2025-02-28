@@ -11,7 +11,6 @@ const url = process.env.NEXT_PUBLIC_APP_URL;
 export default function VideoList({ video }) {
 	const router = useRouter();
 	const [showcaseVideos, setShowCaseVideos] = useState([]);
-	//console.log(video);
 
 	useEffect(() => {
 		async function getShowcaseVideos() {
@@ -30,23 +29,25 @@ export default function VideoList({ video }) {
 		getShowcaseVideos();
 	}, []);
 
+	function handleShowVideoList() {
+		const routeName = video.name
+			.toLowerCase()
+			.replace(/\s+/g, "-") //replace spaces with hyphens for better readability
+			.replace(/[%\.]/g, ""); //replace %  as it causes a Bad Request Error
+		router.push(`/dashboard/${routeName}/${video.vimeo_showcase_id}/videos`);
+	}
+
 	return (
 		<section className={styles.container}>
 			<div className={styles.header}>
 				<div>
 					<h2 className={styles.title}>{video.name.toLowerCase()}</h2>
-					<p className={styles.description}>{video.description}</p>
+					<p className={styles.description}>
+						{video.description ||
+							"[Description goes here but it is currently empty]"}
+					</p>
 				</div>
-				<button
-					className={styles.button}
-					onClick={() => {
-						router.push(
-							`/dashboard/${video.name.toLowerCase()}/${
-								video.vimeo_showcase_id
-							}`
-						);
-					}}
-				>
+				<button className={styles.button} onClick={handleShowVideoList}>
 					View all
 				</button>
 			</div>
@@ -54,7 +55,7 @@ export default function VideoList({ video }) {
 				{showcaseVideos.map((showcaseVideo) => {
 					return (
 						<li key={showcaseVideo.id}>
-							<Video showcaseVideo={showcaseVideo} />
+							<Video showcaseVideo={showcaseVideo} display="column" />
 						</li>
 					);
 				})}
