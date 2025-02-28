@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 const url = process.env.NEXT_PUBLIC_APP_URL;
 
-export default function VideoList({ video }) {
+export default function VideoList({ video, isModalOpen, setIsModalOpen }) {
 	const router = useRouter();
 	const [showcaseVideos, setShowCaseVideos] = useState([]);
 
@@ -55,7 +55,12 @@ export default function VideoList({ video }) {
 				{showcaseVideos.map((showcaseVideo) => {
 					return (
 						<li key={showcaseVideo.id}>
-							<Video showcaseVideo={showcaseVideo} display="column" />
+							<Video
+								showcaseVideo={showcaseVideo}
+								display="column"
+								isModalOpen={isModalOpen}
+								setIsModalOpen={setIsModalOpen}
+							/>
 						</li>
 					);
 				})}

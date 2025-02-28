@@ -3,10 +3,10 @@ import closeIcon from "/public/assets/icons/close.svg";
 import Button from "@/components/ui/Button/Button";
 import styles from "./ContactFormModal.module.scss";
 
-type contactModal = {
+interface contactModal {
 	show: boolean;
 	handleClose: () => void;
-};
+}
 
 export default function ContactFormModal({ show, handleClose }: contactModal) {
 	if (!show) {

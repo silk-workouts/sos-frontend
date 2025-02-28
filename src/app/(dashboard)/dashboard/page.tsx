@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 import DashboardPageContent from "@/components/dashboard/DashboardPageContent/DashboardPageContent";
 import styles from "./page.module.scss";
+import AddToModal from "@/components/dashboard/AddToModal/AddToModal";
 
 const url = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -23,6 +24,7 @@ export default function DashboardPage() {
 		element: true,
 		program: false,
 	});
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	function handleSelect(selected: boolean) {
 		if (!selected) {
@@ -99,7 +101,12 @@ export default function DashboardPage() {
 				aria-labelledby="element-tab"
 				hidden={!isSelected.element}
 			>
-				<DashboardPageContent showcases={filteredShowcases} type="element" />
+				<DashboardPageContent
+					showcases={filteredShowcases}
+					type="element"
+					isModalOpen={isModalOpen}
+					setIsModalOpen={setIsModalOpen}
+				/>
 			</div>
 			<div
 				id="program-panel"
@@ -107,8 +114,14 @@ export default function DashboardPage() {
 				aria-labelledby="program-tab"
 				hidden={!isSelected.program}
 			>
-				<DashboardPageContent showcases={filteredShowcases} type="program" />
+				<DashboardPageContent
+					showcases={filteredShowcases}
+					type="program"
+					isModalOpen={isModalOpen}
+					setIsModalOpen={setIsModalOpen}
+				/>
 			</div>
+			<AddToModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
 		</Suspense>
 	);
 }

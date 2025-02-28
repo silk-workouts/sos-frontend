@@ -2,7 +2,12 @@ import Image from "next/image";
 import kebabIcon from "/public/assets/icons/kebab.svg";
 import styles from "./Video.module.scss";
 
-export default function Video({ showcaseVideo, display }) {
+export default function Video({
+	showcaseVideo,
+	display,
+	isModalOpen,
+	setIsModalOpen,
+}) {
 	return (
 		<article
 			className={`${styles.card} ${
@@ -16,7 +21,10 @@ export default function Video({ showcaseVideo, display }) {
 			></video>
 			<div className={styles.header}>
 				<h3 className={styles.title}>{showcaseVideo.title.toLowerCase()}</h3>
-				<button className={styles.menuButton}>
+				<button
+					className={styles.menuButton}
+					onClick={() => setIsModalOpen(!isModalOpen)}
+				>
 					<Image src={kebabIcon} alt="A kebab menu icon" />
 				</button>
 			</div>

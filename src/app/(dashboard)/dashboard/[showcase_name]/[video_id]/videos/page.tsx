@@ -9,6 +9,7 @@ import playIcon from "/public/assets/icons/play.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
 import styles from "./page.module.scss";
 import Video from "@/components/dashboard/Video/Video";
+import AddToModal from "@/components/dashboard/AddToModal/AddToModal";
 
 const url = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -21,6 +22,7 @@ export default function SingleVideoPage() {
 	const [loading, setLoading] = useState(true);
 	const [showcase, setShowCase] = useState({});
 	const [showcaseVideos, setShowCaseVideos] = useState([]);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const showcaseName = showcase_name.replaceAll("-", " ");
 
 	useEffect(() => {
@@ -106,11 +108,17 @@ export default function SingleVideoPage() {
 				{showcaseVideos.map((video) => {
 					return (
 						<li key={video.id}>
-							<Video showcaseVideo={video} display="row" />
+							<Video
+								showcaseVideo={video}
+								display="row"
+								isModalOpen={isModalOpen}
+								setIsModalOpen={setIsModalOpen}
+							/>
 						</li>
 					);
 				})}
 			</ul>
+			<AddToModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
 		</>
 	);
 }
