@@ -37,4 +37,11 @@
 	display: flex;
 	gap: 1rem;
 	overflow-x: scroll;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+
+	&::-webkit-scrollbar {
+		width: 0;
+		height: 0;
+	}
 }
