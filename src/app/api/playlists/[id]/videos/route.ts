@@ -32,7 +32,15 @@ export async function POST(
       });
     }
 
-    // ✅ Check if playlist exists
+    // ✅ Ensure vimeo_video_id is strictly numeric
+    if (!/^\d+$/.test(vimeo_video_id)) {
+      return NextResponse.json({
+        status: 400,
+        message: 'Invalid Vimeo Video ID format',
+      });
+    }
+
+    // ✅ Check if playlist exists and belongs to the user
     const [playlistRows] = (await pool.execute(
       `SELECT user_id FROM playlists WHERE id = ?`,
       [playlistId]
@@ -45,7 +53,6 @@ export async function POST(
       });
     }
 
-    // ✅ Check if user owns the playlist
     if (playlistRows[0].user_id !== userId) {
       return NextResponse.json({
         status: 403,
@@ -55,7 +62,7 @@ export async function POST(
 
     // ✅ Validate vimeo_video_id exists in `videos` table
     const [videoRows] = (await pool.execute(
-      `SELECT id FROM videos WHERE vimeo_video_id = ?`,
+      `SELECT id FROM videos WHERE CAST(vimeo_video_id AS CHAR) = ?`,
       [vimeo_video_id]
     )) as [Array<{ id: number }>, any];
 
@@ -68,6 +75,19 @@ export async function POST(
 
     // ✅ Get the actual internal video_id
     const video_id = videoRows[0].id;
+
+    // ✅ Check if the video is already in the playlist
+    const [existingVideo] = (await pool.execute(
+      `SELECT video_id FROM playlist_videos WHERE playlist_id = ? AND video_id = ?`,
+      [playlistId, video_id]
+    )) as [Array<{ video_id: number }>, any];
+
+    if (existingVideo.length > 0) {
+      return NextResponse.json({
+        status: 409, // HTTP 409 Conflict
+        message: 'Duplicate Video: This video is already in the playlist',
+      });
+    }
 
     // ✅ Determine position if not provided
     let finalPosition = position;
@@ -89,8 +109,7 @@ export async function POST(
     // ✅ Insert video into playlist with correct position
     await pool.execute(
       `INSERT INTO playlist_videos (playlist_id, video_id, position)
-       VALUES (?, ?, ?)
-       ON DUPLICATE KEY UPDATE position = VALUES(position);`,
+       VALUES (?, ?, ?)`,
       [playlistId, video_id, finalPosition]
     );
 
@@ -103,129 +122,6 @@ export async function POST(
     return NextResponse.json({
       status: 500,
       message: 'Failed to add video to playlist',
-    });
-  }
-}
-
-// ✅ Remove a video from a playlist (DELETE)
-export async function DELETE(
-  req: NextRequest,
-  context: { params: { id: string; video_id: string } }
-) {
-  try {
-    const auth = authenticateUser(req);
-    if ('error' in auth) {
-      return NextResponse.json({ error: auth.error }, { status: auth.status });
-    }
-    const { userId } = auth;
-
-    const { id: playlistId, video_id } = context.params;
-
-    if (!playlistId || !video_id) {
-      return NextResponse.json({
-        status: 400,
-        message: 'Playlist ID and Video ID are required',
-      });
-    }
-
-    // ✅ Check if playlist exists
-    const [playlistRows] = (await pool.execute(
-      `SELECT user_id FROM playlists WHERE id = ?`,
-      [playlistId]
-    )) as [Array<{ user_id: string }>, any];
-
-    if (!playlistRows.length) {
-      return NextResponse.json({
-        status: 404,
-        message: 'Playlist not found or has been deleted',
-      });
-    }
-
-    // ✅ Check if user owns the playlist
-    if (playlistRows[0].user_id !== userId) {
-      return NextResponse.json({
-        status: 403,
-        message: 'Forbidden: You do not own this playlist',
-      });
-    }
-
-    // ✅ Remove video from playlist
-    await pool.execute(
-      `DELETE FROM playlist_videos WHERE playlist_id = ? AND video_id = ?`,
-      [playlistId, video_id]
-    );
-
-    return NextResponse.json({
-      status: 200,
-      message: '✅ Video removed from playlist successfully',
-    });
-  } catch (error) {
-    console.error('❌ Failed to remove video from playlist:', error);
-    return NextResponse.json({
-      status: 500,
-      message: 'Failed to remove video from playlist',
-    });
-  }
-}
-
-// ✅ Update video position in playlist (PATCH)
-export async function PATCH(
-  req: NextRequest,
-  context: { params: { id: string; video_id: string } }
-) {
-  try {
-    const auth = authenticateUser(req);
-    if ('error' in auth) {
-      return NextResponse.json({ error: auth.error }, { status: auth.status });
-    }
-    const { userId } = auth;
-
-    const { id: playlistId, video_id } = context.params;
-    const { position } = await req.json();
-
-    if (!playlistId || !video_id || position === undefined) {
-      return NextResponse.json({
-        status: 400,
-        message: 'Playlist ID, Video ID, and position are required',
-      });
-    }
-
-    // ✅ Check if playlist exists
-    const [playlistRows] = (await pool.execute(
-      `SELECT user_id FROM playlists WHERE id = ?`,
-      [playlistId]
-    )) as [Array<{ user_id: string }>, any];
-
-    if (!playlistRows.length) {
-      return NextResponse.json({
-        status: 404,
-        message: 'Playlist not found or has been deleted',
-      });
-    }
-
-    // ✅ Check if user owns the playlist
-    if (playlistRows[0].user_id !== userId) {
-      return NextResponse.json({
-        status: 403,
-        message: 'Forbidden: You do not own this playlist',
-      });
-    }
-
-    // ✅ Update video position in playlist
-    await pool.execute(
-      `UPDATE playlist_videos SET position = ? WHERE playlist_id = ? AND video_id = ?`,
-      [position, playlistId, video_id]
-    );
-
-    return NextResponse.json({
-      status: 200,
-      message: '✅ Video position updated successfully',
-    });
-  } catch (error) {
-    console.error('❌ Failed to update video position:', error);
-    return NextResponse.json({
-      status: 500,
-      message: 'Failed to update video position',
     });
   }
 }

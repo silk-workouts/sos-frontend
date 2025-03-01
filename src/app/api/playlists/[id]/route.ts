@@ -42,7 +42,7 @@ export async function GET(
 
     const playlist = playlistRows[0];
 
-    // ✅ Fetch associated videos (Fix: Use correct `video_id` mapping)
+    // ✅ Fetch associated videos
     const [videoRows] = (await pool.execute(
       `SELECT v.id, v.vimeo_video_id, v.title, v.description, v.thumbnail_url, v.duration, pv.position
        FROM playlist_videos pv
@@ -140,7 +140,7 @@ export async function PATCH(
   }
 }
 
-// ✅ Delete a playlist (DELETE)
+// ✅ Delete a playlist and cascade delete related videos (DELETE)
 export async function DELETE(
   req: NextRequest,
   context: { params: { id: string } }
@@ -168,27 +168,42 @@ export async function DELETE(
       );
     }
 
-    // ✅ Remove associated videos first (to prevent foreign key constraint issues)
-    await pool.execute('DELETE FROM playlist_videos WHERE playlist_id = ?', [
-      playlistId,
-    ]);
+    // ✅ Use a transaction to ensure both deletions occur atomically
+    const connection = await pool.getConnection();
+    try {
+      await connection.beginTransaction();
 
-    // ✅ Delete the playlist itself
-    const [result] = await pool.execute('DELETE FROM playlists WHERE id = ?', [
-      playlistId,
-    ]);
-
-    if ((result as any).affectedRows === 0) {
-      return NextResponse.json(
-        { error: 'Playlist not found' },
-        { status: 404 }
+      // ✅ Remove associated videos first (to prevent orphaned data)
+      await connection.execute(
+        'DELETE FROM playlist_videos WHERE playlist_id = ?',
+        [playlistId]
       );
-    }
 
-    return NextResponse.json({
-      message: '✅ Playlist deleted successfully',
-      playlistId,
-    });
+      // ✅ Delete the playlist itself
+      const [result] = await connection.execute(
+        'DELETE FROM playlists WHERE id = ?',
+        [playlistId]
+      );
+
+      if ((result as any).affectedRows === 0) {
+        await connection.rollback();
+        return NextResponse.json(
+          { error: 'Playlist not found' },
+          { status: 404 }
+        );
+      }
+
+      await connection.commit();
+      return NextResponse.json({
+        message: '✅ Playlist and its associated videos deleted successfully',
+        playlistId,
+      });
+    } catch (error) {
+      await connection.rollback();
+      throw error;
+    } finally {
+      connection.release();
+    }
   } catch (error) {
     console.error(`❌ Failed to delete playlist ${context.params.id}:`, error);
     return NextResponse.json(
