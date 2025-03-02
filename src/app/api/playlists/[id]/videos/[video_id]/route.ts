@@ -11,18 +11,11 @@ const authenticateUser = (req: NextRequest) => {
 };
 
 // ✅ DELETE: Remove a video from a playlist
-export async function DELETE(
-  req: NextRequest,
-  context: { params: { id: string; video_id: string } }
-) {
+export async function DELETE(req: NextRequest) {
   try {
-    const auth = authenticateUser(req);
-    if ('error' in auth) {
-      return NextResponse.json({ error: auth.error }, { status: auth.status });
-    }
-    const { userId } = auth;
-
-    const { id: playlistId, video_id } = context.params;
+    const pathSegments = req.nextUrl.pathname.split('/');
+    const playlistId = pathSegments[pathSegments.length - 3]; // Extract playlist ID
+    const video_id = pathSegments[pathSegments.length - 1]; // Extract video ID
 
     if (!playlistId || !video_id) {
       return NextResponse.json({
@@ -30,6 +23,12 @@ export async function DELETE(
         message: 'Playlist ID and Video ID are required',
       });
     }
+
+    const auth = authenticateUser(req);
+    if ('error' in auth) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
+    }
+    const { userId } = auth;
 
     // ✅ Check if playlist exists & belongs to the user
     const [playlistRows] = (await pool.execute(
@@ -92,24 +91,30 @@ export async function DELETE(
 }
 
 // ✅ PATCH: Update video position in playlist
-export async function PATCH(
-  req: NextRequest,
-  context: { params: { id: string; video_id: string } }
-) {
+export async function PATCH(req: NextRequest) {
   try {
+    const pathSegments = req.nextUrl.pathname.split('/');
+    const playlistId = pathSegments[pathSegments.length - 3]; // Extract playlist ID
+    const video_id = pathSegments[pathSegments.length - 1]; // Extract video ID
+
+    if (!playlistId || !video_id) {
+      return NextResponse.json({
+        status: 400,
+        message: 'Playlist ID and Video ID are required',
+      });
+    }
+
     const auth = authenticateUser(req);
     if ('error' in auth) {
       return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
     const { userId } = auth;
-
-    const { id: playlistId, video_id } = context.params;
     const { position } = await req.json();
 
-    if (!playlistId || !video_id || position === undefined) {
+    if (position === undefined) {
       return NextResponse.json({
         status: 400,
-        message: 'Playlist ID, Video ID, and position are required',
+        message: 'Position is required',
       });
     }
 
