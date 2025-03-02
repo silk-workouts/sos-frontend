@@ -11,14 +11,17 @@ const authenticateUser = (req: NextRequest) => {
 };
 
 // ✅ Fetch a single playlist and its videos (GET)
-export async function GET(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function GET(req: NextRequest) {
   try {
-    const playlistId = context.params.id;
-    const auth = authenticateUser(req);
+    const playlistId = req.nextUrl.pathname.split('/').pop(); // ✅ Extract ID from URL
+    if (!playlistId) {
+      return NextResponse.json(
+        { error: 'Missing playlist ID' },
+        { status: 400 }
+      );
+    }
 
+    const auth = authenticateUser(req);
     if ('error' in auth) {
       return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
@@ -52,12 +55,9 @@ export async function GET(
       [playlistId]
     )) as [Array<any>, any];
 
-    return NextResponse.json({
-      playlist,
-      videos: videoRows,
-    });
+    return NextResponse.json({ playlist, videos: videoRows });
   } catch (error) {
-    console.error(`❌ Failed to fetch playlist ${context.params.id}:`, error);
+    console.error(`❌ Failed to fetch playlist:`, error);
     return NextResponse.json(
       { error: 'Failed to fetch playlist' },
       { status: 500 }
@@ -66,14 +66,17 @@ export async function GET(
 }
 
 // ✅ Update playlist details (PATCH)
-export async function PATCH(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function PATCH(req: NextRequest) {
   try {
-    const playlistId = context.params.id;
-    const auth = authenticateUser(req);
+    const playlistId = req.nextUrl.pathname.split('/').pop(); // ✅ Extract ID from URL
+    if (!playlistId) {
+      return NextResponse.json(
+        { error: 'Missing playlist ID' },
+        { status: 400 }
+      );
+    }
 
+    const auth = authenticateUser(req);
     if ('error' in auth) {
       return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
@@ -132,7 +135,7 @@ export async function PATCH(
       playlistId,
     });
   } catch (error) {
-    console.error(`❌ Failed to update playlist ${context.params.id}:`, error);
+    console.error(`❌ Failed to update playlist:`, error);
     return NextResponse.json(
       { error: 'Failed to update playlist' },
       { status: 500 }
@@ -141,14 +144,17 @@ export async function PATCH(
 }
 
 // ✅ Delete a playlist and cascade delete related videos (DELETE)
-export async function DELETE(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function DELETE(req: NextRequest) {
   try {
-    const playlistId = context.params.id;
-    const auth = authenticateUser(req);
+    const playlistId = req.nextUrl.pathname.split('/').pop(); // ✅ Extract ID from URL
+    if (!playlistId) {
+      return NextResponse.json(
+        { error: 'Missing playlist ID' },
+        { status: 400 }
+      );
+    }
 
+    const auth = authenticateUser(req);
     if ('error' in auth) {
       return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
@@ -205,7 +211,7 @@ export async function DELETE(
       connection.release();
     }
   } catch (error) {
-    console.error(`❌ Failed to delete playlist ${context.params.id}:`, error);
+    console.error(`❌ Failed to delete playlist:`, error);
     return NextResponse.json(
       { error: 'Failed to delete playlist' },
       { status: 500 }

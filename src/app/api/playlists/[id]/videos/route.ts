@@ -11,24 +11,30 @@ const authenticateUser = (req: NextRequest) => {
 };
 
 // ✅ Add a video to a playlist (POST)
-export async function POST(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function POST(req: NextRequest) {
   try {
+    const pathSegments = req.nextUrl.pathname.split('/');
+    const playlistId = pathSegments[pathSegments.length - 2]; // Extract playlist ID
+
+    if (!playlistId) {
+      return NextResponse.json({
+        status: 400,
+        message: 'Playlist ID is required',
+      });
+    }
+
     const auth = authenticateUser(req);
     if ('error' in auth) {
       return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
     const { userId } = auth;
 
-    const playlistId = context.params.id;
     const { vimeo_video_id, position } = await req.json();
 
-    if (!playlistId || !vimeo_video_id) {
+    if (!vimeo_video_id) {
       return NextResponse.json({
         status: 400,
-        message: 'Playlist ID and Vimeo Video ID are required',
+        message: 'Vimeo Video ID is required',
       });
     }
 
@@ -84,7 +90,7 @@ export async function POST(
 
     if (existingVideo.length > 0) {
       return NextResponse.json({
-        status: 409, // HTTP 409 Conflict
+        status: 409,
         message: 'Duplicate Video: This video is already in the playlist',
       });
     }
