@@ -1,13 +1,24 @@
 @use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/_mixins" as *;
 
 .hero {
   position: relative;
   width: 100%;
-  height: 838px; // almost full viewport height for the hero section
+  min-width: fit-content;
+  height: 838px; // Default height for desktop
   background-image: url("/assets/images/hero-background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  @include mobile {
+    height: 272px; // Limit height on mobile
+    background-position: center top;
+    display: flex;
+    align-items: center; // Ensures text stays visible within the image
+    justify-content: center;
+    padding: 16px;
+  }
 
   &__overlay {
     display: flex;
@@ -19,7 +30,31 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: $color-white;
-    height: 45vh;
+    height: auto; // Allow flexible height adjustment
+    gap: $padding-xl;
+
+    @include mobile {
+      position: relative; // Prevent absolute positioning on mobile
+      top: unset;
+      left: unset;
+      transform: none;
+      width: 100%;
+      gap: $mobile-gutter;
+    }
+
+    img {
+      @include mobile {
+        max-width: 100px;
+        height: auto;
+      }
+    }
+
+    h1,
+    h2 {
+      @include mobile {
+        font-size: 24px;
+        line-height: 28px;
+      }
+    }
   }
 }
