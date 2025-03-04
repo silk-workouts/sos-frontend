@@ -11,6 +11,11 @@ const url = process.env.NEXT_PUBLIC_APP_URL;
 export default function VideoList({ video, isModalOpen, setIsModalOpen }) {
 	const router = useRouter();
 	const [showcaseVideos, setShowCaseVideos] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const routeName = video.name
+		.toLowerCase()
+		.replace(/\s+/g, "-") //replace spaces with hyphens for better readability
+		.replace(/[%\.]/g, ""); //replace %  as it causes a Bad Request Error
 
 	useEffect(() => {
 		async function getShowcaseVideos() {
@@ -19,6 +24,7 @@ export default function VideoList({ video, isModalOpen, setIsModalOpen }) {
 					`${url}/api/showcases/${video.vimeo_showcase_id}`
 				);
 				setShowCaseVideos(response.data.videos);
+				setIsLoading(false);
 			} catch (error) {
 				console.error(
 					`Unable to retrieve showcase videos from Vimeo: ${error}`
@@ -29,11 +35,11 @@ export default function VideoList({ video, isModalOpen, setIsModalOpen }) {
 		getShowcaseVideos();
 	}, []);
 
+	if (isLoading) {
+		return <div>List of videos is loading...</div>;
+	}
+
 	function handleShowVideoList() {
-		const routeName = video.name
-			.toLowerCase()
-			.replace(/\s+/g, "-") //replace spaces with hyphens for better readability
-			.replace(/[%\.]/g, ""); //replace %  as it causes a Bad Request Error
 		router.push(`/dashboard/${routeName}/${video.vimeo_showcase_id}/videos`);
 	}
 
@@ -60,6 +66,7 @@ export default function VideoList({ video, isModalOpen, setIsModalOpen }) {
 								display="column"
 								isModalOpen={isModalOpen}
 								setIsModalOpen={setIsModalOpen}
+								path={`/dashboard/${routeName}/${video.vimeo_showcase_id}/videos`}
 							/>
 						</li>
 					);

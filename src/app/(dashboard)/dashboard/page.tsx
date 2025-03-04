@@ -39,7 +39,12 @@ export default function DashboardPage() {
 		async function getShowcases() {
 			try {
 				const response = await axios.get(`${url}/api/showcases`);
-				setShowcases(response.data.showcases);
+				setShowcases(
+					response.data.showcases.filter(
+						(video: Showcase) =>
+							!video.name.toLowerCase().includes("body burning")
+					)
+				);
 			} catch (error) {
 				console.error(
 					`Unable to retrieve showcase videos from Vimeo: ${error}`

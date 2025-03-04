@@ -13,11 +13,11 @@ import AddToModal from "@/components/dashboard/AddToModal/AddToModal";
 
 const url = process.env.NEXT_PUBLIC_APP_URL;
 
-export default function SingleVideoPage() {
+export default function SingleShowcasePage() {
 	const router = useRouter();
-	const { showcase_name, video_id } = useParams<{
+	const { showcase_name, showcase_id } = useParams<{
 		showcase_name: string;
-		video_id: string;
+		showcase_id: string;
 	}>();
 	const [loading, setLoading] = useState(true);
 	const [showcase, setShowCase] = useState({});
@@ -28,7 +28,7 @@ export default function SingleVideoPage() {
 	useEffect(() => {
 		async function getShowcaseVideos() {
 			try {
-				const response = await axios.get(`${url}/api/showcases/${video_id}`);
+				const response = await axios.get(`${url}/api/showcases/${showcase_id}`);
 				setShowCase(response.data.showcase);
 				setShowCaseVideos(response.data.videos);
 				setLoading(false);
@@ -40,9 +40,7 @@ export default function SingleVideoPage() {
 		}
 
 		getShowcaseVideos();
-	}, [video_id]);
-
-	console.log(showcaseVideos);
+	}, [showcase_id]);
 
 	if (loading) {
 		return <div>Loading videos for {showcaseName}...</div>;
@@ -113,6 +111,7 @@ export default function SingleVideoPage() {
 								display="row"
 								isModalOpen={isModalOpen}
 								setIsModalOpen={setIsModalOpen}
+								path={`/dashboard/${showcase_name}/${showcase_id}/videos`}
 							/>
 						</li>
 					);
