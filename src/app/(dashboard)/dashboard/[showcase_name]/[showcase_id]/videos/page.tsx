@@ -10,6 +10,8 @@ import clockIcon from "/public/assets/icons/clock.svg";
 import styles from "./page.module.scss";
 import Video from "@/components/dashboard/Video/Video";
 import AddToModal from "@/components/dashboard/AddToModal/AddToModal";
+import { Showcase } from "../../../page";
+import { ShowcaseVideo } from "@/components/dashboard/VideoList/VideoList";
 
 const url = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -20,8 +22,8 @@ export default function SingleShowcasePage() {
 		showcase_id: string;
 	}>();
 	const [loading, setLoading] = useState(true);
-	const [showcase, setShowCase] = useState({});
-	const [showcaseVideos, setShowCaseVideos] = useState([]);
+	const [showcase, setShowCase] = useState<Showcase | null>(null);
+	const [showcaseVideos, setShowCaseVideos] = useState<ShowcaseVideo[]>([]);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const showcaseName = showcase_name.replaceAll("-", " ");
 
@@ -45,6 +47,7 @@ export default function SingleShowcasePage() {
 	if (loading) {
 		return <div>Loading videos for {showcaseName}...</div>;
 	}
+
 	return (
 		<>
 			<div className={styles.header}>
@@ -73,7 +76,7 @@ export default function SingleShowcasePage() {
 				<div className={styles["hero__image-container"]}>
 					{/* <Image
 						src={showcase.thumbnail_url}
-						alt={`Cover image for the ${showcaseName} workout`}
+						alt={`Thumbnail image for the ${showcaseName} workout`}
 						width={0}
 						height={0}
 						className={styles.hero__image}
@@ -98,7 +101,7 @@ export default function SingleShowcasePage() {
 					</span>
 				</div>
 				<p className={styles.hero__description}>
-					{showcase.description ||
+					{showcase?.description ||
 						"[Description goes here but it is currently empty]"}
 				</p>
 			</div>

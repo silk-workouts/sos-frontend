@@ -21,7 +21,7 @@ export default function DashboardPageContent({
 }: ContentProps) {
 	const searchParams = useSearchParams();
 	const router = useRouter();
-	const [elementFilter, setElementFilter] = useState(new Set());
+	const [elementFilter, setElementFilter] = useState<Set<string>>(new Set());
 
 	function handleFilter(filter: string) {
 		if (elementFilter.has(filter)) {

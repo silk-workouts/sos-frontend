@@ -1,11 +1,11 @@
 import styles from "./AddToModal.module.scss";
 
-interface AddModal {
+interface AddModalProps {
 	isOpen: boolean;
 	setIsOpen: (arg1: boolean) => void;
 }
 
-export default function AddToModal({ isOpen, setIsOpen }: AddModal) {
+export default function AddToModal({ isOpen, setIsOpen }: AddModalProps) {
 	function handleCloseModal(event: React.MouseEvent<HTMLDivElement>) {
 		const target = event.target;
 

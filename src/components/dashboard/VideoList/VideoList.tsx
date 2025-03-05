@@ -1,16 +1,38 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Video from "../Video/Video";
-import styles from "./VideoList.module.scss";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Showcase } from "src/app/(dashboard)/dashboard/page";
+import Video from "../Video/Video";
+import styles from "./VideoList.module.scss";
 
 const url = process.env.NEXT_PUBLIC_APP_URL;
 
-export default function VideoList({ video, isModalOpen, setIsModalOpen }) {
+interface VideoListProps {
+	video: Showcase;
+	isModalOpen: boolean;
+	setIsModalOpen: (arg1: boolean) => void;
+}
+
+export interface ShowcaseVideo {
+	id: number;
+	vimeo_video_id: string;
+	title: "string";
+	description: string;
+	duration: number;
+	position: number;
+	thumbnail_url: string;
+	created_at: string;
+}
+
+export default function VideoList({
+	video,
+	isModalOpen,
+	setIsModalOpen,
+}: VideoListProps) {
 	const router = useRouter();
-	const [showcaseVideos, setShowCaseVideos] = useState([]);
+	const [showcaseVideos, setShowCaseVideos] = useState<ShowcaseVideo[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const routeName = video.name
 		.toLowerCase()
@@ -46,13 +68,13 @@ export default function VideoList({ video, isModalOpen, setIsModalOpen }) {
 	return (
 		<section className={styles.container}>
 			<div className={styles.header}>
-				<div>
+				<header>
 					<h2 className={styles.title}>{video.name.toLowerCase()}</h2>
 					<p className={styles.description}>
 						{video.description ||
 							"[Description goes here but it is currently empty]"}
 					</p>
-				</div>
+				</header>
 				<button className={styles.button} onClick={handleShowVideoList}>
 					View all
 				</button>

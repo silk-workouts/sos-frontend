@@ -1,7 +1,16 @@
 import Image from "next/image";
 import kebabIcon from "/public/assets/icons/kebab.svg";
-import styles from "./Video.module.scss";
 import Link from "next/link";
+import { ShowcaseVideo } from "../VideoList/VideoList";
+import styles from "./Video.module.scss";
+
+interface VideoProps {
+	showcaseVideo: ShowcaseVideo;
+	display: string;
+	isModalOpen: boolean;
+	setIsModalOpen: (arg1: boolean) => void;
+	path: string;
+}
 
 export default function Video({
 	showcaseVideo,
@@ -9,29 +18,36 @@ export default function Video({
 	isModalOpen,
 	setIsModalOpen,
 	path,
-}) {
+}: VideoProps) {
 	return (
-		<Link href={`${path}/${showcaseVideo.vimeo_video_id}`}>
-			<article
-				className={`${styles.card} ${
-					display === "row" ? styles["card--row"] : ""
-				}`}
-			>
-				<video
-					src="null"
-					className={styles.video}
-					poster={showcaseVideo.thumbnail_url}
-				></video>
-				<div className={styles.header}>
-					<h3 className={styles.title}>{showcaseVideo.title.toLowerCase()}</h3>
-					<button
-						className={styles.menuButton}
-						onClick={() => setIsModalOpen(!isModalOpen)}
-					>
-						<Image src={kebabIcon} alt="A kebab menu icon" />
-					</button>
-				</div>
-			</article>
-		</Link>
+		<article
+			className={`${styles.card} ${
+				display === "row" ? styles["card--row"] : ""
+			}`}
+		>
+			<Link href={`${path}/${showcaseVideo.vimeo_video_id}`}>
+				<Image
+					src={showcaseVideo.thumbnail_url}
+					className={styles.thumbnail}
+					alt={`A thumbnail image for the ${showcaseVideo.title} workout`}
+					width={132}
+					height={74}
+				/>
+			</Link>
+			<div className={styles.header}>
+				<h3 className={styles.title}>
+					<Link href={`${path}/${showcaseVideo.vimeo_video_id}`}>
+						{showcaseVideo.title.toLowerCase()}{" "}
+					</Link>
+				</h3>
+
+				<button
+					className={styles.menuButton}
+					onClick={() => setIsModalOpen(!isModalOpen)}
+				>
+					<Image src={kebabIcon} alt="A kebab menu icon" />
+				</button>
+			</div>
+		</article>
 	);
 }

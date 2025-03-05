@@ -19,7 +19,7 @@ export interface Showcase {
 }
 
 export default function DashboardPage() {
-	const [showcases, setShowcases] = useState([]);
+	const [showcases, setShowcases] = useState<Showcase[]>([]);
 	const [isSelected, setIsSelected] = useState({
 		element: true,
 		program: false,
