@@ -19,9 +19,13 @@
 .header {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
 	padding-left: 0.25rem;
 	flex: 1;
+
+	&--row {
+		align-items: center;
+	}
 }
 
 .title {

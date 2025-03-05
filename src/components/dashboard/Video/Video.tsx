@@ -34,7 +34,11 @@ export default function Video({
 					height={74}
 				/>
 			</Link>
-			<div className={styles.header}>
+			<div
+				className={`${styles.header} ${
+					display === "row" ? styles["header--row"] : ""
+				}`}
+			>
 				<h3 className={styles.title}>
 					<Link href={`${path}/${showcaseVideo.vimeo_video_id}`}>
 						{showcaseVideo.title.toLowerCase()}{" "}
