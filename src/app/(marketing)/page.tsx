@@ -9,7 +9,7 @@ import Testimonials from "@/components/pages/homepage/Testimonials/Testimonials"
 
 export default function Home() {
   return (
-    <>
+    <div className={styles.container}>
       <HomeHero />
       <Philosophy />
 
@@ -18,6 +18,6 @@ export default function Home() {
       <HomeElements />
       <Testimonials />
       <GetStarted />
-    </>
+    </div>
   );
 }
