@@ -1,9 +1,21 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .container {
   display: flex;
   flex-direction: column;
   // align-items: center;
   justify-content: center;
-  max-width: $content-container-maximum;
+
+  @include mobile {
+    max-width: 100vw;
+  }
+
+  @include tablet {
+    max-width: 100vw;
+  }
+
+  @include desktop {
+    max-width: $content-container-maximum;
+  }
 }
