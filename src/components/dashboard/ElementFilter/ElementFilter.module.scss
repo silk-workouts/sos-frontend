@@ -28,6 +28,7 @@
 	}
 
 	&--selected {
-		background-color: grey;
+		border-width: 2px;
+		font-weight: $font-weight-extrabold;
 	}
 }
