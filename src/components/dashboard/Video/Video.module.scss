@@ -1,0 +1,41 @@
+@use "@/styles/partials/variables" as *;
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+
+	&--row {
+		flex-direction: row;
+		gap: 0.5rem;
+	}
+}
+
+.thumbnail {
+	border-radius: 1rem;
+	border: 1px solid $color-black;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding-left: 0.25rem;
+	flex: 1;
+
+	&--row {
+		align-items: center;
+	}
+}
+
+.title {
+	font-size: 0.75rem;
+	font-weight: $font-weight-regular;
+	text-transform: capitalize;
+}
+
+.menuButton {
+	background-color: $color-white;
+	border: none;
+	cursor: pointer;
+}

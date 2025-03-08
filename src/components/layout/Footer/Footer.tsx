@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import logo from "/public/assets/images/logo.png";
 import facebookIcon from "/public/assets/icons/facebook.svg";
 import instagramIcon from "/public/assets/icons/instagram.svg";
@@ -7,6 +9,12 @@ import twitterIcon from "/public/assets/icons/twitter.svg";
 import styles from "./Footer.module.scss";
 
 export default function Footer() {
+	const pathname = usePathname();
+
+	if (pathname.startsWith("/dashboard")) {
+		return;
+	}
+
 	return (
 		<footer className={styles.footer}>
 			<div className={styles.header}>
