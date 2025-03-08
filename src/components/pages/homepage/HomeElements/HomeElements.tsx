@@ -30,7 +30,7 @@ export default function HomeElements() {
         </div>
         <div className={styles["workout-description"]}>
           <p className="body2">→</p>
-          <p className="body2">A killer arm workout</p>
+          <p className={`${styles["underline"]} body2`}>A killer arm workout</p>
         </div>
       </div>
       <Button
