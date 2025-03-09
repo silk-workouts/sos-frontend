@@ -6,8 +6,6 @@ import DashboardPageContent from '@/components/dashboard/DashboardPageContent/Da
 import styles from './page.module.scss';
 import AddToModal from '@/components/dashboard/AddToModal/AddToModal';
 
-const url = process.env.NEXT_PUBLIC_APP_URL;
-
 export interface Showcase {
   id: number;
   vimeo_showcase_id: string;

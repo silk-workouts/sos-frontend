@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.scss';
 import axios from 'axios';
 
-const url = process.env.NEXT_PUBLIC_APP_URL;
-
 interface Video {
   created_at: string;
   description: string;
@@ -44,10 +42,10 @@ export default function SingleVideoPage() {
   return (
     <div className={styles['video-container']}>
       <video controls poster={video?.thumbnail_url} className={styles.video}>
-        <source src={`${url}${video?.playbackUrl}`} />
+        <source src={`${window.location.origin}${video?.playbackUrl}`} />
         Watch the
         <a
-          href={`${url}${video?.playbackUrl}`}
+          href={`${window.location.origin}${video?.playbackUrl}`}
         >{`${video?.title} workout video`}</a>
       </video>
     </div>

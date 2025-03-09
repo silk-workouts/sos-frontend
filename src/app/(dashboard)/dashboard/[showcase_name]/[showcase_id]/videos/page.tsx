@@ -13,8 +13,6 @@ import AddToModal from '@/components/dashboard/AddToModal/AddToModal';
 import { Showcase } from '../../../page';
 import { ShowcaseVideo } from '@/components/dashboard/VideoList/VideoList';
 
-const url = process.env.NEXT_PUBLIC_APP_URL;
-
 export default function SingleShowcasePage() {
   const router = useRouter();
   const { showcase_name, showcase_id } = useParams<{

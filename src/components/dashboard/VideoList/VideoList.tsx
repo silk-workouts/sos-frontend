@@ -7,8 +7,6 @@ import { Showcase } from 'src/app/(dashboard)/dashboard/page';
 import Video from '../Video/Video';
 import styles from './VideoList.module.scss';
 
-const url = process.env.NEXT_PUBLIC_APP_URL;
-
 interface VideoListProps {
   video: Showcase;
   isModalOpen: boolean;
