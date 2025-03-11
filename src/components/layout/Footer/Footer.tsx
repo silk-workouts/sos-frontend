@@ -11,7 +11,11 @@ import styles from "./Footer.module.scss";
 export default function Footer() {
 	const pathname = usePathname();
 
-	if (pathname.startsWith("/dashboard")) {
+	if (
+		pathname.startsWith("/dashboard") ||
+		pathname.startsWith("/library") ||
+		pathname.startsWith("/profile")
+	) {
 		return;
 	}
 
