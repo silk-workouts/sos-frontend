@@ -3,6 +3,7 @@ import Image from "next/image";
 import libraryIcon from "/public/assets/icons/library.svg";
 import library_filled from "/public/assets/icons/library-fill.svg";
 import profileIcon from "/public/assets/icons/profile.svg";
+import profile_filled from "/public/assets/icons/profile-fill.svg";
 import weightsIcon from "/public/assets/icons/weights.svg";
 import weights_filled from "/public/assets/icons/weights-fill.svg";
 import styles from "./Navigation.module.scss";
@@ -12,7 +13,7 @@ import Link from "next/link";
 export default function Navigation() {
 	const path = usePathname();
 
-	if (path !== "/dashboard" && path !== "/library" && path !== "/profile") {
+	if (!/^(\/dashboard|\/dashboard\/library|\/dashboard\/profile)$/.test(path)) {
 		return <></>;
 	}
 
@@ -31,33 +32,37 @@ export default function Navigation() {
 							alt=""
 							className={styles.icon}
 						/>
-						<span>home</span>
+						<span id={styles.navOption}>home</span>
 					</Link>
 				</li>
 				<li className={styles.nav__item}>
 					<Link
-						href="/library"
+						href="/dashboard/library"
 						className={`${styles.nav__link} ${
-							path === "/library" ? styles["nav__link--active"] : ""
+							path === "/dashboard/library" ? styles["nav__link--active"] : ""
 						}`}
 					>
 						<Image
-							src={path === "/library" ? library_filled : libraryIcon}
+							src={path === "/dashboard/library" ? library_filled : libraryIcon}
 							alt=""
 							className={styles.icon}
 						/>
-						<span>library</span>
+						<span id={styles.navOption}>library</span>
 					</Link>
 				</li>
 				<li className={styles.nav__item}>
 					<Link
-						href="/profile"
+						href="/dashboard/profile"
 						className={`${styles.nav__link} ${
-							path === "/profile" ? styles["nav__link--active"] : ""
+							path === "/dashboard/profile" ? styles["nav__link--active"] : ""
 						}`}
 					>
-						<Image src={profileIcon} alt="" className={styles.icon} />
-						<span>profile</span>
+						<Image
+							src={path === "/dashboard/profile" ? profile_filled : profileIcon}
+							alt=""
+							className={styles.icon}
+						/>
+						<span id={styles.navOption}>profile</span>
 					</Link>
 				</li>
 			</ul>

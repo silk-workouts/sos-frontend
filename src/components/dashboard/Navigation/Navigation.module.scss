@@ -24,7 +24,11 @@
 		cursor: pointer;
 
 		&--active {
-			font-weight: $font-weight-extrabold;
+			font-weight: $font-weight-medium;
+
+			#navOption {
+				color: #b21a16;
+			}
 		}
 	}
 }

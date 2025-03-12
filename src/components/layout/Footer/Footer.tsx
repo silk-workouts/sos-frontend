@@ -9,13 +9,9 @@ import twitterIcon from "/public/assets/icons/twitter.svg";
 import styles from "./Footer.module.scss";
 
 export default function Footer() {
-	const pathname = usePathname();
+	const path = usePathname();
 
-	if (
-		pathname.startsWith("/dashboard") ||
-		pathname.startsWith("/library") ||
-		pathname.startsWith("/profile")
-	) {
+	if (path.startsWith("/dashboard")) {
 		return;
 	}
 
