@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import DashboardPageContent from "@/components/dashboard/DashboardPageContent/DashboardPageContent";
+import DashboardPageContent from "@/components/pages/dashboard/DashboardPageContent/DashboardPageContent";
 import styles from "./page.module.scss";
-import AddToModal from "@/components/dashboard/AddToModal/AddToModal";
 
 export interface Showcase {
 	id: number;
@@ -22,7 +21,6 @@ export default function DashboardPage() {
 		element: true,
 		program: false,
 	});
-	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	function handleSelect(selected: boolean) {
 		if (!selected) {
@@ -105,12 +103,7 @@ export default function DashboardPage() {
 				hidden={!isSelected.element}
 				className={styles.content}
 			>
-				<DashboardPageContent
-					showcases={filteredShowcases}
-					type="element"
-					isModalOpen={isModalOpen}
-					setIsModalOpen={setIsModalOpen}
-				/>
+				<DashboardPageContent showcases={filteredShowcases} type="element" />
 			</div>
 			<div
 				id="program-panel"
@@ -119,14 +112,8 @@ export default function DashboardPage() {
 				hidden={!isSelected.program}
 				className={styles.content}
 			>
-				<DashboardPageContent
-					showcases={filteredShowcases}
-					type="program"
-					isModalOpen={isModalOpen}
-					setIsModalOpen={setIsModalOpen}
-				/>
+				<DashboardPageContent showcases={filteredShowcases} type="program" />
 			</div>
-			<AddToModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
 		</>
 	);
 }

@@ -2,23 +2,19 @@ import Image from "next/image";
 import kebabIcon from "/public/assets/icons/kebab.svg";
 import Link from "next/link";
 import { ShowcaseVideo } from "../VideoList/VideoList";
+import AddToModal from "@/components/pages/dashboard/AddToModal/AddToModal";
 import styles from "./Video.module.scss";
+import { useState } from "react";
 
 interface VideoProps {
 	showcaseVideo: ShowcaseVideo;
 	display: string;
-	isModalOpen: boolean;
-	setIsModalOpen: (arg1: boolean) => void;
 	path: string;
 }
 
-export default function Video({
-	showcaseVideo,
-	display,
-	isModalOpen,
-	setIsModalOpen,
-	path,
-}: VideoProps) {
+export default function Video({ showcaseVideo, display, path }: VideoProps) {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
 	return (
 		<article
 			className={`${styles.card} ${
@@ -52,6 +48,11 @@ export default function Video({
 					<Image src={kebabIcon} alt="A kebab menu icon" />
 				</button>
 			</div>
+			<AddToModal
+				isOpen={isModalOpen}
+				setIsOpen={setIsModalOpen}
+				video_id={showcaseVideo.vimeo_video_id}
+			/>
 		</article>
 	);
 }

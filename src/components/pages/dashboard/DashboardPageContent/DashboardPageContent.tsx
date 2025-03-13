@@ -10,14 +10,10 @@ import styles from "./DashboardPageContent.module.scss";
 interface ContentProps {
 	showcases: Showcase[];
 	type: string;
-	isModalOpen: boolean;
-	setIsModalOpen: (arg1: boolean) => void;
 }
 export default function DashboardPageContent({
 	showcases,
 	type,
-	isModalOpen,
-	setIsModalOpen,
 }: ContentProps) {
 	const searchParams = useSearchParams();
 	const router = useRouter();
@@ -59,11 +55,7 @@ export default function DashboardPageContent({
 					return (
 						<li key={video.id} className={styles.listItem}>
 							{" "}
-							<VideoList
-								video={video}
-								isModalOpen={isModalOpen}
-								setIsModalOpen={setIsModalOpen}
-							/>
+							<VideoList video={video} />
 						</li>
 					);
 				})}

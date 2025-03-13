@@ -1,14 +1,11 @@
 "use client";
-import axios from "axios";
+import { useState } from "react";
+import LibraryPageContent from "@/components/pages/library/LibraryPageContent/LibraryPageContent";
+import { usePlaylists } from "../context/PlaylistContext";
 import styles from "./page.module.scss";
-import { useEffect, useState } from "react";
-import LibraryPageContent from "@/components/dashboard/LibraryPageContent/LibraryPageContent";
 
 export default function Library() {
-	const [playlists, setPlaylists] = useState([]);
-	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState("");
+	const { playlists, loading, error } = usePlaylists();
 	const [isSelected, setIsSelected] = useState({
 		myFormula: true,
 		program: false,
@@ -22,50 +19,6 @@ export default function Library() {
 			});
 		}
 	}
-
-	useEffect(() => {
-		async function checkStatus() {
-			try {
-				const response = await axios.get("/api/auth/status", {
-					withCredentials: true,
-				});
-
-				if (response.status === 200) {
-					setUser(response.data);
-				} else {
-					setUser(null);
-				}
-			} catch (error) {
-				console.error(`Unable to fetch user authentication status: ${error}`);
-				setUser(null);
-			}
-		}
-
-		checkStatus();
-	}, []);
-
-	useEffect(() => {
-		if (!user) {
-			return;
-		}
-
-		async function getPlaylists() {
-			try {
-				const response = await axios.get("/api/playlists", {
-					headers: { "x-user-id": user.userId },
-				});
-				setPlaylists(response.data.playlists);
-				setError("");
-			} catch (error) {
-				console.error(`Unable to retrieve playlists: ${error}`);
-				setError("Failed to load playlists");
-			} finally {
-				setLoading(false);
-			}
-		}
-
-		getPlaylists();
-	}, [user]);
 
 	if (loading) {
 		return <div>loading...</div>;

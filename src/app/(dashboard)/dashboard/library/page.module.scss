@@ -2,11 +2,11 @@
 
 .tab-container {
 	padding: 0 $padding-small;
-	border-bottom: 1px solid $color-black;
 	//position: sticky;
 }
 
 .tabContent {
+	border-bottom: 1px solid $color-black;
 	list-style: none;
 	display: flex;
 	gap: 1rem;
