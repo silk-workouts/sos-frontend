@@ -1,13 +1,18 @@
-'use client';
-import axios from 'axios';
-import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import chevronLeftIcon from '/public/assets/icons/chevron-left.svg';
-import helpIcon from '/public/assets/icons/help.svg';
-import playIcon from '/public/assets/icons/play.svg';
-import clockIcon from '/public/assets/icons/clock.svg';
-import styles from './page.module.scss';
+"use client";
+
+import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import chevronLeftIcon from "/public/assets/icons/chevron-left.svg";
+import helpIcon from "/public/assets/icons/help.svg";
+import playIcon from "/public/assets/icons/play.svg";
+import clockIcon from "/public/assets/icons/clock.svg";
+import styles from "./page.module.scss";
+import Video from "@/components/dashboard/Video/Video";
+import AddToModal from "@/components/dashboard/AddToModal/AddToModal";
+import { Showcase } from "../../../page";
+import { ShowcaseVideo } from "@/components/dashboard/VideoList/VideoList";
 
 interface Chapter {
   id: number;
@@ -24,48 +29,85 @@ export default function SingleShowcasePage() {
     showcase_name: string;
     showcase_id: string;
   }>();
+
   const [loading, setLoading] = useState(true);
+  const [showcase, setShowcase] = useState<Showcase | null>(null);
+  const [showcaseVideos, setShowcaseVideos] = useState<ShowcaseVideo[]>([]);
+  const [continuousVideo, setContinuousVideo] = useState<{
+    continuous_vimeo_id: string;
+    continuous_vimeo_title: string;
+  } | null>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
-  const [continuousVideoId, setContinuousVideoId] = useState<string | null>(
-    null
-  );
-  const showcaseName = showcase_name.replaceAll('-', ' ');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showcaseName = showcase_name.replaceAll("-", " ");
 
-  // Fetch continuous video ID for this showcase
+  // Fetch showcase + videos
   useEffect(() => {
-    async function fetchContinuousVideoAndChapters() {
+    async function fetchShowcase() {
       try {
-        // Step 1: Get the continuous video ID for this showcase
-        const videoRes = await axios.get(
-          `/api/showcases/${showcase_id}/continuous-video`
-        );
-
-        const vimeoId = videoRes.data.continuous_vimeo_id;
-        setContinuousVideoId(vimeoId);
-
-        // Step 2: Fetch chapters based on continuous video ID
-        const chaptersRes = await axios.get(
-          `/api/chapters?continuous_vimeo_id=${vimeoId}`
-        );
-        setChapters(chaptersRes.data);
-      } catch (err) {
-        console.error('Error loading video or chapters:', err);
-      } finally {
+        const response = await axios.get(`/api/showcases/${showcase_id}`);
+        setShowcase(response.data.showcase);
+        setShowcaseVideos(response.data.videos);
         setLoading(false);
+      } catch (error) {
+        console.error("Unable to retrieve showcase videos:", error);
       }
     }
-
-    fetchContinuousVideoAndChapters();
+    fetchShowcase();
   }, [showcase_id]);
 
-  if (loading) return <div>Loading workout...</div>;
-  if (!continuousVideoId)
-    return <div>No continuous video found for this workout.</div>;
+  // Fetch continuous video
+  useEffect(() => {
+    async function fetchContinuousVideo() {
+      try {
+        const response = await axios.get(
+          `/api/showcases/${showcase_id}/continuous-video`
+        );
+        setContinuousVideo(response.data);
+      } catch (error) {
+        console.error("Unable to retrieve continuous video:", error);
+      }
+    }
+    fetchContinuousVideo();
+  }, [showcase_id]);
+
+  // Fetch chapters for continuous video
+  useEffect(() => {
+    async function getChapters() {
+      if (!continuousVideo?.continuous_vimeo_id) return;
+      try {
+        const response = await axios.get("/api/chapters", {
+          params: { continuous_vimeo_id: continuousVideo.continuous_vimeo_id },
+        });
+        setChapters(response.data);
+      } catch (error) {
+        console.error("Unable to fetch chapters:", error);
+      }
+    }
+    getChapters();
+  }, [continuousVideo]);
+
+  if (loading || !continuousVideo) {
+    return <div>Loading videos for {showcaseName}...</div>;
+  }
+
+  // ✅ Merge videos and chapters by position field (if available)
+  const mergedData = chapters.map((chapter, index) => {
+    // Try to find matching video (assuming 'position' is reliable)
+    const matchingVideo = showcaseVideos[index]; // Default fallback by index
+
+    return {
+      ...matchingVideo,
+      title: chapter.title, // Use chapter title to match "round" name
+      start_time: chapter.start_time,
+    };
+  });
 
   return (
     <>
+      {/* HEADER */}
       <div className={styles.header}>
-        <div className={styles['title-container']}>
+        <div className={styles["title-container"]}>
           <button
             className={styles.header__button}
             onClick={() => router.back()}
@@ -87,10 +129,9 @@ export default function SingleShowcasePage() {
         </button>
       </div>
 
+      {/* HERO */}
       <div className={styles.hero}>
-        <div className={styles['hero__image-container']}>
-          {/* Placeholder for showcase thumbnail */}
-        </div>
+        <div className={styles["hero__image-container"]}></div>
         <div className={styles.hero__info}>
           <span>
             <Image
@@ -98,7 +139,7 @@ export default function SingleShowcasePage() {
               alt="Play icon"
               className={styles.hero__icon}
             />
-            {chapters.length} chapters
+            {mergedData.length} videos
           </span>
           <span>
             <Image
@@ -106,28 +147,30 @@ export default function SingleShowcasePage() {
               alt="Clock icon"
               className={styles.hero__icon}
             />
-            {/* Optional: Total duration */}
           </span>
         </div>
-        <p className={styles.hero__description}>Continuous Workout</p>
+        <p className={styles.hero__description}>
+          {showcase?.description || "[No description provided]"}
+        </p>
       </div>
 
+      {/* THUMBNAILS */}
       <ul className={styles.list} role="list">
-        {chapters.map((chapter) => (
-          <li key={chapter.id}>
-            <button
-              className={styles.chapterButton}
-              onClick={() =>
-                router.push(
-                  `/dashboard/player/${continuousVideoId}?start_time=${chapter.start_time}`
-                )
-              }
-            >
-              {chapter.title}
-            </button>
+        {mergedData.map((video) => (
+          <li key={video.id}>
+            <Video
+              showcaseVideo={video}
+              display="row"
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              path={`/dashboard/player/${continuousVideo.continuous_vimeo_id}?start_time=${video.start_time}&showcase_id=${showcase_id}`} // ✅ Correct start time
+            />
           </li>
         ))}
       </ul>
+
+      {/* MODAL */}
+      <AddToModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
     </>
   );
 }

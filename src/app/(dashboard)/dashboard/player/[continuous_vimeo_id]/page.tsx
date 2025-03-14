@@ -1,181 +1,184 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useRef } from 'react';
-import { useSearchParams, useParams } from 'next/navigation';
-import Player from '@vimeo/player';
-
-interface Chapter {
-  id: number;
-  title: string;
-  start_time: number;
-  duration: number | null;
-  showcase_id: number;
-  continuous_vimeo_id: string;
-}
+import { useEffect, useState, useRef } from "react";
+import { useSearchParams, useParams } from "next/navigation";
+import Player from "@vimeo/player";
+import Video from "@/components/dashboard/Video/Video";
 
 export default function PlayerPage() {
   const { continuous_vimeo_id } = useParams<{ continuous_vimeo_id: string }>();
   const searchParams = useSearchParams();
-  const initialStartTime = searchParams.get('start_time')
-    ? parseInt(searchParams.get('start_time') as string, 10)
-    : null;
+  const showcase_id = searchParams.get("showcase_id");
+  const initialStartTime = searchParams.get("start_time")
+    ? parseInt(searchParams.get("start_time") as string, 10)
+    : 0;
 
-  const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [chapters, setChapters] = useState<any[]>([]);
+  const [showcaseVideos, setShowcaseVideos] = useState<any[]>([]);
   const [activeChapterIndex, setActiveChapterIndex] = useState<number | null>(
     null
   );
-  const [loading, setLoading] = useState(true);
   const [playerReady, setPlayerReady] = useState(false);
 
   const playerContainerRef = useRef<HTMLDivElement | null>(null);
   const vimeoPlayerRef = useRef<Player | null>(null);
 
-  // Fetch chapters first
+  // ✅ Fetch chapters
   useEffect(() => {
     async function fetchChapters() {
       try {
         const res = await fetch(
           `/api/chapters?continuous_vimeo_id=${continuous_vimeo_id}`
         );
-        const data: Chapter[] = await res.json();
+        const data = await res.json();
         setChapters(data);
-        setLoading(false);
       } catch (error) {
-        console.error('Error loading chapters:', error);
-        setLoading(false);
+        console.error("Failed to load chapters:", error);
       }
     }
     fetchChapters();
   }, [continuous_vimeo_id]);
 
-  // Setup Vimeo player AFTER chapters and data are loaded
+  // ✅ Fetch showcase videos (for thumbnails)
   useEffect(() => {
-    if (loading || !playerContainerRef.current) return;
+    async function fetchVideos() {
+      if (!showcase_id) return;
+      try {
+        const res = await fetch(`/api/showcases/${showcase_id}`);
+        const data = await res.json();
+        setShowcaseVideos(data.videos);
+      } catch (error) {
+        console.error("Failed to load showcase videos:", error);
+      }
+    }
+    fetchVideos();
+  }, [showcase_id]);
 
-    let player: Player;
+  // ✅ Setup player (only once when chapters are loaded!)
+  useEffect(() => {
+    if (!playerContainerRef.current || vimeoPlayerRef.current) return;
 
-    const setupPlayer = async () => {
-      // Clear previous player if any (important when clicking from multiple showcases)
-      if (vimeoPlayerRef.current) {
-        vimeoPlayerRef.current.unload().catch(() => {});
-        vimeoPlayerRef.current.destroy().catch(() => {});
-        vimeoPlayerRef.current = null;
+    const player = new Player(playerContainerRef.current, {
+      id: parseInt(continuous_vimeo_id, 10),
+      responsive: true,
+      autoplay: false, // Don't force autoplay on init
+    });
+
+    vimeoPlayerRef.current = player;
+
+    player.ready().then(async () => {
+      console.log("✅ Vimeo player ready");
+      setPlayerReady(true);
+
+      if (initialStartTime > 0) {
+        await player.setCurrentTime(initialStartTime).catch(console.error);
+        // Don't force autoplay — some browsers block this
+        try {
+          await player.play();
+        } catch (err) {
+          console.warn("Autoplay blocked (expected in some browsers):", err);
+        }
       }
 
-      // ✅ Now create fresh player
-      player = new Player(playerContainerRef.current!, {
-        id: parseInt(continuous_vimeo_id, 10),
-        responsive: true,
-        autoplay: false, // We control when to play
+      // Active chapter tracker
+      player.on("timeupdate", (data) => {
+        const currentTime = data.seconds;
+        const index =
+          chapters.filter((c) => c.start_time <= currentTime).length - 1;
+        if (index !== activeChapterIndex) setActiveChapterIndex(index);
       });
+    });
 
-      vimeoPlayerRef.current = player;
-
-      player.ready().then(async () => {
-        let startAt = 0;
-        if (initialStartTime !== null) {
-          startAt = initialStartTime;
-        }
-
-        // Set start time
-        await player.setCurrentTime(startAt);
-        await player.play(); // Auto play AFTER setting time
-
-        setPlayerReady(true); // Show player now
-
-        // Handle active chapter detection
-        player.on('timeupdate', (data) => {
-          const currentTime = data.seconds;
-          const index =
-            chapters
-              .map((ch) => ch.start_time)
-              .filter((time) => time <= currentTime).length - 1;
-
-          if (index !== activeChapterIndex) {
-            setActiveChapterIndex(index);
-          }
-        });
-      });
-    };
-
-    setupPlayer();
-
-    // Cleanup when component unmounts or when switching videos
+    // Cleanup
     return () => {
-      if (player) player.destroy().catch(() => {});
+      console.log("🔥 Destroying player instance");
+      player.destroy().catch(console.error);
+      vimeoPlayerRef.current = null;
     };
-  }, [loading, continuous_vimeo_id, chapters, initialStartTime]);
+  }, [continuous_vimeo_id, chapters, initialStartTime]);
 
-  // Set active chapter index on load based on start time
-  useEffect(() => {
-    if (chapters.length > 0 && initialStartTime !== null) {
-      const index = chapters.findIndex(
-        (chapter) => initialStartTime >= chapter.start_time
-      );
-      setActiveChapterIndex(index !== -1 ? index : null);
-    }
-  }, [chapters, initialStartTime]);
-
-  // Handle chapter click to jump within video
-  const handleChapterClick = (chapter: Chapter, index: number) => {
+  // ✅ Handle chapter click
+  const handleChapterClick = (chapter: any, index: number) => {
     if (vimeoPlayerRef.current) {
       vimeoPlayerRef.current.setCurrentTime(chapter.start_time).then(() => {
-        vimeoPlayerRef.current?.play();
+        vimeoPlayerRef.current?.play().catch((err) => {
+          console.warn("Autoplay blocked on chapter click:", err);
+        });
         setActiveChapterIndex(index);
       });
     }
   };
 
-  if (loading) return <div>Loading workout...</div>;
+  // ✅ Merged data (chapters + thumbnails)
+  const mergedData = chapters.map((chapter, index) => {
+    const video = showcaseVideos[index];
+    return {
+      ...chapter,
+      ...video,
+      start_time: chapter.start_time,
+      title: chapter.title || video?.title,
+      thumbnail_url: video?.thumbnail_url || "",
+    };
+  });
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Video Player Page</h1>
-      <div style={{ marginBottom: '20px' }}>
-        <strong>Continuous Video ID:</strong> {continuous_vimeo_id}
-        {initialStartTime !== null && (
-          <p>
-            <strong>Start Time:</strong> {initialStartTime} seconds
-          </p>
-        )}
-      </div>
+    <div style={{ padding: "20px" }}>
+      <h1>Workout Player</h1>
 
-      {/* Player container (HIDDEN until fully ready) */}
+      {/* 🎥 Player */}
       <div
         ref={playerContainerRef}
         style={{
-          width: '100%',
-          height: '500px',
-          visibility: playerReady ? 'visible' : 'hidden',
-          transition: 'visibility 0.3s ease-in-out',
+          width: "100%",
+          height: "500px",
+          visibility: playerReady ? "visible" : "hidden",
+          transition: "visibility 0.3s ease-in-out",
         }}
-      ></div>
+      />
 
+      {/* 📼 Chapter List */}
       <h2>Chapters</h2>
-      <ul style={{ marginTop: '20px', padding: 0 }}>
-        {chapters.map((chapter, index) => (
+      <ul style={{ padding: 0, marginTop: "20px" }}>
+        {mergedData.map((item, index) => (
           <li
-            key={chapter.id}
-            onClick={() => handleChapterClick(chapter, index)}
+            key={item.id || index}
+            onClick={() => handleChapterClick(item, index)}
             style={{
-              listStyle: 'none',
-              cursor: 'pointer',
-              padding: '12px 16px',
-              marginBottom: '8px',
-              borderRadius: '6px',
+              listStyle: "none",
+              cursor: "pointer",
+              marginBottom: "12px",
+              borderRadius: "8px",
               border:
                 activeChapterIndex === index
-                  ? '3px solid #0070f3'
-                  : '1px solid #ddd',
+                  ? "3px solid #0070f3"
+                  : "1px solid #ddd",
               background:
                 activeChapterIndex === index
-                  ? 'rgba(0, 112, 243, 0.1)'
-                  : '#f9f9f9',
-              transition: 'all 0.2s ease-in-out',
-              fontWeight: activeChapterIndex === index ? 'bold' : 'normal',
+                  ? "rgba(0, 112, 243, 0.1)"
+                  : "#f9f9f9",
+              padding: "12px",
+              transition: "all 0.2s ease",
             }}
           >
-            {chapter.title} — {chapter.start_time}s
+            <Video
+              showcaseVideo={{
+                id: item.id,
+                title: item.title,
+                thumbnail_url: item.thumbnail_url,
+                playbackUrl: "",
+                description:
+                  item.description || `Starts at ${item.start_time}s`,
+                duration: item.duration || 0,
+                vimeo_video_id: parseInt(continuous_vimeo_id, 10),
+                created_at: item.created_at || "",
+                showcase_id: showcase_id || "",
+                start_time: item.start_time,
+              }}
+              display="row"
+              isModalOpen={false}
+              setIsModalOpen={() => {}}
+              path="#" // Handled via onClick now
+            />
           </li>
         ))}
       </ul>
