@@ -83,6 +83,7 @@
   &__desktopButton {
     display: flex;
     justify-content: flex-start;
+    margin-top: $padding-medium;
 
     @include mobile {
       display: none; // Hide on mobile to prevent duplication
