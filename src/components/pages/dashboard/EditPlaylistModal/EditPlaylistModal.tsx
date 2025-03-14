@@ -46,18 +46,11 @@ export default function EditPlaylistModal({
 		}
 
 		try {
-			const response = await axios.patch(
-				`/api/playlists/${playlist.id}`,
-				data,
-				{
-					headers: { "x-user-id": userId },
-				}
-			);
+			await axios.patch(`/api/playlists/${playlist.id}`, data, {
+				headers: { "x-user-id": userId },
+			});
 
-			if (response.status === 200) {
-				setIsOpen(false);
-			}
-
+			setIsOpen(false);
 			refreshPlaylists();
 			getPlaylistVideos();
 		} catch (error) {

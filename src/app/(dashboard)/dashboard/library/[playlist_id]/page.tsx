@@ -12,8 +12,9 @@ import clockIcon from "/public/assets/icons/clock.svg";
 import bookmarkIcon from "/public/assets/icons/bookmark.svg";
 import grabIcon from "/public/assets/icons/grab.svg";
 import { usePlaylists } from "../../context/PlaylistContext";
-import styles from "./page.module.scss";
 import EditPlaylistModal from "@/components/pages/dashboard/EditPlaylistModal/EditPlaylistModal";
+import styles from "./page.module.scss";
+import DeletePlaylistModal from "@/components/pages/dashboard/DeletePlaylistModal/DeletePlaylistModal";
 
 export default function Playlist() {
 	const { playlist_id } = useParams();
@@ -24,6 +25,7 @@ export default function Playlist() {
 	const [playlist, setPlaylist] = useState(null);
 	const [playlistVideos, setPlaylistVideos] = useState([]);
 	const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+	const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
 	async function getPlaylistVideos() {
 		setLoading(true);
@@ -52,6 +54,26 @@ export default function Playlist() {
 	console.log(playlist);
 	console.log(playlistVideos);
 
+	function handleCloseDeleteModal() {
+		setIsOpenDeleteModal(false);
+	}
+
+	async function handleDeletePlaylist() {
+		try {
+			await axios.delete(`/api/playlists/${playlist_id}`, {
+				headers: { "x-user-id": userId },
+			});
+
+			setIsOpenDeleteModal(false);
+			router.push("/dashboard/library");
+			refreshPlaylists();
+		} catch (error) {
+			console.error(
+				`Unable to delete playlist with id ${playlist_id}: ${error}`
+			);
+		}
+	}
+
 	return (
 		<div>
 			<section className={styles.titleCard}>
@@ -78,6 +100,7 @@ export default function Playlist() {
 						<button
 							aria-label="Delete playlist"
 							className={styles.titleCard__button}
+							onClick={() => setIsOpenDeleteModal(true)}
 						>
 							<Image
 								src={deleteIcon}
@@ -143,6 +166,12 @@ export default function Playlist() {
 					userId={userId}
 					refreshPlaylists={refreshPlaylists}
 					getPlaylistVideos={getPlaylistVideos}
+				/>
+			)}
+			{isOpenDeleteModal && (
+				<DeletePlaylistModal
+					handleClose={handleCloseDeleteModal}
+					handleDelete={handleDeletePlaylist}
 				/>
 			)}
 		</div>
