@@ -51,8 +51,8 @@ export default function NewPlaylistModal({
 				},
 				{ headers: { "x-user-id": userId } }
 			);
-			setIsOpen(false);
 			refreshPlaylists();
+			setIsOpen(false);
 		} catch (error) {
 			console.error(`Unable to save new playlist: ${error}`);
 		}
