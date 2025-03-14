@@ -44,8 +44,9 @@ export default function Video({ showcaseVideo, display, path }: VideoProps) {
 				<button
 					className={styles.menuButton}
 					onClick={() => setIsModalOpen(!isModalOpen)}
+					aria-label="Add Menu"
 				>
-					<Image src={kebabIcon} alt="A kebab menu icon" />
+					<Image src={kebabIcon} alt="" />
 				</button>
 			</div>
 			<AddToModal

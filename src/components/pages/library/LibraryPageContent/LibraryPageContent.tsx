@@ -34,8 +34,8 @@ function PlayListCard({ playlist }) {
 					<h2 className={styles.card__title}>{playlist.title}</h2>
 					<p className={styles.card__description}>{playlist.description}</p>
 				</header>
-				<button className={styles.button}>
-					<Image src={kebabIcon} alt="A kebab menu icon" />
+				<button className={styles.button} aria-label="Playlist actions menu">
+					<Image src={kebabIcon} alt="" />
 				</button>
 			</div>
 			<div className={styles.card__infoContainer}>
@@ -52,12 +52,9 @@ function PlayListCard({ playlist }) {
 				<button
 					className={styles.button}
 					onClick={() => handlePlaylistNavigation(playlist.id)}
+					aria-label="Go to playlist"
 				>
-					<Image
-						src={rightArrow}
-						alt="A right arrow icon"
-						className={styles.icon}
-					/>
+					<Image src={rightArrow} alt="" className={styles.icon} />
 				</button>
 			</div>
 		</article>

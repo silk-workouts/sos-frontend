@@ -52,7 +52,6 @@ export default function NewPlaylistModal({
 				{ headers: { "x-user-id": userId } }
 			);
 			setIsOpen(false);
-
 			refreshPlaylists();
 		} catch (error) {
 			console.error(`Unable to save new playlist: ${error}`);
@@ -71,12 +70,9 @@ export default function NewPlaylistModal({
 							setIsOpenNewPlaylistModal(false);
 							setIsOpenAddPlaylistModal(false);
 						}}
+						aria-label="Close add to new playlist modal"
 					>
-						<Image
-							src={closeIcon}
-							alt="An icon of an X for close"
-							className={styles.header__icon}
-						/>
+						<Image src={closeIcon} alt="" className={styles.header__icon} />
 					</button>
 				</header>
 				<form className={styles.form} onSubmit={(event) => handleSubmit(event)}>

@@ -65,12 +65,9 @@ export default function AddPlaylistModal({
 									setIsOpen(false);
 									setIsOpenAddPlaylistModal(false);
 								}}
+								aria-label="Close Add Menu"
 							>
-								<Image
-									src={closeIcon}
-									alt="An icon of an X for close"
-									className={styles.icon}
-								/>
+								<Image src={closeIcon} alt="" className={styles.icon} />
 							</button>
 						</header>
 						{loading && <span>Loading playlists</span>}

@@ -19,7 +19,6 @@
 
 	&__option {
 		cursor: pointer;
-		padding: 0.5rem;
 
 		&:hover {
 			background-color: rgb(223, 222, 222);
@@ -31,5 +30,8 @@
 	font-family: $font-primary;
 	background-color: transparent;
 	border: none;
+	padding: 0.5rem;
 	cursor: pointer;
+	width: 100%;
+	text-align: left;
 }

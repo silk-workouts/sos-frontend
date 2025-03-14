@@ -9,7 +9,6 @@ import playIcon from "/public/assets/icons/play.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
 import styles from "./page.module.scss";
 import Video from "@/components/pages/dashboard/Video/Video";
-import AddToModal from "@/components/pages/dashboard/AddToModal/AddToModal";
 import { Showcase } from "../../../page";
 import { ShowcaseVideo } from "@/components/pages/dashboard/VideoList/VideoList";
 
@@ -22,7 +21,6 @@ export default function SingleShowcasePage() {
 	const [loading, setLoading] = useState(true);
 	const [showcase, setShowCase] = useState<Showcase | null>(null);
 	const [showcaseVideos, setShowCaseVideos] = useState<ShowcaseVideo[]>([]);
-	const [isModalOpen, setIsModalOpen] = useState(false);
 	const showcaseName = showcase_name.replaceAll("-", " ");
 
 	useEffect(() => {
@@ -53,21 +51,14 @@ export default function SingleShowcasePage() {
 					<button
 						className={styles.header__button}
 						onClick={() => router.back()}
+						aria-label="Navigate back"
 					>
-						<Image
-							src={chevronLeftIcon}
-							alt="A left Chevron icon to navigate back"
-							className={styles.hero__icon}
-						/>
+						<Image src={chevronLeftIcon} alt="" className={styles.hero__icon} />
 					</button>
 					<h1 className={styles.header__title}>{showcaseName}</h1>
 				</div>
-				<button className={styles.header__button}>
-					<Image
-						src={helpIcon}
-						alt="The Help Icon"
-						className={styles.hero__icon}
-					/>
+				<button className={styles.header__button} aria-label="Get help">
+					<Image src={helpIcon} alt="" className={styles.hero__icon} />
 				</button>
 			</div>
 			<div className={styles.hero}>
@@ -82,19 +73,11 @@ export default function SingleShowcasePage() {
 				</div>
 				<div className={styles.hero__info}>
 					<span>
-						<Image
-							src={playIcon}
-							alt="A play icon to symbolize number of videos in the workout"
-							className={styles.hero__icon}
-						/>
+						<Image src={playIcon} alt="" className={styles.hero__icon} />
 						{showcaseVideos.length} videos
 					</span>
 					<span>
-						<Image
-							src={clockIcon}
-							alt="A clock icon to symbolize the duration of this workout"
-							className={styles.hero__icon}
-						/>
+						<Image src={clockIcon} alt="" className={styles.hero__icon} />
 						{`[duration]`} mins
 					</span>
 				</div>
@@ -110,15 +93,12 @@ export default function SingleShowcasePage() {
 							<Video
 								showcaseVideo={video}
 								display="row"
-								isModalOpen={isModalOpen}
-								setIsModalOpen={setIsModalOpen}
 								path={`/dashboard/${showcase_name}/${showcase_id}/videos`}
 							/>
 						</li>
 					);
 				})}
 			</ul>
-			<AddToModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
 		</>
 	);
 }
