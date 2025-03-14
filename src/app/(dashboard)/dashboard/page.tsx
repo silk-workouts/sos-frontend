@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 import DashboardPageContent from "@/components/pages/dashboard/DashboardPageContent/DashboardPageContent";
 import styles from "./page.module.scss";
@@ -61,7 +61,7 @@ export default function DashboardPage() {
 	filteredShowcases.sort((a, b) => (a.name > b.name ? 1 : -1));
 
 	return (
-		<>
+		<Suspense fallback={<div>Loading...</div>}>
 			<div className={styles["tab-container"]}>
 				<ul className={styles.tabContent} role="tablist" tabIndex={0}>
 					<li
@@ -114,6 +114,6 @@ export default function DashboardPage() {
 			>
 				<DashboardPageContent showcases={filteredShowcases} type="program" />
 			</div>
-		</>
+		</Suspense>
 	);
 }
