@@ -17,5 +17,6 @@
 
   @include desktop {
     max-width: $content-container-maximum;
+    margin: 0 auto;
   }
 }
