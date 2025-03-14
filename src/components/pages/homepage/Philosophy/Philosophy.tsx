@@ -18,9 +18,12 @@ export default function Philosophy() {
         </div>
       </div>
       <div className={styles["philosophy-container"]}>
-        <h3 className="h3_title h3_title--accent">our philosophy</h3>
+        {/* <h3 className="h3_title h3_title--accent">our philosophy</h3> */}
         <div className={styles.philosophy__info}>
-          <h4 className="h2-title">Do It Different</h4>
+          <h4 className="h2-title italic">
+            Do It Different<sup>&trade;</sup>
+          </h4>
+
           <p className="body1">
             When you think different, your results are different. They&#39;re
             greater.

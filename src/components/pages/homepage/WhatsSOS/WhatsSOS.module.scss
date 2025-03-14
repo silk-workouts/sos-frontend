@@ -73,7 +73,7 @@
 
   &__subHeading {
     text-transform: capitalize;
-    margin-bottom: 1.5rem;
+    // margin-bottom: 1.5rem;
 
     @include mobile {
       margin-bottom: 0;
@@ -83,6 +83,7 @@
   &__desktopButton {
     display: flex;
     justify-content: flex-start;
+    margin-top: $padding-medium;
 
     @include mobile {
       display: none; // Hide on mobile to prevent duplication

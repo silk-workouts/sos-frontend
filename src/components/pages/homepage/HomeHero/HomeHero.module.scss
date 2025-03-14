@@ -4,20 +4,19 @@
 .hero {
   position: relative;
   width: 100%;
-  min-width: fit-content;
-  height: 838px; // Default height for desktop
+  // min-width: 100vw;
   background-image: url("/assets/images/hero-background.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-repeat: no-repeat;
+  height: calc(100vh - 4rem); //minus height of header (64px)
+  display: flex;
+  align-items: center; // Ensures text stays visible within the image
+  justify-content: center;
+  padding: 16px;
 
-  @include mobile {
-    height: 272px; // Limit height on mobile
-    background-position: center top;
-    display: flex;
-    align-items: center; // Ensures text stays visible within the image
-    justify-content: center;
-    padding: 16px;
+  @include desktop {
+    height: 52.375rem; //838px
   }
 
   &__overlay {
@@ -32,14 +31,14 @@
     transform: translate(-50%, -50%);
     height: auto; // Allow flexible height adjustment
     gap: $padding-xl;
+    width: 100%;
 
     @include mobile {
       position: relative; // Prevent absolute positioning on mobile
       top: unset;
       left: unset;
       transform: none;
-      width: 100%;
-      gap: $mobile-gutter;
+      gap: $padding-large;
     }
 
     img {
@@ -49,12 +48,11 @@
       }
     }
 
-    h1,
-    h2 {
-      @include mobile {
-        font-size: 24px;
-        line-height: 28px;
-      }
-    }
+    // h2 {
+    //   @include mobile {
+    //     font-size: 24px;
+    //     line-height: 28px;
+    //   }
+    // }
   }
 }
