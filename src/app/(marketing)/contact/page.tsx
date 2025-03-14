@@ -77,7 +77,7 @@ export default function Contact() {
             <h2 className={`h2-title ${styles.contact__title}`}>
               Still looking for answers?
             </h2>
-            <a href="mailto:team.systemofsilk@gmail.com">
+            <a href="mailto:michaelolajidejr@gmail.com">
               <Button variant="secondary">contact us</Button>
             </a>
           </div>

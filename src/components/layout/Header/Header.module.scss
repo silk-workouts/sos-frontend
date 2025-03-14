@@ -37,6 +37,16 @@
         height: auto;
         align-self: center;
       }
+      @include tablet {
+        max-width: 64px;
+        height: auto;
+        align-self: center;
+      }
+      @include desktop {
+        max-width: none;
+        height: auto;
+        align-self: center;
+      }
     }
   }
 
