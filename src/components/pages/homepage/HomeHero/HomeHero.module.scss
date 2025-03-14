@@ -31,14 +31,14 @@
     transform: translate(-50%, -50%);
     height: auto; // Allow flexible height adjustment
     gap: $padding-xl;
+    width: 100%;
 
     @include mobile {
       position: relative; // Prevent absolute positioning on mobile
       top: unset;
       left: unset;
       transform: none;
-      width: 100%;
-      gap: $mobile-gutter;
+      gap: $padding-large;
     }
 
     img {
@@ -48,12 +48,11 @@
       }
     }
 
-    h1,
-    h2 {
-      @include mobile {
-        font-size: 24px;
-        line-height: 28px;
-      }
-    }
+    // h2 {
+    //   @include mobile {
+    //     font-size: 24px;
+    //     line-height: 28px;
+    //   }
+    // }
   }
 }
