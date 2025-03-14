@@ -13,32 +13,34 @@ import bookmarkIcon from "/public/assets/icons/bookmark.svg";
 import grabIcon from "/public/assets/icons/grab.svg";
 import { usePlaylists } from "../../context/PlaylistContext";
 import styles from "./page.module.scss";
+import EditPlaylistModal from "@/components/pages/dashboard/EditPlaylistModal/EditPlaylistModal";
 
 export default function Playlist() {
 	const { playlist_id } = useParams();
-	const { userId } = usePlaylists();
+	const { userId, refreshPlaylists } = usePlaylists();
 	const router = useRouter();
 
 	const [loading, setLoading] = useState(true);
 	const [playlist, setPlaylist] = useState(null);
 	const [playlistVideos, setPlaylistVideos] = useState([]);
+	const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 
-	useEffect(() => {
-		async function getPlaylistVideos() {
-			setLoading(true);
+	async function getPlaylistVideos() {
+		setLoading(true);
 
-			try {
-				const response = await axios.get(`/api/playlists/${playlist_id}`, {
-					headers: { "x-user-id": userId },
-				});
-				setPlaylist(response.data.playlist);
-				setPlaylistVideos(response.data.videos);
-			} catch (error) {
-				console.error(`Unable to retrieve videos for playlist: ${error}`);
-			} finally {
-				setLoading(false);
-			}
+		try {
+			const response = await axios.get(`/api/playlists/${playlist_id}`, {
+				headers: { "x-user-id": userId },
+			});
+			setPlaylist(response.data.playlist);
+			setPlaylistVideos(response.data.videos);
+		} catch (error) {
+			console.error(`Unable to retrieve videos for playlist: ${error}`);
+		} finally {
+			setLoading(false);
 		}
+	}
+	useEffect(() => {
 		if (userId) {
 			getPlaylistVideos();
 		}
@@ -69,6 +71,7 @@ export default function Playlist() {
 						<button
 							aria-label="Edit playlist"
 							className={styles.titleCard__button}
+							onClick={() => setIsOpenEditModal(true)}
 						>
 							<Image src={editIcon} alt="" className={styles.titleCard__icon} />
 						</button>
@@ -133,6 +136,15 @@ export default function Playlist() {
 					})}
 				</ul>
 			</section>
+			{isOpenEditModal && (
+				<EditPlaylistModal
+					setIsOpen={setIsOpenEditModal}
+					playlist={playlist}
+					userId={userId}
+					refreshPlaylists={refreshPlaylists}
+					getPlaylistVideos={getPlaylistVideos}
+				/>
+			)}
 		</div>
 	);
 }
