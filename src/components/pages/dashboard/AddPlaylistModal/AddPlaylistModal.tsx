@@ -20,7 +20,7 @@ export default function AddPlaylistModal({
 }: PlaylistModalProps) {
 	const { playlists, loading, error, refreshPlaylists, userId } =
 		usePlaylists();
-	const [selectedPlaylists, setSelectedPlaylists] = useState([]);
+	const [selectedPlaylists, setSelectedPlaylists] = useState<string[]>([]);
 	const [isOpenNewPlaylistModal, setIsOpenNewPlaylistModal] = useState(false);
 
 	function handleSelectCheckbox(playlistId: string) {

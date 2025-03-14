@@ -2,7 +2,15 @@ import Image from "next/image";
 import closeIcon from "/public/assets/icons/close.svg";
 import styles from "./DeletePlaylistModal.module.scss";
 
-export default function DeletePlaylistModal({ handleClose, handleDelete }) {
+interface DeletePlaylistProps {
+	handleClose: () => void;
+	handleDelete: () => Promise<void>;
+}
+
+export default function DeletePlaylistModal({
+	handleClose,
+	handleDelete,
+}: DeletePlaylistProps) {
 	return (
 		<div className={styles.modal} role="dialog" aria-labelledby="dialogTitle">
 			<div className={styles["modal-container"]}>

@@ -1,20 +1,26 @@
 "use client";
+import axios from "axios";
+import Image from "next/image";
+import { useState } from "react";
 import editIcon from "/public/assets/icons/edit.svg";
 import deleteIcon from "/public/assets/icons/trash.svg";
-import styles from "./PlaylistModal.module.scss";
-import Image from "next/image";
 import EditPlaylistModal from "../EditPlaylistModal/EditPlaylistModal";
 import DeletePlaylistModal from "../DeletePlaylistModal/DeletePlaylistModal";
-import { useState } from "react";
-import { usePlaylists } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
-import axios from "axios";
+import {
+	Playlist,
+	usePlaylists,
+} from "src/app/(dashboard)/dashboard/context/PlaylistContext";
+import styles from "./PlaylistModal.module.scss";
 
-// interface PlaylistModalProps {
-// 	setIsOpen: (arg1: boolean) => void;
-// 	playlist: string;
-// }
+interface PlaylistModalProps {
+	setIsOpen: (arg1: boolean) => void;
+	playlist: Playlist;
+}
 
-export default function PlaylistModal({ setIsOpen, playlist }) {
+export default function PlaylistModal({
+	setIsOpen,
+	playlist,
+}: PlaylistModalProps) {
 	const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 	const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 

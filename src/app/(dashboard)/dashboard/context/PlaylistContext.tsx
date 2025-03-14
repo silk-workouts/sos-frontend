@@ -2,13 +2,35 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
-const PlaylistsContext = createContext(undefined);
+export interface Playlist {
+	created_at: string;
+	description: string;
+	id: string;
+	title: string;
+	user_id: string;
+}
+
+export interface PlaylistsContextType {
+	playlists: Playlist[];
+	loading: boolean;
+	error: string;
+	refreshPlaylists: () => Promise<void>;
+	userId: string;
+}
+
+const PlaylistsContext = createContext<PlaylistsContextType>({
+	playlists: [],
+	loading: true,
+	error: "",
+	refreshPlaylists: async () => {},
+	userId: "",
+});
 
 export default function PlaylistsProvider({
 	children,
 }: Readonly<{ children: React.ReactNode }>) {
-	const [playlists, setPlaylists] = useState([]);
-	const [userId, setUserId] = useState(null);
+	const [playlists, setPlaylists] = useState<Playlist[]>([]);
+	const [userId, setUserId] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
 
@@ -22,11 +44,11 @@ export default function PlaylistsProvider({
 				if (response.status === 200) {
 					setUserId(response.data.userId);
 				} else {
-					setUserId(null);
+					setUserId("");
 				}
 			} catch (error) {
 				console.error(`Unable to fetch user authentication status: ${error}`);
-				setUserId(null);
+				setUserId("");
 			}
 		}
 
@@ -34,9 +56,8 @@ export default function PlaylistsProvider({
 	}, []);
 
 	async function getPlaylists() {
-		if (!userId) return;
-
 		setLoading(true);
+
 		try {
 			const response = await axios.get("/api/playlists", {
 				headers: { "x-user-id": userId },
@@ -74,8 +95,5 @@ export default function PlaylistsProvider({
 
 export function usePlaylists() {
 	const context = useContext(PlaylistsContext);
-	if (!context) {
-		throw new Error("usePlaylists must be used within a PlaylistsProvider");
-	}
 	return context;
 }

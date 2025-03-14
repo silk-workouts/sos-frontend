@@ -1,15 +1,20 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import kebabIcon from "/public/assets/icons/kebab.svg";
 import rightArrow from "/public/assets/icons/arrow-right.svg";
 import playIcon from "/public/assets/icons/play.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
-import styles from "./LibraryPageContent.module.scss";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Playlist } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
 import PlaylistModal from "../PlaylistModal/PlaylistModal";
+import styles from "./LibraryPageContent.module.scss";
 
-export default function LibraryPageContent({ playlists, type }) {
+interface LibraryContentProps {
+	playlists: Playlist[];
+}
+
+export default function LibraryPageContent({ playlists }: LibraryContentProps) {
 	return (
 		<ul className={styles.list}>
 			{playlists.map((playlist) => {
@@ -23,11 +28,11 @@ export default function LibraryPageContent({ playlists, type }) {
 	);
 }
 
-function PlayListCard({ playlist }) {
+function PlayListCard({ playlist }: { playlist: Playlist }) {
 	const router = useRouter();
 	const [isOpenModal, setIsOpenModal] = useState(false);
 
-	function handlePlaylistNavigation(id) {
+	function handlePlaylistNavigation(id: string) {
 		router.push(`/dashboard/library/${id}`);
 	}
 	return (

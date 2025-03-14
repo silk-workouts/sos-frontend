@@ -1,9 +1,18 @@
 import Image from "next/image";
 import bookmarkIcon from "/public/assets/icons/bookmark.svg";
 import grabIcon from "/public/assets/icons/grab.svg";
+import { PlaylistVideo } from "src/app/(dashboard)/dashboard/library/[playlist_id]/page";
 import styles from "./PlaylistVideos.module.scss";
 
-export default function PlaylistVideos({ videos, handleDelete }) {
+interface PlaylistVideosProps {
+	videos: PlaylistVideo[];
+	handleDelete: (arg1: number) => void;
+}
+
+export default function PlaylistVideos({
+	videos,
+	handleDelete,
+}: PlaylistVideosProps) {
 	return (
 		<section className={styles.videos}>
 			<ul role="list" className={styles.videos__list}>
@@ -19,7 +28,12 @@ export default function PlaylistVideos({ videos, handleDelete }) {
 	);
 }
 
-function VideoCard({ video, handleDelete }) {
+interface VideoCardProps {
+	video: PlaylistVideo;
+	handleDelete: (arg1: number) => void;
+}
+
+function VideoCard({ video, handleDelete }: VideoCardProps) {
 	return (
 		<article className={styles.card}>
 			<header className={styles.card__header}>

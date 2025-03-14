@@ -1,21 +1,22 @@
-import Image from "next/image";
-import closeIcon from "/public/assets/icons/close.svg";
-import styles from "./EditPlaylistModal.module.scss";
-import { ChangeEvent, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
+import { ChangeEvent, useState } from "react";
+import closeIcon from "/public/assets/icons/close.svg";
+import { Playlist } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
+import styles from "./EditPlaylistModal.module.scss";
 
-// interface EditPlaylistProps {
-// 	setIsOpen: (arg1: boolean) => void;
-// 	playlist: string;
-// 	userId: string;
-// 	refreshPlaylists: () => Promise<void>;
-// }
+interface EditPlaylistProps {
+	handleClose: () => void;
+	playlist: Playlist;
+	userId: string;
+	refreshPlaylists: () => Promise<void>;
+}
 export default function EditPlaylistModal({
 	handleClose,
 	playlist,
 	userId,
 	refreshPlaylists,
-}) {
+}: EditPlaylistProps) {
 	const [data, setData] = useState({
 		title: playlist.title,
 		description: playlist.description,

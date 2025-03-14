@@ -9,20 +9,36 @@ import deleteIcon from "/public/assets/icons/trash.svg";
 import playIcon from "/public/assets/icons/play.svg";
 import playFilledIcon from "/public/assets/icons/play-fill.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
-import { usePlaylists } from "../../context/PlaylistContext";
+import { Playlist, usePlaylists } from "../../context/PlaylistContext";
 import EditPlaylistModal from "@/components/pages/library/EditPlaylistModal/EditPlaylistModal";
-import styles from "./page.module.scss";
 import DeletePlaylistModal from "@/components/pages/library/DeletePlaylistModal/DeletePlaylistModal";
 import PlaylistVideos from "@/components/pages/dashboard/PlaylistVideos/PlaylistVideos";
+import styles from "./page.module.scss";
 
-export default function Playlist() {
+export interface PlaylistVideo {
+	description: string | null;
+	duration: number;
+	id: number;
+	position: number;
+	thumbnail_url: string;
+	title: string;
+	vimeo_video_id: number;
+}
+
+export default function PlaylistPage() {
 	const { playlist_id } = useParams();
 	const { playlists, userId, refreshPlaylists } = usePlaylists();
 	const router = useRouter();
 
 	const [loading, setLoading] = useState(true);
-	const [playlist, setPlaylist] = useState(null);
-	const [playlistVideos, setPlaylistVideos] = useState([]);
+	const [playlist, setPlaylist] = useState<Playlist>({
+		created_at: "",
+		description: "",
+		id: "",
+		title: "",
+		user_id: "",
+	});
+	const [playlistVideos, setPlaylistVideos] = useState<PlaylistVideo[]>([]);
 	const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 	const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
@@ -45,7 +61,7 @@ export default function Playlist() {
 		if (userId) {
 			getPlaylistVideos();
 		}
-	}, [playlists, playlist_id]);
+	}, [playlists, playlist_id, userId]);
 
 	if (loading) {
 		return <div>Loading playlists</div>;
@@ -75,7 +91,7 @@ export default function Playlist() {
 		}
 	}
 
-	async function handleDeleteVideo(video_id) {
+	async function handleDeleteVideo(video_id: number) {
 		try {
 			await axios.delete(`/api/playlists/${playlist_id}/videos/${video_id}`, {
 				headers: { "x-user-id": userId },

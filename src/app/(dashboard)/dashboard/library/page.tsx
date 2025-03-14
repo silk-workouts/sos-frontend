@@ -25,7 +25,7 @@ export default function Library() {
 	}
 
 	if (error) {
-		return <div>{error}</div>;
+		return <div>Error loading playlists</div>;
 	}
 
 	return (
@@ -71,7 +71,7 @@ export default function Library() {
 				hidden={!isSelected.myFormula}
 				className={styles.content}
 			>
-				<LibraryPageContent playlists={playlists} type="myFormula" />
+				<LibraryPageContent playlists={playlists} />
 			</div>
 			<div
 				id="program-panel"
@@ -80,7 +80,7 @@ export default function Library() {
 				hidden={!isSelected.program}
 				className={styles.content}
 			>
-				<LibraryPageContent playlists={playlists} type="myFormula" />
+				<LibraryPageContent playlists={playlists} />
 			</div>
 		</div>
 	);
