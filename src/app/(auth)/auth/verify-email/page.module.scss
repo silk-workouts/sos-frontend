@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   background: $background-color;
 
@@ -17,7 +17,7 @@
 
 // ✅ Left panel for branding & navigation
 .panelLeft {
-  width: 100%;
+  width: 100vw;
   height: fit-content;
   background: $color-grey-light;
   display: flex;
