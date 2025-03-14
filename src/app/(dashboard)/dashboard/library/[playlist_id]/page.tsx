@@ -10,14 +10,14 @@ import playIcon from "/public/assets/icons/play.svg";
 import playFilledIcon from "/public/assets/icons/play-fill.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
 import { usePlaylists } from "../../context/PlaylistContext";
-import EditPlaylistModal from "@/components/pages/dashboard/EditPlaylistModal/EditPlaylistModal";
+import EditPlaylistModal from "@/components/pages/library/EditPlaylistModal/EditPlaylistModal";
 import styles from "./page.module.scss";
-import DeletePlaylistModal from "@/components/pages/dashboard/DeletePlaylistModal/DeletePlaylistModal";
+import DeletePlaylistModal from "@/components/pages/library/DeletePlaylistModal/DeletePlaylistModal";
 import PlaylistVideos from "@/components/pages/dashboard/PlaylistVideos/PlaylistVideos";
 
 export default function Playlist() {
 	const { playlist_id } = useParams();
-	const { userId, refreshPlaylists } = usePlaylists();
+	const { playlists, userId, refreshPlaylists } = usePlaylists();
 	const router = useRouter();
 
 	const [loading, setLoading] = useState(true);
@@ -26,35 +26,37 @@ export default function Playlist() {
 	const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 	const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
-	async function getPlaylistVideos() {
-		setLoading(true);
-
-		try {
-			const response = await axios.get(`/api/playlists/${playlist_id}`, {
-				headers: { "x-user-id": userId },
-			});
-			setPlaylist(response.data.playlist);
-			setPlaylistVideos(response.data.videos);
-		} catch (error) {
-			console.error(`Unable to retrieve videos for playlist: ${error}`);
-		} finally {
-			setLoading(false);
-		}
-	}
 	useEffect(() => {
+		async function getPlaylistVideos() {
+			setLoading(true);
+			try {
+				const response = await axios.get(`/api/playlists/${playlist_id}`, {
+					headers: { "x-user-id": userId },
+				});
+				setPlaylist(response.data.playlist);
+				setPlaylistVideos(response.data.videos);
+			} catch (error) {
+				console.error(`Unable to retrieve videos for playlist: ${error}`);
+			} finally {
+				setLoading(false);
+			}
+		}
+
 		if (userId) {
 			getPlaylistVideos();
 		}
-	}, [userId, playlist_id]);
+	}, [playlists, playlist_id]);
 
 	if (loading) {
 		return <div>Loading playlists</div>;
 	}
-	console.log(playlist);
-	console.log(playlistVideos);
 
 	function handleCloseDeleteModal() {
 		setIsOpenDeleteModal(false);
+	}
+
+	function handleCloseEditModal() {
+		setIsOpenEditModal(false);
 	}
 
 	async function handleDeletePlaylist() {
@@ -63,9 +65,9 @@ export default function Playlist() {
 				headers: { "x-user-id": userId },
 			});
 
-			setIsOpenDeleteModal(false);
 			router.push("/dashboard/library");
 			refreshPlaylists();
+			setIsOpenDeleteModal(false);
 		} catch (error) {
 			console.error(
 				`Unable to delete playlist with id ${playlist_id}: ${error}`
@@ -78,8 +80,7 @@ export default function Playlist() {
 			await axios.delete(`/api/playlists/${playlist_id}/videos/${video_id}`, {
 				headers: { "x-user-id": userId },
 			});
-
-			getPlaylistVideos();
+			refreshPlaylists();
 		} catch (error) {
 			console.error(
 				`Unable to delete playlist with id ${playlist_id}: ${error}`
@@ -167,11 +168,10 @@ export default function Playlist() {
 			/>
 			{isOpenEditModal && (
 				<EditPlaylistModal
-					setIsOpen={setIsOpenEditModal}
+					handleClose={handleCloseEditModal}
 					playlist={playlist}
 					userId={userId}
 					refreshPlaylists={refreshPlaylists}
-					getPlaylistVideos={getPlaylistVideos}
 				/>
 			)}
 			{isOpenDeleteModal && (

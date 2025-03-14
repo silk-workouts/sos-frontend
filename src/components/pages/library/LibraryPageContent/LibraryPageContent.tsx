@@ -6,6 +6,8 @@ import playIcon from "/public/assets/icons/play.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
 import styles from "./LibraryPageContent.module.scss";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import PlaylistModal from "../PlaylistModal/PlaylistModal";
 
 export default function LibraryPageContent({ playlists, type }) {
 	return (
@@ -23,6 +25,7 @@ export default function LibraryPageContent({ playlists, type }) {
 
 function PlayListCard({ playlist }) {
 	const router = useRouter();
+	const [isOpenModal, setIsOpenModal] = useState(false);
 
 	function handlePlaylistNavigation(id) {
 		router.push(`/dashboard/library/${id}`);
@@ -34,7 +37,11 @@ function PlayListCard({ playlist }) {
 					<h2 className={styles.card__title}>{playlist.title}</h2>
 					<p className={styles.card__description}>{playlist.description}</p>
 				</header>
-				<button className={styles.button} aria-label="Playlist actions menu">
+				<button
+					className={styles.button}
+					aria-label="Playlist actions menu"
+					onClick={() => setIsOpenModal(true)}
+				>
 					<Image src={kebabIcon} alt="" />
 				</button>
 			</div>
@@ -57,6 +64,9 @@ function PlayListCard({ playlist }) {
 					<Image src={rightArrow} alt="" className={styles.icon} />
 				</button>
 			</div>
+			{isOpenModal && (
+				<PlaylistModal setIsOpen={setIsOpenModal} playlist={playlist} />
+			)}
 		</article>
 	);
 }

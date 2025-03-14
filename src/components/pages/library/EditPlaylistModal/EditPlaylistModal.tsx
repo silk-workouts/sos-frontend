@@ -11,11 +11,10 @@ import axios from "axios";
 // 	refreshPlaylists: () => Promise<void>;
 // }
 export default function EditPlaylistModal({
-	setIsOpen,
+	handleClose,
 	playlist,
 	userId,
 	refreshPlaylists,
-	getPlaylistVideos,
 }) {
 	const [data, setData] = useState({
 		title: playlist.title,
@@ -26,7 +25,7 @@ export default function EditPlaylistModal({
 		const target = event.target;
 
 		if (target instanceof HTMLElement && target.id === "dialog-container") {
-			setIsOpen(false);
+			handleClose();
 		}
 	}
 
@@ -50,9 +49,8 @@ export default function EditPlaylistModal({
 				headers: { "x-user-id": userId },
 			});
 
-			setIsOpen(false);
+			handleClose();
 			refreshPlaylists();
-			getPlaylistVideos();
 		} catch (error) {
 			console.error(`Unable to save new playlist: ${error}`);
 		}
@@ -72,7 +70,7 @@ export default function EditPlaylistModal({
 						<button
 							className={`${styles.button} ${styles.header__button}`}
 							onClick={() => {
-								setIsOpen(false);
+								handleClose();
 							}}
 							aria-label="Close edit playlist modal"
 						>
