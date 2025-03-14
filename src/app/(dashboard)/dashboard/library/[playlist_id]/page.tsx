@@ -9,12 +9,11 @@ import deleteIcon from "/public/assets/icons/trash.svg";
 import playIcon from "/public/assets/icons/play.svg";
 import playFilledIcon from "/public/assets/icons/play-fill.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
-import bookmarkIcon from "/public/assets/icons/bookmark.svg";
-import grabIcon from "/public/assets/icons/grab.svg";
 import { usePlaylists } from "../../context/PlaylistContext";
 import EditPlaylistModal from "@/components/pages/dashboard/EditPlaylistModal/EditPlaylistModal";
 import styles from "./page.module.scss";
 import DeletePlaylistModal from "@/components/pages/dashboard/DeletePlaylistModal/DeletePlaylistModal";
+import PlaylistVideos from "@/components/pages/dashboard/PlaylistVideos/PlaylistVideos";
 
 export default function Playlist() {
 	const { playlist_id } = useParams();
@@ -67,6 +66,20 @@ export default function Playlist() {
 			setIsOpenDeleteModal(false);
 			router.push("/dashboard/library");
 			refreshPlaylists();
+		} catch (error) {
+			console.error(
+				`Unable to delete playlist with id ${playlist_id}: ${error}`
+			);
+		}
+	}
+
+	async function handleDeleteVideo(video_id) {
+		try {
+			await axios.delete(`/api/playlists/${playlist_id}/videos/${video_id}`, {
+				headers: { "x-user-id": userId },
+			});
+
+			getPlaylistVideos();
 		} catch (error) {
 			console.error(
 				`Unable to delete playlist with id ${playlist_id}: ${error}`
@@ -148,17 +161,10 @@ export default function Playlist() {
 					/>
 				</button>
 			</section>
-			<section className={styles.videos}>
-				<ul role="list" className={styles.videos__list}>
-					{playlistVideos.map((video) => {
-						return (
-							<li key={video.id}>
-								<VideoCard video={video} />
-							</li>
-						);
-					})}
-				</ul>
-			</section>
+			<PlaylistVideos
+				videos={playlistVideos}
+				handleDelete={handleDeleteVideo}
+			/>
 			{isOpenEditModal && (
 				<EditPlaylistModal
 					setIsOpen={setIsOpenEditModal}
@@ -175,34 +181,5 @@ export default function Playlist() {
 				/>
 			)}
 		</div>
-	);
-}
-
-function VideoCard({ video }) {
-	return (
-		<article className={styles.card}>
-			<header className={styles.card__header}>
-				<h3 className={styles.card__title}>{video.title}</h3>
-				<button
-					aria-label="Remove video from playlist"
-					className={styles.card__button}
-				>
-					<Image src={bookmarkIcon} alt="" />
-				</button>
-			</header>
-			<Image
-				src={video.thumbnail_url}
-				className={styles.card__thumbnail}
-				alt={`A thumbnail image for the ${video.title} workout`}
-				width={135}
-				height={117}
-			/>
-			<button
-				aria-label="Grab to rearrange video order"
-				className={styles.card__button}
-			>
-				<Image src={grabIcon} alt="" />
-			</button>
-		</article>
 	);
 }

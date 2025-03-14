@@ -88,39 +88,3 @@
 		font-size: 0.875rem;
 	}
 }
-
-.videos {
-	padding: 1rem;
-
-	&__list {
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-}
-
-.card {
-	display: flex;
-	flex-direction: row-reverse;
-	align-items: center;
-
-	&__button {
-		height: max-content;
-		background-color: $color-white;
-		border: none;
-		cursor: pointer;
-	}
-	&__header {
-		display: flex;
-		gap: 0.5rem;
-		align-items: center;
-	}
-
-	&__title {
-		font-weight: $font-weight-regular;
-		font-size: 0.75rem;
-	}
-	&__thumbnail {
-	}
-}
