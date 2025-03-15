@@ -1,47 +1,47 @@
 @use "@/styles/partials/variables" as *;
 
 .container {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
-	font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-size: 0.75rem;
 }
 
 .header {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	gap: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
 }
 
 .title {
-	font-size: 1rem;
-	font-weight: $font-weight-regular;
-	text-transform: capitalize;
-	margin-bottom: 0.25rem;
+  font-size: 1rem;
+  font-weight: $font-weight-regular;
+  text-transform: capitalize;
+  margin-bottom: 0.25rem;
 }
 
 .description {
 }
 
 .button {
-	background-color: $color-white;
-	border: none;
-	font-family: $font-primary;
-	min-width: max-content;
-	cursor: pointer;
+  background-color: $color-white;
+  border: none;
+  font-family: $font-primary;
+  min-width: max-content;
+  cursor: pointer;
 }
 
 .list {
-	list-style-type: none;
-	display: flex;
-	gap: 1rem;
-	overflow-x: scroll;
-	scroll-snap-type: x mandatory;
-	-webkit-overflow-scrolling: touch;
+  list-style-type: none;
+  display: flex;
+  gap: 1rem;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 
-	&::-webkit-scrollbar {
-		width: 0;
-		height: 0;
-	}
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 }

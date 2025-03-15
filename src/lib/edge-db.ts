@@ -1,4 +1,4 @@
-import { connect } from '@planetscale/database';
+import { connect } from "@planetscale/database";
 
 // ✅ Use Planetscale HTTP connection for Edge-compatible middleware
 const config = {

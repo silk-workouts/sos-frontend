@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { ResultSetHeader } from 'mysql2';
-import { randomUUID } from 'crypto';
-import bcrypt from 'bcryptjs';
-import pool from '@/lib/db';
+import { NextRequest, NextResponse } from "next/server";
+import { ResultSetHeader } from "mysql2";
+import { randomUUID } from "crypto";
+import bcrypt from "bcryptjs";
+import pool from "@/lib/db";
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,8 +12,8 @@ export async function POST(req: NextRequest) {
     // Validate JSON input
     if (!rawBody) {
       return NextResponse.json(
-        { error: 'Empty request body' },
-        { status: 400 }
+        { error: "Empty request body" },
+        { status: 400 },
       );
     }
 
@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
     // Ensure email and password are provided
     if (!email || !password) {
       return NextResponse.json(
-        { error: 'Email and password are required' },
-        { status: 400 }
+        { error: "Email and password are required" },
+        { status: 400 },
       );
     }
 
@@ -32,15 +32,15 @@ export async function POST(req: NextRequest) {
 
     // ✅ Check if email already exists
     const [existingUser] = await pool.execute(
-      'SELECT id FROM users WHERE email = ?',
-      [email]
+      "SELECT id FROM users WHERE email = ?",
+      [email],
     );
 
     if ((existingUser as any[]).length > 0) {
       console.error(`❌ Email already exists: ${email}`);
       return NextResponse.json(
-        { error: 'Email already exists' },
-        { status: 409 }
+        { error: "Email already exists" },
+        { status: 409 },
       );
     }
 
@@ -49,20 +49,20 @@ export async function POST(req: NextRequest) {
 
     // ✅ Insert new user and cast result as ResultSetHeader
     await pool.execute<ResultSetHeader>(
-      'INSERT INTO users (id, email, password, verification_token) VALUES (?, ?, ?, ?)',
-      [userId, email, hashedPassword, verificationToken]
+      "INSERT INTO users (id, email, password, verification_token) VALUES (?, ?, ?, ?)",
+      [userId, email, hashedPassword, verificationToken],
     );
 
     return NextResponse.json({
-      message: 'User registered successfully!',
+      message: "User registered successfully!",
       email, //  Ensure email is returned
       verificationToken,
     });
   } catch (error) {
-    console.error('❌ Signup Error:', error);
+    console.error("❌ Signup Error:", error);
     return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
+      { error: "Internal Server Error" },
+      { status: 500 },
     );
   }
 }

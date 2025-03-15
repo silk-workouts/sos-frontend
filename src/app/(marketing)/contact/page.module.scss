@@ -2,57 +2,57 @@
 @use "@/styles/partials/mixins" as *;
 
 .body {
-	padding: 3rem $padding-small;
-	transition: all 0.3s ease-in-out;
+  padding: 3rem $padding-small;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		padding: 4.5rem 1.5rem;
-	}
+  @include tablet {
+    padding: 4.5rem 1.5rem;
+  }
 
-	@include desktop {
-		padding: 6rem $padding-xl;
-	}
+  @include desktop {
+    padding: 6rem $padding-xl;
+  }
 }
 
 .wrapper {
-	@include desktop {
-		max-width: $content-container-maximum;
-		margin: 0 auto;
-	}
+  @include desktop {
+    max-width: $content-container-maximum;
+    margin: 0 auto;
+  }
 }
 
 .accordionGroup {
-	border-top: 1px solid $color-black;
-	padding: 1.875rem 0;
-	transition: all 0.3s ease-in-out;
+  border-top: 1px solid $color-black;
+  padding: 1.875rem 0;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		padding: 1.875rem 1.5rem;
-	}
+  @include tablet {
+    padding: 1.875rem 1.5rem;
+  }
 }
 
 .contact {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		margin: 1rem 0;
-	}
+  @include tablet {
+    margin: 1rem 0;
+  }
 
-	@include desktop {
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		gap: 3.625rem;
-	}
+  @include desktop {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3.625rem;
+  }
 
-	&__title {
-		text-align: center;
+  &__title {
+    text-align: center;
 
-		@include desktop {
-			padding-bottom: 0;
-		}
-	}
+    @include desktop {
+      padding-bottom: 0;
+    }
+  }
 }

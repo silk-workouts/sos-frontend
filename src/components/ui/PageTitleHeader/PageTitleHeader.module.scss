@@ -2,33 +2,33 @@
 @use "@/styles/partials/mixins" as *;
 
 .header {
-	background-color: $color-red;
-	padding: 2.75rem $padding-small 2rem;
-	transition: all 0.3s ease-in-out;
+  background-color: $color-red;
+  padding: 2.75rem $padding-small 2rem;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		padding: 6.25rem 1.5rem 3.625rem;
-	}
+  @include tablet {
+    padding: 6.25rem 1.5rem 3.625rem;
+  }
 
-	@include desktop {
-		padding: 6.4375rem $padding-xl 3.5rem;
-	}
+  @include desktop {
+    padding: 6.4375rem $padding-xl 3.5rem;
+  }
 
-	.wrapper {
-		margin: 0 auto;
-		max-width: $content-container-maximum;
-	}
+  .wrapper {
+    margin: 0 auto;
+    max-width: $content-container-maximum;
+  }
 
-	&__subHeading {
-		font-family: "Montserrat";
-		font-weight: 400;
-		font-size: 1.5rem;
-		text-transform: capitalize;
-		color: $color-white;
-		transition: all 0.3s ease-in-out;
+  &__subHeading {
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    color: $color-white;
+    transition: all 0.3s ease-in-out;
 
-		@include tablet {
-			font-size: 2rem;
-		}
-	}
+    @include tablet {
+      font-size: 2rem;
+    }
+  }
 }

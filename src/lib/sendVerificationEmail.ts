@@ -1,4 +1,4 @@
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
 
 export async function sendVerificationEmail(email: string, token: string) {
   const confirmationLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/verify-email?token=${token}`;
@@ -13,9 +13,9 @@ export async function sendVerificationEmail(email: string, token: string) {
       process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
       process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
       templateParams,
-      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
     );
   } catch (error) {
-    console.error('❌ Error sending email:', error);
+    console.error("❌ Error sending email:", error);
   }
 }

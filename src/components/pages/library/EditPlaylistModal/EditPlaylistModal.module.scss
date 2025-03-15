@@ -1,98 +1,98 @@
 @use "@/styles/partials/variables" as *;
 
 .dialog-container {
-	position: fixed;
-	inset: 0;
-	z-index: 2000;
-	background-color: rgba($color-black, 0.25);
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background-color: rgba($color-black, 0.25);
 }
 
 .dialog {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	padding: 0 0.5rem;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 0 0.5rem;
 }
 
 .container {
-	background-color: $color-white;
-	border-radius: 0.625rem 0.625rem 0 0;
-	padding: 1rem;
-	display: flex;
-	flex-direction: column;
-	gap: 1.875rem;
+  background-color: $color-white;
+  border-radius: 0.625rem 0.625rem 0 0;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
 }
 
 .button {
-	font-family: $font-primary;
-	background-color: $color-white;
-	border: 1px solid $color-black;
-	border-radius: 2.1875rem;
-	cursor: pointer;
-	padding: 0.25rem 0.5rem;
+  font-family: $font-primary;
+  background-color: $color-white;
+  border: 1px solid $color-black;
+  border-radius: 2.1875rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
 
-	&:hover {
-		background-color: #d9d9d9;
-	}
+  &:hover {
+    background-color: #d9d9d9;
+  }
 }
 
 .header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-	&__title {
-		font-size: 1.5rem;
-	}
+  &__title {
+    font-size: 1.5rem;
+  }
 
-	&__button {
-		border: none;
-		padding: 0;
+  &__button {
+    border: none;
+    padding: 0;
 
-		&:hover {
-			background-color: unset;
-		}
-	}
-	&__icon {
-		width: 1.5rem;
-		height: 1.5rem;
-	}
+    &:hover {
+      background-color: unset;
+    }
+  }
+  &__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }
 
 .form {
-	display: flex;
-	flex-direction: column;
-	gap: 1.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
 
-	&__input-container {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
+  &__input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 
-	&__label {
-		text-transform: capitalize;
-		font-size: 1rem;
+  &__label {
+    text-transform: capitalize;
+    font-size: 1rem;
 
-		.optional {
-			color: #757575;
-			font-size: 0.75rem;
-		}
-	}
+    .optional {
+      color: #757575;
+      font-size: 0.75rem;
+    }
+  }
 
-	&__input {
-		height: 2.8125rem;
-		border-radius: 1rem;
-		background-color: #f5f5f5;
-		border: 0.5px solid #757575;
-		font-family: $font-primary;
-		padding: 0.5rem 1rem;
+  &__input {
+    height: 2.8125rem;
+    border-radius: 1rem;
+    background-color: #f5f5f5;
+    border: 0.5px solid #757575;
+    font-family: $font-primary;
+    padding: 0.5rem 1rem;
 
-		&--text {
-			height: 5.625rem;
-			resize: none;
-			line-height: 1.25rem;
-		}
-	}
+    &--text {
+      height: 5.625rem;
+      resize: none;
+      line-height: 1.25rem;
+    }
+  }
 }

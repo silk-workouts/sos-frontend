@@ -1,8 +1,8 @@
-'use client';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import styles from './page.module.scss';
-import axios from 'axios';
+"use client";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import styles from "./page.module.scss";
+import axios from "axios";
 
 interface Video {
   created_at: string;
@@ -40,7 +40,7 @@ export default function SingleVideoPage() {
   }
 
   return (
-    <div className={styles['video-container']}>
+    <div className={styles["video-container"]}>
       <video controls poster={video?.thumbnail_url} className={styles.video}>
         <source src={`${window.location.origin}${video?.playbackUrl}`} />
         Watch the

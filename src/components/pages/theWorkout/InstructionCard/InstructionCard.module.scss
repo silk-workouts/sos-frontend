@@ -2,66 +2,66 @@
 @use "@/styles/partials/mixins" as *;
 
 .card {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 
-	@include tablet {
-		flex-direction: row;
-		align-items: center;
-	}
+  @include tablet {
+    flex-direction: row;
+    align-items: center;
+  }
 
-	&__content {
-		@include tablet {
-			flex: 1;
-		}
-	}
+  &__content {
+    @include tablet {
+      flex: 1;
+    }
+  }
 
-	&__title {
-		font-family: $font-accent;
-		font-size: 1rem;
-		color: $color-red;
-		font-weight: $font-weight-regular;
-		text-transform: uppercase;
-		margin-bottom: 1.5rem;
-		transition: all 0.3s ease-in-out;
+  &__title {
+    font-family: $font-accent;
+    font-size: 1rem;
+    color: $color-red;
+    font-weight: $font-weight-regular;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease-in-out;
 
-		@include tablet {
-			font-size: 1.25rem;
-		}
+    @include tablet {
+      font-size: 1.25rem;
+    }
 
-		@include desktop {
-			margin-bottom: 3rem;
-		}
-	}
+    @include desktop {
+      margin-bottom: 3rem;
+    }
+  }
 
-	&__subHeading {
-		font-weight: $font-weight-regular;
-		font-size: 1.5rem;
-		text-transform: capitalize;
-		margin-bottom: 1rem;
-		transition: all 0.3s ease-in-out;
+  &__subHeading {
+    font-weight: $font-weight-regular;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease-in-out;
 
-		@include tablet {
-			font-size: 2rem;
-		}
+    @include tablet {
+      font-size: 2rem;
+    }
 
-		@include desktop {
-			margin-bottom: 1.5rem;
-		}
-	}
+    @include desktop {
+      margin-bottom: 1.5rem;
+    }
+  }
 
-	&__image {
-		height: 12.5rem;
-		background-color: rgba(217, 217, 217, 1);
-		transition: height 0.3s ease-in-out;
+  &__image {
+    height: 12.5rem;
+    background-color: rgba(217, 217, 217, 1);
+    transition: height 0.3s ease-in-out;
 
-		@include tablet {
-			flex: 1;
-		}
+    @include tablet {
+      flex: 1;
+    }
 
-		@include desktop {
-			height: 16.9375rem;
-		}
-	}
+    @include desktop {
+      height: 16.9375rem;
+    }
+  }
 }

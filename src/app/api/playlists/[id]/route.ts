@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { NextRequest, NextResponse } from "next/server";
+import pool from "@/lib/db";
 
 // ✅ Middleware: Extract and validate user ID from headers
 const authenticateUser = (req: NextRequest) => {
-  const userId = req.headers.get('x-user-id');
+  const userId = req.headers.get("x-user-id");
   if (!userId) {
-    return { error: 'Unauthorized: Missing user authentication', status: 401 };
+    return { error: "Unauthorized: Missing user authentication", status: 401 };
   }
   return { userId };
 };
@@ -13,16 +13,16 @@ const authenticateUser = (req: NextRequest) => {
 // ✅ Fetch a single playlist and its videos (GET)
 export async function GET(req: NextRequest) {
   try {
-    const playlistId = req.nextUrl.pathname.split('/').pop(); // ✅ Extract ID from URL
+    const playlistId = req.nextUrl.pathname.split("/").pop(); // ✅ Extract ID from URL
     if (!playlistId) {
       return NextResponse.json(
-        { error: 'Missing playlist ID' },
-        { status: 400 }
+        { error: "Missing playlist ID" },
+        { status: 400 },
       );
     }
 
     const auth = authenticateUser(req);
-    if ('error' in auth) {
+    if ("error" in auth) {
       return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
@@ -33,13 +33,13 @@ export async function GET(req: NextRequest) {
       `SELECT id, user_id, title, description, created_at 
        FROM playlists 
        WHERE id = ? AND user_id = ?`,
-      [playlistId, userId]
+      [playlistId, userId],
     )) as [Array<any>, any];
 
     if (!playlistRows.length) {
       return NextResponse.json(
-        { error: 'Playlist not found or access denied' },
-        { status: 404 }
+        { error: "Playlist not found or access denied" },
+        { status: 404 },
       );
     }
 
@@ -52,15 +52,15 @@ export async function GET(req: NextRequest) {
        JOIN videos v ON pv.video_id = v.id
        WHERE pv.playlist_id = ?
        ORDER BY pv.position ASC`,
-      [playlistId]
+      [playlistId],
     )) as [Array<any>, any];
 
     return NextResponse.json({ playlist, videos: videoRows });
   } catch (error) {
     console.error(`❌ Failed to fetch playlist:`, error);
     return NextResponse.json(
-      { error: 'Failed to fetch playlist' },
-      { status: 500 }
+      { error: "Failed to fetch playlist" },
+      { status: 500 },
     );
   }
 }
@@ -68,16 +68,16 @@ export async function GET(req: NextRequest) {
 // ✅ Update playlist details (PATCH)
 export async function PATCH(req: NextRequest) {
   try {
-    const playlistId = req.nextUrl.pathname.split('/').pop(); // ✅ Extract ID from URL
+    const playlistId = req.nextUrl.pathname.split("/").pop(); // ✅ Extract ID from URL
     if (!playlistId) {
       return NextResponse.json(
-        { error: 'Missing playlist ID' },
-        { status: 400 }
+        { error: "Missing playlist ID" },
+        { status: 400 },
       );
     }
 
     const auth = authenticateUser(req);
-    if ('error' in auth) {
+    if ("error" in auth) {
       return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
@@ -85,7 +85,7 @@ export async function PATCH(req: NextRequest) {
     const body = await req.json();
 
     // ✅ Allow only `title` and `description` updates
-    const allowedFields = ['title', 'description'];
+    const allowedFields = ["title", "description"];
     const updateFields: Record<string, string> = {};
 
     for (const key in body) {
@@ -100,20 +100,20 @@ export async function PATCH(req: NextRequest) {
           error:
             'Invalid fields. Only "title" and "description" can be updated.',
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // ✅ Ensure playlist belongs to user before updating
     const [existingRows] = (await pool.execute(
       `SELECT id FROM playlists WHERE id = ? AND user_id = ?`,
-      [playlistId, userId]
+      [playlistId, userId],
     )) as [Array<any>, any];
 
     if (!existingRows.length) {
       return NextResponse.json(
-        { error: 'Playlist not found or access denied' },
-        { status: 404 }
+        { error: "Playlist not found or access denied" },
+        { status: 404 },
       );
     }
 
@@ -122,7 +122,7 @@ export async function PATCH(req: NextRequest) {
       UPDATE playlists
       SET ${Object.keys(updateFields)
         .map((field) => `${field} = ?`)
-        .join(', ')}
+        .join(", ")}
       WHERE id = ? AND user_id = ?
     `;
 
@@ -131,14 +131,14 @@ export async function PATCH(req: NextRequest) {
     await pool.execute(updateQuery, values);
 
     return NextResponse.json({
-      message: '✅ Playlist updated successfully',
+      message: "✅ Playlist updated successfully",
       playlistId,
     });
   } catch (error) {
     console.error(`❌ Failed to update playlist:`, error);
     return NextResponse.json(
-      { error: 'Failed to update playlist' },
-      { status: 500 }
+      { error: "Failed to update playlist" },
+      { status: 500 },
     );
   }
 }
@@ -146,16 +146,16 @@ export async function PATCH(req: NextRequest) {
 // ✅ Delete a playlist and cascade delete related videos (DELETE)
 export async function DELETE(req: NextRequest) {
   try {
-    const playlistId = req.nextUrl.pathname.split('/').pop(); // ✅ Extract ID from URL
+    const playlistId = req.nextUrl.pathname.split("/").pop(); // ✅ Extract ID from URL
     if (!playlistId) {
       return NextResponse.json(
-        { error: 'Missing playlist ID' },
-        { status: 400 }
+        { error: "Missing playlist ID" },
+        { status: 400 },
       );
     }
 
     const auth = authenticateUser(req);
-    if ('error' in auth) {
+    if ("error" in auth) {
       return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
@@ -164,13 +164,13 @@ export async function DELETE(req: NextRequest) {
     // ✅ Ensure the playlist belongs to the user before deleting
     const [existingRows] = (await pool.execute(
       `SELECT id FROM playlists WHERE id = ? AND user_id = ?`,
-      [playlistId, userId]
+      [playlistId, userId],
     )) as [Array<any>, any];
 
     if (!existingRows.length) {
       return NextResponse.json(
-        { error: 'Playlist not found or access denied' },
-        { status: 404 }
+        { error: "Playlist not found or access denied" },
+        { status: 404 },
       );
     }
 
@@ -181,27 +181,27 @@ export async function DELETE(req: NextRequest) {
 
       // ✅ Remove associated videos first (to prevent orphaned data)
       await connection.execute(
-        'DELETE FROM playlist_videos WHERE playlist_id = ?',
-        [playlistId]
+        "DELETE FROM playlist_videos WHERE playlist_id = ?",
+        [playlistId],
       );
 
       // ✅ Delete the playlist itself
       const [result] = await connection.execute(
-        'DELETE FROM playlists WHERE id = ?',
-        [playlistId]
+        "DELETE FROM playlists WHERE id = ?",
+        [playlistId],
       );
 
       if ((result as any).affectedRows === 0) {
         await connection.rollback();
         return NextResponse.json(
-          { error: 'Playlist not found' },
-          { status: 404 }
+          { error: "Playlist not found" },
+          { status: 404 },
         );
       }
 
       await connection.commit();
       return NextResponse.json({
-        message: '✅ Playlist and its associated videos deleted successfully',
+        message: "✅ Playlist and its associated videos deleted successfully",
         playlistId,
       });
     } catch (error) {
@@ -213,8 +213,8 @@ export async function DELETE(req: NextRequest) {
   } catch (error) {
     console.error(`❌ Failed to delete playlist:`, error);
     return NextResponse.json(
-      { error: 'Failed to delete playlist' },
-      { status: 500 }
+      { error: "Failed to delete playlist" },
+      { status: 500 },
     );
   }
 }

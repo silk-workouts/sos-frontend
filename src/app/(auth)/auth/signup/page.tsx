@@ -37,7 +37,7 @@ export default function SignupPage() {
         setPassword("");
 
         setMessage(
-          "Signup successful! Check your email (including SPAM folder) for verification."
+          "Signup successful! Check your email (including SPAM folder) for verification.",
         );
       } else {
         console.error("❌ Signup failed:", data);

@@ -1,31 +1,31 @@
 @use "@/styles/partials/variables" as *;
 
 .tab-container {
-	padding: 0 $padding-small;
-	//position: sticky;
+  padding: 0 $padding-small;
+  //position: sticky;
 }
 
 .tabContent {
-	border-bottom: 1px solid $color-black;
-	list-style: none;
-	display: flex;
-	gap: 1rem;
-	text-transform: capitalize;
-	font-size: 0.75rem;
+  border-bottom: 1px solid $color-black;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  text-transform: capitalize;
+  font-size: 0.75rem;
 }
 
 .tab {
-	padding: 0.5rem;
-	min-width: max-content;
-	border-bottom: 2px solid $color-white;
-	cursor: pointer;
+  padding: 0.5rem;
+  min-width: max-content;
+  border-bottom: 2px solid $color-white;
+  cursor: pointer;
 
-	&:focus {
-		font-weight: $font-weight-medium;
-	}
+  &:focus {
+    font-weight: $font-weight-medium;
+  }
 
-	&--selected {
-		font-weight: $font-weight-medium;
-		border-color: $color-black;
-	}
+  &--selected {
+    font-weight: $font-weight-medium;
+    border-color: $color-black;
+  }
 }

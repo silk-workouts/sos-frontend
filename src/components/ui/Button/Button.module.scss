@@ -10,7 +10,9 @@
   // line-height: 1.4;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease,
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
     border-color 0.3s ease;
   border: none;
   display: inline-flex;
@@ -39,7 +41,9 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      filter 0.3s ease;
 
     // Default arrow color (black)
     filter: brightness(0) invert(0);

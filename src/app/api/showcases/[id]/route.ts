@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { NextRequest, NextResponse } from "next/server";
+import pool from "@/lib/db";
 
 export async function GET(req: NextRequest) {
-  const showcaseId = req.nextUrl.pathname.split('/').pop();
+  const showcaseId = req.nextUrl.pathname.split("/").pop();
 
   if (!showcaseId) {
-    console.error('❌ Showcase ID is missing.');
+    console.error("❌ Showcase ID is missing.");
     return NextResponse.json(
-      { error: 'Showcase ID is required' },
-      { status: 400 }
+      { error: "Showcase ID is required" },
+      { status: 400 },
     );
   }
 
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
       `SELECT id, vimeo_showcase_id, name, description, thumbnail_url, vimeo_link, created_at 
        FROM showcases 
        WHERE vimeo_showcase_id = ?`,
-      [showcaseId]
+      [showcaseId],
     )) as [
       Array<{
         id: string;
@@ -29,14 +29,14 @@ export async function GET(req: NextRequest) {
         vimeo_link: string;
         created_at: string;
       }>,
-      any
+      any,
     ];
 
     if (!showcaseRows || showcaseRows.length === 0) {
       console.warn(`⚠️ No showcase found with ID: ${showcaseId}`);
       return NextResponse.json(
-        { error: 'Showcase not found' },
-        { status: 404 }
+        { error: "Showcase not found" },
+        { status: 404 },
       );
     }
 
@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
       WHERE sv.vimeo_showcase_id = ?
       ORDER BY sv.position ASC;
       `,
-      [showcaseId]
+      [showcaseId],
     )) as [Array<any>, any];
 
     // ✅ Response
@@ -63,8 +63,8 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error(`❌ Failed to fetch showcase with ID ${showcaseId}:`, error);
     return NextResponse.json(
-      { error: 'Failed to fetch showcase' },
-      { status: 500 }
+      { error: "Failed to fetch showcase" },
+      { status: 500 },
     );
   }
 }

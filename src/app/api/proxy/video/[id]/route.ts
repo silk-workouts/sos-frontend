@@ -1,17 +1,17 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 const VIMEO_API_TOKEN = process.env.VIMEO_API_TOKEN;
 
 export async function GET(
   request: NextRequest, // Unused, but here for consistency
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const id = (await params).id;
 
   if (!id) {
     return NextResponse.json(
-      { error: 'Video ID is required' },
-      { status: 400 }
+      { error: "Video ID is required" },
+      { status: 400 },
     );
   }
 
@@ -25,11 +25,11 @@ export async function GET(
 
     if (!vimeoResponse.ok) {
       console.error(
-        `❌ Failed to fetch video from Vimeo. Status: ${vimeoResponse.status}`
+        `❌ Failed to fetch video from Vimeo. Status: ${vimeoResponse.status}`,
       );
       return NextResponse.json(
-        { error: 'Failed to fetch video from Vimeo' },
-        { status: vimeoResponse.status }
+        { error: "Failed to fetch video from Vimeo" },
+        { status: vimeoResponse.status },
       );
     }
 
@@ -37,7 +37,7 @@ export async function GET(
 
     // Find the best available MP4 playback URL
     const playbackFile = vimeoData.files?.find(
-      (file: any) => file.type === 'video/mp4'
+      (file: any) => file.type === "video/mp4",
     );
 
     const playbackUrl = playbackFile?.link ?? null;
@@ -45,8 +45,8 @@ export async function GET(
     if (!playbackUrl) {
       console.warn(`⚠️ No suitable playback URL found for video ID ${id}`);
       return NextResponse.json(
-        { error: 'No playback URL found' },
-        { status: 404 }
+        { error: "No playback URL found" },
+        { status: 404 },
       );
     }
 
@@ -57,8 +57,8 @@ export async function GET(
   } catch (error) {
     console.error(`❌ Failed to proxy video with ID ${id}:`, error);
     return NextResponse.json(
-      { error: 'Failed to proxy video' },
-      { status: 500 }
+      { error: "Failed to proxy video" },
+      { status: 500 },
     );
   }
 }

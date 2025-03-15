@@ -1,58 +1,58 @@
 @use "@/styles/partials/variables" as *;
 
 .modal {
-	position: fixed;
-	inset: 0;
-	background-color: rgba($color-black, 0.25);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 2000;
+  position: fixed;
+  inset: 0;
+  background-color: rgba($color-black, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
 
-	&-container {
-		background-color: $color-white;
-		border-radius: 0.625rem;
-		padding: 1rem;
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-	}
+  &-container {
+    background-color: $color-white;
+    border-radius: 0.625rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
-	&__header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1rem;
-	}
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
 
-	&__title {
-		font-size: 1rem;
-		font-weight: $font-weight-regular;
-		text-transform: capitalize;
-	}
+  &__title {
+    font-size: 1rem;
+    font-weight: $font-weight-regular;
+    text-transform: capitalize;
+  }
 
-	&__button {
-		height: max-content;
-		border: none;
-		background-color: $color-white;
-		font-family: $font-primary;
-		font-size: 1rem;
-		cursor: pointer;
+  &__button {
+    height: max-content;
+    border: none;
+    background-color: $color-white;
+    font-family: $font-primary;
+    font-size: 1rem;
+    cursor: pointer;
 
-		&--delete {
-			align-self: flex-end;
-			border: 1px solid $color-black;
-			padding: 0.25rem 0.5rem;
-			border-radius: 2.1875rem;
+    &--delete {
+      align-self: flex-end;
+      border: 1px solid $color-black;
+      padding: 0.25rem 0.5rem;
+      border-radius: 2.1875rem;
 
-			&:hover {
-				background-color: #d9d9d9;
-			}
-		}
-	}
+      &:hover {
+        background-color: #d9d9d9;
+      }
+    }
+  }
 
-	&__icon {
-		width: 1.5rem;
-		height: 1.5rem;
-	}
+  &__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }

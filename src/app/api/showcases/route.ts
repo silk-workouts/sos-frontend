@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { NextRequest, NextResponse } from "next/server";
+import pool from "@/lib/db";
 
 export async function GET(req: NextRequest) {
   try {
     const [rows] = (await pool.execute(
-      'SELECT id, vimeo_showcase_id, name, description, thumbnail_url, vimeo_link, created_at FROM showcases'
+      "SELECT id, vimeo_showcase_id, name, description, thumbnail_url, vimeo_link, created_at FROM showcases",
     )) as [
       Array<{
         id: string;
@@ -15,15 +15,15 @@ export async function GET(req: NextRequest) {
         vimeo_link: string;
         created_at: string;
       }>,
-      any
+      any,
     ];
 
     return NextResponse.json({ showcases: rows });
   } catch (error) {
-    console.error('❌ Failed to fetch showcases:', error);
+    console.error("❌ Failed to fetch showcases:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch showcases' },
-      { status: 500 }
+      { error: "Failed to fetch showcases" },
+      { status: 500 },
     );
   }
 }

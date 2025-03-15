@@ -2,66 +2,66 @@
 @use "@/styles/partials/mixins" as *;
 
 .body {
-	padding: 3rem $padding-small;
-	transition: all 0.3s ease-in-out;
+  padding: 3rem $padding-small;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		padding: 4rem 1.5rem;
-	}
+  @include tablet {
+    padding: 4rem 1.5rem;
+  }
 
-	@include desktop {
-		padding: 4.5rem $padding-xl;
-		align-items: center;
-	}
+  @include desktop {
+    padding: 4.5rem $padding-xl;
+    align-items: center;
+  }
 }
 
 .content-wrapper {
-	display: flex;
-	flex-direction: column;
-	gap: 2.5rem;
-	max-width: $content-container-maximum;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  max-width: $content-container-maximum;
 
-	@include desktop {
-		margin: 0 auto;
-	}
+  @include desktop {
+    margin: 0 auto;
+  }
 }
 
 .title {
-	font-size: 1.25rem;
-	font-weight: 600;
-	line-height: 2rem;
-	transition: all 0.3s ease-in-out;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 2rem;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		font-size: 2rem;
-		line-height: 2.5rem;
-	}
+  @include tablet {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
 }
 
 .content {
-	margin-top: 1rem;
-	transition: all 0.3s ease-in-out;
+  margin-top: 1rem;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		margin-top: 1.5rem;
-	}
+  @include tablet {
+    margin-top: 1.5rem;
+  }
 }
 
 .list {
-	padding: 1.5rem 2rem 0rem;
+  padding: 1.5rem 2rem 0rem;
 
-	li {
-		padding-bottom: 0.5rem;
-		transition: all 0.3s ease-in-out;
+  li {
+    padding-bottom: 0.5rem;
+    transition: all 0.3s ease-in-out;
 
-		@include tablet {
-			padding-bottom: 1rem;
-		}
-	}
+    @include tablet {
+      padding-bottom: 1rem;
+    }
+  }
 }
 
 a.link,
 a.link:visited {
-	color: $color-red;
-	text-decoration: none;
+  color: $color-red;
+  text-decoration: none;
 }

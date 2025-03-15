@@ -1,39 +1,39 @@
 @use "@/styles/partials/variables" as *;
 
 .dialog-container {
-	position: fixed;
-	inset: 0;
-	z-index: 2000;
-	background-color: rgba($color-black, 0.25);
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background-color: rgba($color-black, 0.25);
 }
 
 .dialog {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	padding: $padding-small;
-	list-style: none;
-	border-radius: 1rem 1rem 0 0;
-	background-color: $color-white;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: $padding-small;
+  list-style: none;
+  border-radius: 1rem 1rem 0 0;
+  background-color: $color-white;
 
-	&__option {
-		cursor: pointer;
+  &__option {
+    cursor: pointer;
 
-		&:hover {
-			background-color: rgb(223, 222, 222);
-		}
-	}
+    &:hover {
+      background-color: rgb(223, 222, 222);
+    }
+  }
 }
 
 .option__button {
-	font-family: $font-primary;
-	background-color: transparent;
-	border: none;
-	padding: 0.5rem;
-	cursor: pointer;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
+  font-family: $font-primary;
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

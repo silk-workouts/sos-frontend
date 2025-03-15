@@ -1,15 +1,15 @@
-'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Button from '@/components/ui/Button/Button';
-import styles from './page.module.scss';
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Button from "@/components/ui/Button/Button";
+import styles from "./page.module.scss";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
 
@@ -17,8 +17,8 @@ export default function LoginPage() {
     event.preventDefault();
 
     let newErrors: { [key: string]: string } = {};
-    if (!email) newErrors.email = '⚠️ Required';
-    if (!password) newErrors.password = '⚠️ Required';
+    if (!email) newErrors.email = "⚠️ Required";
+    if (!password) newErrors.password = "⚠️ Required";
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -27,11 +27,11 @@ export default function LoginPage() {
 
     setErrors({});
 
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
-      credentials: 'include', // Ensure cookies are sent and received
+      credentials: "include", // Ensure cookies are sent and received
     });
 
     const data = await res.json();
@@ -48,22 +48,22 @@ export default function LoginPage() {
     // }
 
     if (res.ok) {
-      setMessage('✅ Login successful!');
+      setMessage("✅ Login successful!");
       // ✅ Immediately call /api/auth/verify-token after login
-      const verifyRes = await fetch('/api/auth/verify-token', {
-        method: 'GET',
-        credentials: 'include',
+      const verifyRes = await fetch("/api/auth/verify-token", {
+        method: "GET",
+        credentials: "include",
       });
 
       if (verifyRes.ok) {
         setTimeout(() => {
-          router.push('/dashboard'); // ✅ Redirect after auth verification
+          router.push("/dashboard"); // ✅ Redirect after auth verification
         }, 1000);
       } else {
-        console.warn('❌ Auth verification failed after login.');
+        console.warn("❌ Auth verification failed after login.");
       }
     } else {
-      setMessage(`❌ ${data.error || 'Login failed'}`);
+      setMessage(`❌ ${data.error || "Login failed"}`);
     }
   }
 
@@ -82,7 +82,7 @@ export default function LoginPage() {
         <form onSubmit={handleLogin} className={styles.loginForm}>
           <h1 className={styles.heading}>Welcome Back!</h1>
           <p className={styles.subtitle}>
-            Don’t have an account yet?{' '}
+            Don’t have an account yet?{" "}
             <Link className="link--emphasis" href="/auth/signup">
               Sign up now
             </Link>
