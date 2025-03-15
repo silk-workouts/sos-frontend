@@ -88,7 +88,9 @@ export default function SingleShowcasePage() {
   }
 
   const mergedData = chapters.map((chapter, index) => {
-    const matchingVideo = showcaseVideos[index]; // fallback by index
+    // const matchingVideo = showcaseVideos[index]; // fallback by index
+    const adjustedIndex = index + 1;
+    const matchingVideo = showcaseVideos[adjustedIndex];
     return {
       ...matchingVideo,
       title: chapter.title, // Use chapter title
