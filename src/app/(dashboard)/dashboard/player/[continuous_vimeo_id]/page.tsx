@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useParams } from "next/navigation";
 import Player from "@vimeo/player";
-import Video from "@/components/pages/dashboard/Video/Video"; // ✅ Prefer A (assuming this is intentional)
+import Video from "@/components/pages/dashboard/Video/Video";
 
 export default function PlayerPage() {
   const { continuous_vimeo_id } = useParams<{ continuous_vimeo_id: string }>();
@@ -23,7 +23,7 @@ export default function PlayerPage() {
   const playerContainerRef = useRef<HTMLDivElement | null>(null);
   const vimeoPlayerRef = useRef<Player | null>(null);
 
-  // ✅ Fetch chapters
+  //  Fetch chapters
   useEffect(() => {
     async function fetchChapters() {
       try {
@@ -39,7 +39,7 @@ export default function PlayerPage() {
     fetchChapters();
   }, [continuous_vimeo_id]);
 
-  // ✅ Fetch showcase videos (for thumbnails)
+  //  Fetch showcase videos (for thumbnails)
   useEffect(() => {
     async function fetchVideos() {
       if (!showcase_id) return;
@@ -54,7 +54,7 @@ export default function PlayerPage() {
     fetchVideos();
   }, [showcase_id]);
 
-  // ✅ Setup player (only once when chapters are loaded!)
+  // Setup player (only once when chapters are loaded!)
   useEffect(() => {
     if (!playerContainerRef.current || vimeoPlayerRef.current) return;
 
@@ -97,7 +97,7 @@ export default function PlayerPage() {
     };
   }, [continuous_vimeo_id, chapters, initialStartTime]);
 
-  // ✅ Handle chapter click
+  //  Handle chapter click
   const handleChapterClick = (chapter: any, index: number) => {
     if (vimeoPlayerRef.current) {
       vimeoPlayerRef.current.setCurrentTime(chapter.start_time).then(() => {
@@ -109,7 +109,7 @@ export default function PlayerPage() {
     }
   };
 
-  // ✅ Merged data (chapters + thumbnails)
+  //  Merged data (chapters + thumbnails)
   const mergedData = chapters.map((chapter, index) => {
     const video = showcaseVideos[index];
     return {
@@ -136,7 +136,7 @@ export default function PlayerPage() {
         }}
       />
 
-      {/* 📼 Chapter List */}
+      {/*  Chapter List */}
       <h2>Chapters</h2>
       <ul style={{ padding: 0, marginTop: "20px" }}>
         {mergedData.map((item, index) => (
@@ -165,18 +165,16 @@ export default function PlayerPage() {
                 id: item.id,
                 title: item.title,
                 thumbnail_url: item.thumbnail_url,
-                playbackUrl: "",
                 description:
                   item.description || `Starts at ${item.start_time}s`,
                 duration: item.duration || 0,
-                vimeo_video_id: parseInt(continuous_vimeo_id, 10),
+                vimeo_video_id: String(continuous_vimeo_id),
                 created_at: item.created_at || "",
                 showcase_id: showcase_id || "",
                 start_time: item.start_time,
+                position: item.position,
               }}
               display="row"
-              isModalOpen={false}
-              setIsModalOpen={() => {}}
               path="#" // Handled via onClick now
             />
           </li>

@@ -24,7 +24,7 @@ export default function Video({ showcaseVideo, display, path }: VideoProps) {
         display === "row" ? styles["card--row"] : ""
       }`}
     >
-      <Link href={`${path}`}>
+      <Link href={path}>
         <Image
           src={
             showcaseVideo.thumbnail_url?.startsWith("http")
@@ -45,9 +45,7 @@ export default function Video({ showcaseVideo, display, path }: VideoProps) {
         }`}
       >
         <h3 className={styles.title}>
-          <Link href={`${path}/${showcaseVideo.vimeo_video_id}`}>
-            {showcaseVideo.title}
-          </Link>
+          <Link href={path}>{showcaseVideo.title}</Link>
         </h3>
 
         <button

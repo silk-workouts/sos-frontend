@@ -15,6 +15,8 @@ export interface ShowcaseVideo {
   position: number;
   thumbnail_url: string;
   created_at: string;
+  showcase_id: string;
+  start_time: any;
 }
 
 interface Chapter {
@@ -76,7 +78,17 @@ export default function VideoList({ video }: VideoListProps) {
           return;
         }
       } catch (error) {
-        console.error("Unable to retrieve continuous video:", error);
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 404) {
+            // Expected case — no video found
+            setContinuousVideo(null); // or handle empty state
+          } else {
+            // Unexpected error (e.g., 500)
+            console.error("Unexpected error fetching continuous video:", error);
+          }
+        } else {
+          console.error("Unknown error:", error);
+        }
       }
     }
 
@@ -91,6 +103,7 @@ export default function VideoList({ video }: VideoListProps) {
 
     async function fetchChapters() {
       try {
+        if (!continuousVideo) return;
         const response = await axios.get("/api/chapters", {
           params: { continuous_vimeo_id: continuousVideo.continuous_vimeo_id },
         });
@@ -140,7 +153,7 @@ export default function VideoList({ video }: VideoListProps) {
       <ul className={styles.list}>
         {mergedData.map((showcaseVideo) => {
           return (
-            <li key={showcaseVideo.id}>
+            <li key={showcaseVideo.id} className={showcaseVideo.vimeo_video_id}>
               <Video
                 showcaseVideo={showcaseVideo}
                 display="column"
