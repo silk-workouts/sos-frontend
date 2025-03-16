@@ -17,6 +17,7 @@ export interface ShowcaseVideo {
   created_at: string;
   showcase_id: string;
   start_time: any;
+  real_vimeo_video_id: string;
 }
 
 interface Chapter {
@@ -26,6 +27,7 @@ interface Chapter {
   duration: number | null;
   showcase_id: number;
   continuous_vimeo_id: string;
+  real_vimeo_video_id: string;
 }
 
 interface VideoListProps {
@@ -127,6 +129,7 @@ export default function VideoList({ video }: VideoListProps) {
       ...matchingVideo,
       title: chapter.title,
       start_time: chapter.start_time,
+      real_vimeo_video_id: chapter.real_vimeo_video_id,
     };
   });
 

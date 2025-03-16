@@ -19,6 +19,7 @@ interface Chapter {
   duration: number | null;
   showcase_id: number;
   continuous_vimeo_id: string;
+  real_vimeo_video_id: string;
 }
 
 export default function SingleShowcasePage() {
@@ -95,6 +96,7 @@ export default function SingleShowcasePage() {
       ...matchingVideo,
       title: chapter.title, // Use chapter title
       start_time: chapter.start_time,
+      real_vimeo_video_id: chapter.real_vimeo_video_id,
     };
   });
 

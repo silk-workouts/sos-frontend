@@ -169,6 +169,7 @@ export default function PlayerPage() {
                   item.description || `Starts at ${item.start_time}s`,
                 duration: item.duration || 0,
                 vimeo_video_id: String(continuous_vimeo_id),
+                real_vimeo_video_id: item.real_vimeo_video_id,
                 created_at: item.created_at || "",
                 showcase_id: showcase_id || "",
                 start_time: item.start_time,
