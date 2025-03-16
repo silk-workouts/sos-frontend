@@ -22,7 +22,8 @@
     "paths": {
       "@/styles/*": ["src/styles/*"],
       "@/components/*": ["src/components/*"],
-      "@/lib/*": ["src/lib/*"]
+      "@/lib/*": ["src/lib/*"],
+      "@vimeo/player": ["types/vimeo__player"]
     }
   },
   "include": [

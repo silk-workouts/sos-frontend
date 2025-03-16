@@ -37,8 +37,12 @@ export default function ContactFormModal({ show, handleClose }: contactModal) {
 					<h2 id="dialogTitle" className="h2-title">
 						Send us a message{" "}
 					</h2>
-					<button className={styles.dialog__closeButton} onClick={handleClose}>
-						<Image src={closeIcon} alt="An icon of an X" />
+					<button
+						className={styles.dialog__closeButton}
+						onClick={handleClose}
+						aria-label="Close Contact Form"
+					>
+						<Image src={closeIcon} alt="" />
 					</button>
 				</div>
 
