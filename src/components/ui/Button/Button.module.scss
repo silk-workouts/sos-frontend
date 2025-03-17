@@ -203,14 +203,17 @@
   &--text {
     background: transparent;
     border: none;
-    color: $color-primary;
+    color: $color-black;
     font-family: $font-primary;
     font-size: $font-size-body2-mobile;
     cursor: pointer;
-    text-decoration: none;
+    text-transform: capitalize;
 
     &:hover {
       color: $link-hover-color;
+      &:hover {
+        box-shadow: none;
+      }
     }
   }
 }
