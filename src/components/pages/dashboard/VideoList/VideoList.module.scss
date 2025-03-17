@@ -43,6 +43,7 @@
   flex-grow: 1;
   height: auto;
   min-height: 100%; /* Prevents collapsing */
+  gap: $padding-small;
 }
 
 /* Bookmark Button - No Border */
