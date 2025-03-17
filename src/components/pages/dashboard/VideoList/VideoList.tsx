@@ -1,4 +1,6 @@
 "use client";
+import Image from "next/image";
+import rightArrow from "/public/assets/icons/arrow-right.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -148,8 +150,15 @@ export default function VideoList({ video }: VideoListProps) {
           </p>
         </header>
 
-        <button className={styles.button} onClick={handleShowVideoList}>
+        {/* <button className={styles.button} onClick={handleShowVideoList}>
           View all
+        </button> */}
+        <button
+          className={styles.button}
+          onClick={handleShowVideoList}
+          aria-label="View all videos"
+        >
+          <Image src={rightArrow} alt="" className={styles.icon} />
         </button>
       </div>
 
