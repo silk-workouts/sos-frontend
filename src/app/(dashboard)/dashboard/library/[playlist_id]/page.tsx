@@ -26,7 +26,7 @@ export interface PlaylistVideo {
 }
 
 export default function PlaylistPage() {
-	const { playlist_id } = useParams();
+	const { playlist_id } = useParams<{ playlist_id: string }>();
 	const { playlists, userId, refreshPlaylists } = usePlaylists();
 	const router = useRouter();
 
@@ -180,7 +180,10 @@ export default function PlaylistPage() {
 			</section>
 			<PlaylistVideos
 				videos={playlistVideos}
+				setVideos={setPlaylistVideos}
 				handleDelete={handleDeleteVideo}
+				playlist_id={playlist_id}
+				userId={userId}
 			/>
 			{isOpenEditModal && (
 				<EditPlaylistModal

@@ -11,6 +11,10 @@
 	}
 }
 
+.list__item {
+	touch-action: none;
+}
+
 .card {
 	display: flex;
 	flex-direction: row-reverse;
