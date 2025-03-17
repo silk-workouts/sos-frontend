@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import rightArrow from "/public/assets/icons/arrow-right.svg";
+import bookmark from "public/assets/icons/bookmark.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -149,17 +150,31 @@ export default function VideoList({ video }: VideoListProps) {
               "[Description goes here but it is currently empty]"}
           </p>
         </header>
+        <section className={styles.actions}>
+          <button
+            className={styles.bookmarkButton}
+            onClick={() => {
+              console.log(
+                "📌 Video saved to playlist (placeholder for API integration)"
+              );
+            }}
+            aria-label="Save to playlist"
+          >
+            <Image
+              src={bookmark}
+              alt="Bookmark video"
+              className={styles.bookmarkIcon}
+            />
+          </button>
 
-        {/* <button className={styles.button} onClick={handleShowVideoList}>
-          View all
-        </button> */}
-        <button
-          className={styles.button}
-          onClick={handleShowVideoList}
-          aria-label="View all videos"
-        >
-          <Image src={rightArrow} alt="" className={styles.icon} />
-        </button>
+          <button
+            className={styles.button}
+            onClick={handleShowVideoList}
+            aria-label="View all videos"
+          >
+            <Image src={rightArrow} alt="" className={styles.icon} />
+          </button>
+        </section>
       </div>
 
       <ul className={styles.list}>
