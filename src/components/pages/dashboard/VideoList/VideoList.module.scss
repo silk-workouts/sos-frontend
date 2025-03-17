@@ -10,12 +10,19 @@
 
 .header {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
   gap: 1.5rem;
   height: 100%;
   flex-grow: 1;
 }
+
+// .headerContainer {
+//   display: flex;
+//   flex-direction: column;
+//   gap: $padding-small;
+// }
 
 .title {
   /* Body 2 (mobile) */
@@ -32,6 +39,7 @@
   flex: none;
   order: 0;
   flex-grow: 0;
+  text-transform: capitalize !important;
 }
 
 /* Actions - Ensure Full Height & Spacing */
@@ -60,6 +68,25 @@
     .bookmarkIcon {
       filter: brightness(0.8);
     }
+  }
+}
+
+.infoContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+
+  .info {
+    display: flex;
+    gap: 1rem;
+    margin-top: $padding-small;
+  }
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+    vertical-align: middle;
   }
 }
 
