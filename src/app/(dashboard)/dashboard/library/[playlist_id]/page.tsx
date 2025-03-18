@@ -41,32 +41,63 @@ export default function PlaylistPage() {
     user_id: "",
   });
   const [playlistVideos, setPlaylistVideos] = useState<PlaylistVideo[]>([]);
+  const [progress, setProgress] = useState<{
+    video_id: string | null;
+    progress_seconds: number;
+  }>({
+    video_id: null,
+    progress_seconds: 0,
+  });
+
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
+  // ✅ Fetch playlist videos & progress
   useEffect(() => {
-    async function getPlaylistVideos() {
+    async function getPlaylistData() {
       setLoading(true);
       try {
+        console.log(`📥 Fetching playlist & videos for ${playlist_id}...`);
         const response = await axios.get(`/api/playlists/${playlist_id}`, {
           headers: { "x-user-id": userId },
         });
+
         setPlaylist(response.data.playlist);
         setPlaylistVideos(response.data.videos);
+
+        // ✅ Fetch last progress
+        fetchLastProgress();
       } catch (error) {
-        console.error(`Unable to retrieve videos for playlist: ${error}`);
+        console.error(`❌ Unable to retrieve playlist:`, error);
       } finally {
         setLoading(false);
       }
     }
 
+    async function fetchLastProgress() {
+      try {
+        console.log(`📥 Fetching last progress for playlist ${playlist_id}...`);
+        const res = await axios.get(
+          `/api/playlists/progress?playlist_id=${playlist_id}`,
+          {
+            headers: { "x-user-id": userId },
+          }
+        );
+
+        console.log("✅ Received progress:", res.data);
+        setProgress(res.data);
+      } catch (error) {
+        console.error("❌ Failed to fetch last progress:", error);
+      }
+    }
+
     if (userId) {
-      getPlaylistVideos();
+      getPlaylistData();
     }
   }, [playlists, playlist_id, userId]);
 
   if (loading) {
-    return <div>Loading playlists</div>;
+    return <div>Loading playlists...</div>;
   }
 
   function handleCloseDeleteModal() {
@@ -87,9 +118,7 @@ export default function PlaylistPage() {
       refreshPlaylists();
       setIsOpenDeleteModal(false);
     } catch (error) {
-      console.error(
-        `Unable to delete playlist with id ${playlist_id}: ${error}`
-      );
+      console.error(`❌ Unable to delete playlist:`, error);
     }
   }
 
@@ -100,10 +129,14 @@ export default function PlaylistPage() {
       });
       refreshPlaylists();
     } catch (error) {
-      console.error(
-        `Unable to delete playlist with id ${playlist_id}: ${error}`
-      );
+      console.error(`❌ Unable to delete video:`, error);
     }
+  }
+
+  function handleStartWorkout() {
+    router.push(
+      `/dashboard/playlistplayer/${playlist.id}?video_id=${progress.video_id}&progress=${progress.progress_seconds}`
+    );
   }
 
   return (
@@ -169,18 +202,17 @@ export default function PlaylistPage() {
             {playlist.description}
           </p>
         </div>
-        <Link href={`/dashboard/playlistplayer/${playlist.id}`} role="button">
-          <button
-            className={`${styles.titleCard__button} ${styles["titleCard__button--begin"]}`}
-          >
-            <span>begin workout</span>{" "}
-            <Image
-              src={playFilledIcon}
-              alt=""
-              className={styles.titleCard__icon}
-            />
-          </button>
-        </Link>
+        <button
+          onClick={handleStartWorkout}
+          className={`${styles.titleCard__button} ${styles["titleCard__button--begin"]}`}
+        >
+          <span>Begin Workout</span>
+          <Image
+            src={playFilledIcon}
+            alt=""
+            className={styles.titleCard__icon}
+          />
+        </button>
       </section>
       <PlaylistVideos
         videos={playlistVideos}
