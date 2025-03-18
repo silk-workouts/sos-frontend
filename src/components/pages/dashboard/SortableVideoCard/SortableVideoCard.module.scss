@@ -1,0 +1,40 @@
+@use "@/styles/partials/variables" as *;
+
+.card {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+
+	&--active {
+		border: 1px solid #e2211c;
+		border-radius: 1rem;
+
+		.card__button--grab {
+			cursor: grabbing;
+		}
+	}
+
+	&__button {
+		height: max-content;
+		background-color: $color-white;
+		border: none;
+		cursor: pointer;
+
+		&--grab {
+			cursor: grab;
+			touch-action: none;
+		}
+	}
+	&__header {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+	}
+
+	&__title {
+		font-weight: $font-weight-regular;
+		font-size: 0.75rem;
+	}
+	&__thumbnail {
+	}
+}
