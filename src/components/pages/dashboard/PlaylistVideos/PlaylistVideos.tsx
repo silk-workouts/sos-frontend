@@ -1,27 +1,26 @@
-import Image from "next/image";
-import bookmarkIcon from "/public/assets/icons/bookmark.svg";
-import grabIcon from "/public/assets/icons/grab.svg";
+import axios from "axios";
+import { useState } from "react";
 import {
 	closestCorners,
 	DndContext,
 	DragEndEvent,
+	DragStartEvent,
 	KeyboardSensor,
 	PointerSensor,
-	TouchSensor,
+	UniqueIdentifier,
 	useSensor,
 	useSensors,
 } from "@dnd-kit/core";
+import { Arguments } from "@dnd-kit/core/dist/components/Accessibility/types";
 import {
 	SortableContext,
 	verticalListSortingStrategy,
-	useSortable,
 	arrayMove,
 	sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { PlaylistVideo } from "src/app/(dashboard)/dashboard/library/[playlist_id]/page";
+import SortableVideoCard from "../SortableVideoCard/SortableVideoCard";
 import styles from "./PlaylistVideos.module.scss";
-import axios from "axios";
 
 interface PlaylistVideosProps {
 	videos: PlaylistVideo[];
@@ -38,54 +37,108 @@ export default function PlaylistVideos({
 	playlist_id,
 	userId,
 }: PlaylistVideosProps) {
-	async function updateVideoPosition(position, video_id) {
+	const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>(
+		undefined
+	);
+
+	async function updateVideoPosition(position: number, video_id: number) {
 		try {
-			const response = await axios.patch(
+			await axios.patch(
 				`/api/playlists/${playlist_id}/videos/${video_id}`,
 				{ position: position },
 				{ headers: { "x-user-id": userId } }
 			);
-
-			console.log(response);
 		} catch (error) {
 			console.error(
 				`Unable to update the position of video with id ${video_id}: ${error}`
 			);
 		}
 	}
-	function getVideoPosition(videoId) {
+
+	function handleDragStart(event: DragStartEvent) {
+		const { active } = event;
+		setActiveId(active.id);
+	}
+
+	function getVideoPosition(videoId: UniqueIdentifier) {
 		return videos.findIndex((video) => video.id === videoId);
 	}
 
 	function handleDragEnd(event: DragEndEvent) {
 		const { active, over } = event;
 
-		if (active.id === over.id) {
-			return;
+		if (over && active.id !== over.id) {
+			const originalPos = getVideoPosition(active.id);
+			const newPos = getVideoPosition(over.id);
+			const newVideos = arrayMove(videos, originalPos, newPos);
+			setVideos(newVideos);
+
+			const currVideo = videos[originalPos];
+			updateVideoPosition(newPos + 1, currVideo.id);
 		}
 
-		const originalPos = getVideoPosition(active.id);
-		const newPos = getVideoPosition(over?.id);
-		setVideos((videos) => arrayMove(videos, originalPos, newPos));
+		setActiveId(undefined);
+	}
 
-		const activeVideo = videos[originalPos];
-		updateVideoPosition(newPos + 1, activeVideo.id);
+	function handleDragCancel() {
+		setActiveId(undefined);
 	}
 
 	const sensors = useSensors(
 		useSensor(PointerSensor),
-		useSensor(TouchSensor),
-		useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+		useSensor(KeyboardSensor, {
+			coordinateGetter: sortableKeyboardCoordinates,
+		})
 	);
+
+	const announcements = {
+		onDragStart({ active }: Arguments) {
+			return `Picked up the ${
+				active.data.current?.video.title
+			} video. The Video is in position ${getVideoPosition(active.id) + 1} of ${
+				videos.length
+			}`;
+		},
+		onDragOver({ active, over }: Arguments) {
+			if (over && over.id !== active.id) {
+				return `The ${
+					active.data.current?.video.title
+				} video was moved into position ${getVideoPosition(over.id) + 1} of ${
+					videos.length
+				}`;
+			}
+		},
+		onDragEnd({ active, over }: Arguments) {
+			if (over && active.id !== over.id) {
+				return `The ${
+					active.data.current?.video.title
+				} video was dropped at position ${getVideoPosition(over.id) + 1} of ${
+					videos.length
+				}`;
+			}
+		},
+		onDragCancel({ active }: Arguments) {
+			return `Dragging was cancelled. The ${active.data.current?.video.title} video was dropped.`;
+		},
+	};
+
+	const screenReaderInstructions = ` To pick up a video item, press space or enter.
+									   Use the up and down arrow keys to update the position of the video in the playlist.
+									   Press space or enter again to drop the item in its new position, or press escape to cancel.`;
 
 	return (
 		<section className={styles.videos}>
 			<DndContext
+				onDragStart={handleDragStart}
 				onDragEnd={handleDragEnd}
+				onDragCancel={handleDragCancel}
 				collisionDetection={closestCorners}
+				accessibility={{
+					announcements,
+					screenReaderInstructions: { draggable: screenReaderInstructions },
+				}}
 				sensors={sensors}
 			>
-				{/*try closest center*/}
 				<ul role="list" className={styles.videos__list}>
 					<SortableContext
 						items={videos}
@@ -93,10 +146,11 @@ export default function PlaylistVideos({
 					>
 						{videos.map((video) => {
 							return (
-								<VideoCard
+								<SortableVideoCard
 									key={video.id}
 									video={video}
 									handleDelete={handleDelete}
+									activeId={activeId}
 								/>
 							);
 						})}
@@ -104,61 +158,5 @@ export default function PlaylistVideos({
 				</ul>
 			</DndContext>
 		</section>
-	);
-}
-
-interface VideoCardProps {
-	video: PlaylistVideo;
-	handleDelete: (arg1: number) => void;
-}
-
-function VideoCard({ video, handleDelete }: VideoCardProps) {
-	const { attributes, listeners, setNodeRef, transform, transition } =
-		useSortable({
-			id: video.id,
-			data: { title: video.title, position: video.position, id: video.id },
-		});
-
-	const style = {
-		transition,
-		transform: CSS.Transform.toString(transform),
-	};
-
-	return (
-		<li
-			ref={setNodeRef}
-			{...attributes}
-			{...listeners}
-			style={style}
-			className={styles.list__item}
-		>
-			<article className={styles.card}>
-				<header className={styles.card__header}>
-					<h3 className={styles.card__title}>{video.title}</h3>
-					<button
-						aria-label="Remove video from playlist"
-						className={styles.card__button}
-						onClick={() => {
-							handleDelete(video.id);
-						}}
-					>
-						<Image src={bookmarkIcon} alt="" />
-					</button>
-				</header>
-				<Image
-					src={video.thumbnail_url}
-					className={styles.card__thumbnail}
-					alt={`A thumbnail image for the ${video.title} workout`}
-					width={135}
-					height={117}
-				/>
-				<button
-					aria-label="Grab to rearrange video order"
-					className={`${styles.card__button} ${styles["card__button--grab"]}`}
-				>
-					<Image src={grabIcon} alt="" />
-				</button>
-			</article>
-		</li>
 	);
 }

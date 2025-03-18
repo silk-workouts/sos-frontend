@@ -10,36 +10,3 @@
 		gap: 1rem;
 	}
 }
-
-.list__item {
-	touch-action: none;
-}
-
-.card {
-	display: flex;
-	flex-direction: row-reverse;
-	align-items: center;
-
-	&__button {
-		height: max-content;
-		background-color: $color-white;
-		border: none;
-		cursor: pointer;
-
-		&--grab {
-			cursor: grab;
-		}
-	}
-	&__header {
-		display: flex;
-		gap: 0.5rem;
-		align-items: center;
-	}
-
-	&__title {
-		font-weight: $font-weight-regular;
-		font-size: 0.75rem;
-	}
-	&__thumbnail {
-	}
-}
