@@ -1,7 +1,6 @@
 "use client";
 import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import leftArrowIcon from "/public/assets/icons/chevron-left.svg";
@@ -24,11 +23,10 @@ export interface PlaylistVideo {
   thumbnail_url: string;
   title: string;
   vimeo_video_id: number;
-  playlist_id: string;
 }
 
 export default function PlaylistPage() {
-  const { playlist_id } = useParams();
+  const { playlist_id } = useParams<{ playlist_id: string }>();
   const { playlists, userId, refreshPlaylists } = usePlaylists();
   const router = useRouter();
 
@@ -216,7 +214,10 @@ export default function PlaylistPage() {
       </section>
       <PlaylistVideos
         videos={playlistVideos}
+        setVideos={setPlaylistVideos} // ✅ Added from B
         handleDelete={handleDeleteVideo}
+        playlist_id={playlist_id} // ✅ Added from B
+        userId={userId} // ✅ Added from B
       />
       {isOpenEditModal && (
         <EditPlaylistModal

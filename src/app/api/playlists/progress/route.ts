@@ -31,10 +31,6 @@ export async function GET(req: NextRequest) {
 
     const { userId } = auth;
 
-    console.log(
-      `🔎 Fetching last watched video for user ${userId} in playlist ${playlistId}...`
-    );
-
     // ✅ Retrieve the most recently updated progress entry
     const [progressRows] = (await pool.execute(
       `SELECT video_id, progress_seconds 
@@ -46,17 +42,12 @@ export async function GET(req: NextRequest) {
     )) as [Array<any>, any];
 
     if (!progressRows.length) {
-      console.log("🚫 No progress found for this playlist.");
       return NextResponse.json({
         message: "No progress found",
         video_id: null,
         progress_seconds: 0,
       });
     }
-
-    console.log(
-      `✅ Found progress: Video ${progressRows[0].video_id}, Time ${progressRows[0].progress_seconds} sec`
-    );
 
     return NextResponse.json({
       video_id: progressRows[0].video_id,
@@ -76,8 +67,6 @@ export async function PUT(req: NextRequest) {
   try {
     const body = await req.json();
     const { playlist_id, video_id, progress_seconds } = body;
-
-    console.log("➡️ Received progress update request:", body);
 
     if (!playlist_id || !video_id || progress_seconds === undefined) {
       console.error("❌ Missing required fields", {
@@ -102,10 +91,6 @@ export async function PUT(req: NextRequest) {
 
     const { userId } = auth;
 
-    console.log(
-      `🔹 [API] User ${userId} updating progress for video ${video_id}: ${progress_seconds} sec`
-    );
-
     // ✅ SQL query: Ensure progress is always updated
     const query = `
       INSERT INTO playlist_video_progress (user_id, playlist_id, video_id, progress_seconds)
@@ -117,10 +102,7 @@ export async function PUT(req: NextRequest) {
 
     const values = [userId, playlist_id, video_id, progress_seconds];
 
-    console.log("🛠 Executing SQL:", query, values);
-
     const [result] = await pool.execute(query, values);
-    console.log("✅ Progress updated in database:", result);
 
     return NextResponse.json({ message: "✅ Progress updated successfully" });
   } catch (error) {

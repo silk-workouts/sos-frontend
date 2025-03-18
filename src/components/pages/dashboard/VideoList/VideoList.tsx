@@ -1,4 +1,9 @@
 "use client";
+import Image from "next/image";
+import rightArrow from "/public/assets/icons/arrow-right.svg";
+import bookmark from "public/assets/icons/bookmark.svg";
+import playIcon from "/public/assets/icons/play.svg";
+import clockIcon from "/public/assets/icons/clock.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -140,17 +145,51 @@ export default function VideoList({ video }: VideoListProps) {
   return (
     <section className={styles.container}>
       <div className={styles.header}>
-        <header>
+        <header className={styles.headerContainer}>
           <h2 className={styles.title}>{video.name.toLowerCase()}</h2>
           <p className={styles.description}>
             {video.description ||
               "[Description goes here but it is currently empty]"}
           </p>
+          <div className={styles.infoContainer}>
+            {" "}
+            <div className={styles.info}>
+              <span>
+                <Image src={playIcon} alt="" className={styles.icon} />
+                <span>[num] Videos</span>
+              </span>
+              <span>
+                <Image src={clockIcon} alt="" className={styles.icon} />
+                <span>[num] mins</span>
+              </span>
+            </div>
+          </div>
         </header>
+        <section className={styles.actions}>
+          <button
+            className={styles.bookmarkButton}
+            onClick={() => {
+              console.log(
+                "📌 Video saved to playlist (placeholder for API integration)"
+              );
+            }}
+            aria-label="Save to playlist"
+          >
+            <Image
+              src={bookmark}
+              alt="Bookmark video"
+              className={styles.bookmarkIcon}
+            />
+          </button>
 
-        <button className={styles.button} onClick={handleShowVideoList}>
-          View all
-        </button>
+          <button
+            className={styles.button}
+            onClick={handleShowVideoList}
+            aria-label="View all videos"
+          >
+            <Image src={rightArrow} alt="" className={styles.icon} />
+          </button>
+        </section>
       </div>
 
       <ul className={styles.list}>

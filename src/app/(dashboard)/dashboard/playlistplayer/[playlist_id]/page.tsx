@@ -187,6 +187,7 @@ export default function PlaylistPlayerPage() {
     <div className={styles.pageContainer}>
       <h1>{playlist.title}</h1>
       {playlist.description && <p>{playlist.description}</p>}
+      {activeVideo.title && <p>{`Now playing: ${activeVideo.title}`}</p>}
 
       {/* 🎥 Video Player */}
       <div
