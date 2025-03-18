@@ -77,42 +77,43 @@ export default function Header() {
         </div>
 
         {isLoggedIn ? (
-          <div
-            className={`${styles.authSection} ${styles["is-logged-in"]}`}
-            data-type="CODE-REFERENCE"
-          >
-            <div className={styles.profileMenu} role="menu">
-              <button
-                className={styles.profileButton}
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                aria-expanded={isDropdownOpen}
-                aria-haspopup="true"
-              >
-                <Image
-                  src="/assets/images/jumpRope.png"
-                  alt="User Profile"
-                  width={40}
-                  height={40}
-                />
-              </button>
+          // <div
+          //   className={`${styles.authSection} ${styles["is-logged-in"]}`}
+          //   data-type="CODE-REFERENCE"
+          // >
+          //   <div className={styles.profileMenu} role="menu">
+          //     <button
+          //       className={styles.profileButton}
+          //       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          //       aria-expanded={isDropdownOpen}
+          //       aria-haspopup="true"
+          //     >
+          //       <Image
+          //         src="/assets/images/jumpRope.png"
+          //         alt="User Profile"
+          //         width={40}
+          //         height={40}
+          //       />
+          //     </button>
 
-              {isDropdownOpen && (
-                <nav className={styles.dropdownMenu} role="menu">
-                  <ul>
-                    <li>
-                      <Link href="/dashboard">Dashboard</Link>
-                    </li>
-                    <li>
-                      <Link href="/about">About</Link>
-                    </li>
-                    <li>
-                      <button onClick={handleLogout}>Logout</button>
-                    </li>
-                  </ul>
-                </nav>
-              )}
-            </div>
-          </div>
+          //     {isDropdownOpen && (
+          //       <nav className={styles.dropdownMenu} role="menu">
+          //         <ul>
+          //           <li>
+          //             <Link href="/dashboard">Dashboard</Link>
+          //           </li>
+          //           <li>
+          //             <Link href="/about">About</Link>
+          //           </li>
+          //           <li>
+          //             <button onClick={handleLogout}>Logout</button>
+          //           </li>
+          //         </ul>
+          //       </nav>
+          //     )}
+          //   </div>
+          // </div>
+          ""
         ) : (
           <>
             <nav className={styles.navLinks}>

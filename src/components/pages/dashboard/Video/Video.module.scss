@@ -1,41 +1,43 @@
 @use "@/styles/partials/variables" as *;
 
 .card {
-	display: flex;
-	flex-direction: column;
-	gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 
-	&--row {
-		flex-direction: row;
-		gap: 0.5rem;
-	}
+  &--row {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
 }
 
 .thumbnail {
-	border-radius: 1rem;
-	border: 1px solid $color-black;
+  border-radius: 10px;
+  //   border: 1px solid $color-black;
+  height: 75px;
+  width: 134px;
 }
 
 .header {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	padding-left: 0.25rem;
-	flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-left: 0.25rem;
+  flex: 1;
 
-	&--row {
-		align-items: center;
-	}
+  &--row {
+    align-items: center;
+  }
 }
 
 .title {
-	font-size: 0.75rem;
-	font-weight: $font-weight-regular;
-	text-transform: capitalize;
+  font-size: 0.75rem;
+  font-weight: $font-weight-regular;
+  text-transform: capitalize;
 }
 
 .menuButton {
-	background-color: $color-white;
-	border: none;
-	cursor: pointer;
+  background-color: $color-white;
+  border: none;
+  cursor: pointer;
 }

@@ -198,4 +198,22 @@
     width: 100%;
     justify-content: center;
   }
+
+  //add variant for text
+  &--text {
+    background: transparent;
+    border: none;
+    color: $color-black;
+    font-family: $font-primary;
+    font-size: $font-size-body2-mobile;
+    cursor: pointer;
+    text-transform: capitalize;
+
+    &:hover {
+      color: $link-hover-color;
+      &:hover {
+        box-shadow: none;
+      }
+    }
+  }
 }

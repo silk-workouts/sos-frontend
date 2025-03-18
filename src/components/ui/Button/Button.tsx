@@ -5,9 +5,9 @@ import styles from "./Button.module.scss";
 
 interface ButtonProps {
   type?: "button" | "submit" | "reset";
-  variant?: "primary" | "secondary" | "tertiary" | "delete";
+  variant?: "primary" | "secondary" | "tertiary" | "delete" | "text"; // Added "text"
   children: ReactNode;
-  onClick?: () => void; // Made optional
+  onClick?: () => void;
   className?: string;
 }
 
