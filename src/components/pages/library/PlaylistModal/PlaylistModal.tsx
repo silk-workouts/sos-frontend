@@ -11,6 +11,7 @@ import {
 	usePlaylists,
 } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
 import styles from "./PlaylistModal.module.scss";
+import { usePathname, useRouter } from "next/navigation";
 
 interface PlaylistModalProps {
 	setIsOpen: (arg1: boolean) => void;
@@ -21,6 +22,8 @@ export default function PlaylistModal({
 	setIsOpen,
 	playlist,
 }: PlaylistModalProps) {
+	const router = useRouter();
+	const pathname = usePathname();
 	const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 	const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
@@ -39,6 +42,9 @@ export default function PlaylistModal({
 			await axios.delete(`/api/playlists/${playlist.id}`, {
 				headers: { "x-user-id": userId },
 			});
+
+			if (pathname !== "/dashboard/library") router.push("/dashboard/library");
+
 			refreshPlaylists();
 			setIsOpenDeleteModal(false);
 			setIsOpen(false);

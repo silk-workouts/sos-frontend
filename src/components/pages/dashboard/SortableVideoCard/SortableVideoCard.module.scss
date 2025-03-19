@@ -2,8 +2,8 @@
 
 .card {
 	display: flex;
-	flex-direction: row-reverse;
 	align-items: center;
+	padding-right: 1rem;
 
 	&--active {
 		border: 1px solid #e2211c;
@@ -23,11 +23,12 @@
 		&--grab {
 			cursor: grab;
 			touch-action: none;
+			padding: 0.5rem;
 		}
 	}
 	&__header {
 		display: flex;
-		gap: 0.5rem;
+		flex-direction: row-reverse;
 		align-items: center;
 	}
 

@@ -6,6 +6,10 @@
 
 	&__item {
 		border-bottom: 1px solid #cacaca;
+
+		&:last-child {
+			border-bottom: none;
+		}
 	}
 }
 
