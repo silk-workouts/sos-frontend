@@ -3,7 +3,14 @@
 .card {
 	display: flex;
 	align-items: center;
-	padding-right: 1rem;
+	padding: 0.5rem 1rem 0.5rem 0;
+	background-color: $color-white;
+
+	&:hover {
+		.card__button--grab {
+			transform: scale(1.2);
+		}
+	}
 
 	&--active {
 		border: 1px solid #e2211c;
@@ -16,7 +23,7 @@
 
 	&__button {
 		height: max-content;
-		background-color: $color-white;
+		background-color: transparent;
 		border: none;
 		cursor: pointer;
 
@@ -27,15 +34,28 @@
 		}
 	}
 	&__header {
+		flex: 1;
 		display: flex;
 		flex-direction: row-reverse;
 		align-items: center;
+		justify-content: flex-end;
+		gap: 0.5rem;
 	}
 
 	&__title {
 		font-weight: $font-weight-regular;
 		font-size: 0.75rem;
+		text-transform: capitalize;
+	}
+
+	&__thumbnail-container {
+		width: 8.375rem;
+		height: 4.6875rem;
+		position: relative;
+		flex-shrink: 0;
 	}
 	&__thumbnail {
+		border-radius: 0.625rem;
+		border: 0.5px solid #dbdbdb;
 	}
 }

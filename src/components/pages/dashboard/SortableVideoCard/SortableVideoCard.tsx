@@ -43,18 +43,21 @@ export default function SortableVideoCard({
 				</button>
 
 				<div className={styles.card__header}>
-					<h3 className={styles.card__title}>{video.title}</h3>
-					<Image
-						src={video.thumbnail_url}
-						className={styles.card__thumbnail}
-						alt={`A thumbnail image for the ${video.title} workout`}
-						width={135}
-						height={117}
-					/>
+					<h3 className={styles.card__title}>{video.title.toLowerCase()}</h3>
+					<div className={styles["card__thumbnail-container"]}>
+						<Image
+							src={video.thumbnail_url}
+							className={styles.card__thumbnail}
+							alt={`A thumbnail image for the ${video.title} workout`}
+							fill
+							style={{ objectFit: "cover" }}
+						/>
+					</div>
 				</div>
 
 				<button
-					aria-label="Remove video from playlist"
+					aria-label="Delete video from playlist"
+					title="Delete video from playlist"
 					className={styles.card__button}
 					onClick={() => {
 						handleDelete(video.id);
