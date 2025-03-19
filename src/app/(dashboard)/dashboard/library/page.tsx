@@ -34,7 +34,7 @@ export default function Library() {
 				<ul className={styles.tabContent} role="tablist" tabIndex={0}>
 					<li
 						role="tab"
-						tabIndex={0}
+						tabIndex={isSelected.myFormula ? 0 : -1}
 						id="myFormula-tab"
 						aria-selected={isSelected.myFormula}
 						aria-controls="myFormula-panel"
@@ -49,7 +49,7 @@ export default function Library() {
 					</li>
 					<li
 						role="tab"
-						tabIndex={0}
+						tabIndex={isSelected.program ? 0 : -1}
 						id="program-tab"
 						aria-selected={isSelected.program}
 						aria-controls="program-panel"
