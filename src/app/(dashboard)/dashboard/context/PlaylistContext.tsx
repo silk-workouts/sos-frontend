@@ -8,6 +8,7 @@ export interface Playlist {
   id: string;
   title: string;
   user_id: string;
+  type?: "custom" | "savedProgram";
 }
 
 export interface PlaylistsContextType {

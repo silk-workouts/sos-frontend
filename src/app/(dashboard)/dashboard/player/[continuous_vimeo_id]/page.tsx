@@ -5,6 +5,8 @@ import { useSearchParams, useParams } from "next/navigation";
 import Player from "@vimeo/player";
 import Video from "@/components/pages/dashboard/Video/Video";
 
+import styles from "./page.module.scss";
+
 export default function PlayerPage() {
   const { continuous_vimeo_id } = useParams<{ continuous_vimeo_id: string }>();
   const searchParams = useSearchParams();
@@ -12,7 +14,7 @@ export default function PlayerPage() {
   const initialStartTime = searchParams.get("start_time")
     ? parseInt(searchParams.get("start_time") as string, 10)
     : 0;
-
+  const autoplay = searchParams.get("autoplay") === "1";
   const [chapters, setChapters] = useState<any[]>([]);
   const [showcaseVideos, setShowcaseVideos] = useState<any[]>([]);
   const [activeChapterIndex, setActiveChapterIndex] = useState<number | null>(
@@ -121,44 +123,85 @@ export default function PlayerPage() {
     };
   });
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>Workout Player</h1>
+  useEffect(() => {
+    if (autoplay && playerReady && vimeoPlayerRef.current) {
+      console.log("▶️ Autoplaying video...");
 
-      {/* 🎥 Player */}
+      //  Find the correct index based on start time
+      const startIndex = chapters.findIndex(
+        (c) => c.start_time >= initialStartTime
+      );
+      const validIndex = startIndex !== -1 ? startIndex : 0; // Default to first chapter
+
+      // Set the active chapter index to highlight the correct thumbnail
+      setActiveChapterIndex(validIndex);
+      console.log(
+        `🎯 Autoplay started - Active chapter set to index: ${validIndex}`
+      );
+
+      // Start playing video
+      vimeoPlayerRef.current.play().catch((err) => {
+        console.warn("Autoplay blocked by browser:", err);
+      });
+    }
+  }, [autoplay, playerReady, chapters]);
+
+  useEffect(() => {
+    if (!playerContainerRef.current) return;
+
+    const cleanupInjectedStyles = () => {
+      const container = playerContainerRef.current;
+      if (!container) return; // Ensure it's not null
+
+      const injectedDivs = container.querySelectorAll<HTMLDivElement>(
+        "div[style*='padding:56.25%']"
+      );
+
+      injectedDivs.forEach((div) => {
+        if (div instanceof HTMLDivElement) {
+          div.style.padding = "0";
+          div.style.position = "static";
+          div.style.height = "100%";
+        }
+      });
+
+      console.log("✅ Removed extra Vimeo-injected padding divs");
+    };
+
+    // Run cleanup initially (in case the divs are already there)
+    cleanupInjectedStyles();
+
+    // Also run cleanup again after a short delay (for dynamically injected elements)
+    const cleanupTimeout = setTimeout(cleanupInjectedStyles, 500);
+
+    return () => {
+      clearTimeout(cleanupTimeout);
+      console.log("Cleaning up Vimeo-injected styles on unmount");
+    };
+  }, [playerReady]); // Runs only when the player is ready
+
+  return (
+    <div className={styles.container}>
+      <h1 className={styles.title}>Workout Player</h1>
+
+      {/* 🎥 Player Wrapper */}
       <div
         ref={playerContainerRef}
-        style={{
-          width: "100%",
-          height: "500px",
-          visibility: playerReady ? "visible" : "hidden",
-          transition: "visibility 0.3s ease-in-out",
-        }}
+        className={`${styles.playerContainer} ${
+          playerReady ? styles.playerVisible : ""
+        }`}
       />
 
-      {/*  Chapter List */}
-      <h2>Chapters</h2>
-      <ul style={{ padding: 0, marginTop: "20px" }}>
+      {/* 📜 Chapter List */}
+      <h2 className={styles.chapterTitle}>Chapters</h2>
+      <ul className={styles.chapterList}>
         {mergedData.map((item, index) => (
           <li
             key={item.id || index}
             onClick={() => handleChapterClick(item, index)}
-            style={{
-              listStyle: "none",
-              cursor: "pointer",
-              marginBottom: "12px",
-              borderRadius: "8px",
-              border:
-                activeChapterIndex === index
-                  ? "3px solid #0070f3"
-                  : "1px solid #ddd",
-              background:
-                activeChapterIndex === index
-                  ? "rgba(0, 112, 243, 0.1)"
-                  : "#f9f9f9",
-              padding: "12px",
-              transition: "all 0.2s ease",
-            }}
+            className={`${styles.chapterItem} ${
+              activeChapterIndex === index ? styles.activeChapter : ""
+            }`}
           >
             <Video
               showcaseVideo={{

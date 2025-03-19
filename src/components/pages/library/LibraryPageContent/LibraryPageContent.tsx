@@ -1,77 +1,48 @@
 "use client";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import kebabIcon from "/public/assets/icons/kebab.svg";
-import rightArrow from "/public/assets/icons/arrow-right.svg";
-import playIcon from "/public/assets/icons/play.svg";
-import clockIcon from "/public/assets/icons/clock.svg";
+import PlayListCard from "../PlayListCard/PlayListCard";
 import { Playlist } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
-import PlaylistModal from "../PlaylistModal/PlaylistModal";
+import { SavedProgram } from "src/types";
 import styles from "./LibraryPageContent.module.scss";
 
 interface LibraryContentProps {
-	playlists: Playlist[];
+  playlists?: Playlist[];
+  savedPrograms?: SavedProgram[];
+  refreshSavedPrograms?: () => void;
 }
 
-export default function LibraryPageContent({ playlists }: LibraryContentProps) {
-	return (
-		<ul className={styles.list}>
-			{playlists.map((playlist) => {
-				return (
-					<li key={playlist.id} className={styles.list__item}>
-						<PlayListCard playlist={playlist} />
-					</li>
-				);
-			})}
-		</ul>
-	);
-}
+export default function LibraryPageContent({
+  playlists = [],
+  savedPrograms = [],
+  refreshSavedPrograms,
+}: LibraryContentProps) {
+  const combinedPlaylists: Playlist[] = [
+    ...playlists.map((p) => ({
+      ...p,
+      type: "custom" as const,
+    })),
+    ...savedPrograms.map((program) => ({
+      id: String(program.showcaseId), // Ensure ID is a string
+      title: program.title,
+      description: program.description || "",
+      created_at: "", // No created_at field in savedPrograms
+      user_id: "", // Not needed for saved programs
+      type: "savedProgram" as const,
+    })),
+  ];
 
-function PlayListCard({ playlist }: { playlist: Playlist }) {
-	const router = useRouter();
-	const [isOpenModal, setIsOpenModal] = useState(false);
-
-	function handlePlaylistNavigation(id: string) {
-		router.push(`/dashboard/library/${id}`);
-	}
-	return (
-		<article className={styles.card}>
-			<div className={styles.card__headerContainer}>
-				<header>
-					<h2 className={styles.card__title}>{playlist.title}</h2>
-					<p className={styles.card__description}>{playlist.description}</p>
-				</header>
-				<button
-					className={styles.button}
-					aria-label="Playlist actions menu"
-					onClick={() => setIsOpenModal(true)}
-				>
-					<Image src={kebabIcon} alt="" />
-				</button>
-			</div>
-			<div className={styles.card__infoContainer}>
-				<div className={styles.info}>
-					<span>
-						<Image src={playIcon} alt="" className={styles.icon} />
-						<span>[num] Videos</span>
-					</span>
-					<span>
-						<Image src={clockIcon} alt="" className={styles.icon} />
-						<span>[num] mins</span>
-					</span>
-				</div>
-				<button
-					className={styles.button}
-					onClick={() => handlePlaylistNavigation(playlist.id)}
-					aria-label="Go to playlist"
-				>
-					<Image src={rightArrow} alt="" className={styles.icon} />
-				</button>
-			</div>
-			{isOpenModal && (
-				<PlaylistModal setIsOpen={setIsOpenModal} playlist={playlist} />
-			)}
-		</article>
-	);
+  return (
+    <ul className={styles.list}>
+      {combinedPlaylists.map((playlist) => (
+        <li
+          key={`${playlist.type}-${playlist.id}`}
+          className={styles.list__item}
+        >
+          <PlayListCard
+            playlist={playlist}
+            refreshSavedPrograms={refreshSavedPrograms}
+          />
+        </li>
+      ))}
+    </ul>
+  );
 }
