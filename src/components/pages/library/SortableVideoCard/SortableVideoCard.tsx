@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { useState } from "react";
+import bookmarkFill from "/public/assets/icons/bookmark-fill.svg";
 import bookmarkIcon from "/public/assets/icons/bookmark.svg";
 import grabIcon from "/public/assets/icons/grab.svg";
 import { useSortable } from "@dnd-kit/sortable";
@@ -18,6 +20,7 @@ export default function SortableVideoCard({
 	activeId,
 	handleDelete,
 }: VideoCardProps) {
+	const [isDeleted, setIsDeleted] = useState(false);
 	const { listeners, setNodeRef, setActivatorNodeRef, transform, transition } =
 		useSortable({ id: video.id, data: { video } });
 
@@ -60,10 +63,26 @@ export default function SortableVideoCard({
 					title="Delete video from playlist"
 					className={styles.card__button}
 					onClick={() => {
+						setIsDeleted(true);
 						handleDelete(video.id);
 					}}
 				>
-					<Image src={bookmarkIcon} alt="" aria-hidden="true" />
+					{!isDeleted && (
+						<Image
+							src={bookmarkFill}
+							alt=""
+							aria-hidden="true"
+							className={styles.card__icon}
+						/>
+					)}
+					{isDeleted && (
+						<Image
+							src={bookmarkIcon}
+							alt=""
+							aria-hidden="true"
+							className={styles.card__icon}
+						/>
+					)}
 				</button>
 			</article>
 		</li>

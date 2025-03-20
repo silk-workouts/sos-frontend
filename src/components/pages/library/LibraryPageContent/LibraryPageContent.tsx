@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,9 +13,8 @@ import {
 	usePlaylists,
 } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
 import PlaylistModal from "../PlaylistModal/PlaylistModal";
-import styles from "./LibraryPageContent.module.scss";
 import { PlaylistVideo } from "src/app/(dashboard)/dashboard/library/[playlist_id]/page";
-import axios from "axios";
+import styles from "./LibraryPageContent.module.scss";
 
 interface LibraryContentProps {
 	playlists: Playlist[];

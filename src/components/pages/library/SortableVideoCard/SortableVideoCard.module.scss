@@ -1,10 +1,15 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .card {
 	display: flex;
 	align-items: center;
 	padding: 0.5rem 1rem 0.5rem 0;
 	background-color: $color-white;
+
+	@include tablet {
+		padding-right: 1.5rem;
+	}
 
 	&:hover {
 		.card__button--grab {
@@ -31,6 +36,10 @@
 			cursor: grab;
 			touch-action: none;
 			padding: 0.5rem;
+
+			@include tablet {
+				padding: 1rem;
+			}
 		}
 	}
 	&__header {
@@ -40,12 +49,20 @@
 		align-items: center;
 		justify-content: flex-end;
 		gap: 0.5rem;
+
+		@include tablet {
+			gap: 1rem;
+		}
 	}
 
 	&__title {
 		font-weight: $font-weight-regular;
 		font-size: 0.75rem;
 		text-transform: capitalize;
+
+		@include tablet {
+			font-size: 1rem;
+		}
 	}
 
 	&__thumbnail-container {
@@ -53,9 +70,21 @@
 		height: 4.6875rem;
 		position: relative;
 		flex-shrink: 0;
+
+		@include tablet {
+			width: 15.9375rem;
+			height: 8.9375rem;
+		}
 	}
 	&__thumbnail {
 		border-radius: 0.625rem;
 		border: 0.5px solid #dbdbdb;
+	}
+
+	&__icon {
+		@include tablet {
+			width: 1.5rem;
+			height: 1.5rem;
+		}
 	}
 }
