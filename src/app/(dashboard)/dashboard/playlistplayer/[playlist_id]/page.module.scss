@@ -1,39 +1,181 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+/* 🎥 Page Container */
 .pageContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1200px; // Adjust as needed
+  // max-width: 320px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 16px;
+  gap: $padding-base;
+
+  @include tablet {
+    max-width: 500px;
+  }
+
+  @include desktop {
+    max-width: 600px;
+  }
 }
 
+/* 🔙 Back Button */
+.backButton {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* 🎬 Video Player */
 .playerContainer {
   width: 100%;
-  max-width: 800px; // Set a max width so it doesn't grow too much
-  aspect-ratio: 16 / 9; // Ensures responsive scaling
+  aspect-ratio: 16 / 9;
   position: relative;
+  background: #d9d9d9; // Placeholder background
 }
 
-.thumbnailGallery {
+/* 🎞 Video Details */
+.videoDetails {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px; // Ensures space between player & thumbnails
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px;
+  gap: 8px;
   width: 100%;
-  max-width: 800px;
-  overflow-x: auto;
+}
 
-  .thumbnailCard {
-    cursor: pointer;
-    transition: border 0.2s ease-in-out;
+.playlistTitle {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: $color-primary;
+}
 
-    &.active {
-      border: 2px solid red;
-    }
+.videoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
 
-    img {
-      width: 100%;
-    }
+.videoTitle {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #0f0f0f;
+}
+
+.videoDescription {
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #424242;
+  line-height: 160%;
+}
+
+/* 🔖 Bookmark Button */
+.bookmarkButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.bookmarkIcon {
+  width: 16px;
+  height: 16px;
+}
+
+/* 📌 Video List */
+.videoList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+/* 🎞 Video Thumbnail */
+.thumbnailCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  gap: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: border 0.2s ease-in-out;
+  position: relative;
+  border-radius: 10px;
+
+  /* 🔴 Active Video Highlight */
+  &.active {
+    border: 2px solid #e2211c;
   }
+
+  @include tablet {
+    width: 100%;
+  }
+
+  @include desktop {
+    max-width: 600px;
+  }
+}
+
+/* 🎞 Thumbnail Image */
+.thumbnailImage {
+  width: 134px;
+  height: 74.98px;
+  background: #bbbbbb;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+
+  @include tablet {
+    width: 180px;
+    height: 100px;
+  }
+
+  @include desktop {
+    width: 200px;
+    height: 120px;
+  }
+}
+
+/* ⏱ Time Stamp */
+.timeStamp {
+  position: absolute;
+  width: 43px;
+  height: 19px;
+  background: rgba(15, 15, 15, 0.3);
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🏷 Video Info */
+.videoInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+
+.videoTitle {
+  font-size: 12px;
+  color: #000000;
 }

@@ -1,13 +1,18 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { useSearchParams, useParams } from "next/navigation";
+import { useSearchParams, useParams, useRouter } from "next/navigation";
 import { usePlaylists } from "../../context/PlaylistContext";
 import Player from "@vimeo/player";
 import axios from "axios";
+import Image from "next/image";
 import styles from "./page.module.scss";
+import backArrowIcon from "/public/assets/icons/chevron-left.svg";
+import bookmarkIcon from "/public/assets/icons/bookmark.svg";
+import bookmarkUnsavedIcon from "/public/assets/icons/bookmark-unsaved.svg";
 
 export default function PlaylistPlayerPage() {
+  const router = useRouter();
   const { playlist_id } = useParams<{ playlist_id: string }>();
   const searchParams = useSearchParams();
   const { userId } = usePlaylists();
@@ -18,6 +23,9 @@ export default function PlaylistPlayerPage() {
   const [playlist, setPlaylist] = useState<any | null>(null);
   const [videos, setVideos] = useState<any[]>([]);
   const [activeVideo, setActiveVideo] = useState<any | null>(null);
+  const [savedVideos, setSavedVideos] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const playerContainerRef = useRef<HTMLDivElement | null>(null);
   const vimeoPlayerRef = useRef<Player | null>(null);
   const lastUpdateTimeRef = useRef<number>(0);
@@ -180,24 +188,61 @@ export default function PlaylistPlayerPage() {
       console.error("❌ Failed to save progress:", err);
     }
   }
+  // ✅ Handle Bookmark Toggle
+  function handleBookmark(videoId: number) {
+    setSavedVideos((prev) => {
+      const isSaved = !prev[videoId];
+
+      console.log(
+        isSaved
+          ? `✅ Video ${videoId} added to bookmarks (API call placeholder)`
+          : `🔖 Video ${videoId} removed from bookmarks (API call placeholder)`
+      );
+
+      return { ...prev, [videoId]: isSaved };
+    });
+  }
 
   if (!playlist || !activeVideo) return <div>Loading...</div>;
 
   return (
     <div className={styles.pageContainer}>
-      <h1>{playlist.title}</h1>
-      {playlist.description && <p>{playlist.description}</p>}
-      {activeVideo.title && <p>{`Now playing: ${activeVideo.title}`}</p>}
+      {/* 🔙 Back Button */}
+      <button
+        onClick={() => router.back()}
+        className={styles.backButton}
+        aria-label="Go back"
+      >
+        <Image src={backArrowIcon} alt="Back" width={24} height={24} />
+      </button>
 
       {/* 🎥 Video Player */}
-      <div
-        ref={playerContainerRef}
-        className={styles.playerContainer}
-        style={{ width: "100%", height: "500px" }}
-      />
+      <div ref={playerContainerRef} className={styles.playerContainer} />
 
-      {/* 🔽 Playlist Thumbnails */}
-      <div className={styles.thumbnailGallery}>
+      {/* 📜 Video Info */}
+      <div className={styles.videoDetails}>
+        <h2 className={styles.playlistTitle}>{playlist.title}</h2>
+        <div className={styles.videoHeader}>
+          <h3 className={styles.videoTitle}>{activeVideo.title}</h3>
+          <button
+            onClick={() => handleBookmark(activeVideo.id)}
+            className={styles.bookmarkButton}
+            aria-label="Save video"
+          >
+            <Image
+              src={
+                savedVideos[activeVideo.id] ? bookmarkIcon : bookmarkUnsavedIcon
+              }
+              alt="Bookmark"
+              className={styles.bookmarkIcon}
+            />
+          </button>
+        </div>
+        <p className={styles.videoDescription}>{activeVideo.description}</p>
+      </div>
+
+      {/* 📌 Playlist Thumbnails */}
+      <div className={styles.videoList}>
         {videos.map((video) => (
           <div
             key={video.id}
@@ -211,7 +256,23 @@ export default function PlaylistPlayerPage() {
               alt={video.title}
               className={styles.thumbnailImage}
             />
-            <p>{video.title}</p>
+            <div className={styles.videoInfo}>
+              <p className={styles.videoTitle}>{video.title}</p>
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleBookmark(video.id);
+              }}
+              className={styles.bookmarkButton}
+              aria-label="Save video"
+            >
+              <Image
+                src={savedVideos[video.id] ? bookmarkIcon : bookmarkUnsavedIcon}
+                alt="Bookmark"
+                className={styles.bookmarkIcon}
+              />
+            </button>
           </div>
         ))}
       </div>
