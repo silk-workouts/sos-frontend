@@ -3,15 +3,9 @@
 
 .container {
 	margin-top: -4rem;
-}
-
-.content-container {
-	display: flex;
-	flex-direction: column;
 
 	@include desktop {
-		flex-direction: row;
-		gap: 0.5rem;
+		margin-top: 2rem;
 	}
 }
 
@@ -23,6 +17,7 @@
 	padding: 1rem;
 	margin-bottom: 1.5rem;
 	color: $color-white;
+	position: relative;
 
 	@include tablet {
 		padding: 1.5rem;
@@ -30,6 +25,9 @@
 
 	@include desktop {
 		border-radius: 0.75rem;
+		position: fixed;
+		top: 6.5rem;
+		bottom: 0;
 	}
 
 	&__button {
@@ -68,16 +66,18 @@
 		}
 
 		&--desktop {
+			gap: 0.5rem;
+			align-items: center;
+			font-size: 1rem;
+			font-weight: 600;
+			padding: 0.5rem 1rem;
+			margin-bottom: 1.5rem;
 			display: none;
 
 			@include desktop {
-				display: unset;
 				display: flex;
-				gap: 0.5rem;
-				align-items: center;
-				font-size: 1rem;
-				padding: 0.5rem 1rem;
-				margin-bottom: 1.5rem;
+				position: absolute;
+				top: -4rem;
 			}
 		}
 	}
