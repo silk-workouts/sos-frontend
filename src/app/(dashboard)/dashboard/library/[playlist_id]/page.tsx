@@ -161,9 +161,9 @@ export default function PlaylistPage() {
 					<div className={styles["hero__title-container"]}>
 						<h1 className={styles.hero__title}>{playlist.title}</h1>{" "}
 						<button
-							aria-label={`Options for ${playlist.title} playlist`}
+							aria-label={`View Options for ${playlist.title} playlist`}
 							className={styles.hero__button}
-							onClick={() => setIsOpenModal(true)}
+							onClick={() => setIsOpenModal(!isOpenModal)}
 						>
 							<Image
 								src={kebabIcon}
@@ -172,6 +172,9 @@ export default function PlaylistPage() {
 								className={`${styles.hero__icon} ${styles["hero__icon--options"]}`}
 							/>
 						</button>
+						{isOpenModal && (
+							<PlaylistModal setIsOpen={setIsOpenModal} playlist={playlist} />
+						)}
 					</div>
 					<div className={styles.hero__info}>
 						<span className={styles.hero__message} aria-live="polite">
@@ -219,9 +222,6 @@ export default function PlaylistPage() {
 				playlist_id={playlist_id} // ✅ Added from B
 				userId={userId} // ✅ Added from B
 			/>
-			{isOpenModal && (
-				<PlaylistModal setIsOpen={setIsOpenModal} playlist={playlist} />
-			)}
 		</div>
 	);
 }

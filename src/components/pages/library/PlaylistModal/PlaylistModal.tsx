@@ -1,7 +1,8 @@
 "use client";
 import axios from "axios";
-import Image from "next/image";
 import { useState } from "react";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import editIcon from "/public/assets/icons/edit.svg";
 import deleteIcon from "/public/assets/icons/trash.svg";
 import EditPlaylistModal from "../EditPlaylistModal/EditPlaylistModal";
@@ -11,7 +12,6 @@ import {
 	usePlaylists,
 } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
 import styles from "./PlaylistModal.module.scss";
-import { usePathname, useRouter } from "next/navigation";
 
 interface PlaylistModalProps {
 	setIsOpen: (arg1: boolean) => void;
@@ -98,6 +98,41 @@ export default function PlaylistModal({
 					</ul>
 				</div>
 			)}
+			{isOpenEditModal || isOpenDeleteModal || (
+				<ul
+					className={`${styles.dialog} ${styles["dialog--tablet"]}`}
+					role="menu"
+					aria-label=""
+				>
+					<li
+						className={`${styles.dialog__option} ${styles["dialog__option--tablet"]}`}
+						role="menuitem"
+					>
+						<button
+							className={`${styles.option__button} ${styles["option__button--tablet"]}`}
+							onClick={() => {
+								setIsOpenEditModal(true);
+							}}
+						>
+							<Image src={editIcon} alt="" />
+							<span>Edit</span>
+						</button>
+					</li>
+					<li
+						className={`${styles.dialog__option} ${styles["dialog__option--tablet"]}`}
+						role="menuitem"
+					>
+						<button
+							className={`${styles.option__button} ${styles["option__button--tablet"]}`}
+							onClick={() => setIsOpenDeleteModal(true)}
+						>
+							<Image src={deleteIcon} alt="" />
+							<span>Delete</span>
+						</button>
+					</li>
+				</ul>
+			)}
+
 			{isOpenEditModal && (
 				<EditPlaylistModal
 					handleClose={handleCloseEditModal}

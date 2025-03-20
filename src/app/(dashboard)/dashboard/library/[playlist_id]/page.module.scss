@@ -5,7 +5,7 @@
 	margin-top: -4rem;
 
 	@include desktop {
-		margin-top: 2rem;
+		margin-top: 2.5rem;
 	}
 }
 
@@ -29,6 +29,7 @@
 		top: 6.5rem;
 		left: 9.125rem;
 		bottom: 0;
+		min-height: 25rem;
 	}
 
 	&__button {
@@ -100,14 +101,11 @@
 
 	&__image-container {
 		position: relative;
-		height: 10rem;
+		width: 100%;
+		aspect-ratio: 16 / 9;
 
-		@include tablet {
-			height: 25rem;
-		}
 		@include desktop {
 			width: 19.5rem;
-			height: 10.9375rem;
 		}
 	}
 
@@ -119,6 +117,10 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+
+		@include tablet {
+			position: relative;
+		}
 	}
 
 	&__title {

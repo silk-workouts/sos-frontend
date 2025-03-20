@@ -15,6 +15,7 @@
 
 	&__item {
 		border-bottom: 1px solid #cacaca;
+		max-width: 21.875rem;
 
 		&:last-child {
 			border-bottom: none;
@@ -44,15 +45,12 @@
 	&__image-container {
 		display: none;
 		position: relative;
-		height: 10rem;
+		width: 100%;
+		aspect-ratio: 16/9;
 		margin-bottom: -0.5rem;
 
 		@include tablet {
 			display: unset;
-		}
-
-		@include desktop {
-			height: 11.5625rem;
 		}
 	}
 
@@ -64,6 +62,10 @@
 	&__headerContainer {
 		display: flex;
 		justify-content: space-between;
+
+		@include tablet {
+			position: relative;
+		}
 
 		.button {
 			height: max-content;
@@ -77,14 +79,18 @@
 		font-weight: $font-weight-regular;
 		font-size: 1rem;
 
-		@include desktop {
-			font-size: 1.25rem;
-		}
+		// @include desktop {
+		// 	font-size: 1.25rem;
+		// }
 	}
 
 	&__description {
 		font-size: 0.75rem;
 		margin-top: 0.5rem;
+
+		@include tablet {
+			display: none;
+		}
 	}
 
 	&__icon {

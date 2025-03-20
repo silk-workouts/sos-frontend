@@ -19,12 +19,16 @@ export default function DeletePlaylistModal({
 						delete playlist?
 					</h1>
 
-					<button className={styles.modal__button}>
+					<button
+						className={styles.modal__button}
+						aria-label="Cancel delete"
+						onClick={handleClose}
+					>
 						<Image
 							src={closeIcon}
 							alt=""
 							className={styles.modal__icon}
-							onClick={handleClose}
+							aria-hidden="true"
 						/>
 					</button>
 				</div>

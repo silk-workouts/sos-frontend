@@ -42,7 +42,12 @@ export default function SortableVideoCard({
 					ref={setActivatorNodeRef}
 					{...listeners}
 				>
-					<Image src={grabIcon} alt="" aria-hidden="true" />
+					<Image
+						src={grabIcon}
+						alt=""
+						aria-hidden="true"
+						className={styles.card__icon}
+					/>
 				</button>
 
 				<div className={styles.card__header}>

@@ -91,7 +91,7 @@ function PlayListCard({ playlist }: { playlist: Playlist }) {
 				<button
 					className={styles.button}
 					aria-label="Open to view playlist actions "
-					onClick={() => setIsOpenModal(true)}
+					onClick={() => setIsOpenModal(!isOpenModal)}
 				>
 					<Image
 						src={kebabIcon}
@@ -100,6 +100,9 @@ function PlayListCard({ playlist }: { playlist: Playlist }) {
 						aria-hidden="true"
 					/>
 				</button>
+				{isOpenModal && (
+					<PlaylistModal setIsOpen={setIsOpenModal} playlist={playlist} />
+				)}
 			</div>
 			<div className={styles.card__infoContainer}>
 				{!loading && (
@@ -137,9 +140,6 @@ function PlayListCard({ playlist }: { playlist: Playlist }) {
 					/>
 				</button>
 			</div>
-			{isOpenModal && (
-				<PlaylistModal setIsOpen={setIsOpenModal} playlist={playlist} />
-			)}
 		</article>
 	);
 }

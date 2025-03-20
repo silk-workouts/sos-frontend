@@ -64,11 +64,17 @@ export default function Navigation() {
 					<Link
 						href="/dashboard/library"
 						className={`${styles.nav__link} ${
-							path === "/dashboard/library" ? styles["nav__link--active"] : ""
+							path.startsWith("/dashboard/library")
+								? styles["nav__link--active"]
+								: ""
 						}`}
 					>
 						<Image
-							src={path === "/dashboard/library" ? library_filled : libraryIcon}
+							src={
+								path.startsWith("/dashboard/library")
+									? library_filled
+									: libraryIcon
+							}
 							alt=""
 							className={styles.icon}
 						/>
