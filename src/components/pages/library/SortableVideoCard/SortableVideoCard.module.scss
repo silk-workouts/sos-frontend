@@ -6,12 +6,16 @@
 	align-items: center;
 	padding: 0.5rem 1rem 0.5rem 0;
 	background-color: $color-white;
+	border-radius: 1rem;
 
 	@include tablet {
 		padding-right: 1.5rem;
 	}
 
 	&:hover {
+		background-color: rgba($color-black, 0.05);
+		//background-color: rgba($color-red, 0.1);
+
 		.card__button--grab {
 			transform: scale(1.2);
 		}
@@ -19,7 +23,6 @@
 
 	&--active {
 		border: 1px solid #e2211c;
-		border-radius: 1rem;
 
 		.card__button--grab {
 			cursor: grabbing;
