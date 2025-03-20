@@ -81,6 +81,36 @@
 				position: absolute;
 				top: -4rem;
 			}
+
+			&::before,
+			&::after {
+				content: "";
+				position: absolute;
+				font-size: 2rem;
+				font-weight: 400;
+				opacity: 0;
+				transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+			}
+
+			&::before {
+				content: "[";
+				left: -5px;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+
+			&::after {
+				content: "]";
+				right: -5px;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+
+			&:hover::before,
+			&:hover::after {
+				opacity: 1;
+				transform: translateY(-50%) scale(1.1);
+			}
 		}
 	}
 

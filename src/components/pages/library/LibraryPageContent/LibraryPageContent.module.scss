@@ -9,13 +9,13 @@
 		display: flex;
 		flex-flow: row wrap;
 		justify-content: space-between;
-		row-gap: 3rem;
+		row-gap: 2.5rem;
+		column-gap: 0.5rem;
 		padding: 1.5rem;
 	}
 
 	&__item {
 		border-bottom: 1px solid #cacaca;
-		max-width: 21.875rem;
 
 		&:last-child {
 			border-bottom: none;
@@ -24,10 +24,7 @@
 		@include tablet {
 			border: none;
 			width: 30vw;
-		}
-
-		@include desktop {
-			width: 25vw;
+			max-width: 20rem;
 		}
 	}
 }
@@ -48,6 +45,8 @@
 		width: 100%;
 		aspect-ratio: 16/9;
 		margin-bottom: -0.5rem;
+		border-radius: 0.75rem;
+		background-color: rgba($color-black, 0.05);
 
 		@include tablet {
 			display: unset;
@@ -123,6 +122,9 @@
 
 			@include tablet {
 				gap: 0.5rem;
+			}
+
+			@include desktop {
 				font-size: 0.875rem;
 			}
 		}
@@ -138,7 +140,7 @@
 				background-color: #e2211c;
 				border-color: #e2211c;
 
-				.icon {
+				.card__icon {
 					filter: invert(1);
 				}
 			}

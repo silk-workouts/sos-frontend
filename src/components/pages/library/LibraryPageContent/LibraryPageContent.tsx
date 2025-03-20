@@ -68,8 +68,8 @@ function PlayListCard({ playlist }: { playlist: Playlist }) {
 
 	return (
 		<article className={styles.card}>
-			{!loading && (
-				<div className={styles["card__image-container"]}>
+			<div className={styles["card__image-container"]}>
+				{!loading && (
 					<Image
 						src={
 							playlistVideos.length > 0
@@ -81,8 +81,8 @@ function PlayListCard({ playlist }: { playlist: Playlist }) {
 						style={{ objectFit: "cover" }}
 						className={styles.card__image}
 					/>
-				</div>
-			)}
+				)}
+			</div>
 			<div className={styles.card__headerContainer}>
 				<header>
 					<h2 className={styles.card__title}>{playlist.title}</h2>
@@ -105,28 +105,27 @@ function PlayListCard({ playlist }: { playlist: Playlist }) {
 				)}
 			</div>
 			<div className={styles.card__infoContainer}>
-				{!loading && (
-					<div className={styles.info}>
-						<span className={styles.card__message}>
-							<Image
-								src={playIcon}
-								alt=""
-								className={styles.card__icon}
-								aria-hidden="true"
-							/>
-							<span>{playlistVideos.length} videos</span>
-						</span>
-						<span className={styles.card__message}>
-							<Image
-								src={clockIcon}
-								alt=""
-								className={styles.card__icon}
-								aria-hidden="true"
-							/>
-							<span>[X] mins</span>
-						</span>
-					</div>
-				)}
+				<div className={styles.info}>
+					<span className={styles.card__message}>
+						<Image
+							src={playIcon}
+							alt=""
+							className={styles.card__icon}
+							aria-hidden="true"
+						/>
+						<span>{!loading && playlistVideos.length} videos</span>
+					</span>
+					<span className={styles.card__message}>
+						<Image
+							src={clockIcon}
+							alt=""
+							className={styles.card__icon}
+							aria-hidden="true"
+						/>
+						<span>{!loading && `[X]`} mins</span>
+					</span>
+				</div>
+
 				<button
 					className={styles.button}
 					onClick={() => handlePlaylistNavigation(playlist.id)}
