@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import Image from "next/image";
 import libraryIcon from "/public/assets/icons/library.svg";
 import library_filled from "/public/assets/icons/library-fill.svg";
@@ -6,9 +7,9 @@ import profileIcon from "/public/assets/icons/profile.svg";
 import profile_filled from "/public/assets/icons/profile-fill.svg";
 import weightsIcon from "/public/assets/icons/weights.svg";
 import weights_filled from "/public/assets/icons/weights-fill.svg";
-import styles from "./Navigation.module.scss";
+import logoIcon from "/public/assets/icons/s-single.svg";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
+import styles from "./Navigation.module.scss";
 
 export default function Navigation() {
 	const path = usePathname();
@@ -19,6 +20,17 @@ export default function Navigation() {
 
 	return (
 		<nav className={styles.nav}>
+			<Link
+				href="/dashboard"
+				aria-label="Navigate to dashboard"
+				className={styles["nav__logo-link"]}
+			>
+				<Image
+					src={logoIcon}
+					alt="System of Silk logo"
+					className={styles.nav__logo}
+				/>
+			</Link>
 			<ul className={styles.nav__list} role="list">
 				<li className={styles.nav__item}>
 					<Link

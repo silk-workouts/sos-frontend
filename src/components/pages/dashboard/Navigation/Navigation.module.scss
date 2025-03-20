@@ -1,4 +1,5 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .nav {
 	position: fixed;
@@ -9,12 +10,47 @@
 	padding: 0.5rem;
 	border-top: 0.5px solid #dbdbdb;
 
+	@include desktop {
+		top: 0;
+		right: unset;
+		border-top: none;
+		border-right: 0.5px solid #dbdbdb;
+		padding: 1.5rem;
+	}
+
+	&__logo-link {
+		display: none;
+
+		@include desktop {
+			display: flex;
+			justify-content: center;
+			margin-bottom: 1.5rem;
+		}
+	}
+
+	&__logo {
+		width: 3.5625rem;
+		height: auto;
+	}
+
 	&__list {
 		display: flex;
 		list-style: none;
 		justify-content: space-around;
 		text-transform: capitalize;
 		font-size: 0.75rem;
+
+		@include desktop {
+			flex-direction: column;
+		}
+	}
+
+	&__item {
+		border-radius: 1rem;
+
+		&:hover {
+			background-color: rgba(#b21a16, 0.25);
+		}
 	}
 
 	&__link {
@@ -22,7 +58,12 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 0.25rem;
+		padding: 0 1rem;
 		cursor: pointer;
+
+		@include desktop {
+			padding: 1rem;
+		}
 
 		&--active {
 			font-weight: $font-weight-medium;

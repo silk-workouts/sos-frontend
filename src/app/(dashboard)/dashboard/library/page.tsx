@@ -29,7 +29,7 @@ export default function Library() {
 	}
 
 	return (
-		<div>
+		<div className={styles.container}>
 			<div className={styles["tab-container"]}>
 				<ul className={styles.tabContent} role="tablist" tabIndex={0}>
 					<li

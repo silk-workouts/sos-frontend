@@ -1,6 +1,12 @@
 @use "@/styles/partials/variables" as *;
 @use "@/styles/partials/mixins" as *;
 
+.container {
+	@include desktop {
+		padding-left: 7.75rem;
+	}
+}
+
 .tab-container {
 	background-color: $color-white;
 	padding: 0 $padding-small;
