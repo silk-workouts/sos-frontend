@@ -94,7 +94,7 @@ export default function PlaylistPage() {
 	}, [playlists, playlist_id, userId]);
 
 	if (loading) {
-		return <div>Loading playlist...</div>;
+		return <div className={styles.loading}>Loading playlist...</div>;
 	}
 
 	async function handleDeleteVideo(video_id: number) {

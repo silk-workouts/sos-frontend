@@ -18,6 +18,14 @@
 		padding: 1.5rem;
 	}
 
+	&--playlist {
+		display: none;
+
+		@include desktop {
+			display: unset;
+		}
+	}
+
 	&__logo-link {
 		display: none;
 

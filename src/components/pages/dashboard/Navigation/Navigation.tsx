@@ -13,13 +13,26 @@ import styles from "./Navigation.module.scss";
 
 export default function Navigation() {
 	const path = usePathname();
+	let isPlaylistPage = false;
 
-	if (!/^(\/dashboard|\/dashboard\/library|\/dashboard\/profile)$/.test(path)) {
+	if (
+		!/^\/dashboard$|^\/dashboard\/library$|^\/dashboard\/library\/[^/]+$|^\/dashboard\/profile$/.test(
+			path
+		)
+	) {
 		return <></>;
 	}
 
+	if (path.startsWith("/dashboard/library") && path.split("/").length > 3) {
+		isPlaylistPage = true;
+	}
+
 	return (
-		<nav className={styles.nav}>
+		<nav
+			className={`${styles.nav} ${
+				isPlaylistPage ? styles["nav--playlist"] : ""
+			}`}
+		>
 			<Link
 				href="/dashboard"
 				aria-label="Navigate to dashboard"

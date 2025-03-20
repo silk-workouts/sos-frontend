@@ -27,6 +27,7 @@
 		border-radius: 0.75rem;
 		position: fixed;
 		top: 6.5rem;
+		left: 9.125rem;
 		bottom: 0;
 	}
 
@@ -149,5 +150,11 @@
 	&__description {
 		margin-top: 1.5rem;
 		font-size: 0.875rem;
+	}
+}
+
+.loading {
+	@include desktop {
+		padding-left: 31.25rem;
 	}
 }
