@@ -76,16 +76,20 @@ export async function POST(req: NextRequest) {
     const subscription = subscriptions.data[0];
     console.log(`✅ Found active subscription: ${subscription.id}`);
 
-    // ✅ Immediately cancel the subscription
-    await stripe.subscriptions.cancel(subscription.id);
+    // ✅ Set the subscription to cancel at the end of the billing cycle
+    await stripe.subscriptions.update(subscription.id, {
+      cancel_at_period_end: true,
+    });
 
-    console.log("✅ Subscription was canceled immediately");
+    console.log(
+      "✅ Subscription is set to cancel at the end of the billing cycle"
+    );
 
-    // ✅ Store cancellation reason, timestamp, and mark user as NOT paid in the database
-    console.log("📌 Updating database with cancellation details...");
+    // ✅ Store cancellation reason & timestamp in the database (but keep user active)
+    console.log("📌 Storing cancellation reason in the database...");
     try {
       const [result] = (await pool.execute(
-        "UPDATE users SET is_paid_user = 0, cancellation_reason = ?, canceled_at = ? WHERE id = ?",
+        "UPDATE users SET cancellation_reason = ?, canceled_at = ? WHERE id = ?",
         [reason, canceledAt, userId]
       )) as [ResultSetHeader, any];
 
@@ -106,8 +110,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log("✅ Cancellation reason stored in the database");
-    return NextResponse.json({ message: "Subscription canceled successfully" });
+    console.log(
+      "✅ Cancellation reason stored. User remains active until the end of the billing cycle."
+    );
+
+    return NextResponse.json({
+      message: "Subscription will be canceled at the end of the billing cycle",
+    });
   } catch (error) {
     console.error("❌ SERVER ERROR canceling subscription:", error);
     return NextResponse.json(
