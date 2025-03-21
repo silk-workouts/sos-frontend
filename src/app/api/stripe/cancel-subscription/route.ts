@@ -1,34 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import pool from "@/lib/db";
-import { verifyToken } from "@/lib/auth";
+import jwt from "jsonwebtoken";
 import { ResultSetHeader } from "mysql2";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-01-27.acacia",
 });
+const JWT_SECRET = process.env.JWT_SECRET!; // Ensure JWT secret is available
 
 export async function POST(req: NextRequest) {
   try {
     const { reason } = await req.json();
-    const canceledAt = new Date(); // Capture current timestamp
+    const canceledAt = new Date();
 
     console.log("📌 Received cancellation request. Reason:", reason);
 
-    // ✅ Retrieve the user's authentication token from the request
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      console.error("❌ ERROR: Missing or invalid auth token");
+    // ✅ Retrieve the auth token from cookies
+    const tokenCookie = req.cookies.get("auth_token");
+    const token = tokenCookie?.value;
+
+    if (!token) {
+      console.error("❌ ERROR: Missing auth token in cookies");
       return NextResponse.json(
         { error: "Unauthorized - No valid token provided" },
         { status: 401 }
       );
     }
 
-    const token = authHeader.split(" ")[1]; // Extract token
     let userId;
     try {
-      const decoded = verifyToken(token); // Decode JWT
+      const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
       userId = decoded.id;
     } catch (err) {
       console.error("❌ ERROR: Invalid token:", err);
@@ -87,7 +89,7 @@ export async function POST(req: NextRequest) {
       const [result] = (await pool.execute(
         "UPDATE users SET cancellation_reason = ?, canceled_at = ? WHERE id = ?",
         [reason, canceledAt, userId]
-      )) as [ResultSetHeader, any]; // ✅ Explicitly cast to ResultSetHeader
+      )) as [ResultSetHeader, any];
 
       if (result.affectedRows === 0) {
         console.error(
