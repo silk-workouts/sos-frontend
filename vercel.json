@@ -10,7 +10,7 @@
   "routes": [
     {
       "src": "/api/stripe/webhook",
-      "dest": "/api/stripe/webhook.ts"
+      "dest": "/api/stripe/webhook.js"
     }
   ]
 }
