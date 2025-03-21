@@ -4,9 +4,13 @@ import pool from "@/lib/db";
 import jwt from "jsonwebtoken";
 import { ResultSetHeader } from "mysql2";
 
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+//   apiVersion: "2025-01-27.acacia",
+// });
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-01-27.acacia",
+  apiVersion: "2023-10-16" as any, // Loosen type enforcement
 });
+
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export async function POST(req: NextRequest) {
