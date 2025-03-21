@@ -7,7 +7,7 @@ import { ResultSetHeader } from "mysql2";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-01-27.acacia",
 });
-const JWT_SECRET = process.env.JWT_SECRET!; // Ensure JWT secret is available
+const JWT_SECRET = process.env.JWT_SECRET!;
 
 export async function POST(req: NextRequest) {
   try {
@@ -76,18 +76,16 @@ export async function POST(req: NextRequest) {
     const subscription = subscriptions.data[0];
     console.log(`✅ Found active subscription: ${subscription.id}`);
 
-    // ✅ Cancel at the end of the billing cycle
-    await stripe.subscriptions.update(subscription.id, {
-      cancel_at_period_end: true,
-    });
+    // ✅ Immediately cancel the subscription
+    await stripe.subscriptions.cancel(subscription.id);
 
-    console.log("✅ Subscription cancellation scheduled successfully");
+    console.log("✅ Subscription was canceled immediately");
 
-    // ✅ Store cancellation reason & timestamp in the database
-    console.log("📌 Updating database with cancellation reason...");
+    // ✅ Store cancellation reason, timestamp, and mark user as NOT paid in the database
+    console.log("📌 Updating database with cancellation details...");
     try {
       const [result] = (await pool.execute(
-        "UPDATE users SET cancellation_reason = ?, canceled_at = ? WHERE id = ?",
+        "UPDATE users SET is_paid_user = 0, cancellation_reason = ?, canceled_at = ? WHERE id = ?",
         [reason, canceledAt, userId]
       )) as [ResultSetHeader, any];
 
