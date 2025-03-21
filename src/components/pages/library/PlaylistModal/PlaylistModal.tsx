@@ -120,20 +120,22 @@ export default function PlaylistModal({
 					role="menu"
 					aria-label=""
 				>
-					<li
-						className={`${styles.dialog__option} ${styles["dialog__option--tablet"]}`}
-						role="menuitem"
-					>
-						<button
-							className={`${styles.option__button} ${styles["option__button--tablet"]}`}
-							onClick={() => {
-								setIsOpenEditModal(true);
-							}}
+					{playlist.type !== "savedProgram" && (
+						<li
+							className={`${styles.dialog__option} ${styles["dialog__option--tablet"]}`}
+							role="menuitem"
 						>
-							<Image src={editIcon} alt="" />
-							<span>Edit</span>
-						</button>
-					</li>
+							<button
+								className={`${styles.option__button} ${styles["option__button--tablet"]}`}
+								onClick={() => {
+									setIsOpenEditModal(true);
+								}}
+							>
+								<Image src={editIcon} alt="" />
+								<span>Edit</span>
+							</button>
+						</li>
+					)}
 					<li
 						className={`${styles.dialog__option} ${styles["dialog__option--tablet"]}`}
 						role="menuitem"

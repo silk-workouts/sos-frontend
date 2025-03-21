@@ -34,10 +34,15 @@ export default function PlayListCard({
 		async function getPlaylistData() {
 			setLoading(true);
 			try {
-				const response = await axios.get(`/api/playlists/${playlist.id}`, {
-					headers: { "x-user-id": userId },
-				});
-				setPlaylistVideos(response.data.videos);
+				if (playlist.type === "savedProgram") {
+					const response = await axios.get(`/api/showcases/${playlist.id}`);
+					setPlaylistVideos(response.data.videos);
+				} else {
+					const response = await axios.get(`/api/playlists/${playlist.id}`, {
+						headers: { "x-user-id": userId },
+					});
+					setPlaylistVideos(response.data.videos);
+				}
 			} catch (error) {
 				console.error(`Unable to retrieve playlist:`, error);
 			} finally {
