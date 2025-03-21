@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "api/stripe/webhook/route.ts": {
-      "runtime": "nodejs18.x",
+      "runtime": "@vercel/node@18.19.0",
       "maxDuration": 10,
       "memory": 128
     }
