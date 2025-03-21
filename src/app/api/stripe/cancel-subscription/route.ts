@@ -1,13 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import pool from "@/lib/db";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-01-27.acacia",
 });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const { reason } = await req.json();
+    const canceledAt = new Date(); // Capture current timestamp
 
     // Retrieve the logged-in user's Stripe customer ID
     const user = await getUserFromSession(req);
@@ -38,8 +40,11 @@ export async function POST(req: Request) {
       cancel_at_period_end: true,
     });
 
-    // Optionally: Store the reason for cancellation in the database
-    await saveCancellationReason(user.id, reason);
+    // ✅ Store cancellation reason & timestamp in the database
+    await pool.execute(
+      "UPDATE users SET cancellation_reason = ?, canceled_at = ? WHERE stripe_customer_id = ?",
+      [reason, canceledAt, user.stripeCustomerId]
+    );
 
     return NextResponse.json({ message: "Subscription canceled successfully" });
   } catch (error) {
@@ -57,9 +62,4 @@ async function getUserFromSession(req: Request) {
     id: "user_123",
     stripeCustomerId: "cus_ABC123",
   };
-}
-
-// Simulated function to save the cancellation reason
-async function saveCancellationReason(userId: string, reason: string) {
-  console.log(`User ${userId} canceled with reason: ${reason}`);
 }
