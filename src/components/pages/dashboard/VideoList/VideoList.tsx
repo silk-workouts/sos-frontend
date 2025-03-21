@@ -2,12 +2,15 @@
 import Image from "next/image";
 import rightArrow from "/public/assets/icons/arrow-right.svg";
 import bookmark from "public/assets/icons/bookmark-fill.svg";
+import bookmarkUnsaved from "public/assets/icons/bookmark-unsaved.svg";
 import playIcon from "/public/assets/icons/play.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Showcase } from "src/app/(dashboard)/dashboard/page";
+import { usePlaylists } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
+import { useSavedPrograms } from "src/hooks/useSavedPrograms";
 import Video from "../Video/Video";
 import styles from "./VideoList.module.scss";
 
@@ -47,6 +50,8 @@ export default function VideoList({ video }: VideoListProps) {
 		continuous_vimeo_id: string;
 	} | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const { userId } = usePlaylists();
+	const { saveProgram, deleteProgram, savedPrograms } = useSavedPrograms();
 
 	const routeName = video.name
 		.toLowerCase()
@@ -142,6 +147,35 @@ export default function VideoList({ video }: VideoListProps) {
 		router.push(`/dashboard/${routeName}/${video.vimeo_showcase_id}/videos`);
 	}
 
+	const isSaved = savedPrograms.some(
+		(p) => p.showcaseId === Number(video.vimeo_showcase_id)
+	);
+
+	async function handleToggleSave() {
+		const showcaseId = Number(video.vimeo_showcase_id); // 🔥 Ensure it's a number
+
+		if (isNaN(showcaseId)) {
+			console.error(`❌ Invalid showcaseId: ${video.vimeo_showcase_id}`);
+			return;
+		}
+
+		if (isSaved) {
+			await deleteProgram(showcaseId);
+		} else {
+			await saveProgram({
+				userId, // UUID string
+				showcaseId, // Ensure this is a number
+				title: video.name,
+				description: video.description || "",
+				videoCount: showcaseVideos.length,
+				duration: chapters.reduce(
+					(sum, chapter) => sum + (chapter.duration || 0),
+					0
+				),
+			});
+		}
+	}
+
 	return (
 		<section className={styles.container}>
 			<div className={styles.header}>
@@ -168,18 +202,22 @@ export default function VideoList({ video }: VideoListProps) {
 				<section className={styles.actions}>
 					<button
 						className={styles.bookmarkButton}
-						onClick={() => {
-							console.log(
-								"📌 Video saved to playlist (placeholder for API integration)"
-							);
-						}}
+						onClick={handleToggleSave}
 						aria-label="Save to playlist"
 					>
-						<Image
-							src={bookmark}
-							alt="Bookmark video"
-							className={styles.bookmarkIcon}
-						/>
+						{isSaved ? (
+							<Image
+								src={bookmark}
+								alt="Bookmark video saved"
+								className={styles.bookmarkIcon}
+							/>
+						) : (
+							<Image
+								src={bookmarkUnsaved}
+								alt="Bookmark video saved not saved"
+								className={styles.bookmarkIcon}
+							/>
+						)}
 					</button>
 
 					<button

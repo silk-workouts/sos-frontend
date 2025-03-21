@@ -1,0 +1,100 @@
+@use "@/styles/partials/variables" as *;
+
+// Fix extra padding from Vimeo injected div when dynamically creating player
+.playerCcontainer > div {
+  padding: 0 !important; // Remove unwanted padding
+  position: static !important; // Prevent forced positioning
+  height: 100% !important; // Ensure proper height
+}
+
+// Ensure the iframe is fully visible and sized correctly
+.playerContainer iframe {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   padding: 20px;
+//   max-width: 900px;
+//   margin: 0 auto;
+// }
+
+.title {
+  margin-bottom: 16px;
+}
+
+.playerContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 450px; // Set an explicit height
+  overflow: hidden;
+}
+
+// Fix extra padding from Vimeo injected div when dynamically creating player
+.player-container div[style*="padding:56.25%"] {
+  padding: 0 !important; // Remove unwanted padding
+}
+
+// .player-wrapper {
+//   width: 100%;
+//   max-width: 100%;
+//   height: auto; // Allow dynamic height
+//   aspect-ratio: 16 / 9; // Ensure a consistent 16:9 aspect ratio
+//   position: relative;
+//   overflow: hidden;
+// }
+
+// .player-wrapper iframe,
+// .player-wrapper div {
+//   width: 100%;
+//   height: 100%;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+// }
+
+.playerVisible {
+  visibility: visible;
+  opacity: 1;
+}
+
+// .chapterTitle {
+//   align-self: flex-start;
+//   margin-bottom: 12px;
+// }
+
+// .chapterList {
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: stretch;
+//   gap: 12px;
+//   padding: 0;
+//   margin-top: 10px;
+// }
+
+// .chapterItem {
+//   list-style: none;
+//   cursor: pointer;
+//   border-radius: 8px;
+//   padding: 12px;
+//   border: 1px solid #ddd;
+//   background: #f9f9f9;
+//   transition: all 0.2s ease;
+// }
+
+.activeChapter {
+  border: 3px solid #0070f3;
+  background: rgba(0, 112, 243, 0.1);
+}

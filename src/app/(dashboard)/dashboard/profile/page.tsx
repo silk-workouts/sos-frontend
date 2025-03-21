@@ -153,21 +153,21 @@ const ProfilePage: React.FC = () => {
           {/* Additional Profile Links */}
           <div className={styles.profile__links}>
             <Link
-              href="/subscription"
+              href="/dashboard/cancel-subscription"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.profile__link}
             >
-              Change/Cancel Subscription
+              Cancel Subscription
             </Link>
-            <Link
+            {/* <Link
               href="/about"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.profile__link}
             >
               Help
-            </Link>
+            </Link> */}
             <Link
               href="/contact"
               target="_blank"
