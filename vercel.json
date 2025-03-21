@@ -4,13 +4,8 @@
     "api/stripe/webhook": {
       "runtime": "@vercel/node@18.19.0",
       "maxDuration": 10,
-      "memory": 128
+      "memory": 128,
+      "includeFiles": ["api/stripe/webhook/**"]
     }
-  },
-  "routes": [
-    {
-      "src": "/api/stripe/webhook",
-      "dest": "/api/stripe/webhook"
-    }
-  ]
+  }
 }
