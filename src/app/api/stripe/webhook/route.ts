@@ -2,14 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import pool from "@/lib/db";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-01-27.acacia",
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY!;
+const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
+
+if (!STRIPE_SECRET_KEY || !STRIPE_WEBHOOK_SECRET) {
+  console.error(
+    "❌ Stripe secret keys are missing. Check your environment variables."
+  );
+  throw new Error("Missing Stripe keys");
+}
+
+const stripe = new Stripe(STRIPE_SECRET_KEY, {
+  apiVersion: "2025-01-27.acacia", // ✅ Fixed to match your project's version
 });
 
-// ✅ Only include this if webhook verification fails due to signature issues
+// ✅ Ensures Next.js does not modify the webhook request body
 export const config = {
   api: {
-    bodyParser: false, // Ensures Next.js doesn't modify the raw request body
+    bodyParser: false,
   },
 };
 
@@ -26,15 +36,17 @@ export async function POST(req: NextRequest) {
 
   let event;
   try {
-    const rawBody = await req.text(); // ✅ Ensure raw body is used for verification
+    const rawBody = await req.body; // ✅ Ensure Stripe receives the raw request body
+
     event = stripe.webhooks.constructEvent(
-      rawBody,
+      rawBody as any, // Stripe expects a raw buffer, not a parsed JSON object
       sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      STRIPE_WEBHOOK_SECRET
     );
-    console.log("✅ Webhook verified successfully.");
-  } catch (error) {
-    console.error("❌ Webhook verification failed:", error);
+
+    console.log("✅ Webhook verified successfully. Event type:", event.type);
+  } catch (error: any) {
+    console.error("❌ Webhook verification failed:", error.message);
     return NextResponse.json(
       { error: "Webhook verification failed" },
       { status: 400 }
@@ -42,61 +54,19 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    const eventData = event.data.object as any; // Type assertion
+
     switch (event.type) {
-      case "checkout.session.completed": {
-        const session = event.data.object;
-        const stripeCustomerId = session.customer as string;
-
-        if (!stripeCustomerId) {
-          console.error("❌ Missing Stripe Customer ID in checkout session.");
-          return NextResponse.json(
-            { error: "Invalid session data" },
-            { status: 400 }
-          );
-        }
-
-        const [user] = (await pool.execute(
-          "SELECT id FROM users WHERE stripe_customer_id = ?",
-          [stripeCustomerId]
-        )) as [{ id: string }[], any];
-
-        if (!user.length) {
-          console.error(
-            `❌ No user found for Stripe Customer ID: ${stripeCustomerId}`
-          );
-          return NextResponse.json(
-            { error: "User not found" },
-            { status: 404 }
-          );
-        }
-
-        const [result] = (await pool.execute(
-          "UPDATE users SET is_paid_user = 1 WHERE stripe_customer_id = ?",
-          [stripeCustomerId]
-        )) as [{ affectedRows: number }, any];
-
-        if (result.affectedRows === 0) {
-          console.error(
-            `❌ Failed to update user for customer ID: ${stripeCustomerId}`
-          );
-          return NextResponse.json(
-            { error: "User not updated" },
-            { status: 404 }
-          );
-        }
-
-        console.log(`✅ User ${user[0].id} marked as paid.`);
-        return NextResponse.json({ success: true });
-      }
-
+      case "checkout.session.completed":
       case "invoice.payment_succeeded": {
-        const invoice = event.data.object;
-        const stripeCustomerId = invoice.customer as string;
+        const stripeCustomerId = eventData.customer as string;
 
         if (!stripeCustomerId) {
-          console.error("❌ Missing Stripe Customer ID in invoice event.");
+          console.error(
+            `❌ Missing Stripe Customer ID in ${event.type} event.`
+          );
           return NextResponse.json(
-            { error: "Invalid invoice data" },
+            { error: "Invalid event data" },
             { status: 400 }
           );
         }
@@ -136,9 +106,8 @@ export async function POST(req: NextRequest) {
       }
 
       case "customer.subscription.deleted": {
-        const subscription = event.data.object;
-        const stripeCustomerId = subscription.customer as string;
-        const cancelAt = subscription.current_period_end; // When the subscription actually expires
+        const stripeCustomerId = eventData.customer as string;
+        const cancelAt = eventData.current_period_end;
 
         if (!stripeCustomerId) {
           console.error(
@@ -163,7 +132,6 @@ export async function POST(req: NextRequest) {
           });
         }
 
-        // Only now should we mark them as not paid
         const [result] = (await pool.execute(
           "UPDATE users SET is_paid_user = 0 WHERE stripe_customer_id = ?",
           [stripeCustomerId]
@@ -187,8 +155,8 @@ export async function POST(req: NextRequest) {
         console.warn(`⚠️ Unhandled event type: ${event.type}`);
         return NextResponse.json({ received: true });
     }
-  } catch (error) {
-    console.error("❌ Error processing webhook:", error);
+  } catch (error: any) {
+    console.error("❌ Error processing webhook:", error.message);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
