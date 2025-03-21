@@ -2,10 +2,16 @@
 import { useState } from "react";
 import LibraryPageContent from "@/components/pages/library/LibraryPageContent/LibraryPageContent";
 import { usePlaylists } from "../context/PlaylistContext";
+import { useSavedPrograms } from "src/hooks/useSavedPrograms";
 import styles from "./page.module.scss";
 
 export default function Library() {
 	const { playlists, loading, error } = usePlaylists();
+	const {
+		savedPrograms,
+		loading: savedLoading,
+		refreshSavedPrograms,
+	} = useSavedPrograms(); // ✅ Add refreshSavedPrograms
 	const [isSelected, setIsSelected] = useState({
 		myFormula: true,
 		program: false,
@@ -20,8 +26,9 @@ export default function Library() {
 		}
 	}
 
-	if (loading) {
-		return <div>loading...</div>;
+	// Handle loading states for both playlists and saved programs
+	if (loading || savedLoading) {
+		return <div>Loading...</div>;
 	}
 
 	if (error) {
@@ -64,6 +71,8 @@ export default function Library() {
 					</li>
 				</ul>
 			</div>
+
+			{/* My Formulas Section */}
 			<div
 				id="myFormula-panel"
 				role="tabpanel"
@@ -73,6 +82,8 @@ export default function Library() {
 			>
 				<LibraryPageContent playlists={playlists} />
 			</div>
+
+			{/* Saved Programs Section */}
 			<div
 				id="program-panel"
 				role="tabpanel"
@@ -80,7 +91,11 @@ export default function Library() {
 				hidden={!isSelected.program}
 				className={styles.content}
 			>
-				<LibraryPageContent playlists={playlists} />
+				<LibraryPageContent
+					savedPrograms={savedPrograms}
+					refreshSavedPrograms={refreshSavedPrograms}
+				/>{" "}
+				{/* ✅ Pass refresh function */}
 			</div>
 		</div>
 	);

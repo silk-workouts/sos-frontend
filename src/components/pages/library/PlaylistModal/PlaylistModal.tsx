@@ -11,16 +11,19 @@ import {
 	Playlist,
 	usePlaylists,
 } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
+import { useSavedPrograms } from "src/hooks/useSavedPrograms"; // ✅ Import useSavedPrograms
 import styles from "./PlaylistModal.module.scss";
 
 interface PlaylistModalProps {
 	setIsOpen: (arg1: boolean) => void;
 	playlist: Playlist;
+	refreshSavedPrograms?: () => void; // ✅ Passed from parent component
 }
 
 export default function PlaylistModal({
 	setIsOpen,
 	playlist,
+	refreshSavedPrograms,
 }: PlaylistModalProps) {
 	const router = useRouter();
 	const pathname = usePathname();
@@ -28,24 +31,35 @@ export default function PlaylistModal({
 	const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
 	const { refreshPlaylists, userId } = usePlaylists();
+	const { deleteProgram, refreshSavedPrograms: refreshSavedProgramsFromHook } =
+		useSavedPrograms();
 
 	function handleCloseModal(event: React.MouseEvent<HTMLDivElement>) {
-		const target = event.target;
-
-		if (target instanceof HTMLElement && target.id === "dialog-container") {
+		if (
+			event.target instanceof HTMLElement &&
+			event.target.id === "dialog-container"
+		) {
 			setIsOpen(false);
 		}
 	}
 
-	async function handleDeletePlaylist() {
+	async function handleDelete() {
 		try {
-			await axios.delete(`/api/playlists/${playlist.id}`, {
-				headers: { "x-user-id": userId },
-			});
+			if (playlist.type === "savedProgram") {
+				// ✅ Call delete for saved programs
+				await deleteProgram(Number(playlist.id));
+				refreshSavedPrograms?.(); // ✅ Use the prop if available
+				refreshSavedProgramsFromHook(); // ✅ Ensure state is refreshed
+			} else {
+				await axios.delete(`/api/playlists/${playlist.id}`, {
+					headers: { "x-user-id": userId },
+				});
 
-			if (pathname !== "/dashboard/library") router.push("/dashboard/library");
+				if (pathname !== "/dashboard/library")
+					router.push("/dashboard/library");
 
-			refreshPlaylists();
+				refreshPlaylists();
+			}
 			setIsOpenDeleteModal(false);
 			setIsOpen(false);
 		} catch (error) {
@@ -67,25 +81,27 @@ export default function PlaylistModal({
 
 	return (
 		<>
-			{isOpenEditModal || isOpenDeleteModal || (
+			{!isOpenEditModal && !isOpenDeleteModal && (
 				<div
 					className={styles["dialog-container"]}
-					onClick={(event) => handleCloseModal(event)}
+					onClick={handleCloseModal}
 					id="dialog-container"
 					role="dialog button"
 				>
 					<ul className={styles.dialog} role="menu" aria-label="">
-						<li className={styles.dialog__option} role="menuitem">
-							<button
-								className={styles.option__button}
-								onClick={() => {
-									setIsOpenEditModal(true);
-								}}
-							>
-								<Image src={editIcon} alt="" />
-								<span>Edit</span>
-							</button>
-						</li>
+						{playlist.type !== "savedProgram" && ( // ✅ Hide "Edit" for saved programs
+							<li className={styles.dialog__option} role="menuitem">
+								<button
+									className={styles.option__button}
+									onClick={() => {
+										setIsOpenEditModal(true);
+									}}
+								>
+									<Image src={editIcon} alt="" />
+									<span>Edit</span>
+								</button>
+							</li>
+						)}
 						<li className={styles.dialog__option} role="menuitem">
 							<button
 								className={styles.option__button}
@@ -98,7 +114,7 @@ export default function PlaylistModal({
 					</ul>
 				</div>
 			)}
-			{isOpenEditModal || isOpenDeleteModal || (
+			{!isOpenEditModal && !isOpenDeleteModal && (
 				<ul
 					className={`${styles.dialog} ${styles["dialog--tablet"]}`}
 					role="menu"
@@ -144,7 +160,7 @@ export default function PlaylistModal({
 			{isOpenDeleteModal && (
 				<DeletePlaylistModal
 					handleClose={handleCloseDeleteModal}
-					handleDelete={handleDeletePlaylist}
+					handleDelete={handleDelete}
 				/>
 			)}
 		</>

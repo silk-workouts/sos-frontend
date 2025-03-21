@@ -11,7 +11,7 @@ import playIcon from "/public/assets/icons/play-red.svg";
 import playFilledIcon from "/public/assets/icons/play-fill.svg";
 import clockIcon from "/public/assets/icons/clock-red.svg";
 import { Playlist, usePlaylists } from "../../context/PlaylistContext";
-import PlaylistVideos from "@/components/pages/library/PlaylistVideos/PlaylistVideos";
+import PlaylistVideos from "@/components/pages/dashboard/PlaylistVideos/PlaylistVideos";
 import PlaylistModal from "@/components/pages/library/PlaylistModal/PlaylistModal";
 import styles from "./page.module.scss";
 
