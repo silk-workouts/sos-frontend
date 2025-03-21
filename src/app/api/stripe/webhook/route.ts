@@ -150,6 +150,7 @@ export async function POST(req: NextRequest) {
       case "customer.subscription.deleted": {
         const subscription = event.data.object;
         const stripeCustomerId = subscription.customer as string;
+        const cancelAt = subscription.current_period_end; // Subscription end time
 
         if (!stripeCustomerId) {
           console.error(
@@ -161,7 +162,21 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        // Mark user as not paid
+        // ✅ Ensure user is not locked out early
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+        if (cancelAt > currentTimestamp) {
+          console.log(
+            `🕒 User ${stripeCustomerId} still has access until ${new Date(
+              cancelAt * 1000
+            ).toISOString()}`
+          );
+          return NextResponse.json({
+            message:
+              "Subscription is canceled but still active until period end.",
+          });
+        }
+
+        // ❌ Only now should we mark them as not paid
         const [result] = (await pool.execute(
           "UPDATE users SET is_paid_user = 0 WHERE stripe_customer_id = ?",
           [stripeCustomerId]
