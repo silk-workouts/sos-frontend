@@ -132,7 +132,7 @@ export default function PlaylistModal({
 								}}
 							>
 								<Image src={editIcon} alt="" />
-								<span>Edit</span>
+								<span>Edit Playlist</span>
 							</button>
 						</li>
 					)}
@@ -145,7 +145,7 @@ export default function PlaylistModal({
 							onClick={() => setIsOpenDeleteModal(true)}
 						>
 							<Image src={deleteIcon} alt="" />
-							<span>Delete</span>
+							<span>Delete Playlist</span>
 						</button>
 					</li>
 				</ul>
