@@ -12,7 +12,7 @@
   gap: $padding-base;
 
   @include tablet {
-    max-width: 500px;
+    // max-width: 500px;
   }
 
   @include desktop {
