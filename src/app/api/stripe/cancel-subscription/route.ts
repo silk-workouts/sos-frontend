@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import pool from "@/lib/db";
-import { verifyToken } from "@/lib/auth"; // ✅ Use verifyToken instead of getSession
+import { verifyToken } from "@/lib/auth";
+import { ResultSetHeader } from "mysql2";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-01-27.acacia",
@@ -83,10 +84,10 @@ export async function POST(req: NextRequest) {
     // ✅ Store cancellation reason & timestamp in the database
     console.log("📌 Updating database with cancellation reason...");
     try {
-      const [result] = await pool.execute(
+      const [result] = (await pool.execute(
         "UPDATE users SET cancellation_reason = ?, canceled_at = ? WHERE id = ?",
         [reason, canceledAt, userId]
-      );
+      )) as [ResultSetHeader, any]; // ✅ Explicitly cast to ResultSetHeader
 
       if (result.affectedRows === 0) {
         console.error(
