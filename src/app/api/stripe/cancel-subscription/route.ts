@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import pool from "@/lib/db";
-import { getSession } from "@/lib/auth"; // ✅ Import auth helper
+import { verifyToken } from "@/lib/auth";
+import { ResultSetHeader } from "mysql2";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-01-27.acacia",
@@ -14,21 +15,51 @@ export async function POST(req: NextRequest) {
 
     console.log("📌 Received cancellation request. Reason:", reason);
 
-    // ✅ Retrieve the logged-in user's session
-    const user = await getUserFromSession(req);
-    if (!user || !user.stripeCustomerId) {
-      console.error("❌ ERROR: User not authenticated or missing Stripe ID");
+    // ✅ Retrieve the user's authentication token from the request
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      console.error("❌ ERROR: Missing or invalid auth token");
       return NextResponse.json(
-        { error: "User not authenticated" },
+        { error: "Unauthorized - No valid token provided" },
         { status: 401 }
       );
     }
 
-    console.log(`✅ User authenticated: ${user.stripeCustomerId}`);
+    const token = authHeader.split(" ")[1]; // Extract token
+    let userId;
+    try {
+      const decoded = verifyToken(token); // Decode JWT
+      userId = decoded.id;
+    } catch (err) {
+      console.error("❌ ERROR: Invalid token:", err);
+      return NextResponse.json(
+        { error: "Unauthorized - Invalid token" },
+        { status: 401 }
+      );
+    }
+
+    console.log(`✅ Verified user: ${userId}`);
+
+    // ✅ Get the user from the database
+    const [user] = (await pool.execute(
+      "SELECT stripe_customer_id FROM users WHERE id = ?",
+      [userId]
+    )) as [{ stripe_customer_id: string }[], any];
+
+    if (!user || !user.length || !user[0].stripe_customer_id) {
+      console.error("❌ ERROR: No Stripe Customer ID found for user");
+      return NextResponse.json(
+        { error: "No associated Stripe customer" },
+        { status: 400 }
+      );
+    }
+
+    const stripeCustomerId = user[0].stripe_customer_id;
+    console.log(`✅ User's Stripe Customer ID: ${stripeCustomerId}`);
 
     // ✅ Get the user's active subscription from Stripe
     const subscriptions = await stripe.subscriptions.list({
-      customer: user.stripeCustomerId,
+      customer: stripeCustomerId,
       status: "active",
     });
 
@@ -53,14 +84,14 @@ export async function POST(req: NextRequest) {
     // ✅ Store cancellation reason & timestamp in the database
     console.log("📌 Updating database with cancellation reason...");
     try {
-      const [result] = await pool.execute(
-        "UPDATE users SET cancellation_reason = ?, canceled_at = ? WHERE stripe_customer_id = ?",
-        [reason, canceledAt, user.stripeCustomerId]
-      );
+      const [result] = (await pool.execute(
+        "UPDATE users SET cancellation_reason = ?, canceled_at = ? WHERE id = ?",
+        [reason, canceledAt, userId]
+      )) as [ResultSetHeader, any]; // ✅ Explicitly cast to ResultSetHeader
 
       if (result.affectedRows === 0) {
         console.error(
-          `❌ ERROR: Failed to update cancellation info for ${user.stripeCustomerId}`
+          `❌ ERROR: Failed to update cancellation info for user ${userId}`
         );
         return NextResponse.json(
           { error: "Database update failed" },
@@ -84,15 +115,4 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-}
-
-// ✅ Get the real user session
-async function getUserFromSession(req: Request) {
-  const session = await getSession(req); // Uses real session-based authentication
-  if (!session || !session.user) return null;
-
-  return {
-    id: session.user.id,
-    stripeCustomerId: session.user.stripeCustomerId, // ✅ This should now be correct
-  };
 }
