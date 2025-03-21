@@ -5,11 +5,13 @@ import styles from "./DeletePlaylistModal.module.scss";
 interface DeletePlaylistProps {
 	handleClose: () => void;
 	handleDelete: () => Promise<void>;
+	title: string;
 }
 
 export default function DeletePlaylistModal({
 	handleClose,
 	handleDelete,
+	title,
 }: DeletePlaylistProps) {
 	return (
 		<div className={styles.modal} role="dialog" aria-labelledby="dialogTitle">
@@ -32,6 +34,12 @@ export default function DeletePlaylistModal({
 						/>
 					</button>
 				</div>
+				<p className={styles.modal__description}>
+					{" "}
+					Are you sure you want to delete{" "}
+					<span className={styles.title}>{title} </span>from your library?
+				</p>
+
 				<button
 					onClick={handleDelete}
 					className={`${styles.modal__button} ${styles["modal__button--delete"]}`}

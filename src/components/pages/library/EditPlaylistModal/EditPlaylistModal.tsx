@@ -75,7 +75,12 @@ export default function EditPlaylistModal({
 							}}
 							aria-label="Close edit playlist modal"
 						>
-							<Image src={closeIcon} alt="" className={styles.header__icon} />
+							<Image
+								src={closeIcon}
+								alt=""
+								className={styles.header__icon}
+								aria-hidden="true"
+							/>
 						</button>
 					</header>
 					<form

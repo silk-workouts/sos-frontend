@@ -8,7 +8,10 @@
 	background-color: rgba($color-black, 0.25);
 
 	@include tablet {
-		display: none;
+		position: absolute;
+		top: 1.875rem;
+		right: 0;
+		bottom: unset;
 	}
 }
 
@@ -21,19 +24,14 @@
 	border-radius: 1rem 1rem 0 0;
 	background-color: $color-white;
 
-	&--tablet {
-		display: none;
+	@include tablet {
 		position: absolute;
-		top: 1.875rem;
+		top: 0;
 		left: unset;
 		bottom: unset;
 		z-index: 2000;
 		box-shadow: 0px 0px 7.7px 0px rgba($color-black, 0.1);
 		border-radius: 1rem;
-
-		@include tablet {
-			display: unset;
-		}
 	}
 
 	&__option {
@@ -47,9 +45,17 @@
 			border-radius: 1rem 1rem 0 0;
 		}
 
-		&--tablet {
-			&:last-child {
+		&:last-child {
+			@include tablet {
 				border-radius: 0 0 1rem 1rem;
+			}
+		}
+
+		.tablet {
+			display: none;
+
+			@include tablet {
+				display: unset;
 			}
 		}
 	}
@@ -66,7 +72,7 @@
 	align-items: center;
 	gap: 0.5rem;
 
-	&--tablet {
+	@include tablet {
 		padding-right: 2rem;
 	}
 }

@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import editIcon from "/public/assets/icons/edit.svg";
@@ -34,14 +34,23 @@ export default function PlaylistModal({
 	const { deleteProgram, refreshSavedPrograms: refreshSavedProgramsFromHook } =
 		useSavedPrograms();
 
-	function handleCloseModal(event: React.MouseEvent<HTMLDivElement>) {
-		if (
-			event.target instanceof HTMLElement &&
-			event.target.id === "dialog-container"
-		) {
-			setIsOpen(false);
+	const modalRef = useRef<HTMLUListElement | null>(null);
+
+	useEffect(() => {
+		function handleClickOutside(event: MouseEvent) {
+			if (
+				modalRef.current &&
+				!modalRef.current.contains(event.target as Node)
+			) {
+				setIsOpen(false);
+			}
 		}
-	}
+
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
 
 	async function handleDelete() {
 		try {
@@ -84,11 +93,15 @@ export default function PlaylistModal({
 			{!isOpenEditModal && !isOpenDeleteModal && (
 				<div
 					className={styles["dialog-container"]}
-					onClick={handleCloseModal}
 					id="dialog-container"
 					role="dialog button"
 				>
-					<ul className={styles.dialog} role="menu" aria-label="">
+					<ul
+						className={styles.dialog}
+						role="menu"
+						aria-label=""
+						ref={modalRef}
+					>
 						{playlist.type !== "savedProgram" && ( // ✅ Hide "Edit" for saved programs
 							<li className={styles.dialog__option} role="menuitem">
 								<button
@@ -98,7 +111,9 @@ export default function PlaylistModal({
 									}}
 								>
 									<Image src={editIcon} alt="" />
-									<span>Edit</span>
+									<span>
+										Edit <span className={styles.tablet}>Playlist</span>
+									</span>
 								</button>
 							</li>
 						)}
@@ -108,47 +123,13 @@ export default function PlaylistModal({
 								onClick={() => setIsOpenDeleteModal(true)}
 							>
 								<Image src={deleteIcon} alt="" />
-								<span>Delete</span>
+								<span>
+									Delete <span className={styles.tablet}>Playlist</span>
+								</span>
 							</button>
 						</li>
 					</ul>
 				</div>
-			)}
-			{!isOpenEditModal && !isOpenDeleteModal && (
-				<ul
-					className={`${styles.dialog} ${styles["dialog--tablet"]}`}
-					role="menu"
-					aria-label=""
-				>
-					{playlist.type !== "savedProgram" && (
-						<li
-							className={`${styles.dialog__option} ${styles["dialog__option--tablet"]}`}
-							role="menuitem"
-						>
-							<button
-								className={`${styles.option__button} ${styles["option__button--tablet"]}`}
-								onClick={() => {
-									setIsOpenEditModal(true);
-								}}
-							>
-								<Image src={editIcon} alt="" />
-								<span>Edit Playlist</span>
-							</button>
-						</li>
-					)}
-					<li
-						className={`${styles.dialog__option} ${styles["dialog__option--tablet"]}`}
-						role="menuitem"
-					>
-						<button
-							className={`${styles.option__button} ${styles["option__button--tablet"]}`}
-							onClick={() => setIsOpenDeleteModal(true)}
-						>
-							<Image src={deleteIcon} alt="" />
-							<span>Delete Playlist</span>
-						</button>
-					</li>
-				</ul>
 			)}
 
 			{isOpenEditModal && (
@@ -163,6 +144,7 @@ export default function PlaylistModal({
 				<DeletePlaylistModal
 					handleClose={handleCloseDeleteModal}
 					handleDelete={handleDelete}
+					title={playlist.title}
 				/>
 			)}
 		</>
