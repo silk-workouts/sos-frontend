@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "functions": {
+    "api/stripe/webhook": {
+      "runtime": "nodejs18.x",
+      "maxDuration": 10,
+      "memory": 128
+    }
+  }
+}
