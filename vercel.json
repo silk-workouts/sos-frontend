@@ -1,7 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "api/stripe/webhook.ts": {
+    "api/stripe/webhook/route.ts": {
       "runtime": "nodejs18.x",
       "maxDuration": 10,
       "memory": 128
@@ -10,7 +10,7 @@
   "routes": [
     {
       "src": "/api/stripe/webhook",
-      "dest": "/api/stripe/webhook.js"
+      "dest": "/api/stripe/webhook/route.js"
     }
   ]
 }
