@@ -6,6 +6,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-01-27.acacia",
 });
 
+export const config = {
+  api: {
+    bodyParser: false, // ✅ Critical: Ensures we receive the raw body from Stripe
+  },
+};
+
 export async function POST(req: NextRequest) {
   const sig = req.headers.get("stripe-signature");
 
@@ -19,15 +25,18 @@ export async function POST(req: NextRequest) {
 
   let event;
   try {
+    // ✅ Convert the request to a raw buffer (Stripe expects this format)
     const rawBody = await req.text();
+
     event = stripe.webhooks.constructEvent(
       rawBody,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
+
     console.log("✅ Webhook verified successfully.");
-  } catch (err) {
-    console.error(`❌ Webhook verification failed: ${err}`);
+  } catch (err: any) {
+    console.error(`❌ Webhook verification failed: ${err.message}`);
     return NextResponse.json(
       { error: "Webhook verification failed" },
       { status: 400 }
@@ -50,14 +59,11 @@ export async function POST(req: NextRequest) {
 
         // ✅ Log user before update
         const [user] = (await pool.execute(
-          "SELECT id, email, is_paid_user FROM users WHERE stripe_customer_id = ?",
+          "SELECT id FROM users WHERE stripe_customer_id = ?",
           [stripeCustomerId]
-        )) as [
-          Array<{ id: string; email: string; is_paid_user: boolean }>,
-          any
-        ];
+        )) as [{ id: string }[], any];
 
-        if (!user || user.length === 0) {
+        if (!user.length) {
           console.error(
             `❌ No user found with Stripe Customer ID: ${stripeCustomerId}`
           );
@@ -79,37 +85,18 @@ export async function POST(req: NextRequest) {
           );
           return NextResponse.json(
             { error: "User not updated" },
-            { status: 404 }
+            { status: 500 }
           );
         }
 
-        break;
-      }
-
-      case "invoice.payment_succeeded": {
-        const invoice = event.data.object;
-        const stripeCustomerId = invoice.customer as string;
-
-        if (!stripeCustomerId) {
-          console.error("❌ Missing Stripe Customer ID in invoice event.");
-          return NextResponse.json(
-            { error: "Invalid invoice data" },
-            { status: 400 }
-          );
-        }
-
-        // Ensure user remains active after recurring payment
-        const [result] = (await pool.execute(
-          "UPDATE users SET is_paid_user = 1 WHERE stripe_customer_id = ?",
-          [stripeCustomerId]
-        )) as [{ affectedRows: number }, any];
-
-        break;
+        console.log(`✅ User ${user[0].id} marked as paid.`);
+        return NextResponse.json({ success: true });
       }
 
       case "customer.subscription.deleted": {
         const subscription = event.data.object;
         const stripeCustomerId = subscription.customer as string;
+        const cancelAt = subscription.current_period_end;
 
         if (!stripeCustomerId) {
           console.error(
@@ -121,25 +108,49 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        // Mark user as not paid
+        // ✅ Ensure user is not locked out early
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+        if (cancelAt > currentTimestamp) {
+          console.log(
+            `🕒 User ${stripeCustomerId} still has access until ${new Date(
+              cancelAt * 1000
+            ).toISOString()}`
+          );
+          return NextResponse.json({
+            message:
+              "Subscription is canceled but still active until period end.",
+          });
+        }
+
+        // ❌ Only now should we mark them as not paid
         const [result] = (await pool.execute(
           "UPDATE users SET is_paid_user = 0 WHERE stripe_customer_id = ?",
           [stripeCustomerId]
         )) as [{ affectedRows: number }, any];
 
-        break;
+        if (result.affectedRows === 0) {
+          console.error(
+            `❌ Failed to mark user as unpaid for customer ID: ${stripeCustomerId}`
+          );
+          return NextResponse.json(
+            { error: "User not updated" },
+            { status: 500 }
+          );
+        }
+
+        console.log(`✅ User ${stripeCustomerId} marked as unpaid.`);
+        return NextResponse.json({ success: true });
       }
 
       default:
+        console.warn(`⚠️ Unhandled event type: ${event.type}`);
+        return NextResponse.json({ received: true });
     }
-  } catch (error) {
-    console.error("❌ Error processing webhook:", error);
+  } catch (error: any) {
+    console.error("❌ Error processing webhook:", error.message);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
     );
   }
-
-  console.log("✅ Webhook processed successfully.");
-  return NextResponse.json({ received: true });
 }
