@@ -1,34 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import crypto from "crypto"; // ⬅️ Added for manual signature verification
-import pool from "@/lib/db";
+import crypto from "crypto";
 
 console.log(`Node.js version: ${process.version}`);
 
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-//   apiVersion: "2023-10-16",
-// });
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2023-10-16" as any, // Loosen type enforcement
+  apiVersion: "2023-10-16" as any,
 });
 
 export const config = {
   api: {
-    bodyParser: false, // ✅ Ensures raw body is passed to Stripe
+    bodyParser: false,
   },
 };
 
 export async function POST(req: NextRequest) {
   console.log("📌 STRIPE WEBHOOK HIT");
 
-  function getStripeSignature(headers: Headers) {
+  function getStripeSignatureAndTimestamp(headers: Headers) {
     const sigHeader = headers.get("stripe-signature");
     if (!sigHeader) return null;
 
-    const v1Signature = sigHeader
-      .split(",")
-      .find((part) => part.startsWith("v1="));
-    return v1Signature ? v1Signature.substring(3) : null;
+    const parts = sigHeader.split(",");
+    const timestampPart = parts.find((part) => part.startsWith("t="));
+    const v1SignaturePart = parts.find((part) => part.startsWith("v1="));
+
+    if (!timestampPart || !v1SignaturePart) return null;
+
+    const timestamp = timestampPart.substring(2); // Remove "t="
+    const v1Signature = v1SignaturePart.substring(3); // Remove "v1="
+
+    return { timestamp, v1Signature };
   }
 
   console.log(
@@ -36,13 +38,13 @@ export async function POST(req: NextRequest) {
     JSON.stringify(Object.fromEntries(req.headers), null, 2)
   );
 
-  const sig = getStripeSignature(req.headers);
-  console.log("📌 Extracted Stripe Signature (v1 only):", sig);
+  const sigData = getStripeSignatureAndTimestamp(req.headers);
+  console.log("📌 Extracted Signature Data:", sigData);
 
-  if (!sig) {
-    console.error("❌ Missing Stripe signature");
+  if (!sigData) {
+    console.error("❌ Missing or invalid Stripe signature");
     return NextResponse.json(
-      { error: "Missing Stripe signature" },
+      { error: "Missing or invalid Stripe signature" },
       { status: 400 }
     );
   }
@@ -50,8 +52,8 @@ export async function POST(req: NextRequest) {
   let rawBodyText;
   let rawBodyBuffer;
   try {
-    rawBodyText = await req.text(); // Read raw request body
-    rawBodyBuffer = Buffer.from(rawBodyText); // Convert text to Buffer
+    rawBodyText = await req.text();
+    rawBodyBuffer = Buffer.from(rawBodyText, "utf8"); // Explicitly use utf8
     console.log("📌 RAW BODY TEXT:", rawBodyText);
     console.log(
       "📌 RAW BODY AS BUFFER (hex format):",
@@ -66,8 +68,7 @@ export async function POST(req: NextRequest) {
   // **Manually Compute Signature for Debugging**
   try {
     const expectedSecret = process.env.STRIPE_WEBHOOK_SECRET!;
-    const timestamp = sig.split(",")[0].split("=")[1]; // Extract timestamp from signature
-    const payload = `${timestamp}.${rawBodyText}`; // Stripe's expected payload format
+    const payload = `${sigData.timestamp}.${rawBodyText}`;
 
     const computedSignature = crypto
       .createHmac("sha256", expectedSecret)
@@ -75,11 +76,11 @@ export async function POST(req: NextRequest) {
       .digest("hex");
 
     console.log("📌 Computed Signature:", computedSignature);
-    console.log("📌 Signature from Stripe:", sig);
+    console.log("📌 Signature from Stripe:", sigData.v1Signature);
 
-    if (sig !== computedSignature) {
+    if (computedSignature !== sigData.v1Signature) {
       console.error(
-        "❌ Signature Mismatch! The computed signature does not match the one from Stripe."
+        "❌ Signature Mismatch! Computed signature does not match Stripe's."
       );
     }
   } catch (error) {
@@ -89,8 +90,8 @@ export async function POST(req: NextRequest) {
   let event;
   try {
     event = stripe.webhooks.constructEvent(
-      rawBodyBuffer, // ✅ Pass buffer to match Stripe's verification
-      sig,
+      rawBodyBuffer,
+      sigData.v1Signature, // Use v1 signature
       process.env.STRIPE_WEBHOOK_SECRET!
     );
 
