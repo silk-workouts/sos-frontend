@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
   // Log full headers to check if "stripe-signature" is missing
   console.log(
     "📌 FULL HEADERS RECEIVED FROM STRIPE:",
-    JSON.stringify(req.headers, null, 2)
+    JSON.stringify(Object.fromEntries(req.headers), null, 2)
   );
 
   const sig = req.headers.get("stripe-signature");
