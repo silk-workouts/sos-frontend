@@ -6,6 +6,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-01-27.acacia",
 });
 
+export const config = {
+  api: {
+    bodyParser: false, // ✅ Prevent Next.js from modifying the request body
+  },
+};
+
 export async function POST(req: NextRequest) {
   const sig = req.headers.get("stripe-signature");
 
@@ -19,15 +25,19 @@ export async function POST(req: NextRequest) {
 
   let event;
   try {
-    const rawBody = await req.text();
+    const rawBody = await req.text(); // ✅ Read the unmodified raw request body
+
     event = stripe.webhooks.constructEvent(
-      rawBody,
+      rawBody, // ✅ Pass the raw body to Stripe
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
+
     console.log("✅ Webhook verified successfully.");
   } catch (err) {
-    console.error(`❌ Webhook verification failed: ${err}`);
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    console.error(`❌ Webhook verification failed: ${errorMessage}`);
+
     return NextResponse.json(
       { error: "Webhook verification failed" },
       { status: 400 }
