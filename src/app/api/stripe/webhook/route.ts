@@ -6,9 +6,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-01-27.acacia",
 });
 
+// ✅ Only include this if webhook verification fails due to signature issues
 export const config = {
   api: {
-    bodyParser: false, // ✅ Prevent Next.js from modifying the request body
+    bodyParser: false, // Ensures Next.js doesn't modify the raw request body
   },
 };
 
@@ -25,19 +26,15 @@ export async function POST(req: NextRequest) {
 
   let event;
   try {
-    const rawBody = await req.text(); // ✅ Read the unmodified raw request body
-
+    const rawBody = await req.text(); // ✅ Ensure raw body is used for verification
     event = stripe.webhooks.constructEvent(
-      rawBody, // ✅ Pass the raw body to Stripe
+      rawBody,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
-
     console.log("✅ Webhook verified successfully.");
-  } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : "Unknown error";
-    console.error(`❌ Webhook verification failed: ${errorMessage}`);
-
+  } catch (error) {
+    console.error("❌ Webhook verification failed:", error);
     return NextResponse.json(
       { error: "Webhook verification failed" },
       { status: 400 }
@@ -58,18 +55,14 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        // ✅ Log user before update
         const [user] = (await pool.execute(
-          "SELECT id, email, is_paid_user FROM users WHERE stripe_customer_id = ?",
+          "SELECT id FROM users WHERE stripe_customer_id = ?",
           [stripeCustomerId]
-        )) as [
-          Array<{ id: string; email: string; is_paid_user: boolean }>,
-          any
-        ];
+        )) as [{ id: string }[], any];
 
-        if (!user || user.length === 0) {
+        if (!user.length) {
           console.error(
-            `❌ No user found with Stripe Customer ID: ${stripeCustomerId}`
+            `❌ No user found for Stripe Customer ID: ${stripeCustomerId}`
           );
           return NextResponse.json(
             { error: "User not found" },
@@ -77,7 +70,6 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        // ✅ Update user in the database
         const [result] = (await pool.execute(
           "UPDATE users SET is_paid_user = 1 WHERE stripe_customer_id = ?",
           [stripeCustomerId]
@@ -93,9 +85,7 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        console.log(
-          `✅ Successfully updated user ${user[0].id} to is_paid_user = 1`
-        );
+        console.log(`✅ User ${user[0].id} marked as paid.`);
         return NextResponse.json({ success: true });
       }
 
@@ -111,18 +101,14 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        // 🔎 Check if user exists before updating
         const [user] = (await pool.execute(
-          "SELECT id, email, is_paid_user FROM users WHERE stripe_customer_id = ?",
+          "SELECT id FROM users WHERE stripe_customer_id = ?",
           [stripeCustomerId]
-        )) as [
-          Array<{ id: string; email: string; is_paid_user: boolean }>,
-          any
-        ];
+        )) as [{ id: string }[], any];
 
-        if (!user || user.length === 0) {
+        if (!user.length) {
           console.error(
-            `❌ No user found with Stripe Customer ID: ${stripeCustomerId}`
+            `❌ No user found for Stripe Customer ID: ${stripeCustomerId}`
           );
           return NextResponse.json(
             { error: "User not found" },
@@ -130,12 +116,6 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        console.log(`✅ Found user:`, user);
-
-        // ✅ Log before updating
-        console.log(`🔄 Updating user ${user[0].id} (is_paid_user = 1)`);
-
-        // 🔥 Run the actual update
         const [result] = (await pool.execute(
           "UPDATE users SET is_paid_user = 1 WHERE stripe_customer_id = ?",
           [stripeCustomerId]
@@ -151,16 +131,14 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        console.log(
-          `✅ Successfully updated user ${user[0].id} to is_paid_user = 1`
-        );
+        console.log(`✅ User ${user[0].id} marked as paid.`);
         return NextResponse.json({ success: true });
       }
 
       case "customer.subscription.deleted": {
         const subscription = event.data.object;
         const stripeCustomerId = subscription.customer as string;
-        const cancelAt = subscription.current_period_end; // Subscription end time
+        const cancelAt = subscription.current_period_end; // When the subscription actually expires
 
         if (!stripeCustomerId) {
           console.error(
@@ -172,21 +150,20 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        // ✅ Ensure user is not locked out early
         const currentTimestamp = Math.floor(Date.now() / 1000);
         if (cancelAt > currentTimestamp) {
           console.log(
-            `🕒 User ${stripeCustomerId} still has access until ${new Date(
+            `🕒 User ${stripeCustomerId} has access until ${new Date(
               cancelAt * 1000
             ).toISOString()}`
           );
           return NextResponse.json({
             message:
-              "Subscription is canceled but still active until period end.",
+              "Subscription is canceled but user retains access until period end.",
           });
         }
 
-        // ❌ Only now should we mark them as not paid
+        // Only now should we mark them as not paid
         const [result] = (await pool.execute(
           "UPDATE users SET is_paid_user = 0 WHERE stripe_customer_id = ?",
           [stripeCustomerId]
@@ -202,9 +179,7 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        console.log(
-          `✅ Successfully updated user ${stripeCustomerId} to is_paid_user = 0`
-        );
+        console.log(`✅ User ${stripeCustomerId} marked as unpaid.`);
         return NextResponse.json({ success: true });
       }
 
