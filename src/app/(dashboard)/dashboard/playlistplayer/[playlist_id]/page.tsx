@@ -207,42 +207,44 @@ export default function PlaylistPlayerPage() {
 
   return (
     <div className={styles.pageContainer}>
-      {/* 🔙 Back Button */}
-      <button
-        onClick={() => router.back()}
-        className={styles.backButton}
-        aria-label="Go back"
-      >
-        <Image src={backArrowIcon} alt="Back" width={24} height={24} />
-      </button>
+      <div className={styles.contentArea}>
+        <button
+          onClick={() => router.back()}
+          className={styles.backButton}
+          aria-label="Go back"
+        >
+          <Image src={backArrowIcon} alt="Back" width={24} height={24} />
+        </button>
 
-      {/* 🎥 Video Player */}
-      <div ref={playerContainerRef} className={styles.playerContainer} />
+        <div ref={playerContainerRef} className={styles.playerContainer} />
 
-      {/* 📜 Video Info */}
-      <div className={styles.videoDetails}>
-        <h2 className={styles.playlistTitle}>{playlist.title}</h2>
-        <div className={styles.videoHeader}>
-          <h3 className={styles.videoTitle}>{activeVideo.title}</h3>
-          <button
-            onClick={() => handleBookmark(activeVideo.id)}
-            className={styles.bookmarkButton}
-            aria-label="Save video"
-          >
-            <Image
-              src={
-                savedVideos[activeVideo.id] ? bookmarkIcon : bookmarkUnsavedIcon
-              }
-              alt="Bookmark"
-              className={styles.bookmarkIcon}
-            />
-          </button>
+        <div className={styles.videoDetails}>
+          <h2 className={styles.playlistTitle}>{playlist.title}</h2>
+          <div className={styles.videoHeader}>
+            <h3 className={styles.videoTitle}>{activeVideo.title}</h3>
+            <button
+              onClick={() => handleBookmark(activeVideo.id)}
+              className={styles.bookmarkButton}
+              aria-label="Save video"
+            >
+              <Image
+                src={
+                  savedVideos[activeVideo.id]
+                    ? bookmarkIcon
+                    : bookmarkUnsavedIcon
+                }
+                alt="Bookmark"
+                className={styles.bookmarkIcon}
+              />
+            </button>
+          </div>
+          <p className={styles.videoDescription}>{activeVideo.description}</p>
         </div>
-        <p className={styles.videoDescription}>{activeVideo.description}</p>
       </div>
 
-      {/* 📌 Playlist Thumbnails */}
       <div className={styles.videoList}>
+        <p className={styles.videoListTitle}>Up Next</p>
+
         {videos.map((video) => (
           <div
             key={video.id}

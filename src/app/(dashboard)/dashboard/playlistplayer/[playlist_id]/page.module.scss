@@ -1,26 +1,34 @@
 @use "@/styles/partials/variables" as *;
 @use "@/styles/partials/mixins" as *;
 
-/* 🎥 Page Container */
 .pageContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  // max-width: 320px;
   margin: 0 auto;
   padding: 16px;
   gap: $padding-base;
 
-  @include tablet {
-    // max-width: 500px;
-  }
-
   @include desktop {
-    max-width: 600px;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
   }
 }
 
-/* 🔙 Back Button */
+.contentArea {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+
+  @include desktop {
+    max-width: 640px;
+    flex-shrink: 0;
+  }
+}
+
 .backButton {
   align-self: flex-start;
   background: none;
@@ -31,15 +39,13 @@
   align-items: center;
 }
 
-/* 🎬 Video Player */
 .playerContainer {
   width: 100%;
   aspect-ratio: 16 / 9;
   position: relative;
-  background: #d9d9d9; // Placeholder background
+  background: #d9d9d9;
 }
 
-/* 🎞 Video Details */
 .videoDetails {
   display: flex;
   flex-direction: column;
@@ -78,7 +84,6 @@
   line-height: 160%;
 }
 
-/* 🔖 Bookmark Button */
 .bookmarkButton {
   background: none;
   border: none;
@@ -95,7 +100,6 @@
   height: 16px;
 }
 
-/* 📌 Video List */
 .videoList {
   display: flex;
   flex-direction: column;
@@ -103,9 +107,14 @@
   gap: 8px;
   width: 100%;
   overflow-y: auto;
+  margin-top: 24px;
+
+  @include desktop {
+    width: 320px;
+    margin-top: 0;
+  }
 }
 
-/* 🎞 Video Thumbnail */
 .thumbnailCard {
   display: flex;
   flex-direction: row;
@@ -119,21 +128,11 @@
   position: relative;
   border-radius: 10px;
 
-  /* 🔴 Active Video Highlight */
   &.active {
     border: 2px solid #e2211c;
   }
-
-  @include tablet {
-    width: 100%;
-  }
-
-  @include desktop {
-    max-width: 600px;
-  }
 }
 
-/* 🎞 Thumbnail Image */
 .thumbnailImage {
   width: 134px;
   height: 74.98px;
@@ -153,7 +152,6 @@
   }
 }
 
-/* ⏱ Time Stamp */
 .timeStamp {
   position: absolute;
   width: 43px;
@@ -167,7 +165,6 @@
   justify-content: center;
 }
 
-/* 🏷 Video Info */
 .videoInfo {
   display: flex;
   flex-direction: column;
