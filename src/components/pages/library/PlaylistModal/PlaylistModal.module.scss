@@ -1,10 +1,18 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .dialog-container {
 	position: fixed;
 	inset: 0;
 	z-index: 2000;
 	background-color: rgba($color-black, 0.25);
+
+	@include tablet {
+		position: absolute;
+		top: 1.875rem;
+		right: 0;
+		bottom: unset;
+	}
 }
 
 .dialog {
@@ -12,16 +20,43 @@
 	bottom: 0;
 	right: 0;
 	left: 0;
-	padding: $padding-small;
 	list-style: none;
 	border-radius: 1rem 1rem 0 0;
 	background-color: $color-white;
+
+	@include tablet {
+		position: absolute;
+		top: 0;
+		left: unset;
+		bottom: unset;
+		z-index: 2000;
+		box-shadow: 0px 0px 7.7px 0px rgba($color-black, 0.1);
+		border-radius: 1rem;
+	}
 
 	&__option {
 		cursor: pointer;
 
 		&:hover {
 			background-color: rgb(223, 222, 222);
+		}
+
+		&:first-child {
+			border-radius: 1rem 1rem 0 0;
+		}
+
+		&:last-child {
+			@include tablet {
+				border-radius: 0 0 1rem 1rem;
+			}
+		}
+
+		.tablet {
+			display: none;
+
+			@include tablet {
+				display: unset;
+			}
 		}
 	}
 }
@@ -30,10 +65,14 @@
 	font-family: $font-primary;
 	background-color: transparent;
 	border: none;
-	padding: 0.5rem;
+	padding: $padding-small;
 	cursor: pointer;
 	width: 100%;
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+
+	@include tablet {
+		padding-right: 2rem;
+	}
 }

@@ -1,33 +1,54 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.container {
+	@include desktop {
+		padding-left: 7.75rem;
+	}
+}
 
 .tab-container {
-  padding: 0 $padding-small;
-  //position: sticky;
+	background-color: $color-white;
+	padding: 0 $padding-small;
+	position: sticky;
+	top: 0;
+	will-change: transform;
+	z-index: 900;
+	margin-top: -4rem;
+	padding-top: 4rem;
+
+	@include tablet {
+		padding: 4rem 1.5rem 0;
+	}
 }
 
 .tabContent {
-  border-bottom: 1px solid $color-black;
-  list-style: none;
-  display: flex;
-  // gap: 1rem;
-  text-transform: capitalize;
-  font-size: 0.75rem;
+	border-bottom: 1px solid $color-black;
+	list-style: none;
+	display: flex;
+	// gap: 1rem;
+	text-transform: capitalize;
+	font-size: 0.75rem;
+
+	@include tablet {
+		font-size: 0.875rem;
+	}
 }
 
 .tab {
-  padding: 0.5rem;
-  // min-width: max-content;
-  width: 50%;
-  text-align: center;
-  border-bottom: 2px solid $color-white;
-  cursor: pointer;
+	padding: 0.5rem;
+	// min-width: max-content;
+	width: 50%;
+	text-align: center;
+	border-bottom: 2px solid $color-white;
+	cursor: pointer;
 
-  &:focus {
-    font-weight: $font-weight-medium;
-  }
+	&:focus {
+		font-weight: $font-weight-medium;
+	}
 
-  &--selected {
-    font-weight: $font-weight-medium;
-    border-color: $color-black;
-  }
+	&--selected {
+		font-weight: $font-weight-medium;
+		border-color: $color-black;
+	}
 }

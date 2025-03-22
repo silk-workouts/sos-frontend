@@ -11,7 +11,7 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-  const pathname = usePathname();
+  const pathname = usePathname()!;
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -60,6 +60,11 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  if (pathname.startsWith("/dashboard/library")) {
+    const pathnameSegment = pathname.split("/");
+    if (pathnameSegment.length > 3) return;
+  }
 
   return (
     <header className={styles.header}>
