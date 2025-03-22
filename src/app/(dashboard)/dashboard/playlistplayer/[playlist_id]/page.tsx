@@ -8,8 +8,8 @@ import axios from "axios";
 import styles from "./page.module.scss";
 
 export default function PlaylistPlayerPage() {
-  const { playlist_id } = useParams<{ playlist_id: string }>();
-  const searchParams = useSearchParams();
+  const { playlist_id } = useParams<{ playlist_id: string }>()!;
+  const searchParams = useSearchParams()!;
   const { userId } = usePlaylists();
 
   const video_id = searchParams.get("video_id");

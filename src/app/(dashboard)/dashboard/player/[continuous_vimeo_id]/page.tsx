@@ -8,8 +8,8 @@ import Video from "@/components/pages/dashboard/Video/Video";
 import styles from "./page.module.scss";
 
 export default function PlayerPage() {
-  const { continuous_vimeo_id } = useParams<{ continuous_vimeo_id: string }>();
-  const searchParams = useSearchParams();
+  const { continuous_vimeo_id } = useParams<{ continuous_vimeo_id: string }>()!;
+  const searchParams = useSearchParams()!;
   const showcase_id = searchParams.get("showcase_id");
   const initialStartTime = searchParams.get("start_time")
     ? parseInt(searchParams.get("start_time") as string, 10)
