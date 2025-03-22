@@ -27,7 +27,7 @@ export default function SingleShowcasePage() {
   const { showcase_name, showcase_id } = useParams<{
     showcase_name: string;
     showcase_id: string;
-  }>();
+  }>()!;
 
   const [loading, setLoading] = useState(true);
   const [showcase, setShowcase] = useState<Showcase | null>(null); // ✅ Prefer A (correct casing)
