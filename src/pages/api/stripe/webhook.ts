@@ -1,3 +1,20 @@
+/**
+ * ⚠️ IMPORTANT:
+ * This route is placed inside `pages/api/` instead of `app/api/`
+ * because Stripe requires access to the raw request body in order to verify webhook signatures.
+ *
+ * Next.js 13+ App Router automatically parses request bodies (even with `bodyParser: false`),
+ * which breaks Stripe's `constructEvent()` verification method.
+ *
+ * Stripe sends the signature as a header (`stripe-signature`), and if the body is altered (parsed),
+ * the signature check will fail with: ❌ "Webhook verification failed: No signatures found matching the expected signature for payload".
+ *
+ * Only `pages/api` routes support disabling body parsing in a way that preserves the raw stream.
+ *
+ * Related Stripe docs: https://stripe.com/docs/webhooks/signatures
+ * Related Next.js issue: https://github.com/vercel/next.js/issues/49368
+ */
+
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import { buffer } from "micro";
