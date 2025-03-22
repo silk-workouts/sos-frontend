@@ -1,39 +1,178 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
 .pageContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1200px; // Adjust as needed
   margin: 0 auto;
-  padding: 20px;
+  padding: 16px;
+  gap: $padding-base;
+
+  @include desktop {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+  }
+}
+
+.contentArea {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+
+  @include desktop {
+    max-width: 640px;
+    flex-shrink: 0;
+  }
+}
+
+.backButton {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 .playerContainer {
   width: 100%;
-  max-width: 800px; // Set a max width so it doesn't grow too much
-  aspect-ratio: 16 / 9; // Ensures responsive scaling
+  aspect-ratio: 16 / 9;
   position: relative;
+  background: #d9d9d9;
 }
 
-.thumbnailGallery {
+.videoDetails {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px; // Ensures space between player & thumbnails
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px;
+  gap: 8px;
   width: 100%;
-  max-width: 800px;
-  overflow-x: auto;
+}
 
-  .thumbnailCard {
-    cursor: pointer;
-    transition: border 0.2s ease-in-out;
+.playlistTitle {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: $color-primary;
+}
 
-    &.active {
-      border: 2px solid red;
-    }
+.videoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
 
-    img {
-      width: 100%;
-    }
+.videoTitle {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #0f0f0f;
+}
+
+.videoDescription {
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #424242;
+  line-height: 160%;
+}
+
+.bookmarkButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.bookmarkIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.videoList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  overflow-y: auto;
+  margin-top: 24px;
+
+  @include desktop {
+    width: 320px;
+    margin-top: 0;
   }
+}
+
+.thumbnailCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  gap: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: border 0.2s ease-in-out;
+  position: relative;
+  border-radius: 10px;
+
+  &.active {
+    border: 2px solid #e2211c;
+  }
+}
+
+.thumbnailImage {
+  width: 134px;
+  height: 74.98px;
+  background: #bbbbbb;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+
+  @include tablet {
+    width: 180px;
+    height: 100px;
+  }
+
+  @include desktop {
+    width: 200px;
+    height: 120px;
+  }
+}
+
+.timeStamp {
+  position: absolute;
+  width: 43px;
+  height: 19px;
+  background: rgba(15, 15, 15, 0.3);
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.videoInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+
+.videoTitle {
+  font-size: 12px;
+  color: #000000;
 }
