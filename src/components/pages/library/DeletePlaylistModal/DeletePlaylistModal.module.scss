@@ -1,4 +1,5 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .modal {
 	position: fixed;
@@ -11,6 +12,7 @@
 
 	&-container {
 		background-color: $color-white;
+		color: $color-black;
 		border-radius: 0.625rem;
 		padding: 1rem;
 		display: flex;
@@ -22,13 +24,32 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		gap: 1rem;
+		gap: 1.5rem;
 	}
 
 	&__title {
 		font-size: 1rem;
 		font-weight: $font-weight-regular;
 		text-transform: capitalize;
+
+		@include tablet {
+			font-size: 1.25rem;
+		}
+	}
+
+	&__description {
+		font-size: 0.75rem;
+		max-width: 12.5rem;
+		line-height: 1.375rem;
+
+		@include tablet {
+			font-size: 0.875rem;
+			max-width: 18.75rem;
+		}
+
+		.title {
+			color: $color-red;
+		}
 	}
 
 	&__button {
@@ -36,8 +57,12 @@
 		border: none;
 		background-color: $color-white;
 		font-family: $font-primary;
-		font-size: 1rem;
+		font-size: 0.75rem;
 		cursor: pointer;
+
+		@include tablet {
+			font-size: 1rem;
+		}
 
 		&--delete {
 			align-self: flex-end;

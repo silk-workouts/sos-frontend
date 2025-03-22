@@ -1,12 +1,23 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .videos {
-	padding: 1rem;
+	padding-bottom: 1rem;
+
+	@include desktop {
+		width: 100%;
+		padding-right: 1rem;
+		padding-left: 32.1875rem;
+	}
 
 	&__list {
 		list-style: none;
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+
+		@include tablet {
+			gap: 1.5rem;
+		}
 	}
 }

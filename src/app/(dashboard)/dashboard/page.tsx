@@ -66,7 +66,7 @@ export default function DashboardPage() {
 				<ul className={styles.tabContent} role="tablist" tabIndex={0}>
 					<li
 						role="tab"
-						tabIndex={0}
+						tabIndex={isSelected.element ? 0 : -1}
 						id="element-tab"
 						aria-selected={isSelected.element}
 						aria-controls="element-panel"
@@ -81,7 +81,7 @@ export default function DashboardPage() {
 					</li>
 					<li
 						role="tab"
-						tabIndex={0}
+						tabIndex={isSelected.program ? 0 : -1}
 						id="program-tab"
 						aria-selected={isSelected.program}
 						aria-controls="program-panel"
