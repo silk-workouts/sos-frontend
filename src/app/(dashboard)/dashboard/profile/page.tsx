@@ -1,7 +1,4 @@
 // Updates required for integration with database:
-// - Validating email doesn't exist (avoid duplicates)
-// - Validating length of entries and email format
-// - Minimum password security and/or 2x entries
 // - API calls to facilitate PATCH/PUT for account details
 // - Where does the change/cancel subscription link go to?
 
@@ -11,51 +8,78 @@ import { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Button from "@/components/ui/Button/Button";
+import { toast } from "react-hot-toast";
 import styles from "./page.module.scss";
 
-//had to use React.FC because of selector styling issue - feel free to revert if you know of a solution
 const ProfilePage: React.FC = () => {
   const [email, setEmail] = useState<string>("user@example.com");
-  const [password, setPassword] = useState<string>("********");
+  const [age, setAge] = useState<number | undefined>();
+  const [location, setLocation] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [fitnessLevel, setFitnessLevel] = useState<string>("");
+
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [tempEmail, setTempEmail] = useState<string>(email);
-  const [tempPassword, setTempPassword] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+  const [tempAge, setTempAge] = useState<number | undefined>(age);
+  const [tempLocation, setTempLocation] = useState<string>(location);
+  const [tempGender, setTempGender] = useState<string>(gender);
+  const [tempFitnessLevel, setTempFitnessLevel] =
+    useState<string>(fitnessLevel);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string>("");
   const router = useRouter();
 
   useEffect(() => {
-    async function checkAuthStatus() {
+    async function fetchProfile() {
       try {
-        const res = await fetch("/api/auth/verify-token", {
+        const tokenRes = await fetch("/api/auth/verify-token", {
           method: "GET",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
         });
 
-        if (!res.ok) {
+        if (!tokenRes.ok) {
           setIsLoggedIn(false);
           return;
         }
+
+        const { userId } = await tokenRes.json();
+        setUserId(userId);
         setIsLoggedIn(true);
+
+        const profileRes = await fetch(`/api/users/get-user?id=${userId}`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (!profileRes.ok) return;
+
+        const data = await profileRes.json();
+        setEmail(data.email || "");
+        setAge(data.age ?? undefined);
+        setLocation(data.location || "");
+        setGender(data.gender || "");
+        setFitnessLevel(data.fitness_level || "");
       } catch (error) {
+        console.error("Failed to load profile:", error);
         setIsLoggedIn(false);
       }
     }
 
-    checkAuthStatus();
+    fetchProfile();
   }, []);
 
   const handleEditClick = (): void => {
     setIsEditing(true);
-    setTempEmail(email);
-    setTempPassword("");
+    setTempAge(age);
+    setTempLocation(location);
+    setTempGender(gender);
+    setTempFitnessLevel(fitnessLevel);
   };
 
   const handleCancelClick = (): void => {
     setIsEditing(false);
-    setMessage("");
   };
 
   const handleLogout = async () => {
@@ -67,57 +91,62 @@ const ProfilePage: React.FC = () => {
   const handleSaveProfile = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     setIsLoading(true);
-    setMessage("");
 
-    // Validate email format
-    if (!tempEmail.includes("@")) {
-      setMessage("Invalid email format.");
+    if (tempAge && (tempAge < 0 || tempAge > 120)) {
+      toast.error("Please enter a valid age between 0 and 120.");
       setIsLoading(false);
       return;
     }
 
-    // Validate password length (adjustable based on security requirements)
-    if (tempPassword.length > 0 && tempPassword.length < 6) {
-      setMessage("Password must be at least 6 characters.");
+    if (tempLocation.length > 100) {
+      toast.error("Location must be under 100 characters.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (tempGender && !["male", "female", "other"].includes(tempGender)) {
+      toast.error("Please select a valid gender.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (
+      tempFitnessLevel &&
+      !["beginner", "intermediate", "advanced"].includes(tempFitnessLevel)
+    ) {
+      toast.error("Please select a valid fitness level.");
       setIsLoading(false);
       return;
     }
 
     try {
-      // API call to check if email already exists (avoid duplicates)
-      const emailCheckRes = await fetch(
-        `/api/auth/check-email?email=${tempEmail}`
-      );
-      if (!emailCheckRes.ok) {
-        setMessage("Email already exists.");
-        setIsLoading(false);
-        return;
-      }
-
-      // API call to update user profile (PATCH or PUT)
-      const updateRes = await fetch("/api/auth/update-profile", {
-        method: "PATCH",
+      const updateRes = await fetch("/api/users/update-profile", {
+        method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: tempEmail !== email ? tempEmail : undefined,
-          password: tempPassword.length > 0 ? tempPassword : undefined,
+          userId,
+          age: tempAge,
+          location: tempLocation.trim(),
+          gender: tempGender,
+          fitnessLevel: tempFitnessLevel,
         }),
       });
 
       if (!updateRes.ok) {
-        setMessage("Error updating profile. Please try again.");
+        toast.error("Error updating profile. Please try again.");
         setIsLoading(false);
         return;
       }
 
-      // Update state only after a successful update
-      setEmail(tempEmail);
-      setPassword("********"); // Hide updated password for security reasons
-      setMessage("Profile updated successfully!");
+      setAge(tempAge);
+      setLocation(tempLocation.trim());
+      setGender(tempGender);
+      setFitnessLevel(tempFitnessLevel);
+      toast.success("Profile updated successfully!");
       setIsEditing(false);
     } catch (error) {
-      setMessage("Error updating profile. Try again.");
+      toast.error("Error updating profile. Try again.");
     } finally {
       setIsLoading(false);
     }
@@ -137,82 +166,86 @@ const ProfilePage: React.FC = () => {
         )}
       </div>
 
-      {!isEditing ? (
-        <>
-          <div className={styles.profile__info}>
-            <div className={styles.profile__infoGroup}>
-              <span className={styles.profile__label}>Email</span>
-              <span className={styles.profile__value}>{email}</span>
-            </div>
-            <div className={styles.profile__infoGroup}>
-              <span className={styles.profile__label}>Password</span>
-              <span className={styles.profile__value}>********</span>
-            </div>
+      {!isEditing && (
+        <div className={styles.profile__info}>
+          <div className={styles.profile__infoGroup}>
+            <span className={styles.profile__label}>Email</span>
+            <span className={styles.profile__value}>{email}</span>
           </div>
-
-          {/* Additional Profile Links */}
-          <div className={styles.profile__links}>
-            <Link
-              href="/dashboard/cancel-subscription"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.profile__link}
-            >
-              Cancel Subscription
-            </Link>
-            {/* <Link
-              href="/about"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.profile__link}
-            >
-              Help
-            </Link> */}
-            <Link
-              href="/contact"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.profile__link}
-            >
-              FAQ
-            </Link>
+          <div className={styles.profile__infoGroup}>
+            <span className={styles.profile__label}>Age</span>
+            <span className={styles.profile__value}>{age ?? "N/A"}</span>
           </div>
+          <div className={styles.profile__infoGroup}>
+            <span className={styles.profile__label}>Location</span>
+            <span className={styles.profile__value}>{location || "N/A"}</span>
+          </div>
+          <div className={styles.profile__infoGroup}>
+            <span className={styles.profile__label}>Gender</span>
+            <span className={styles.profile__value}>{gender || "N/A"}</span>
+          </div>
+          <div className={styles.profile__infoGroup}>
+            <span className={styles.profile__label}>Fitness Level</span>
+            <span className={styles.profile__value}>
+              {fitnessLevel || "N/A"}
+            </span>
+          </div>
+        </div>
+      )}
 
-          {/* Logout Button - Uses Header's Logout Functionality */}
-          {isLoggedIn && (
-            <Button
-              variant="tertiary"
-              className={styles.profile__logoutButton}
-              onClick={handleLogout}
-            >
-              Log Out
-            </Button>
-          )}
-        </>
-      ) : (
+      {isEditing && (
         <form className={styles.profile__form} onSubmit={handleSaveProfile}>
           <div className={styles.profile__inputGroup}>
-            <label className={styles.profile__label}>Email*</label>
+            <label className={styles.profile__label}>Age</label>
             <input
-              type="email"
+              type="number"
+              min={0}
               className={styles.profile__input}
-              value={tempEmail}
-              onChange={(e) => setTempEmail(e.target.value)}
+              value={tempAge ?? ""}
+              onChange={(e) =>
+                setTempAge(parseInt(e.target.value, 10) || undefined)
+              }
             />
           </div>
 
           <div className={styles.profile__inputGroup}>
-            <label className={styles.profile__label}>New Password*</label>
+            <label className={styles.profile__label}>Location</label>
             <input
-              type="password"
+              type="text"
               className={styles.profile__input}
-              placeholder="Enter new password"
-              value={tempPassword}
-              onChange={(e) => setTempPassword(e.target.value)}
+              value={tempLocation}
+              onChange={(e) => setTempLocation(e.target.value)}
             />
           </div>
 
-          {/* Buttons now appear immediately below the input fields */}
+          <div className={styles.profile__inputGroup}>
+            <label className={styles.profile__label}>Gender</label>
+            <select
+              className={styles.profile__input}
+              value={tempGender}
+              onChange={(e) => setTempGender(e.target.value)}
+            >
+              <option value="">Select...</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div className={styles.profile__inputGroup}>
+            <label className={styles.profile__label}>Fitness Level</label>
+            <select
+              className={styles.profile__input}
+              value={tempFitnessLevel}
+              onChange={(e) => setTempFitnessLevel(e.target.value)}
+            >
+              <option value="">Select...</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+
           <div className={styles.profile__buttonGroup}>
             <Button variant="text" onClick={handleCancelClick}>
               Cancel
@@ -224,7 +257,50 @@ const ProfilePage: React.FC = () => {
         </form>
       )}
 
-      {message && <p className={styles.profile__message}>{message}</p>}
+      <div className={styles.profile__actions}>
+        <div className={styles.profile__links}>
+          <Link
+            href="/auth/forgot-password"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.profile__link}
+          >
+            Change Password
+          </Link>
+          <Link
+            href="mailto:michaelolajidejr@gmail.com"
+            className={styles.profile__link}
+          >
+            Request Email Update
+          </Link>
+          <Link
+            href="/dashboard/cancel-subscription"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.profile__link}
+          >
+            Cancel Subscription
+          </Link>
+          <Link
+            href="/contact"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.profile__link}
+          >
+            FAQ
+          </Link>
+        </div>
+
+        {isLoggedIn && (
+          <Button
+            variant="tertiary"
+            className={styles.profile__logoutButton}
+            onClick={handleLogout}
+          >
+            Log Out
+          </Button>
+        )}
+      </div>
     </div>
   );
 };
