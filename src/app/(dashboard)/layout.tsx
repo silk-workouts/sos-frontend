@@ -1,13 +1,15 @@
+import { Toaster } from "react-hot-toast";
 import Navigation from "@/components/pages/dashboard/Navigation/Navigation";
 import PlaylistsProvider from "./dashboard/context/PlaylistContext";
 
 export default function DashboardLayout({
-	children,
+  children,
 }: Readonly<{ children: React.ReactNode }>) {
-	return (
-		<PlaylistsProvider>
-			{children}
-			<Navigation />
-		</PlaylistsProvider>
-	);
+  return (
+    <PlaylistsProvider>
+      {children}
+      <Navigation />
+      <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
+    </PlaylistsProvider>
+  );
 }

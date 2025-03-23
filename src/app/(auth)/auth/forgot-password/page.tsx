@@ -21,7 +21,7 @@ export default function ForgotPasswordPage() {
     try {
       console.log("📩 Sending reset email...");
 
-      const res = await fetch("/api/auth/forgot-password", {
+      const res = await fetch("/api/auth/request-reset", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -30,7 +30,9 @@ export default function ForgotPasswordPage() {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage("✅ Reset link sent! Check your email.");
+        setMessage(
+          "✅ If your email exist, reset link sent! Check your email."
+        );
       } else {
         setMessage(`❌ ${data.error || "Failed to send reset link."}`);
       }
