@@ -66,19 +66,20 @@ export async function POST(req: NextRequest) {
     // ✅ Get the user's active subscription from Stripe
     const subscriptions = await stripe.subscriptions.list({
       customer: stripeCustomerId,
-      status: "active",
+      status: "all",
     });
 
-    if (subscriptions.data.length === 0) {
-      console.error("❌ ERROR: No active subscription found for customer");
+    const subscription = subscriptions.data.find(
+      (sub) => sub.status === "active" || sub.status === "trialing"
+    );
+
+    if (!subscription) {
+      console.error("❌ ERROR: No active or trialing subscription found");
       return NextResponse.json(
-        { error: "No active subscription found" },
+        { error: "No active or trialing subscription found" },
         { status: 400 }
       );
     }
-
-    const subscription = subscriptions.data[0];
-    console.log(`✅ Found active subscription: ${subscription.id}`);
 
     // ✅ Set the subscription to cancel at the end of the billing cycle
     await stripe.subscriptions.update(subscription.id, {
