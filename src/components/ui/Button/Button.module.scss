@@ -6,7 +6,7 @@
   font-weight: $font-weight-regular;
   text-transform: uppercase;
   // width: 100%;
-  max-width: fit-content;
+  max-width: none;
   // line-height: 1.4;
   border-radius: 4px;
   cursor: pointer;
@@ -24,10 +24,11 @@
   }
 
   &__text {
-    display: block;
+    display: inline-block;
     flex-grow: 1;
     text-align: center;
-    white-space: nowrap;
+    white-space: normal !important;
+    width: 100%;
   }
 
   &__arrow {
@@ -142,6 +143,9 @@
     border: 1px solid $color-black;
     color: $color-black;
     border-radius: 2.1875rem;
+    display: inline-flex;
+    white-space: nowrap;
+    max-width: none;
 
     @include mobile {
       padding: 0 16px;

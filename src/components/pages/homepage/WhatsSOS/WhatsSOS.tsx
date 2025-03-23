@@ -20,7 +20,7 @@ export default function WhatsSOS() {
         <div className={styles.about__mobileButton}>
           {/* Button appears below the image only on mobile */}
           <Button variant="secondary" onClick={() => router.push("/signup")}>
-            Start 7-day free trial
+            Start 30-day free trial
           </Button>
         </div>
       </div>
@@ -38,7 +38,7 @@ export default function WhatsSOS() {
           <div className={styles.about__desktopButton}>
             {/* Button remains in the original location on desktop */}
             <Button variant="secondary" onClick={() => router.push("/signup")}>
-              Start 7-day free trial
+              Start 30-day free trial
             </Button>
           </div>
         </div>

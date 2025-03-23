@@ -17,6 +17,14 @@ export default function HomeHero() {
 
   return (
     <section className={styles.hero}>
+      <video
+        className={styles.hero__video}
+        src="/assets/videos/homepage-hero.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
       <div className={styles.hero__overlay}>
         <div>
           <h1 className={`homehero_title ${styles.hero__title}`}>
@@ -28,7 +36,7 @@ export default function HomeHero() {
         </div>
         <Image src={Logo} alt="Logo" />
         <Button variant="primary" onClick={handleNavigate}>
-          Start 7-day free trial
+          Start 30-day free trial
         </Button>
       </div>
     </section>

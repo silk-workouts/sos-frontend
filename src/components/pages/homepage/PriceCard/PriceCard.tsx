@@ -20,7 +20,7 @@ export default function PriceCard() {
           onClick={handleStartTrial}
           className={styles.priceCard__button}
         >
-          Start 7-day free trial
+          Start 30-day free trial
         </Button>
       </div>
 
