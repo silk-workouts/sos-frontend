@@ -26,6 +26,10 @@ export default function SortableVideoCard({
 		transform: CSS.Transform.toString(transform),
 	};
 
+	const minute = `${Math.floor(video.duration / 60) || "00"}`;
+	const seconds = `${Math.floor(video.duration % 60)}`.padStart(2, "0");
+	const duration = `${minute}:${seconds}`;
+
 	return (
 		<li ref={setNodeRef} style={style} role="listitem">
 			<article
@@ -57,6 +61,7 @@ export default function SortableVideoCard({
 							fill
 							style={{ objectFit: "cover" }}
 						/>
+						<div className={styles.card__duration}>{duration}</div>
 					</div>
 				</div>
 
