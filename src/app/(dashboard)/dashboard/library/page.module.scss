@@ -3,7 +3,13 @@
 
 .container {
 	margin-top: 3.6344rem;
+
+	@include tablet {
+		margin-top: 4.4375rem;
+	}
+
 	@include desktop {
+		margin-top: 0;
 		padding-left: 7.75rem;
 	}
 }
@@ -17,7 +23,12 @@
 	z-index: 900;
 
 	@include tablet {
-		padding: 4rem 1.5rem 0;
+		top: 4.4375rem;
+		padding: 0 1.5rem;
+	}
+	@include desktop {
+		top: 0;
+		padding-top: 4.4375rem;
 	}
 }
 
@@ -36,7 +47,6 @@
 
 .tab {
 	padding: 0.5rem;
-	// min-width: max-content;
 	width: 50%;
 	text-align: center;
 	border-bottom: 2px solid $color-white;
