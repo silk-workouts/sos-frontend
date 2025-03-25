@@ -8,7 +8,7 @@ import styles from "./page.module.scss";
 export interface Showcase {
 	id: number;
 	vimeo_showcase_id: string;
-	name: "string";
+	name: string;
 	description: string;
 	thumbnail_url: string;
 	vimeo_link: string;

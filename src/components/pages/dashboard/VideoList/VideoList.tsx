@@ -13,6 +13,7 @@ import { usePlaylists } from "src/app/(dashboard)/dashboard/context/PlaylistCont
 import { useSavedPrograms } from "src/hooks/useSavedPrograms";
 import Video from "../Video/Video";
 import styles from "./VideoList.module.scss";
+import { playlistDuration } from "../../library/PlayListCard/PlayListCard";
 
 export interface ShowcaseVideo {
 	id: number;
@@ -40,9 +41,10 @@ interface Chapter {
 
 interface VideoListProps {
 	video: Showcase;
+	type: string;
 }
 
-export default function VideoList({ video }: VideoListProps) {
+export default function VideoList({ video, type }: VideoListProps) {
 	const router = useRouter();
 	const [showcaseVideos, setShowCaseVideos] = useState<ShowcaseVideo[]>([]);
 	const [chapters, setChapters] = useState<Chapter[]>([]);
@@ -175,59 +177,88 @@ export default function VideoList({ video }: VideoListProps) {
 			});
 		}
 	}
+	const duration = playlistDuration(
+		mergedData.reduce((prev, curr) => prev + curr.duration, 0)
+	);
 
 	return (
 		<section className={styles.container}>
-			<div className={styles.header}>
-				<header className={styles.headerContainer}>
-					<h2 className={styles.title}>{video.name.toLowerCase()}</h2>
-					<p className={styles.description}>
-						{video.description ||
-							"[Description goes here but it is currently empty]"}
-					</p>
-					<div className={styles.infoContainer}>
-						{" "}
-						<div className={styles.info}>
-							<span>
-								<Image src={playIcon} alt="" className={styles.icon} />
-								<span>[num] Videos</span>
-							</span>
-							<span>
-								<Image src={clockIcon} alt="" className={styles.icon} />
-								<span>[num] mins</span>
-							</span>
+			<div className={styles.infoContainer}>
+				<div className={styles.headerContainer}>
+					<div className={styles.header}>
+						<div className={styles.titleContainer}>
+							<h2 className={styles.title}>{video.name.toLowerCase()}</h2>{" "}
+							<button
+								className={`${styles.button} ${styles["button--tablet"]}`}
+								onClick={handleShowVideoList}
+								aria-label="View all videos"
+							>
+								<Image
+									src={rightArrow}
+									alt=""
+									className={styles.icon}
+									aria-hidden="true"
+								/>
+							</button>
 						</div>
+						<p className={styles.description}>
+							{video.description ||
+								"[Description goes here but it is currently empty]"}
+						</p>
 					</div>
-				</header>
-				<section className={styles.actions}>
-					<button
-						className={styles.bookmarkButton}
-						onClick={handleToggleSave}
-						aria-label="Save to playlist"
-					>
-						{isSaved ? (
-							<Image
-								src={bookmark}
-								alt="Bookmark video saved"
-								className={styles.bookmarkIcon}
-							/>
-						) : (
-							<Image
-								src={bookmarkUnsaved}
-								alt="Bookmark video saved not saved"
-								className={styles.bookmarkIcon}
-							/>
-						)}
-					</button>
+					{type === "program" && (
+						<button
+							className={styles.bookmarkButton}
+							onClick={handleToggleSave}
+							aria-label="Save to playlist"
+						>
+							{isSaved ? (
+								<>
+									<Image
+										src={bookmark}
+										alt="Bookmark video saved"
+										className={styles.bookmarkIcon}
+									/>
+									<span>Saved to library</span>
+								</>
+							) : (
+								<>
+									<Image
+										src={bookmarkUnsaved}
+										alt="Bookmark video saved not saved"
+										className={styles.bookmarkIcon}
+									/>
+									<span>Save to library</span>
+								</>
+							)}
+						</button>
+					)}
+				</div>
+				<div className={styles.metadata}>
+					<div className={styles.info}>
+						<span className={styles.message}>
+							<Image src={playIcon} alt="" className={styles.icon} />
+							<span>{mergedData.length} videos</span>
+						</span>
+						<span className={styles.message}>
+							<Image src={clockIcon} alt="" className={styles.icon} />
+							<span>{duration}</span>
+						</span>
+					</div>
 
 					<button
 						className={styles.button}
 						onClick={handleShowVideoList}
 						aria-label="View all videos"
 					>
-						<Image src={rightArrow} alt="" className={styles.icon} />
+						<Image
+							src={rightArrow}
+							alt=""
+							className={styles.icon}
+							aria-hidden="true"
+						/>
 					</button>
-				</section>
+				</div>
 			</div>
 
 			<ul className={styles.list}>

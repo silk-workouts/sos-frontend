@@ -1,10 +1,11 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .list {
 	list-style-type: none;
 	display: flex;
 	gap: 0.5rem;
-	padding: 1.5rem 0.5rem 0;
+	padding-top: 1.5rem;
 	overflow-x: scroll;
 	scroll-snap-type: x mandatory;
 	-webkit-overflow-scrolling: touch;
@@ -12,6 +13,10 @@
 	&::-webkit-scrollbar {
 		width: 0;
 		height: 0;
+	}
+
+	@include desktop {
+		padding-top: 2rem;
 	}
 }
 
@@ -25,10 +30,18 @@
 
 	&:hover {
 		cursor: pointer;
+		border-color: #e2211c;
+	}
+
+	@include tablet {
+		font-size: 0.875rem;
+		padding: 0.375rem 0.625rem;
 	}
 
 	&--selected {
-		border-width: 2px;
+		border-color: #e2211c;
 		font-weight: $font-weight-extrabold;
+		background-color: #e2211c;
+		color: $color-white;
 	}
 }

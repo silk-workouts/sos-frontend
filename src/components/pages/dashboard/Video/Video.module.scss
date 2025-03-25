@@ -1,43 +1,90 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
 .card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
 
-  &--row {
-    flex-direction: row;
-    gap: 0.5rem;
-  }
+	@include tablet {
+		gap: 0.5rem;
+	}
+
+	&--row {
+		flex-direction: row;
+		gap: 0.5rem;
+	}
+
+	&__thumbnail-container {
+		width: 10rem;
+		aspect-ratio: 16 / 9;
+		position: relative;
+		transition: all 0.3s ease-in-out;
+
+		@include tablet {
+			width: 13.5rem;
+		}
+
+		@include tablet {
+			width: 18.75rem;
+		}
+	}
 }
 
 .thumbnail {
-  border-radius: 10px;
-  //   border: 1px solid $color-black;
-  height: 75px;
-  width: 134px;
+	border-radius: 0.625rem;
+	border: 0.5px solid #dbdbdb;
+}
+
+.duration {
+	position: absolute;
+	bottom: 0.3125rem;
+	right: 0.3125rem;
+	font-size: 0.75rem;
+	background-color: rgba($color-black, 0.6);
+	border-radius: 0.25rem;
+	padding: 2px 4px;
+	color: $color-white;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding-left: 0.25rem;
-  flex: 1;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex: 1;
+	gap: 0.25rem;
 
-  &--row {
-    align-items: center;
-  }
+	@include tablet {
+		gap: 0.5rem;
+	}
+
+	&--row {
+		align-items: center;
+	}
 }
 
 .title {
-  font-size: 0.75rem;
-  font-weight: $font-weight-regular;
-  text-transform: capitalize;
+	font-size: 0.75rem;
+	font-weight: $font-weight-regular;
+	text-transform: capitalize;
+
+	@include tablet {
+		font-size: 1rem;
+	}
 }
 
 .menuButton {
-  background-color: $color-white;
-  border: none;
-  cursor: pointer;
+	background-color: $color-white;
+	border: none;
+	cursor: pointer;
+}
+
+.icon {
+	width: 1rem;
+	height: 1rem;
+
+	@include tablet {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
 }
