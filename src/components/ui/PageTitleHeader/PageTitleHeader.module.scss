@@ -5,6 +5,7 @@
 	background-color: $color-red;
 	padding: 2.75rem $padding-small 2rem;
 	transition: all 0.3s ease-in-out;
+	margin-top: 4rem;
 
 	@include tablet {
 		padding: 6.25rem 1.5rem 3.625rem;

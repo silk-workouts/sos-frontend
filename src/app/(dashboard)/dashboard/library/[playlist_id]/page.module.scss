@@ -2,8 +2,6 @@
 @use "@/styles/partials/mixins" as *;
 
 .container {
-	margin-top: -4rem;
-
 	@include desktop {
 		margin-top: 2.5rem;
 	}

@@ -2,6 +2,7 @@
 @use "@/styles/partials/mixins" as *;
 
 .container {
+	margin-top: 3.6344rem;
 	@include desktop {
 		padding-left: 7.75rem;
 	}
@@ -11,11 +12,9 @@
 	background-color: $color-white;
 	padding: 0 $padding-small;
 	position: sticky;
-	top: 0;
+	top: 3.6344rem;
 	will-change: transform;
 	z-index: 900;
-	margin-top: -4rem;
-	padding-top: 4rem;
 
 	@include tablet {
 		padding: 4rem 1.5rem 0;
