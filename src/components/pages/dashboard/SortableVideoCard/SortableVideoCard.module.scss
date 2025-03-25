@@ -72,6 +72,7 @@
 		aspect-ratio: 16 / 9;
 		position: relative;
 		flex-shrink: 0;
+		transition: all 0.3s ease-in-out;
 
 		@include tablet {
 			width: 13.5rem;

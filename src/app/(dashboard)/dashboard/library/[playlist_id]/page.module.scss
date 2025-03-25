@@ -49,6 +49,7 @@
 			justify-content: center;
 			gap: 0.5rem;
 			width: unset;
+			transition: all 0.3s ease-in-out;
 
 			&:hover {
 				background-color: #e2211c;
@@ -117,6 +118,7 @@
 	&__icon {
 		width: 1rem;
 		height: 1rem;
+		transition: all 0.3s ease-in-out;
 
 		&--options {
 			width: 1.5rem;
@@ -133,6 +135,7 @@
 		position: relative;
 		width: 100%;
 		aspect-ratio: 16 / 9;
+		transition: all 0.3s ease-in-out;
 
 		@include desktop {
 			width: 19.5rem;

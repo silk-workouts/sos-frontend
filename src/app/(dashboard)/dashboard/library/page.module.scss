@@ -26,9 +26,9 @@
 	border-bottom: 1px solid $color-black;
 	list-style: none;
 	display: flex;
-	// gap: 1rem;
 	text-transform: capitalize;
 	font-size: 0.75rem;
+	transition: all 0.3s ease-in-out;
 
 	@include tablet {
 		font-size: 0.875rem;
