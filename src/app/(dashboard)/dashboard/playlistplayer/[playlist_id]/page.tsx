@@ -6,15 +6,12 @@ import Player from "@vimeo/player";
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useParams, useRouter } from "next/navigation";
 import backArrowIcon from "/public/assets/icons/arrow-left.svg";
-import bookmarkIcon from "/public/assets/icons/bookmark.svg";
-import bookmarkUnsavedIcon from "/public/assets/icons/bookmark-unsaved.svg";
-import playIcon from "/public/assets/icons/play-red.svg";
-import grabIcon from "/public/assets/icons/grab.svg";
 import { Playlist, usePlaylists } from "../../context/PlaylistContext";
 import { PlaylistVideo } from "../../library/[playlist_id]/page";
 import styles from "./page.module.scss";
+import PlaylistPlayerVideos from "@/components/pages/dashboard/PlaylistPlayerVideos/PlaylistPlayerVideos";
 
-interface PlayerVideo extends PlaylistVideo {
+export interface PlayerVideo extends PlaylistVideo {
 	playlist_id: string;
 	progress_seconds: number;
 }
@@ -195,87 +192,17 @@ export default function PlaylistPlayerPage() {
 					<p className={styles.videoDescription}>{activeVideo.description}</p>
 				</div>
 			</div>
-
-			<div className={styles.playlist}>
-				<h2 className={styles.videoListTitle}>
-					Playing{" "}
-					<span>
-						{activeVideoPosition} of {videos.length}
-					</span>
-				</h2>
-				<ul className={styles.videoList} role="list">
-					{videos.map((video) => (
-						<li
-							key={video.id}
-							onClick={() => handleVideoClick(video)}
-							className={`${styles.thumbnailCard} ${
-								activeVideo.id === video.id ? styles.active : ""
-							}`}
-						>
-							<button
-								aria-label="Grab to reorder video in playlist"
-								className={styles.grabButton}
-								// ref={setActivatorNodeRef}
-								// {...listeners}
-							>
-								<Image
-									src={grabIcon}
-									alt=""
-									aria-hidden="true"
-									className={styles.icon}
-								/>
-							</button>
-
-							<span
-								aria-label={`Currently playing ${activeVideo.title} video`}
-								className={styles.playContainer}
-							>
-								<Image
-									src={playIcon}
-									alt=""
-									aria-hidden="true"
-									className={styles.icon}
-								/>
-							</span>
-
-							<span className={styles.positionContainer}>
-								{videos.findIndex(
-									(playlistVideo) => video.id === playlistVideo.id
-								) + 1}
-							</span>
-							<div className={styles.header}>
-								<div className={styles.thumbnailContainer}>
-									<Image
-										src={video.thumbnail_url || "/default-thumbnail.jpg"}
-										alt={`A thumbnail image for the ${video.title} workout`}
-										className={styles.thumbnailImage}
-										fill
-										style={{ objectFit: "cover" }}
-									/>
-								</div>
-								<p className={styles.videoTitle}>{video.title.toLowerCase()}</p>
-							</div>
-
-							<button
-								onClick={(e) => {
-									e.stopPropagation();
-									handleBookmark(video.id);
-								}}
-								className={styles.bookmarkButton}
-								aria-label="Save video"
-							>
-								<Image
-									src={
-										savedVideos[video.id] ? bookmarkIcon : bookmarkUnsavedIcon
-									}
-									alt="Bookmark"
-									className={styles.icon}
-								/>
-							</button>
-						</li>
-					))}
-				</ul>
-			</div>
+			<PlaylistPlayerVideos
+				videos={videos}
+				handleVideoClick={handleVideoClick}
+				handleBookmark={handleBookmark}
+				activeVideo={activeVideo}
+				activeVideoPosition={activeVideoPosition}
+				savedVideos={savedVideos}
+				playlist_id={playlist_id}
+				userId={userId}
+				setVideos={setVideos}
+			/>
 		</div>
 	);
 }
