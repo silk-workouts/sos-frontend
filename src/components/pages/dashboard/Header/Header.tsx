@@ -8,6 +8,8 @@ import { usePathname } from "next/navigation";
 export default function Header() {
 	const pathname = usePathname();
 
+	if (pathname?.startsWith("/dashboard/playlistplayer")) return;
+
 	if (pathname?.startsWith("/dashboard/library")) {
 		const pathnameSegment = pathname.split("/");
 		if (pathnameSegment.length > 3) return;
