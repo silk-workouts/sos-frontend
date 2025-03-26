@@ -5,9 +5,9 @@ import playIcon from "/public/assets/icons/play-red.svg";
 import grabIcon from "/public/assets/icons/grab.svg";
 import { PlayerVideo } from "src/app/(dashboard)/dashboard/playlistplayer/[playlist_id]/page";
 import { UniqueIdentifier } from "@dnd-kit/core";
-import styles from "./SortablePlaylistPlayerVideo.module.scss";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import styles from "./SortablePlaylistPlayerVideo.module.scss";
 
 interface SortableVideoProps {
 	video: PlayerVideo;
@@ -86,6 +86,7 @@ export default function SortablePlaylistPlayerVideo({
 						alt={`A thumbnail image for the ${video.title} workout`}
 						className={styles.thumbnailImage}
 						fill
+						sizes="(max-width: 767px) 160px,(max-width: 1279px) 216px, 160px"
 						style={{ objectFit: "cover" }}
 					/>
 					<div className={styles.duration}>{duration}</div>

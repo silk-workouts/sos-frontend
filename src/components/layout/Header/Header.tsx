@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import profileIcon from "/public/assets/icons/profile.svg";
@@ -12,7 +12,6 @@ export default function Header() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 	const pathname = usePathname()!;
-	const router = useRouter();
 	const menuRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
@@ -39,13 +38,6 @@ export default function Header() {
 
 		checkAuthStatus();
 	}, [pathname]);
-
-	async function handleLogout() {
-		await fetch("/api/auth/logout", { method: "GET" });
-		setIsLoggedIn(false);
-		setIsMobileMenuOpen(false); // Close mobile menu upon logout
-		router.push("/");
-	}
 
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
@@ -179,14 +171,7 @@ export default function Header() {
 							>
 								Shop
 							</a>
-							{isLoggedIn ? (
-								<button
-									className={`${styles.menuItem} ${styles["menuItem--button"]}`}
-									onClick={handleLogout}
-								>
-									Logout
-								</button>
-							) : (
+							{!isLoggedIn && (
 								<Link
 									href="/auth/login"
 									className={styles.menuItem}

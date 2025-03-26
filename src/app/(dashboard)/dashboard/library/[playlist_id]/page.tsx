@@ -151,6 +151,7 @@ export default function PlaylistPage() {
 						}
 						alt={`Thumbnail for ${playlist.title} playlist`}
 						fill
+						sizes="(max-width: 1279px) 100%, 312px"
 						style={{ objectFit: "cover" }}
 						className={styles.hero__image}
 					/>

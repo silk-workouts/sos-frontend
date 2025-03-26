@@ -84,6 +84,7 @@ export default function PlayListCard({
 						}
 						alt={`Thumbnail for ${playlist.title} playlist`}
 						fill
+						sizes="100%"
 						style={{ objectFit: "cover" }}
 						className={styles.card__image}
 					/>

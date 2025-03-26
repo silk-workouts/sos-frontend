@@ -36,6 +36,7 @@ export default function Video({ showcaseVideo, display, path }: VideoProps) {
 					className={styles.thumbnail}
 					alt={`A thumbnail image for ${showcaseVideo.title} workout`}
 					fill
+					sizes="(max-width: 767px) 160px, (max-width: 1279px) 216px, 300px"
 					style={{ objectFit: "cover" }}
 				/>
 				<div className={styles.duration}>{duration}</div>
