@@ -2,177 +2,117 @@
 @use "@/styles/partials/mixins" as *;
 
 .pageContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
-  padding: 16px;
-  gap: $padding-base;
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
 
-  @include desktop {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 24px;
-  }
+	@include tablet {
+		gap: 4rem;
+	}
+
+	@include desktop {
+		flex-direction: row;
+		padding: 1.5rem;
+	}
 }
 
 .contentArea {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
 
-  @include desktop {
-    max-width: 640px;
-    flex-shrink: 0;
-  }
+	@include tablet {
+		gap: 2.5rem;
+	}
+
+	@include desktop {
+		flex: 1;
+	}
 }
 
 .backButton {
-  align-self: flex-start;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
+	align-self: flex-start;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 1rem 1rem 0.5rem;
+	margin-bottom: -1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	font-family: $font-primary;
+	font-size: 0.875rem;
+
+	@include tablet {
+		font-size: 1rem;
+		padding: 1.5rem 1.5rem 1rem;
+		margin-bottom: -2rem;
+	}
+
+	@include desktop {
+		padding-left: 0;
+	}
 }
 
 .playerContainer {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  position: relative;
-  background: #d9d9d9;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	border: solid #b7b4b4;
+	border-width: 0.5px 0;
+
+	@include desktop {
+		min-width: 50.9375rem;
+		border-width: 0.5px;
+	}
 }
 
 .videoDetails {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 8px;
-  gap: 8px;
-  width: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 0 1rem;
+	gap: 8px;
+
+	@include tablet {
+		padding: 0 1.5rem;
+	}
+
+	@include desktop {
+		gap: 1rem;
+		width: 50.9375rem;
+	}
 }
 
 .playlistTitle {
-  font-family: "Montserrat", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: $color-primary;
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: #e2211c;
+
+	@include tablet {
+		font-size: 1rem;
+	}
 }
 
-.videoHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
+.activeVideoTitle {
+	font-size: 1rem;
+	font-weight: 400;
+	text-transform: capitalize;
 
-.videoTitle {
-  font-family: "Montserrat", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: #0f0f0f;
+	@include tablet {
+		font-size: 1.25rem;
+	}
 }
 
 .videoDescription {
-  font-family: "Montserrat", sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  color: #424242;
-  line-height: 160%;
-}
+	font-size: 12px;
+	color: #424242;
+	line-height: 140%;
+	margin-top: -0.25rem;
 
-.bookmarkButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-}
+	@include tablet {
+		font-size: 0.875rem;
+	}
 
-.bookmarkIcon {
-  width: 16px;
-  height: 16px;
-}
-
-.videoList {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  width: 100%;
-  overflow-y: auto;
-  margin-top: 24px;
-
-  @include desktop {
-    width: 320px;
-    margin-top: 0;
-  }
-}
-
-.thumbnailCard {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px;
-  gap: 8px;
-  width: 100%;
-  cursor: pointer;
-  transition: border 0.2s ease-in-out;
-  position: relative;
-  border-radius: 10px;
-
-  &.active {
-    border: 2px solid #e2211c;
-  }
-}
-
-.thumbnailImage {
-  width: 134px;
-  height: 74.98px;
-  background: #bbbbbb;
-  border-radius: 10px;
-  object-fit: cover;
-  flex-shrink: 0;
-
-  @include tablet {
-    width: 180px;
-    height: 100px;
-  }
-
-  @include desktop {
-    width: 200px;
-    height: 120px;
-  }
-}
-
-.timeStamp {
-  position: absolute;
-  width: 43px;
-  height: 19px;
-  background: rgba(15, 15, 15, 0.3);
-  border-radius: 4px;
-  color: #ffffff;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.videoInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex-grow: 1;
-}
-
-.videoTitle {
-  font-size: 12px;
-  color: #000000;
+	@include desktop {
+		margin-top: -0.5rem;
+	}
 }

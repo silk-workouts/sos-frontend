@@ -1,0 +1,30 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.header {
+	padding: 1rem;
+	background-color: $color-white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+
+	@include tablet {
+		padding: 1rem 1.5rem;
+	}
+
+	@include desktop {
+		display: none;
+	}
+}
+
+.logo {
+	height: 1.3844rem;
+	width: auto;
+	transition: all 0.3s ease-in-out;
+
+	@include tablet {
+		height: 2.1875rem;
+	}
+}

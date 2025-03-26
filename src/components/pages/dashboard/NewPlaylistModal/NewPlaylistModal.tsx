@@ -1,8 +1,8 @@
+import axios from "axios";
 import Image from "next/image";
+import { ChangeEvent, useState } from "react";
 import closeIcon from "/public/assets/icons/close.svg";
 import styles from "./NewPlaylistModal.module.scss";
-import { ChangeEvent, useState } from "react";
-import axios from "axios";
 
 interface NewPlaylistProps {
 	setIsOpen: (arg1: boolean) => void;
@@ -10,7 +10,6 @@ interface NewPlaylistProps {
 	userId: string;
 	refreshPlaylists: () => Promise<void>;
 	setIsOpenNewPlaylistModal: (arg1: boolean) => void;
-	setIsOpenAddPlaylistModal: (arg1: boolean) => void;
 }
 export default function NewPlaylistModal({
 	setIsOpen,
@@ -18,7 +17,6 @@ export default function NewPlaylistModal({
 	userId,
 	refreshPlaylists,
 	setIsOpenNewPlaylistModal,
-	setIsOpenAddPlaylistModal,
 }: NewPlaylistProps) {
 	const [data, setData] = useState({ title: "", description: "" });
 
@@ -52,6 +50,7 @@ export default function NewPlaylistModal({
 				{ headers: { "x-user-id": userId } }
 			);
 			refreshPlaylists();
+			setIsOpenNewPlaylistModal(false);
 			setIsOpen(false);
 		} catch (error) {
 			console.error(`Unable to save new playlist: ${error}`);
@@ -68,7 +67,6 @@ export default function NewPlaylistModal({
 						onClick={() => {
 							setIsOpen(false);
 							setIsOpenNewPlaylistModal(false);
-							setIsOpenAddPlaylistModal(false);
 						}}
 						aria-label="Close add to new playlist modal"
 					>

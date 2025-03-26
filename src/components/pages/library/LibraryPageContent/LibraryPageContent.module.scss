@@ -15,6 +15,7 @@
 
 	&__item {
 		border-bottom: 1px solid #cacaca;
+		transition: all 0.3s ease-in-out;
 
 		&:last-child {
 			border-bottom: none;

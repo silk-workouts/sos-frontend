@@ -72,6 +72,7 @@
 		aspect-ratio: 16 / 9;
 		position: relative;
 		flex-shrink: 0;
+		transition: all 0.3s ease-in-out;
 
 		@include tablet {
 			width: 13.5rem;
@@ -80,6 +81,17 @@
 	&__thumbnail {
 		border-radius: 0.625rem;
 		border: 0.5px solid #dbdbdb;
+	}
+
+	&__duration {
+		position: absolute;
+		bottom: 0.3125rem;
+		right: 0.3125rem;
+		font-size: 0.75rem;
+		background-color: rgba($color-black, 0.6);
+		border-radius: 0.25rem;
+		padding: 2px 4px;
+		color: $color-white;
 	}
 
 	&__icon {

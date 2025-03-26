@@ -1,4 +1,18 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.dialog-container {
+	position: fixed;
+	inset: 0;
+	z-index: 2000;
+	background-color: rgba($color-black, 0.25);
+
+	@include tablet {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
 
 .dialog {
 	position: fixed;
@@ -6,15 +20,23 @@
 	right: 0;
 	left: 0;
 	padding: 0 0.5rem;
+
+	@include tablet {
+		position: unset;
+	}
 }
 
 .container {
 	background-color: $color-white;
 	border-radius: 0.625rem 0.625rem 0 0;
-	padding: 1rem;
+	padding: 1rem 1rem 2rem;
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
+
+	@include tablet {
+		border-radius: 0.625rem;
+	}
 }
 
 .button {
@@ -27,6 +49,10 @@
 
 	&:hover {
 		background-color: #d9d9d9;
+	}
+
+	@include tablet {
+		font-size: 1rem;
 	}
 
 	&--add {
@@ -46,9 +72,17 @@
 	justify-content: space-between;
 	align-items: center;
 
+	@include tablet {
+		gap: 10rem;
+	}
+
 	&__title {
 		font-size: 1rem;
 		font-weight: $font-weight-regular;
+
+		@include tablet {
+			font-size: 1.5rem;
+		}
 	}
 
 	.icon {
@@ -76,4 +110,8 @@
 	display: flex;
 	gap: 1rem;
 	cursor: pointer;
+
+	@include tablet {
+		font-size: 1.125rem;
+	}
 }

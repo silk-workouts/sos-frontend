@@ -68,6 +68,10 @@ export default function PlayListCard({
 		}
 	}
 
+	const duration = playlistDuration(
+		playlistVideos.reduce((prev, curr) => prev + curr.duration, 0)
+	);
+
 	return (
 		<article className={styles.card}>
 			<div className={styles["card__image-container"]}>
@@ -80,6 +84,7 @@ export default function PlayListCard({
 						}
 						alt={`Thumbnail for ${playlist.title} playlist`}
 						fill
+						sizes="100%"
 						style={{ objectFit: "cover" }}
 						className={styles.card__image}
 					/>
@@ -128,7 +133,7 @@ export default function PlayListCard({
 							className={styles.card__icon}
 							aria-hidden="true"
 						/>
-						<span>{!loading && `[X]`} mins</span>
+						<span>{!loading && duration}</span>
 					</span>
 				</div>
 
@@ -147,4 +152,18 @@ export default function PlayListCard({
 			</div>
 		</article>
 	);
+}
+
+export function playlistDuration(videos_duration: number) {
+	let dur = videos_duration;
+	const hours = Math.floor(dur / 3600);
+	dur %= 3600;
+	const minutes = Math.floor(dur / 60);
+
+	const parts = [];
+
+	if (hours) parts.push(`${hours} ${hours === 1 ? "hr" : "hrs"}`);
+	if (minutes) parts.push(`${minutes} ${minutes === 1 ? "min" : "mins"}`);
+
+	return parts.length ? parts.join(" ") : "0 min";
 }

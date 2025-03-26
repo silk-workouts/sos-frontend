@@ -8,7 +8,7 @@ import styles from "./page.module.scss";
 export interface Showcase {
 	id: number;
 	vimeo_showcase_id: string;
-	name: "string";
+	name: string;
 	description: string;
 	thumbnail_url: string;
 	vimeo_link: string;
@@ -62,57 +62,59 @@ export default function DashboardPage() {
 
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
-			<div className={styles["tab-container"]}>
-				<ul className={styles.tabContent} role="tablist" tabIndex={0}>
-					<li
-						role="tab"
-						tabIndex={isSelected.element ? 0 : -1}
-						id="element-tab"
-						aria-selected={isSelected.element}
-						aria-controls="element-panel"
-						className={`${styles.tab} ${
-							isSelected.element ? styles["tab--selected"] : ""
-						}`}
-						onClick={() => {
-							handleSelect(isSelected.element);
-						}}
-					>
-						elements
-					</li>
-					<li
-						role="tab"
-						tabIndex={isSelected.program ? 0 : -1}
-						id="program-tab"
-						aria-selected={isSelected.program}
-						aria-controls="program-panel"
-						className={`${styles.tab} ${
-							isSelected.program ? styles["tab--selected"] : ""
-						}`}
-						onClick={() => {
-							handleSelect(isSelected.program);
-						}}
-					>
-						prescription programs
-					</li>
-				</ul>
-			</div>
-			<div
-				id="element-panel"
-				role="tabpanel"
-				aria-labelledby="element-tab"
-				hidden={!isSelected.element}
-				className={styles.content}
-			>
-				<DashboardPageContent showcases={filteredShowcases} type="element" />
-			</div>
-			<div
-				id="program-panel"
-				role="tabpanel"
-				aria-labelledby="program-tab"
-				hidden={!isSelected.program}
-				className={styles.content}
-			>
-				<DashboardPageContent showcases={filteredShowcases} type="program" />
+			<div className={styles.container}>
+				<div className={styles["tab-container"]}>
+					<ul className={styles.tabContent} role="tablist" tabIndex={0}>
+						<li
+							role="tab"
+							tabIndex={isSelected.element ? 0 : -1}
+							id="element-tab"
+							aria-selected={isSelected.element}
+							aria-controls="element-panel"
+							className={`${styles.tab} ${
+								isSelected.element ? styles["tab--selected"] : ""
+							}`}
+							onClick={() => {
+								handleSelect(isSelected.element);
+							}}
+						>
+							elements
+						</li>
+						<li
+							role="tab"
+							tabIndex={isSelected.program ? 0 : -1}
+							id="program-tab"
+							aria-selected={isSelected.program}
+							aria-controls="program-panel"
+							className={`${styles.tab} ${
+								isSelected.program ? styles["tab--selected"] : ""
+							}`}
+							onClick={() => {
+								handleSelect(isSelected.program);
+							}}
+						>
+							prescription programs
+						</li>
+					</ul>
+				</div>
+				<div
+					id="element-panel"
+					role="tabpanel"
+					aria-labelledby="element-tab"
+					hidden={!isSelected.element}
+					className={styles.content}
+				>
+					<DashboardPageContent showcases={filteredShowcases} type="element" />
+				</div>
+				<div
+					id="program-panel"
+					role="tabpanel"
+					aria-labelledby="program-tab"
+					hidden={!isSelected.program}
+					className={styles.content}
+				>
+					<DashboardPageContent showcases={filteredShowcases} type="program" />
+				</div>
 			</div>
 		</Suspense>
 	);

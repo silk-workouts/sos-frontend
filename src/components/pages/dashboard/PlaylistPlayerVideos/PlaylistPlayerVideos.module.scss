@@ -1,0 +1,48 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.playlist {
+	padding: 0 0.5rem;
+
+	@include tablet {
+		padding: 0 1.5rem;
+	}
+
+	@include desktop {
+		border: 0.5px solid #b7b4b4;
+		border-radius: 0.625rem;
+		padding: 1rem 0 1rem;
+		margin-top: 72px;
+		max-height: 34.375rem;
+		overflow: hidden;
+	}
+}
+
+.videoListTitle {
+	font-weight: 400;
+	font-size: 1rem;
+	margin-bottom: 1rem;
+	padding-left: 0.5rem;
+
+	@include tablet {
+		padding-left: 0;
+		margin-bottom: 1.25rem;
+	}
+
+	@include desktop {
+		padding-left: 1rem;
+	}
+}
+
+.videoList {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	@include desktop {
+		height: 100%;
+		padding-bottom: 2rem;
+		overflow-y: scroll;
+	}
+}

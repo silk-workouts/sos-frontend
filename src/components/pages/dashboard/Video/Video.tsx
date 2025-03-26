@@ -1,67 +1,71 @@
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import kebabIcon from "/public/assets/icons/kebab.svg";
+import bookmarkUnsaved from "public/assets/icons/bookmark-unsaved.svg";
+import AddPlaylistModal from "../AddPlaylistModal/AddPlaylistModal";
 import { ShowcaseVideo } from "../VideoList/VideoList";
-import AddToModal from "@/components/pages/dashboard/AddToModal/AddToModal";
-import { useState } from "react";
-
 import styles from "./Video.module.scss";
 
 interface VideoProps {
-  showcaseVideo: ShowcaseVideo;
-  display: string;
-  path: string;
+	showcaseVideo: ShowcaseVideo;
+	display: string;
+	path: string;
 }
 
 export default function Video({ showcaseVideo, display, path }: VideoProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const fallbackThumbnail = "/default-thumbnail.jpg";
+	const fallbackThumbnail = "/default-thumbnail.jpg";
+	const minute = `${Math.floor(showcaseVideo.duration / 60) || "00"}`;
+	const seconds = `${Math.floor(showcaseVideo.duration % 60)}`.padStart(2, "0");
+	const duration = `${minute}:${seconds}`;
 
-  return (
-    <article
-      className={`${styles.card} ${
-        display === "row" ? styles["card--row"] : ""
-      }`}
-    >
-      <Link href={path}>
-        <Image
-          src={
-            showcaseVideo.thumbnail_url?.startsWith("http")
-              ? showcaseVideo.thumbnail_url
-              : fallbackThumbnail
-          }
-          className={styles.thumbnail}
-          alt={`Thumbnail for ${showcaseVideo.title}`}
-          width={132}
-          height={74}
-          unoptimized
-        />
-      </Link>
+	return (
+		<article
+			className={`${styles.card} ${
+				display === "row" ? styles["card--row"] : ""
+			}`}
+		>
+			<Link href={path} className={styles["card__thumbnail-container"]}>
+				<Image
+					src={
+						showcaseVideo.thumbnail_url?.startsWith("http")
+							? showcaseVideo.thumbnail_url
+							: fallbackThumbnail
+					}
+					className={styles.thumbnail}
+					alt={`A thumbnail image for ${showcaseVideo.title} workout`}
+					fill
+					sizes="(max-width: 767px) 160px, (max-width: 1279px) 216px, 300px"
+					style={{ objectFit: "cover" }}
+				/>
+				<div className={styles.duration}>{duration}</div>
+			</Link>
 
-      <div
-        className={`${styles.header} ${
-          display === "row" ? styles["header--row"] : ""
-        }`}
-      >
-        <h3 className={styles.title}>
-          <Link href={path}>{showcaseVideo.title}</Link>
-        </h3>
+			<div
+				className={`${styles.header} ${
+					display === "row" ? styles["header--row"] : ""
+				}`}
+			>
+				<h3 className={styles.title}>
+					<Link href={path}>{showcaseVideo.title.toLowerCase()}</Link>
+				</h3>
 
-        <button
-          className={styles.menuButton}
-          onClick={() => setIsModalOpen(!isModalOpen)}
-          aria-label="Add Menu"
-        >
-          <Image src={kebabIcon} alt="Options" />
-        </button>
-      </div>
+				<button
+					className={styles.menuButton}
+					onClick={() => setIsModalOpen(!isModalOpen)}
+					aria-label="Add Menu"
+				>
+					<Image src={bookmarkUnsaved} alt="Options" className={styles.icon} />
+				</button>
+			</div>
 
-      <AddToModal
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-        video_id={showcaseVideo.vimeo_video_id}
-      />
-    </article>
-  );
+			{isModalOpen && (
+				<AddPlaylistModal
+					setIsOpen={setIsModalOpen}
+					video_id={showcaseVideo.vimeo_video_id}
+				/>
+			)}
+		</article>
+	);
 }

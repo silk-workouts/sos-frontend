@@ -26,6 +26,10 @@ export default function SortableVideoCard({
 		transform: CSS.Transform.toString(transform),
 	};
 
+	const minute = `${Math.floor(video.duration / 60) || "00"}`;
+	const seconds = `${Math.floor(video.duration % 60)}`.padStart(2, "0");
+	const duration = `${minute}:${seconds}`;
+
 	return (
 		<li ref={setNodeRef} style={style} role="listitem">
 			<article
@@ -55,8 +59,10 @@ export default function SortableVideoCard({
 							className={styles.card__thumbnail}
 							alt={`A thumbnail image for the ${video.title} workout`}
 							fill
+							sizes="(max-width: 767px) 160px, 216px"
 							style={{ objectFit: "cover" }}
 						/>
+						<div className={styles.card__duration}>{duration}</div>
 					</div>
 				</div>
 
