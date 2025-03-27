@@ -9,11 +9,13 @@ import leftArrow from "/public/assets/icons/arrow-left.svg";
 import playIcon from "/public/assets/icons/play-red.svg";
 import playFilledIcon from "/public/assets/icons/play-fill.svg";
 import clockIcon from "/public/assets/icons/clock-red.svg";
+import bookmarkIcon from "/public/assets/icons/bookmark-white.svg";
 import Video from "@/components/pages/dashboard/Video/Video"; // ✅ Prefer A (assuming this is intentional)
 import { Showcase } from "../../../page";
 import { ShowcaseVideo } from "@/components/pages/dashboard/VideoList/VideoList";
 import styles from "./page.module.scss";
 import { playlistDuration } from "@/components/pages/library/PlayListCard/PlayListCard";
+import Element from "@/components/Element/Element";
 
 interface Chapter {
 	id: number;
@@ -123,7 +125,7 @@ export default function SingleShowcasePage() {
 				<button
 					aria-label="Navigate back"
 					className={`${styles.hero__button} ${styles["hero__button--desktop"]}`}
-					onClick={() => router.push("/dashboard/library")}
+					onClick={() => router.back()}
 				>
 					<Image
 						src={leftArrow}
@@ -136,7 +138,7 @@ export default function SingleShowcasePage() {
 				<button
 					aria-label="Navigate back"
 					className={`${styles.hero__button} ${styles["hero__button--back"]}`}
-					onClick={() => router.push("/dashboard/library")}
+					onClick={() => router.back()}
 				>
 					<Image
 						src={leftArrowIcon}
@@ -146,34 +148,43 @@ export default function SingleShowcasePage() {
 					/>
 				</button>
 
-				<div className={styles["hero__image-container"]}>
-					<Image
-						src={defaultThumbnail}
-						alt=""
-						fill
-						sizes="(max-width: 1279px) 100%, 312px"
-						style={{ objectFit: "cover" }}
-						className={styles.hero__image}
-					/>
-				</div>
+				{showcaseName.includes("prescription") && (
+					<div className={styles["hero__image-container"]}>
+						<Image
+							src={showcase?.thumbnail_url || defaultThumbnail}
+							alt=""
+							fill
+							sizes="(max-width: 1279px) 100%, 312px"
+							style={{ objectFit: "cover" }}
+							className={styles.hero__image}
+						/>
+					</div>
+				)}
 
-				<header>
-					{/* <div className={styles["hero__title-container"]}>
-						<h1 className={styles.hero__title}>{showcase?.title}</h1>
-						<button
-							aria-label={`View Options for ${showcase?.title} playlist`}
-							className={styles.hero__button}
-							onClick={()=> ""}
-						>
-							<Image
-								src={kebabIcon}
-								alt=""
-								className={`${styles.hero__icon} ${styles["hero__icon--options"]}`}
-								aria-hidden="true"
-							/>
-						</button>
-
-					</div> */}
+				<header className={styles.hero__header}>
+					{showcaseName.includes("prescription") ? (
+						<div className={styles["hero__title-container"]}>
+							<h1 className={styles.hero__title}>
+								{showcase?.name.toLowerCase()}
+							</h1>
+							<button
+								aria-label={`Save ${showcase?.name} to your library`}
+								className={styles.hero__button}
+								onClick={() => ""}
+							>
+								<Image
+									src={bookmarkIcon}
+									alt=""
+									className={`${styles.hero__icon} ${styles["hero__icon--save"]}`}
+									aria-hidden="true"
+								/>
+							</button>
+						</div>
+					) : (
+						<h2 className={styles.hero__element}>
+							<Element name={showcaseName} />
+						</h2>
+					)}
 					<div className={styles.hero__info}>
 						<span className={styles.hero__message}>
 							<Image

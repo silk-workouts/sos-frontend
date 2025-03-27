@@ -37,39 +37,39 @@ export default function TheWorkout() {
 					</div>
 					<div className={styles.elementCards}>
 						<ElementCard
-							element={{ number: "1", letter: "B", name: "Boxing" }}
+							element="Boxing"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit. "
 							imageSrc={upperBandsImage}
 							imageAlt="A picture of Michael doing the boxing workout"
 						/>
 						<ElementCard
-							element={{ number: "2", letter: "Jr", name: "Jump Rope" }}
+							element="Jump Rope"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
 							imageSrc={upperBandsImage}
 							imageAlt="A picture of Michael doing the jump rope workout"
 							alternate={true}
 						/>
 						<ElementCard
-							element={{ number: "3", letter: "Cc", name: "Core Crushers" }}
+							element="Core Crushers"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
 							imageSrc={upperBandsImage}
 							imageAlt="A picture of Michael doing the core crushers workout"
 						/>
 						<ElementCard
-							element={{ number: "4", letter: "Ubb", name: "Upper Body Bands" }}
+							element="Upper Body Bands"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
 							imageSrc={upperBandsImage}
 							imageAlt="A picture of Michael doing the upper bands workout"
 							alternate={true}
 						/>
 						<ElementCard
-							element={{ number: "5", letter: "Lbb", name: "Lower Body Bands" }}
+							element="Lower Body Bands"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
 							imageSrc={upperBandsImage}
 							imageAlt="A picture of Michael doing the lower bands workout"
 						/>
 						<ElementCard
-							element={{ number: "6", letter: "I", name: "Isometric" }}
+							element="Isometric"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
 							imageSrc={upperBandsImage}
 							imageAlt="A picture of Michael doing the isometric workout"

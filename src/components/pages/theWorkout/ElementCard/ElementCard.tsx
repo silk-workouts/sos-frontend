@@ -1,10 +1,9 @@
 import Image, { StaticImageData } from "next/image";
 import Element from "@/components/Element/Element";
-import { ElementProps } from "@/components/Element/Element";
 import styles from "./ElementCard.module.scss";
 
 interface ElementInfo {
-	element: ElementProps;
+	element: string;
 	content: string;
 	imageSrc: StaticImageData;
 	imageAlt: string;
@@ -23,11 +22,7 @@ export default function ElementCard({
 			className={`${styles.card} ${alternate ? styles["card--alternate"] : ""}`}
 		>
 			<div className={styles.card__info}>
-				<Element
-					number={element.number}
-					letter={element.letter}
-					name={element.name}
-				/>
+				<Element name={element} />
 				<p className={styles.card__message}>{content}</p>
 			</div>
 			<Image src={imageSrc} alt={imageAlt} className={styles.card__image} />

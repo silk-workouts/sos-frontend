@@ -2,6 +2,9 @@
 @use "@/styles/partials/mixins" as *;
 
 .container {
+	@include desktop {
+		margin-top: 6rem;
+	}
 }
 
 .hero {
@@ -25,6 +28,7 @@
 		left: 9.125rem;
 		bottom: 0;
 		min-height: 25rem;
+		width: 22.5rem;
 	}
 
 	&__button {
@@ -127,8 +131,39 @@
 		border-radius: 0.75rem;
 	}
 
+	&__header {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	&__title-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		margin-bottom: -1rem;
+
+		@include desktop {
+			gap: 1rem;
+		}
+	}
+
+	&__title {
+		font-size: 1.125rem;
+		font-weight: $font-weight-extrabold;
+		text-transform: capitalize;
+
+		@include tablet {
+			font-size: 1.25rem;
+		}
+	}
+
+	&__element {
+		font-weight: 400;
+		align-self: center;
+	}
+
 	&__info {
-		margin-top: 0.5rem;
 		display: flex;
 		gap: 1rem;
 		font-size: 0.625rem;
@@ -144,6 +179,11 @@
 		height: 1rem;
 		transition: all 0.3s ease-in-out;
 
+		&--save {
+			width: 1.5rem;
+			height: 1.5rem;
+		}
+
 		@include tablet {
 			width: 1.5rem;
 			height: 1.5rem;
@@ -156,7 +196,6 @@
 	}
 
 	&__description {
-		margin-top: 1.5rem;
 		font-size: 0.875rem;
 	}
 }
@@ -168,7 +207,6 @@
 		width: 100%;
 		padding-right: 1rem;
 		padding-left: 32.1875rem;
-		margin-top: 6rem;
 	}
 }
 
