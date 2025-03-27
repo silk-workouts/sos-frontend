@@ -22,11 +22,14 @@ export default function Video({ showcaseVideo, display, path }: VideoProps) {
 
 	return (
 		<article
-			className={`${styles.card} ${
-				display === "row" ? styles["card--row"] : ""
-			}`}
+			className={`${styles.card} ${display === "row" ? styles.row : ""}`}
 		>
-			<Link href={path} className={styles["card__thumbnail-container"]}>
+			<Link
+				href={path}
+				className={`${styles["card__thumbnail-container"]} ${
+					display === "row" ? styles.row : ""
+				}`}
+			>
 				<Image
 					src={
 						showcaseVideo.thumbnail_url?.startsWith("http")
@@ -43,9 +46,7 @@ export default function Video({ showcaseVideo, display, path }: VideoProps) {
 			</Link>
 
 			<div
-				className={`${styles.header} ${
-					display === "row" ? styles["header--row"] : ""
-				}`}
+				className={`${styles.header} ${display === "row" ? styles.row : ""}`}
 			>
 				<h3 className={styles.title}>
 					<Link href={path}>{showcaseVideo.title.toLowerCase()}</Link>

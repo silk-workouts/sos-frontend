@@ -61,6 +61,8 @@
 		}
 
 		&--back {
+			padding: 1rem;
+			margin: -1rem;
 			@include desktop {
 				display: none;
 			}

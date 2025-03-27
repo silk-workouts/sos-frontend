@@ -184,7 +184,7 @@ export default function PlaylistPage() {
 								className={styles.hero__icon}
 								aria-hidden="true"
 							/>
-							<span>{playlistVideos.length} Videos</span>
+							<span>{playlistVideos.length} videos</span>
 						</span>
 						<span className={styles.hero__message}>
 							<Image
