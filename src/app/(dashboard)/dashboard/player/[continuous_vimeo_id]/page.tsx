@@ -44,16 +44,16 @@ export default function PlayerPage() {
 
   //  Fetch video thumbnails
   useEffect(() => {
-    if (!continuous_video_id) return;
-    console.log(continuous_video_id);
+    if (!continuous_vimeo_id) return;
 
     async function fetchVideoThumbnails() {
       try {
         const res = await fetch(
-          `/api/continuous-videos/${continuous_video_id}`
+          `/api/continuous-videos/${continuous_vimeo_id}`
         );
+
         const data = await res.json();
-        console.log(data);
+
         setVideoThumbnails(data.chapters); // These contain thumbnails, real_vimeo_video_id, etc.
       } catch (error) {
         console.error("Failed to load video thumbnails:", error);
@@ -61,7 +61,7 @@ export default function PlayerPage() {
     }
 
     fetchVideoThumbnails();
-  }, [continuous_video_id]);
+  }, [continuous_vimeo_id]);
 
   //  Setup Vimeo player
   useEffect(() => {
@@ -138,6 +138,14 @@ export default function PlayerPage() {
     return () => clearTimeout(cleanupTimeout);
   }, [playerReady]);
 
+  // 1. Build a map of thumbnails using real_vimeo_video_id
+  const thumbnailMap = new Map<string, any>();
+  videoThumbnails.forEach((item) => {
+    if (item.real_vimeo_video_id) {
+      thumbnailMap.set(item.real_vimeo_video_id, item);
+    }
+  });
+
   //  Merge chapters with thumbnails
   const mergedData = chapters.map((chapter, index) => {
     const meta = videoThumbnails[index] || {};
@@ -145,7 +153,9 @@ export default function PlayerPage() {
       ...chapter,
       ...meta,
       title: chapter.title || meta.corresponding_video_title || "Untitled",
-      thumbnail_url: meta.thumbnail_url || "/default-thumbnail.jpg",
+      thumbnail_url: meta?.thumbnail_url?.startsWith("http")
+        ? meta.thumbnail_url
+        : "/assets/images/default-thumbnail.jpg",
       real_vimeo_video_id:
         chapter.real_vimeo_video_id || meta.real_vimeo_video_id,
     };

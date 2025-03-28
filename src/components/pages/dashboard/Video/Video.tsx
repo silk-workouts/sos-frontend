@@ -17,7 +17,7 @@ export default function Video({ chapterVideo, display, path }: VideoProps) {
 
   //   console.log(chapterVideo, "chap vid");
 
-  const fallbackThumbnail = "/default-thumbnail.jpg";
+  const fallbackThumbnail = "/assets/images/default-thumbnail.jpg";
   const validThumbnail = chapterVideo.thumbnail_url?.startsWith("http")
     ? chapterVideo.thumbnail_url
     : fallbackThumbnail;

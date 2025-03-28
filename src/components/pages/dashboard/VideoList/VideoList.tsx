@@ -113,7 +113,7 @@ export default function VideoList({ video, type }: VideoListProps) {
         duration: chapter.duration ?? videoMeta?.duration ?? 0,
         thumbnail_url: videoMeta?.thumbnail_url?.startsWith("http")
           ? videoMeta.thumbnail_url
-          : "/default-thumbnail.jpg",
+          : "/assets/images/default-thumbnail.jpg",
         real_vimeo_video_id:
           chapter.real_vimeo_video_id ?? videoMeta?.real_vimeo_video_id ?? "",
         continuous_vimeo_id:

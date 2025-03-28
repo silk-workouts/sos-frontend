@@ -1,14 +1,14 @@
 "use client";
-import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import chevronLeftIcon from "/public/assets/icons/chevron-left.svg";
 import helpIcon from "/public/assets/icons/help.svg";
 import playIcon from "/public/assets/icons/play.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
-import styles from "./page.module.scss";
+import axios from "axios";
 import Video from "@/components/pages/dashboard/Video/Video";
+import styles from "./page.module.scss";
 import { ChapterVideo } from "src/types/video";
 
 interface Chapter {
@@ -16,76 +16,117 @@ interface Chapter {
   title: string;
   start_time: number;
   duration: number | null;
-  continuous_video_id: number;
   continuous_vimeo_id: string;
   real_vimeo_video_id: string;
 }
 
+interface MergedChapterVideo extends ChapterVideo {
+  // title: string;
+  // duration: number;
+  thumbnail_url: string;
+  start_time: number;
+  real_vimeo_video_id: string;
+  // continuous_vimeo_id: string;
+  // vimeo_video_id: string;
+  // description: string;
+  // position?: number;
+  // created_at?: string;
+}
+
 export default function SingleContinuousVideoPage() {
   const router = useRouter();
-  const { continuous_video_name, continuous_video_id } = useParams<{
-    continuous_video_name: string;
-    continuous_video_id: string;
-  }>()!;
+
+  const { continuous_video_name, continuous_video_id } =
+    useParams<{
+      continuous_video_name: string;
+      continuous_video_id: string;
+    }>() || {};
 
   const [loading, setLoading] = useState(true);
   const [continuousVideo, setContinuousVideo] = useState<{
-    continuous_vimeo_id: string;
-    continuous_vimeo_title: string;
+    continuous_video_id: string;
     name: string;
     description?: string;
   } | null>(null);
-  const [chapterVideos, setChapterVideos] = useState<ChapterVideo[]>([]);
   const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [chapterVideos, setChapterVideos] = useState<ChapterVideo[]>([]);
 
-  const routeName = continuous_video_name.replaceAll("-", " ");
+  const routeName = continuous_video_name?.replaceAll("-", " ") || "Program";
+
+  console.log("id", continuous_video_id);
 
   useEffect(() => {
-    async function fetchMetaAndVideos() {
+    async function fetchData() {
+      if (!continuous_video_id) return;
+
       try {
         const [metaRes, videoRes, chapterRes] = await Promise.all([
           axios.get(
             `/api/continuous-videos/${continuous_video_id}/continuous-video`
           ),
           axios.get(`/api/continuous-videos/${continuous_video_id}`),
-          axios.get("/api/chapters", {
+          axios.get(`/api/chapters`, {
             params: { continuous_vimeo_id: continuous_video_id },
           }),
         ]);
 
+        console.log("meta ", metaRes.data);
+
         setContinuousVideo(metaRes.data.continuousVideo);
-        setChapterVideos(videoRes.data.chapters); // 🧠 this should align with how chapterVideo is shaped
-        setChapters(chapterRes.data);
+        setChapterVideos(videoRes.data.chapters || []);
+        setChapters(chapterRes.data || []);
       } catch (error) {
-        console.error("Error loading continuous video data:", error);
+        console.error("❌ Error loading continuous video page:", error);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchMetaAndVideos();
+    fetchData();
   }, [continuous_video_id]);
 
   if (loading || !continuousVideo) {
-    return <div>Loading videos for {routeName}...</div>;
+    return <div>Loading videos for this {routeName}...</div>;
   }
 
-  const mergedData = chapters.map((chapter, index) => {
-    const video = chapterVideos[index] || {};
-    return {
-      ...video,
-      ...chapter,
-      title: chapter.title,
-      start_time: chapter.start_time ?? 0,
-      duration: chapter.duration ?? 0,
-      thumbnail_url: video.thumbnail_url ?? "/default-thumbnail.jpg",
-    };
-  });
+  const chapterVideoMap = new Map<string, ChapterVideo>();
+  for (const video of chapterVideos) {
+    if (video.real_vimeo_video_id) {
+      chapterVideoMap.set(video.real_vimeo_video_id, video);
+    }
+  }
+
+  const mergedData: MergedChapterVideo[] = chapters
+    .filter((ch) => {
+      const title = ch.title.toLowerCase();
+      return !title.includes("warmup") && !title.includes("cooldown");
+    })
+    .map((chapter) => {
+      const videoMeta = chapterVideoMap.get(chapter.real_vimeo_video_id);
+
+      return {
+        id: chapter.id,
+        title: chapter.title || videoMeta?.title || "Untitled",
+        start_time: chapter.start_time ?? 0,
+        duration: chapter.duration ?? videoMeta?.duration ?? 0,
+        thumbnail_url: videoMeta?.thumbnail_url?.startsWith("http")
+          ? videoMeta.thumbnail_url
+          : "/assets/images/default-thumbnail.jpg",
+        real_vimeo_video_id:
+          chapter.real_vimeo_video_id ?? videoMeta?.real_vimeo_video_id ?? "",
+        continuous_vimeo_id:
+          chapter.continuous_vimeo_id ?? continuous_video_id ?? "",
+        vimeo_video_id: videoMeta?.vimeo_video_id || "",
+        description: videoMeta?.description ?? "",
+        position: videoMeta?.position ?? 0,
+        created_at: videoMeta?.created_at || "",
+      };
+    });
 
   function handlePlayAll() {
-    if (continuousVideo?.continuous_vimeo_id) {
+    if (continuousVideo?.continuous_video_id) {
       router.push(
-        `/dashboard/player/${continuousVideo.continuous_vimeo_id}?autoplay=1`
+        `/dashboard/player/${continuousVideo.continuous_video_id}?autoplay=1`
       );
     }
   }
@@ -155,7 +196,7 @@ export default function SingleContinuousVideoPage() {
             <Video
               chapterVideo={video}
               display="row"
-              path={`/dashboard/player/${continuousVideo.continuous_vimeo_id}?start_time=${video.start_time}&showcase_id=${video.continuous_video_id}`}
+              path={`/dashboard/player/${continuousVideo.continuous_video_id}?start_time=${video.start_time}&showcase_id=${video.continuous_vimeo_id}`}
             />
           </li>
         ))}
