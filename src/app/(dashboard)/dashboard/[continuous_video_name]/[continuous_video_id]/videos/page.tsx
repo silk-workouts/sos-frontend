@@ -20,6 +20,7 @@ import defaultThumbnail from "/public/assets/images/defaultPlaylistThumbnail.png
 
 import styles from "./page.module.scss";
 import { ChapterVideo } from "src/types/video";
+import { NEXT_CACHE_TAG_MAX_LENGTH } from "next/dist/lib/constants";
 
 interface Chapter {
   id: number;
@@ -134,6 +135,8 @@ export default function SingleContinuousVideoPage() {
     }
   }
 
+  console.log(continuousVideo, "vid");
+
   return (
     <div className={styles.container}>
       {/* HERO */}
@@ -167,7 +170,11 @@ export default function SingleContinuousVideoPage() {
         {routeName.includes("prescription") && (
           <div className={styles["hero__image-container"]}>
             <Image
-              src={continuousVideo?.thumbnail_url || defaultThumbnail}
+              src={
+                mergedData.length > 0 && mergedData[0].thumbnail_url
+                  ? mergedData[0].thumbnail_url
+                  : "/assets/images/default-thumbnail.jpg"
+              }
               alt=""
               fill
               sizes="(max-width: 1279px) 100%, 312px"
@@ -181,10 +188,12 @@ export default function SingleContinuousVideoPage() {
           {routeName.includes("prescription") ? (
             <div className={styles["hero__title-container"]}>
               <h1 className={styles.hero__title}>
-                {continuousVideo?.name.toLowerCase()}
+                {mergedData[0]?.title?.toLowerCase() || "Untitled"}
               </h1>
               <button
-                aria-label={`Save ${continuousVideo?.name} to your library`}
+                aria-label={`Save ${
+                  mergedData[0]?.title?.toLowerCase() || "Untitled"
+                } to your library`}
                 className={styles.hero__button}
                 onClick={() => ""}
               >
