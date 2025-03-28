@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface Chapter {
   id: number;
   title: string;
   start_time: number;
   duration: number | null;
-  showcase_id: number;
+  continuous_video_id: string;
   continuous_vimeo_id: string;
 }
 
@@ -23,8 +23,8 @@ export const useChapters = (continuousVimeoId: string) => {
         );
         setChapters(data);
       } catch (err: any) {
-        console.error('Failed to fetch chapters:', err);
-        setError('Failed to fetch chapters');
+        console.error("Failed to fetch chapters:", err);
+        setError("Failed to fetch chapters");
       } finally {
         setLoading(false);
       }

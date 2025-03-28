@@ -5,9 +5,9 @@ export async function DELETE(req: NextRequest) {
   try {
     const userId = req.headers.get("x-user-id");
     const urlSegments = req.nextUrl.pathname.split("/");
-    const showcaseId = urlSegments[urlSegments.length - 1]; // Extract showcaseId from URL
+    const continuousVideoId = urlSegments[urlSegments.length - 1]; // Extract from URL
 
-    if (!userId || !showcaseId) {
+    if (!userId || !continuousVideoId) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -15,13 +15,13 @@ export async function DELETE(req: NextRequest) {
     }
 
     await pool.execute(
-      `DELETE FROM saved_programs WHERE user_id = ? AND showcase_id = ?`,
-      [userId, showcaseId]
+      `DELETE FROM saved_programs WHERE user_id = ? AND continuous_vimeo_id = ?`,
+      [userId, continuousVideoId]
     );
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error deleting saved program:", error);
+    console.error("❌ Error deleting saved program:", error);
     return NextResponse.json(
       { error: "Failed to delete program" },
       { status: 500 }

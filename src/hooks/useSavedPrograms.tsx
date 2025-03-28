@@ -1,23 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import { usePlaylists } from "../app/(dashboard)/dashboard/context/PlaylistContext";
-
-/** ✅ Define an interface for a saved program (placed outside for reuse) */
-export interface SavedProgram {
-  userId: string;
-  showcaseId: number;
-  title: string;
-  description: string;
-  videoCount: number;
-  duration: number;
-}
+import { SavedProgram } from "src/types";
 
 export function useSavedPrograms() {
   const { userId } = usePlaylists();
   const [savedPrograms, setSavedPrograms] = useState<SavedProgram[]>([]);
   const [loading, setLoading] = useState(true);
 
-  /** ✅ Fetch saved programs from API */
+  /** ✅ Fetch saved programs from the API */
   async function fetchPrograms() {
     if (!userId) return;
 
@@ -26,20 +17,22 @@ export function useSavedPrograms() {
         headers: { "x-user-id": userId },
       });
 
-      // ✅ Handle empty response before parsing JSON
       if (!res.ok) {
         console.error(`Error fetching programs: ${res.statusText}`);
         return;
       }
 
-      const text = await res.text(); // Get raw response text
-      if (!text) {
-        setSavedPrograms([]); // ✅ Set empty array if no data
-        return;
-      }
-
-      const data: SavedProgram[] = JSON.parse(text); // ✅ Parse only if there's content
-      setSavedPrograms(data);
+      const rawData = await res.json();
+      const transformed: SavedProgram[] = rawData.map((program: any) => ({
+        userId: program.userId,
+        continuousVideoId: program.continuousVideoId,
+        title: program.title,
+        description: program.description || "",
+        videoCount: program.videoCount ?? 0,
+        duration: program.duration ?? 0,
+        createdAt: program.createdAt,
+      }));
+      setSavedPrograms(transformed);
     } catch (error) {
       console.error("Error fetching saved programs:", error);
     } finally {
@@ -47,7 +40,7 @@ export function useSavedPrograms() {
     }
   }
 
-  /** ✅ Refresh function to manually trigger re-fetch */
+  /** ✅ Manual refresh function */
   function refreshSavedPrograms() {
     fetchPrograms();
   }
@@ -56,7 +49,7 @@ export function useSavedPrograms() {
     fetchPrograms();
   }, [userId]);
 
-  /** ✅ Function to Save a Program */
+  /** ✅ Save a continuous video program */
   async function saveProgram(program: SavedProgram) {
     if (!userId) {
       console.error("Missing userId.");
@@ -74,7 +67,7 @@ export function useSavedPrograms() {
       });
 
       if (response.ok) {
-        setSavedPrograms((prev) => [...prev, program]); // ✅ Update state with correct type
+        await fetchPrograms(); // Ensure sync with DB
       } else {
         console.error("Failed to save program.");
       }
@@ -83,16 +76,15 @@ export function useSavedPrograms() {
     }
   }
 
-  /** ✅ Function to Delete a Program */
-  /** ✅ Delete saved program & refresh list */
-  async function deleteProgram(showcaseId: number) {
+  /** ✅ Delete a saved continuous video program */
+  async function deleteProgram(continuousVideoId: string) {
     if (!userId) {
       console.error("Missing userId.");
       return;
     }
 
     try {
-      const response = await fetch(`/api/saved-programs/${showcaseId}`, {
+      const response = await fetch(`/api/saved-programs/${continuousVideoId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +93,7 @@ export function useSavedPrograms() {
       });
 
       if (response.ok) {
-        await refreshSavedPrograms(); // ✅ Ensure fresh data
+        await fetchPrograms();
       } else {
         console.error("❌ Failed to delete program.");
       }
@@ -109,10 +101,6 @@ export function useSavedPrograms() {
       console.error("Error deleting program:", error);
     }
   }
-
-  useEffect(() => {
-    refreshSavedPrograms();
-  }, [userId]);
 
   return {
     savedPrograms,
