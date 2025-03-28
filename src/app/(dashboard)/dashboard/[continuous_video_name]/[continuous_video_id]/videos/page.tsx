@@ -56,7 +56,8 @@ export default function SingleContinuousVideoPage() {
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [chapterVideos, setChapterVideos] = useState<ChapterVideo[]>([]);
 
-  const routeName = continuous_video_name?.replaceAll("-", " ") || "Program";
+  const continuousVideoName =
+    continuous_video_name?.replaceAll("-", " ") || "Program";
 
   useEffect(() => {
     async function fetchData() {
@@ -87,7 +88,7 @@ export default function SingleContinuousVideoPage() {
   }, [continuous_video_id]);
 
   if (loading || !continuousVideo) {
-    return <div>Loading videos for this {routeName}...</div>;
+    return <div>Loading videos for this {continuousVideoName}...</div>;
   }
 
   const chapterVideoMap = new Map<string, ChapterVideo>();
@@ -167,7 +168,7 @@ export default function SingleContinuousVideoPage() {
           />
         </button>
 
-        {routeName.includes("prescription") && (
+        {continuousVideoName.includes("prescription") && (
           <div className={styles["hero__image-container"]}>
             <Image
               src={
@@ -185,10 +186,10 @@ export default function SingleContinuousVideoPage() {
         )}
 
         <header className={styles.hero__header}>
-          {routeName.includes("prescription") ? (
+          {continuousVideoName.includes("prescription") ? (
             <div className={styles["hero__title-container"]}>
               <h1 className={styles.hero__title}>
-                {mergedData[0]?.title?.toLowerCase() || "Untitled"}
+                {continuousVideoName.toLowerCase() || "Untitled"}
               </h1>
               <button
                 aria-label={`Save ${
@@ -207,7 +208,7 @@ export default function SingleContinuousVideoPage() {
             </div>
           ) : (
             <h2 className={styles.hero__element}>
-              <Element name={routeName} />
+              <Element name={continuousVideoName} />
             </h2>
           )}
           <div className={styles.hero__info}>
@@ -238,7 +239,7 @@ export default function SingleContinuousVideoPage() {
         <button
           onClick={handlePlayAll}
           className={`${styles.hero__button} ${styles["hero__button--begin"]}`}
-          aria-label={`Play all videos in the ${routeName} workout`}
+          aria-label={`Play all videos in the ${continuousVideoName} workout`}
         >
           <span>Play all</span>
           <Image

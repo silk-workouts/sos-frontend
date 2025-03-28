@@ -15,7 +15,6 @@ export default function LibraryPageContent({
   savedPrograms = [],
   refreshSavedPrograms,
 }: LibraryContentProps) {
-  console.log(savedPrograms);
   const combinedPlaylists: Playlist[] = [
     ...playlists.map((p) => ({
       ...p,

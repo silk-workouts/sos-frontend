@@ -30,8 +30,6 @@ export default function PlayListCard({
   const [loading, setLoading] = useState(true);
   const [playlistVideos, setPlaylistVideos] = useState<PlaylistVideo[]>([]);
 
-  console.log(playlist);
-
   useEffect(() => {
     async function getPlaylistData() {
       setLoading(true);
@@ -40,13 +38,13 @@ export default function PlayListCard({
           const response = await axios.get(
             `/api/continuous-videos/${playlist.id}`
           );
-          console.log("savedProg", response.data.videos);
+
           setPlaylistVideos(response.data.videos);
         } else {
           const response = await axios.get(`/api/playlists/${playlist.id}`, {
             headers: { "x-user-id": userId },
           });
-          console.log("other: ", response.data.videos);
+
           setPlaylistVideos(response.data.videos);
         }
       } catch (error) {

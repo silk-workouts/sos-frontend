@@ -1,15 +1,23 @@
+import React from "react";
 import styles from "./Element.module.scss";
 
-export default function Element({ name }: { name: string }) {
-	const nameSegments = name.split(" ");
-	const elementSymbol = nameSegments.map((str: string) => str[0]).join("");
+export interface ElementProps {
+  number?: string;
+  letter?: string;
+  name: string;
+}
 
-	return (
-		<div className={styles.elementContainer}>
-			<div className={styles.element}>
-				<div className={styles.symbol}>{elementSymbol}</div>
-				<div className={styles.name}>{name}</div>
-			</div>
-		</div>
-	);
+export default function Element({ number, letter, name }: ElementProps) {
+  return (
+    <div className={styles.elementContainer}>
+      {/* Tooltip appears on hover */}
+      <div className={styles.tooltip}>Boxing 2: Straight Punches</div>
+
+      <div className={styles.element}>
+        <div className={styles.number}>{number}</div>
+        <div className={styles.letter}>{letter}</div>
+        <div className={styles.name}>{name}</div>
+      </div>
+    </div>
+  );
 }

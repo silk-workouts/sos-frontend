@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { RowDataPacket } from "mysql2";
 import pool from "@/lib/db";
 
 export async function GET(req: NextRequest) {
@@ -11,7 +12,14 @@ export async function GET(req: NextRequest) {
 
   try {
     // 1. Get continuous video metadata
-    const [videoRows] = await pool.execute(
+    type VideoRow = {
+      id: number;
+      continuous_video_id: string;
+      continuous_video_title: string;
+      name: string;
+    } & RowDataPacket;
+
+    const [videoRows] = await pool.execute<VideoRow[]>(
       `
       SELECT id, continuous_video_id, continuous_video_title, name
       FROM video_mappings

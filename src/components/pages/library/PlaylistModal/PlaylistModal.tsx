@@ -52,8 +52,6 @@ export default function PlaylistModal({
     };
   }, []);
 
-  console.log(playlist, "playlist");
-
   async function handleDelete() {
     try {
       if (playlist.type === "savedProgram") {

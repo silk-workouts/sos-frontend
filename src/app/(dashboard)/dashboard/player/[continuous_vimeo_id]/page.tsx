@@ -206,7 +206,8 @@ export default function PlayerPage() {
                 vimeo_video_id: String(continuous_vimeo_id),
                 real_vimeo_video_id: item.real_vimeo_video_id,
                 created_at: item.created_at || "",
-                continuous_video_id: Number(continuous_video_id) || 0,
+                continuous_vimeo_id:
+                  item.continuous_vimeo_id || String(continuous_video_id),
                 start_time: item.start_time,
                 position: item.position ?? index,
               }}
