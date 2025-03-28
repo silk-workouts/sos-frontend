@@ -11,15 +11,26 @@ export async function GET(req: NextRequest) {
     }
 
     const [savedPrograms] = await pool.query(
-      `SELECT showcase_id AS showcaseId, title, description, video_count AS videoCount, duration
+      `SELECT user_id, continuous_vimeo_id, title, description, video_count, duration, created_at
        FROM saved_programs
        WHERE user_id = ?`,
       [userId]
     );
 
-    return NextResponse.json(savedPrograms);
+    // 🔁 Remap DB response to camelCase for frontend consistency
+    const transformed = (savedPrograms as any[]).map((program) => ({
+      userId: program.user_id,
+      continuousVideoId: program.continuous_vimeo_id,
+      title: program.title,
+      description: program.description,
+      videoCount: program.video_count,
+      duration: program.duration,
+      createdAt: program.created_at,
+    }));
+
+    return NextResponse.json(transformed);
   } catch (error) {
-    console.error("Error fetching saved programs:", error);
+    console.error("❌ Error fetching saved programs:", error);
     return NextResponse.json(
       { error: "Error fetching programs" },
       { status: 500 }
@@ -27,15 +38,14 @@ export async function GET(req: NextRequest) {
   }
 }
 
-/** ✅ POST: Save a new program */
+/** ✅ POST: Save a new continuous video program */
 export async function POST(req: NextRequest) {
   try {
-    const userId = req.headers.get("x-user-id"); // ✅ No conversion needed
-    const { showcaseId, title, description, videoCount, duration } =
+    const userId = req.headers.get("x-user-id");
+    const { continuousVideoId, title, description, videoCount, duration } =
       await req.json();
 
-    if (!userId || !showcaseId || !title) {
-      console.error("❌ Missing required fields.");
+    if (!userId || !continuousVideoId?.trim() || !title) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -43,9 +53,9 @@ export async function POST(req: NextRequest) {
     }
 
     await pool.execute(
-      `INSERT INTO saved_programs (user_id, showcase_id, title, description, video_count, duration) 
+      `INSERT INTO saved_programs (user_id, continuous_vimeo_id, title, description, video_count, duration)
        VALUES (?, ?, ?, ?, ?, ?)`,
-      [userId, showcaseId, title, description, videoCount, duration] // ✅ Keep userId as a string
+      [userId, continuousVideoId, title, description, videoCount, duration]
     );
 
     return NextResponse.json({ success: true });

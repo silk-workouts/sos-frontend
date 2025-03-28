@@ -1,279 +1,252 @@
+// src/components/pages/dashboard/VideoList/VideoList.tsx
+
 "use client";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import rightArrow from "/public/assets/icons/arrow-right.svg";
 import bookmark from "public/assets/icons/bookmark-fill.svg";
 import bookmarkUnsaved from "public/assets/icons/bookmark-unsaved.svg";
 import playIcon from "/public/assets/icons/play.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { Showcase } from "src/app/(dashboard)/dashboard/page";
-import { usePlaylists } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
-import { useSavedPrograms } from "src/hooks/useSavedPrograms";
 import Video from "../Video/Video";
 import styles from "./VideoList.module.scss";
 import { playlistDuration } from "../../library/PlayListCard/PlayListCard";
-
-export interface ShowcaseVideo {
-	id: number;
-	vimeo_video_id: string;
-	title: string;
-	description: string;
-	duration: number;
-	position: number;
-	thumbnail_url: string;
-	created_at: string;
-	showcase_id: string;
-	start_time: any;
-	real_vimeo_video_id: string;
-}
+import { ChapterVideo } from "src/types/video";
+import { ContinuousVideo } from "src/app/(dashboard)/dashboard/page";
+import { usePlaylists } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
+import { useSavedPrograms } from "src/hooks/useSavedPrograms";
 
 interface Chapter {
-	id: number;
-	title: string;
-	start_time: number;
-	duration: number | null;
-	showcase_id: number;
-	continuous_vimeo_id: string;
-	real_vimeo_video_id: string;
+  id: number;
+  title: string;
+  start_time: number;
+  duration: number | null;
+  continuous_vimeo_id: string;
+  real_vimeo_video_id: string;
+}
+
+interface MergedChapterVideo extends ChapterVideo {
+  title: string;
+  start_time: number;
+  duration: number;
+  thumbnail_url: string;
+  real_vimeo_video_id: string;
+  continuous_vimeo_id: string;
+  vimeo_video_id: string; // ✅ must be string (not optional)
 }
 
 interface VideoListProps {
-	video: Showcase;
-	type: string;
+  video: ContinuousVideo;
+  type: string;
 }
 
 export default function VideoList({ video, type }: VideoListProps) {
-	const router = useRouter();
-	const [showcaseVideos, setShowCaseVideos] = useState<ShowcaseVideo[]>([]);
-	const [chapters, setChapters] = useState<Chapter[]>([]);
-	const [continuousVideo, setContinuousVideo] = useState<{
-		continuous_vimeo_id: string;
-	} | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
-	const { userId } = usePlaylists();
-	const { saveProgram, deleteProgram, savedPrograms } = useSavedPrograms();
+  const router = useRouter();
+  const [chapterVideos, setChapterVideos] = useState<ChapterVideo[]>([]);
+  const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [continuousVideo, setContinuousVideo] = useState<{
+    continuous_video_id: string;
+  } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-	const routeName = video.name
-		.toLowerCase()
-		.replace(/\s+/g, "-")
-		.replace(/[%\.]/g, "");
+  const { userId } = usePlaylists();
+  const { saveProgram, deleteProgram, savedPrograms } = useSavedPrograms();
 
-	useEffect(() => {
-		async function getShowcaseVideos() {
-			try {
-				const response = await axios.get(
-					`/api/showcases/${video.vimeo_showcase_id}`
-				);
-				setShowCaseVideos(response.data.videos);
-				setIsLoading(false);
-			} catch (error) {
-				console.error(
-					`Unable to retrieve showcase videos from Vimeo: ${error}`
-				);
-			}
-		}
+  const routeName = video.name
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[%\.]/g, "");
 
-		getShowcaseVideos();
-	}, [video.vimeo_showcase_id]);
+  useEffect(() => {
+    axios
+      .get("/api/chapters", {
+        params: { continuous_vimeo_id: video.continuous_video_id },
+      })
+      .then((res) => setChapters(res.data))
+      .catch((err) => console.error("Error fetching chapters:", err));
+  }, [video.continuous_video_id]);
 
-	useEffect(() => {
-		async function fetchContinuousVideo() {
-			try {
-				const response = await axios.get(
-					`/api/showcases/${video.vimeo_showcase_id}/continuous-video`
-				);
+  useEffect(() => {
+    axios
+      .get(
+        `/api/continuous-videos/${video.continuous_video_id}/continuous-video`
+      )
+      .then((res) => setContinuousVideo(res.data.continuousVideo))
+      .catch((err) =>
+        console.error("Error fetching continuous video metadata:", err)
+      )
+      .finally(() => setIsLoading(false));
+  }, [video.continuous_video_id]);
 
-				if (response.data.continuous_vimeo_id) {
-					setContinuousVideo(response.data);
-				} else {
-					console.warn("No continuous video found for this showcase");
-					return;
-				}
-			} catch (error) {
-				if (axios.isAxiosError(error)) {
-					if (error.response?.status === 404) {
-						// Expected case — no video found
-						setContinuousVideo(null); // or handle empty state
-					} else {
-						// Unexpected error (e.g., 500)
-						console.error("Unexpected error fetching continuous video:", error);
-					}
-				} else {
-					console.error("Unknown error:", error);
-				}
-			}
-		}
+  useEffect(() => {
+    axios
+      .get(`/api/continuous-videos/${video.continuous_video_id}`)
+      .then((res) => setChapterVideos(res.data.chapters))
+      .catch((err) => console.error("Error fetching video metadata:", err));
+  }, [video.continuous_video_id]);
 
-		fetchContinuousVideo();
-	}, [video.vimeo_showcase_id]);
+  if (isLoading || (!chapters.length && continuousVideo)) {
+    return <div>List of videos is loading...</div>;
+  }
 
-	useEffect(() => {
-		if (!continuousVideo?.continuous_vimeo_id) {
-			console.log("Skipping chapter fetch due to missing continuous_vimeo_id");
-			return;
-		}
+  const chapterVideoMap = new Map<string, ChapterVideo>();
+  for (const video of chapterVideos) {
+    if (video.real_vimeo_video_id) {
+      chapterVideoMap.set(video.real_vimeo_video_id, video);
+    }
+  }
 
-		async function fetchChapters() {
-			try {
-				if (!continuousVideo) return;
-				const response = await axios.get("/api/chapters", {
-					params: { continuous_vimeo_id: continuousVideo.continuous_vimeo_id },
-				});
-				setChapters(response.data);
-			} catch (error) {
-				console.error("Unable to fetch chapters:", error);
-			}
-		}
+  const mergedData: MergedChapterVideo[] = chapters
+    .filter((ch) => {
+      const title = ch.title.toLowerCase();
+      return !title.includes("warmup") && !title.includes("cooldown");
+    })
+    .map((chapter) => {
+      const videoMeta = chapterVideoMap.get(chapter.real_vimeo_video_id);
 
-		fetchChapters();
-	}, [continuousVideo]);
+      return {
+        id: chapter.id,
+        title: chapter.title || videoMeta?.title || "Untitled",
+        start_time: chapter.start_time ?? 0,
+        duration: chapter.duration ?? videoMeta?.duration ?? 0,
+        thumbnail_url: videoMeta?.thumbnail_url?.startsWith("http")
+          ? videoMeta.thumbnail_url
+          : "/default-thumbnail.jpg",
+        real_vimeo_video_id:
+          chapter.real_vimeo_video_id ?? videoMeta?.real_vimeo_video_id ?? "",
+        continuous_vimeo_id:
+          chapter.continuous_vimeo_id ??
+          continuousVideo?.continuous_video_id ??
+          "",
+        vimeo_video_id: videoMeta?.vimeo_video_id || "", // ✅ must be string
+        description: videoMeta?.description || "",
+        position: videoMeta?.position || 0,
+        created_at: videoMeta?.created_at || "",
+      };
+    });
 
-	if (isLoading || (!chapters.length && continuousVideo)) {
-		return <div>List of videos is loading...</div>;
-	}
+  function handleShowVideoList() {
+    router.push(`/dashboard/${routeName}/${video.continuous_video_id}/videos`);
+  }
 
-	const mergedData = chapters.map((chapter, index) => {
-		const adjustedIndex = index + 1;
-		const matchingVideo = showcaseVideos[adjustedIndex];
-		return {
-			...matchingVideo,
-			title: chapter.title,
-			start_time: chapter.start_time,
-			real_vimeo_video_id: chapter.real_vimeo_video_id,
-		};
-	});
+  const isSaved = savedPrograms.some(
+    (p) => p.continuousVideoId === video.continuous_video_id
+  );
 
-	function handleShowVideoList() {
-		router.push(`/dashboard/${routeName}/${video.vimeo_showcase_id}/videos`);
-	}
+  async function handleToggleSave() {
+    if (!userId || !video.continuous_video_id) {
+      console.error("Missing userId or continuous_video_id.");
+      return;
+    }
 
-	const isSaved = savedPrograms.some(
-		(p) => p.showcaseId === Number(video.vimeo_showcase_id)
-	);
+    const payload = {
+      user_id: userId,
+      continuous_vimeo_id: video.continuous_video_id,
+      title: video.name,
+      description: video.description || "",
+      videoCount: chapters.length,
+      duration: chapters.reduce((sum, ch) => sum + (ch.duration || 0), 0),
+    };
 
-	async function handleToggleSave() {
-		const showcaseId = Number(video.vimeo_showcase_id); // 🔥 Ensure it's a number
+    if (isSaved) {
+      await deleteProgram(video.continuous_video_id);
+    } else {
+      await saveProgram({
+        userId, // ✅ fix this
+        continuousVideoId: video.continuous_video_id, // ✅ already good
+        title: video.name,
+        description: video.description || "",
+        videoCount: chapters.length,
+        duration: chapters.reduce(
+          (sum, chapter) => sum + (chapter.duration || 0),
+          0
+        ),
+      });
+    }
+  }
 
-		if (isNaN(showcaseId)) {
-			console.error(`❌ Invalid showcaseId: ${video.vimeo_showcase_id}`);
-			return;
-		}
+  const duration = playlistDuration(
+    mergedData.reduce((sum, ch) => sum + (ch.duration || 0), 0)
+  );
 
-		if (isSaved) {
-			await deleteProgram(showcaseId);
-		} else {
-			await saveProgram({
-				userId, // UUID string
-				showcaseId, // Ensure this is a number
-				title: video.name,
-				description: video.description || "",
-				videoCount: showcaseVideos.length,
-				duration: chapters.reduce(
-					(sum, chapter) => sum + (chapter.duration || 0),
-					0
-				),
-			});
-		}
-	}
-	const duration = playlistDuration(
-		mergedData.reduce((prev, curr) => prev + curr.duration, 0)
-	);
+  return (
+    <section className={styles.container}>
+      <div className={styles.infoContainer}>
+        <div className={styles.headerContainer}>
+          <div className={styles.header}>
+            <div className={styles.titleContainer}>
+              <h2 className={styles.title}>{video.name.toLowerCase()}</h2>
+              <button
+                className={`${styles.button} ${styles["button--tablet"]}`}
+                onClick={handleShowVideoList}
+                aria-label="View all videos"
+              >
+                <Image
+                  src={rightArrow}
+                  alt=""
+                  className={styles.icon}
+                  aria-hidden
+                />
+              </button>
+            </div>
+            <p className={styles.description}>
+              {video.description ||
+                "[Description goes here but it is currently empty]"}
+            </p>
+          </div>
+          {type === "program" && (
+            <button
+              className={styles.bookmarkButton}
+              onClick={handleToggleSave}
+            >
+              <Image
+                src={isSaved ? bookmark : bookmarkUnsaved}
+                alt=""
+                className={styles.bookmarkIcon}
+              />
+              <span>{isSaved ? "Saved to library" : "Save to library"}</span>
+            </button>
+          )}
+        </div>
 
-	return (
-		<section className={styles.container}>
-			<div className={styles.infoContainer}>
-				<div className={styles.headerContainer}>
-					<div className={styles.header}>
-						<div className={styles.titleContainer}>
-							<h2 className={styles.title}>{video.name.toLowerCase()}</h2>{" "}
-							<button
-								className={`${styles.button} ${styles["button--tablet"]}`}
-								onClick={handleShowVideoList}
-								aria-label="View all videos"
-							>
-								<Image
-									src={rightArrow}
-									alt=""
-									className={styles.icon}
-									aria-hidden="true"
-								/>
-							</button>
-						</div>
-						<p className={styles.description}>
-							{video.description ||
-								"[Description goes here but it is currently empty]"}
-						</p>
-					</div>
-					{type === "program" && (
-						<button
-							className={styles.bookmarkButton}
-							onClick={handleToggleSave}
-							aria-label="Save to playlist"
-						>
-							{isSaved ? (
-								<>
-									<Image
-										src={bookmark}
-										alt="Bookmark video saved"
-										className={styles.bookmarkIcon}
-									/>
-									<span>Saved to library</span>
-								</>
-							) : (
-								<>
-									<Image
-										src={bookmarkUnsaved}
-										alt="Bookmark video saved not saved"
-										className={styles.bookmarkIcon}
-									/>
-									<span>Save to library</span>
-								</>
-							)}
-						</button>
-					)}
-				</div>
-				<div className={styles.metadata}>
-					<div className={styles.info}>
-						<span className={styles.message}>
-							<Image src={playIcon} alt="" className={styles.icon} />
-							<span>{mergedData.length} videos</span>
-						</span>
-						<span className={styles.message}>
-							<Image src={clockIcon} alt="" className={styles.icon} />
-							<span>{duration}</span>
-						</span>
-					</div>
+        <div className={styles.metadata}>
+          <div className={styles.info}>
+            <span className={styles.message}>
+              <Image src={playIcon} alt="" className={styles.icon} />
+              <span>{mergedData.length} videos</span>
+            </span>
+            <span className={styles.message}>
+              <Image src={clockIcon} alt="" className={styles.icon} />
+              <span>{duration}</span>
+            </span>
+          </div>
+          <button className={styles.button} onClick={handleShowVideoList}>
+            <Image
+              src={rightArrow}
+              alt=""
+              className={styles.icon}
+              aria-hidden
+            />
+          </button>
+        </div>
+      </div>
 
-					<button
-						className={styles.button}
-						onClick={handleShowVideoList}
-						aria-label="View all videos"
-					>
-						<Image
-							src={rightArrow}
-							alt=""
-							className={styles.icon}
-							aria-hidden="true"
-						/>
-					</button>
-				</div>
-			</div>
-
-			<ul className={styles.list}>
-				{mergedData.map((showcaseVideo) => {
-					return (
-						<li key={showcaseVideo.id} className={showcaseVideo.vimeo_video_id}>
-							<Video
-								showcaseVideo={showcaseVideo}
-								display="column"
-								path={`/dashboard/player/${continuousVideo?.continuous_vimeo_id}?start_time=${showcaseVideo.start_time}&showcase_id=${video.vimeo_showcase_id}`}
-							/>
-						</li>
-					);
-				})}
-			</ul>
-		</section>
-	);
+      <ul className={styles.list}>
+        {mergedData.map((chapterVideo) => (
+          <li
+            key={chapterVideo.id}
+            className={chapterVideo.real_vimeo_video_id}
+          >
+            <Video
+              chapterVideo={chapterVideo}
+              display="column"
+              path={`/dashboard/player/${chapterVideo.continuous_vimeo_id}?start_time=${chapterVideo.start_time}&continuous_video_id=${chapterVideo.continuous_vimeo_id}`}
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 }
