@@ -6,13 +6,17 @@ import styles from "./Header.module.scss";
 import { usePathname } from "next/navigation";
 
 export default function Header() {
-	const pathname = usePathname();
+	const pathname = usePathname()!;
+	const pathnameSegment = pathname.split("/");
 
-	if (pathname?.startsWith("/dashboard/playlistplayer")) return;
+	if (pathnameSegment.length === 5 && pathnameSegment[4] === "videos") {
+		return;
+	}
 
-	if (pathname?.startsWith("/dashboard/library")) {
-		const pathnameSegment = pathname.split("/");
-		if (pathnameSegment.length > 3) return;
+	if (pathname.startsWith("/dashboard/playlistplayer")) return;
+
+	if (pathname.startsWith("/dashboard/library") && pathnameSegment.length > 3) {
+		return;
 	}
 
 	return (

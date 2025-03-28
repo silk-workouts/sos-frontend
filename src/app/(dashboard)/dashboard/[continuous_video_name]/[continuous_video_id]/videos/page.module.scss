@@ -116,22 +116,6 @@
 		}
 	}
 
-	&__icon {
-		width: 1rem;
-		height: 1rem;
-		transition: all 0.3s ease-in-out;
-
-		&--options {
-			width: 1.5rem;
-			height: 1.5rem;
-		}
-
-		@include tablet {
-			width: 1.5rem;
-			height: 1.5rem;
-		}
-	}
-
 	&__image-container {
 		position: relative;
 		width: 100%;
@@ -147,17 +131,19 @@
 		border-radius: 0.75rem;
 	}
 
+	&__header {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
 	&__title-container {
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
-
-		@include tablet {
-			position: relative;
-		}
+		align-items: flex-start;
+		margin-bottom: -1rem;
 
 		@include desktop {
-			align-items: flex-start;
 			gap: 1rem;
 		}
 	}
@@ -165,14 +151,19 @@
 	&__title {
 		font-size: 1.125rem;
 		font-weight: $font-weight-extrabold;
+		text-transform: capitalize;
 
 		@include tablet {
 			font-size: 1.25rem;
 		}
 	}
 
+	&__element {
+		font-weight: 400;
+		align-self: center;
+	}
+
 	&__info {
-		margin-top: 0.5rem;
 		display: flex;
 		gap: 1rem;
 		font-size: 0.625rem;
@@ -183,19 +174,54 @@
 		}
 	}
 
+	&__icon {
+		width: 1rem;
+		height: 1rem;
+		transition: all 0.3s ease-in-out;
+
+		&--save {
+			width: 1.5rem;
+			height: 1.5rem;
+		}
+
+		@include tablet {
+			width: 1.5rem;
+			height: 1.5rem;
+		}
+	}
+
 	&__message {
 		display: flex;
 		align-items: center;
 	}
 
 	&__description {
-		margin-top: 1.5rem;
 		font-size: 0.875rem;
 	}
 }
 
-.loading {
+.videos {
+	padding-bottom: 1rem;
+
 	@include desktop {
-		padding-left: 31.25rem;
+		width: 100%;
+		padding-right: 1rem;
+		padding-left: 32.1875rem;
+	}
+}
+
+.list {
+	padding: 0 0 $padding-large;
+	list-style-type: none;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	@include tablet {
+		gap: 1.5rem;
+	}
+
+	@include desktop {
+		padding: 0;
 	}
 }

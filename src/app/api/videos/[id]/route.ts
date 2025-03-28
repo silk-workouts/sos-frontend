@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { NextRequest, NextResponse } from "next/server";
+import pool from "@/lib/db";
 
 const VIMEO_API_TOKEN = process.env.VIMEO_API_TOKEN;
 
@@ -11,15 +11,15 @@ export async function GET(
 
   if (!id) {
     return NextResponse.json(
-      { error: 'Video ID is required' },
+      { error: "Video ID is required" },
       { status: 400 }
     );
   }
 
   try {
-    // Fetch video metadata from the database
+    // Fetch video metadata from the database (🎯 showcase_id removed)
     const [rows] = (await pool.execute(
-      'SELECT id, vimeo_video_id, title, description, thumbnail_url, duration, showcase_id, created_at FROM videos WHERE vimeo_video_id = ?',
+      "SELECT id, vimeo_video_id, title, description, thumbnail_url, duration, created_at FROM videos WHERE vimeo_video_id = ?",
       [id]
     )) as [
       Array<{
@@ -35,7 +35,7 @@ export async function GET(
     ];
 
     if (rows.length === 0) {
-      return NextResponse.json({ error: 'Video not found' }, { status: 404 });
+      return NextResponse.json({ error: "Video not found" }, { status: 404 });
     }
 
     const video = rows[0];
@@ -53,7 +53,7 @@ export async function GET(
         `❌ Failed to fetch video from Vimeo. Status: ${vimeoResponse.status}`
       );
       return NextResponse.json(
-        { error: 'Failed to fetch video playback URL' },
+        { error: "Failed to fetch video playback URL" },
         { status: 500 }
       );
     }
@@ -62,7 +62,7 @@ export async function GET(
 
     // Extract only the necessary playback URL without exposing tokens
     const playbackFile = vimeoData.files?.find(
-      (file: any) => file.type === 'video/mp4'
+      (file: any) => file.type === "video/mp4"
     );
     const secureUrl = playbackFile?.link ?? null;
 
@@ -82,7 +82,7 @@ export async function GET(
   } catch (error) {
     console.error(`❌ Failed to fetch video with ID ${id}:`, error);
     return NextResponse.json(
-      { error: 'Failed to fetch video' },
+      { error: "Failed to fetch video" },
       { status: 500 }
     );
   }
