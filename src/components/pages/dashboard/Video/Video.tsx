@@ -15,6 +15,17 @@ interface VideoProps {
 export default function Video({ chapterVideo, display, path }: VideoProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const formatDuration = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    // Pad with leading zeros if necessary
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(remainingSeconds).padStart(2, "0");
+
+    return `${formattedMinutes}:${formattedSeconds}`;
+  };
+
   return (
     <article
       className={`${styles.card} ${display === "row" ? styles.row : ""}`}
@@ -37,8 +48,9 @@ export default function Video({ chapterVideo, display, path }: VideoProps) {
           sizes="(max-width: 767px) 160px, (max-width: 1279px) 216px, 300px"
           style={{ objectFit: "cover" }}
         />
-        {/* <div className={styles.duration}>{duration}</div> */}
-        <div className={styles.duration}>duration to come</div>
+        <div className={styles.duration}>
+          {formatDuration(chapterVideo.duration)}
+        </div>
       </Link>
 
       <div

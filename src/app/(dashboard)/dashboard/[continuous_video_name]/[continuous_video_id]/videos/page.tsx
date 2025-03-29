@@ -136,8 +136,6 @@ export default function SingleContinuousVideoPage() {
     }
   }
 
-  console.log(continuousVideo, "vid");
-
   return (
     <div className={styles.container}>
       {/* HERO */}
