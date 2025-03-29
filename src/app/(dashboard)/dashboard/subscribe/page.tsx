@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import silkHeadshot from "/public/assets/images/silk_headshot_1.jpg";
+import silkHeadshot from "/public/assets/images/silk_headshot_1_red_patch.jpg";
 import styles from "./page.module.scss";
 
 export default function SubscribePage() {

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import silkHeadshot from "/public/assets/images/silk_headshot_1.jpg";
+import silkHeadshot from "/public/assets/images/silk_headshot_1_red_patch.jpg";
 import Button from "@/components/ui/Button/Button";
 import styles from "./About.module.scss";
 
