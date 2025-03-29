@@ -27,7 +27,6 @@ export interface PlaylistVideo {
 }
 
 export default function PlaylistPage() {
-  console.log("anything");
   const { playlist_id } = useParams<{ playlist_id: string }>()!;
   const { playlists, userId, refreshPlaylists } = usePlaylists();
   const router = useRouter();
