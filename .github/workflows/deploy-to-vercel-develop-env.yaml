@@ -1,0 +1,14 @@
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Deploy to Develop
+        run: vercel deploy --prebuilt --environment=develop --token=${{ secrets.VERCEL_TOKEN }}
