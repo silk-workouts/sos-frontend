@@ -6,7 +6,7 @@ import styles from "./Testimonials.module.scss";
 const testimonials = [
   {
     id: 1,
-    text: "Clears my head and tests my limits. It’s been a life-changer.",
+    text: "System of Silk clears my head and tests my limits. It’s been a life-changer.",
     name: "Jeff",
   },
   {
