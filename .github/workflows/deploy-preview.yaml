@@ -16,7 +16,5 @@ jobs:
       - name: Trigger Vercel Preview Deployment
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
         run: |
-          npx vercel --token $VERCEL_TOKEN --project-id $VERCEL_PROJECT_ID --org-id $VERCEL_ORG_ID --scope $VERCEL_ORG_ID --env ENVIRONMENT=preview --prod
+          npx vercel --token $VERCEL_TOKEN --prod --env ENVIRONMENT=preview
