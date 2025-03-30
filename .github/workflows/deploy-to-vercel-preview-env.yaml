@@ -1,0 +1,16 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Deploy to Staging
+        run: vercel deploy --prebuilt --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
