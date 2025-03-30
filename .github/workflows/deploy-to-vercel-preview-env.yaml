@@ -13,4 +13,4 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Deploy to Staging
-        run: vercel deploy --prebuilt --target=preview --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prebuilt --target=preview --yes --token=${{ secrets.VERCEL_TOKEN }}
