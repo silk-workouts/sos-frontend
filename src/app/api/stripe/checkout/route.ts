@@ -67,12 +67,12 @@ export async function POST(req: NextRequest) {
       customer: stripeCustomerId,
       line_items: [
         {
-          price: "plan_Pr3EoR7dvIAlN7", // Replace with Stripe Price ID or plan ID
+          price: process.env.STRIPE_MONTHLY_PLAN_KEY, // Replace with Stripe Price ID or plan ID
           quantity: 1,
         },
       ],
       subscription_data: {
-        trial_period_days: 1,
+        trial_period_days: Number(process.env.STRIPE_TRIAL_DURATION),
       },
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?refresh=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
