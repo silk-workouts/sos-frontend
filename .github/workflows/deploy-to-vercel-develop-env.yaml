@@ -1,20 +1,22 @@
-name: Deploy to Develop
+# name: Deploy to Develop
 
-on:
-  push:
-    branches:
-      - develop
+# on:
+#   push:
+#     branches:
+#       - develop
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Pull Project Settings
-        run: vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy to Develop
-        run: vercel deploy --prebuilt --target=develop --yes --token=${{ secrets.VERCEL_TOKEN }}
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Install Vercel CLI
+#         run: npm install --global vercel@latest
+#       - name: Pull Project Settings
+#         run: vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
+#       - name: Pull Environment Variables
+#         run: vercel env pull .env.local --target=develop --yes --token=${{ secrets.VERCEL_TOKEN }}
+#       - name: Build Project
+#         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+#       - name: Deploy to Develop
+#         run: vercel deploy --prebuilt --target=develop --yes --token=${{ secrets.VERCEL_TOKEN }}
