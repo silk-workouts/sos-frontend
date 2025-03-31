@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useState } from "react";
 import {
 	closestCorners,
 	DndContext,
@@ -9,10 +11,6 @@ import {
 	useSensor,
 	useSensors,
 } from "@dnd-kit/core";
-import { PlayerVideo } from "src/app/(dashboard)/dashboard/playlistplayer/[playlist_id]/page";
-import styles from "./PlaylistPlayerVideos.module.scss";
-import { useState } from "react";
-import axios from "axios";
 import {
 	arrayMove,
 	SortableContext,
@@ -20,7 +18,9 @@ import {
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { Arguments } from "@dnd-kit/core/dist/components/Accessibility/types";
+import { PlayerVideo } from "src/app/(dashboard)/dashboard/playlistplayer/[playlist_id]/page";
 import SortablePlaylistPlayerVideo from "../SortablePlaylistPlayerVideo/SortablePlaylistPlayerVideo";
+import styles from "./PlaylistPlayerVideos.module.scss";
 
 interface PlaylistPlayerVideosProps {
 	videos: PlayerVideo[];
@@ -135,7 +135,7 @@ export default function PlaylistPlayerVideos({
     Press space or enter again to drop the item in its new position, or press escape to cancel.`;
 
 	return (
-		<div className={styles.playlist}>
+		<section className={styles.playlist}>
 			<h2 className={styles.videoListTitle}>
 				Playing {activeVideoPosition} of {videos.length}
 			</h2>
@@ -170,6 +170,6 @@ export default function PlaylistPlayerVideos({
 					</SortableContext>
 				</ul>
 			</DndContext>
-		</div>
+		</section>
 	);
 }

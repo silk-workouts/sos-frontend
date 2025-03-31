@@ -34,14 +34,18 @@
 
 		@include tablet {
 			width: 13.5rem;
+		}
+
+		@include desktop {
+			width: 18.75rem;
 
 			&.row {
 				width: 13.5rem;
 			}
-		}
 
-		@include tablet {
-			width: 18.75rem;
+			&.player {
+				width: 10rem;
+			}
 		}
 	}
 }
@@ -86,6 +90,12 @@
 	@include tablet {
 		font-size: 1rem;
 	}
+
+	@include desktop {
+		&.player {
+			font-size: 0.75rem;
+		}
+	}
 }
 
 .menuButton {
@@ -103,5 +113,12 @@
 	@include tablet {
 		width: 1.5rem;
 		height: 1.5rem;
+	}
+
+	@include desktop {
+		&.player {
+			width: 1rem;
+			height: 1rem;
+		}
 	}
 }

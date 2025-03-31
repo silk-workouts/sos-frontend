@@ -1,7 +1,7 @@
 @use "@/styles/partials/variables" as *;
 @use "@/styles/partials/mixins" as *;
 
-.pageContainer {
+.container {
 	display: flex;
 	flex-direction: column;
 	gap: 3rem;
@@ -57,12 +57,10 @@
 .playerContainer {
 	width: 100%;
 	aspect-ratio: 16 / 9;
-	border: solid #b7b4b4;
-	border-width: 0.5px 0;
+	border: 0.5px solid #b7b4b4;
 
 	@include desktop {
 		min-width: 50.9375rem;
-		border-width: 0.5px;
 	}
 }
 

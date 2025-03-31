@@ -169,13 +169,9 @@ export default function PlaylistPlayerPage() {
 		videos.findIndex((video) => video.id === activeVideo.id) + 1;
 
 	return (
-		<div className={styles.pageContainer}>
-			<div className={styles.contentArea}>
-				<button
-					onClick={() => router.back()}
-					className={styles.backButton}
-					aria-label="Exit workout"
-				>
+		<div className={styles.container}>
+			<section className={styles.contentArea}>
+				<button onClick={() => router.back()} className={styles.backButton}>
 					<Image src={backArrowIcon} alt="" aria-hidden="true" />{" "}
 					<span>Exit workout</span>
 				</button>
@@ -191,7 +187,7 @@ export default function PlaylistPlayerPage() {
 
 					<p className={styles.videoDescription}>{activeVideo.description}</p>
 				</div>
-			</div>
+			</section>
 			<PlaylistPlayerVideos
 				videos={videos}
 				handleVideoClick={handleVideoClick}
