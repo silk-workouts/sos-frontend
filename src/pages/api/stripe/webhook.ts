@@ -20,6 +20,21 @@ import Stripe from "stripe";
 import { buffer } from "micro";
 import pool from "@/lib/db"; // ⬅️ Ensure this points to your MySQL (PlanetScale) pool
 
+// for testing expected Stripe signature HMAC-SHA256
+import { createHmac } from "crypto";
+
+function computeExpectedSignature(
+  secret: string,
+  payload: string,
+  timestamp: string
+): string {
+  const signedPayload = `${timestamp}.${payload}`;
+  const hash = createHmac("sha256", secret)
+    .update(signedPayload, "utf8")
+    .digest("hex");
+  return `v1=${hash}`; // Include "v1=" prefix to match Stripe's format
+}
+
 export const config = {
   api: {
     bodyParser: false,
@@ -43,6 +58,37 @@ export default async function handler(
   let event;
   try {
     const rawBody = await buffer(req);
+
+    // Extract timestamp and signature from the Stripe header
+    const timestamp = sig.split(",")[0].split("=")[1];
+
+    // Extract all signature versions (v1, v0, etc.) from the header
+    // Extract all signature versions (v1, v0, etc.) from the header
+    const signatures = sig
+      .split(",")
+      .reduce((acc: Record<string, string>, part) => {
+        const [version, signature] = part.split("=");
+        acc[version] = signature;
+        return acc;
+      }, {});
+
+    // Retrieve the v1 signature for comparison (prioritize v1)
+    const receivedSignature = signatures["v1"] || signatures["v0"]; // Fallback to v0 if v1 not available
+
+    // Compute the expected signature
+    const expectedSignature = computeExpectedSignature(
+      process.env.STRIPE_WEBHOOK_SECRET!,
+      rawBody.toString(),
+      timestamp
+    );
+
+    // Logging the relevant information for comparison
+    console.log("🔑 Stripe Signature Header:", sig);
+    console.log("📅 Timestamp from Header:", timestamp);
+    console.log("🔑 Received Signature:", receivedSignature);
+    console.log("📝 Expected Signature:", expectedSignature);
+    console.log("🔍 Raw body received:", rawBody.toString());
+
     event = stripe.webhooks.constructEvent(
       rawBody,
       sig,
