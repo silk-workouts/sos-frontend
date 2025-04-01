@@ -9,13 +9,13 @@ import bookmarkUnsaved from "public/assets/icons/bookmark-unsaved.svg";
 import playIcon from "/public/assets/icons/play.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
 import Video from "../Video/Video";
-import styles from "./VideoList.module.scss";
 import { playlistDuration } from "../../library/PlayListCard/PlayListCard";
 import { ChapterVideo } from "src/types/video";
 import { ContinuousVideo } from "src/app/(dashboard)/dashboard/page";
 import { usePlaylists } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
 import { useSavedPrograms } from "src/hooks/useSavedPrograms";
 import { parseDescription } from "src/utils/parseDescription";
+import styles from "./VideoList.module.scss";
 
 interface Chapter {
 	id: number;
