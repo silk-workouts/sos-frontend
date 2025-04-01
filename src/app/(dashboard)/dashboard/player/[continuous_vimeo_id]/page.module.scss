@@ -1,100 +1,177 @@
 @use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
-// Fix extra padding from Vimeo injected div when dynamically creating player
-.playerCcontainer > div {
-  padding: 0 !important; // Remove unwanted padding
-  position: static !important; // Prevent forced positioning
-  height: 100% !important; // Ensure proper height
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+
+	@include tablet {
+		gap: 4rem;
+	}
+
+	@include desktop {
+		flex-direction: row;
+		padding: 1.5rem;
+	}
 }
 
-// Ensure the iframe is fully visible and sized correctly
-.playerContainer iframe {
-  width: 100% !important;
-  height: 100% !important;
-  position: absolute !important;
-  top: 0;
-  left: 0;
+.contentArea {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+
+	@include tablet {
+		gap: 2.5rem;
+	}
+
+	@include desktop {
+		flex: 1;
+	}
 }
 
-// .container {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   padding: 20px;
-//   max-width: 900px;
-//   margin: 0 auto;
-// }
+.backButton {
+	align-self: flex-start;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 1rem 1rem 0.5rem;
+	margin-bottom: -1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	font-family: $font-primary;
+	font-size: 0.875rem;
 
-.title {
-  margin-bottom: 16px;
+	@include tablet {
+		font-size: 1rem;
+		padding: 1.5rem 1.5rem 1rem;
+		margin-bottom: -2rem;
+	}
+
+	@include desktop {
+		padding-left: 0;
+	}
 }
 
 .playerContainer {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  height: 450px; // Set an explicit height
-  overflow: hidden;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	border: 0.5px solid #b7b4b4;
+	position: relative;
+
+	@include desktop {
+		min-width: 50.9375rem;
+	}
 }
 
-// Fix extra padding from Vimeo injected div when dynamically creating player
-.player-container div[style*="padding:56.25%"] {
-  padding: 0 !important; // Remove unwanted padding
+.videoDetails {
+	display: flex;
+	flex-direction: column;
+	padding: 0 1rem;
+	gap: 8px;
+
+	@include tablet {
+		padding: 0 1.5rem;
+	}
+
+	@include desktop {
+		gap: 1rem;
+		width: 50.9375rem;
+	}
 }
 
-// .player-wrapper {
-//   width: 100%;
-//   max-width: 100%;
-//   height: auto; // Allow dynamic height
-//   aspect-ratio: 16 / 9; // Ensure a consistent 16:9 aspect ratio
-//   position: relative;
-//   overflow: hidden;
-// }
+.playlistTitle {
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: #e2211c;
+	text-transform: capitalize;
 
-// .player-wrapper iframe,
-// .player-wrapper div {
-//   width: 100%;
-//   height: 100%;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// }
-
-.playerVisible {
-  visibility: visible;
-  opacity: 1;
+	@include tablet {
+		font-size: 1rem;
+	}
 }
 
-// .chapterTitle {
-//   align-self: flex-start;
-//   margin-bottom: 12px;
-// }
+.activeVideoTitle {
+	font-size: 1rem;
+	font-weight: 400;
+	text-transform: capitalize;
 
-// .chapterList {
-//   width: 100%;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: stretch;
-//   gap: 12px;
-//   padding: 0;
-//   margin-top: 10px;
-// }
+	@include tablet {
+		font-size: 1.25rem;
+	}
+}
 
-// .chapterItem {
-//   list-style: none;
-//   cursor: pointer;
-//   border-radius: 8px;
-//   padding: 12px;
-//   border: 1px solid #ddd;
-//   background: #f9f9f9;
-//   transition: all 0.2s ease;
-// }
+.videoDescription {
+	font-size: 12px;
+	color: #424242;
+	line-height: 140%;
+	margin-top: -0.25rem;
 
-.activeChapter {
-  border: 3px solid #0070f3;
-  background: rgba(0, 112, 243, 0.1);
+	@include tablet {
+		font-size: 0.875rem;
+	}
+
+	@include desktop {
+		margin-top: -0.5rem;
+	}
+}
+
+.chapter {
+	padding: 0 0.5rem;
+
+	@include tablet {
+		padding: 0 1.5rem;
+	}
+
+	@include desktop {
+		border: 0.5px solid #b7b4b4;
+		border-radius: 0.625rem;
+		padding: 1rem 0 1rem;
+		margin-top: 72px;
+		max-height: 34.375rem;
+		overflow: hidden;
+	}
+}
+
+.chapterTitle {
+	font-weight: 400;
+	font-size: 1rem;
+	margin-bottom: 1rem;
+	padding-left: 0.5rem;
+
+	@include tablet {
+		padding-left: 0;
+		margin-bottom: 1.25rem;
+	}
+
+	@include desktop {
+		padding-left: 1rem;
+	}
+}
+
+.chapterList {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding-bottom: 2rem;
+
+	@include desktop {
+		height: 100%;
+		overflow-y: scroll;
+	}
+}
+
+.chapterItem {
+	border-radius: 1rem;
+
+	@include desktop {
+		border-radius: 0;
+	}
+
+	&.activeChapter {
+		border: 1px solid #e2211c;
+		background-color: rgba(#e2211c, 0.1);
+	}
 }

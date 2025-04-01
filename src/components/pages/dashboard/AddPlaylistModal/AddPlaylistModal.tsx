@@ -61,7 +61,10 @@ export default function AddPlaylistModal({
 	return (
 		<div
 			className={styles["dialog-container"]}
-			onClick={(event) => handleCloseModal(event)}
+			onClick={(event) => {
+				event.stopPropagation();
+				handleCloseModal(event);
+			}}
 			id="dialog-container"
 			role="dialog button"
 		>
@@ -72,9 +75,7 @@ export default function AddPlaylistModal({
 							<h3 className={styles.header__title}>Save to...</h3>
 							<button
 								className={styles.button}
-								onClick={() => {
-									setIsOpen(false);
-								}}
+								onClick={() => setIsOpen(false)}
 								aria-label="Close Add To Playlist Modal"
 							>
 								<Image
