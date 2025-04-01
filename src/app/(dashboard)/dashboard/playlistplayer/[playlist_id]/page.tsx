@@ -39,6 +39,11 @@ export default function PlaylistPlayerPage() {
 	const playerContainerRef = useRef<HTMLDivElement | null>(null);
 	const vimeoPlayerRef = useRef<Player | null>(null);
 	const lastUpdateTimeRef = useRef<number>(0);
+	const videosRef = useRef<PlayerVideo[]>([]);
+
+	useEffect(() => {
+		videosRef.current = videos;
+	}, [videos]);
 
 	//  Fetch playlist and set initial video
 	useEffect(() => {
@@ -95,6 +100,49 @@ export default function PlaylistPlayerPage() {
 			.catch((err) => console.error("❌ Player.ready() failed:", err));
 	}, [activeVideo]);
 
+	useEffect(() => {
+		async function handleBeforeUnload(event: BeforeUnloadEvent) {
+			console.log(
+				"🔄 Page refresh or close detected. Updating URL with latest progress."
+			);
+
+			try {
+				// Fetch the latest progress from the API
+				const res = await axios.get(
+					`/api/playlists/progress?playlist_id=${playlist_id}`,
+					{ headers: { "x-user-id": userId } }
+				);
+
+				const latestProgress = res.data.progress_seconds;
+				const latestVideoId = res.data.video_id;
+
+				console.log(
+					"📥 Latest progress fetched before unload:",
+					latestProgress
+				);
+
+				// Update the URL with the latest video ID and progress
+				const newUrl = `/dashboard/playlistplayer/${playlist_id}?video_id=${latestVideoId}&progress=${latestProgress}`;
+				console.log("🌐 Redirecting to latest progress URL:", newUrl);
+
+				// Prevent the default unload to allow redirect
+				event.preventDefault();
+				event.returnValue = "";
+				window.location.replace(newUrl);
+			} catch (err) {
+				console.error("❌ Failed to update URL before unload:", err);
+			}
+		}
+
+		// Attach event listener
+		window.addEventListener("beforeunload", handleBeforeUnload);
+
+		return () => {
+			// Clean up event listener on unmount
+			window.removeEventListener("beforeunload", handleBeforeUnload);
+		};
+	}, [playlist_id, userId]);
+
 	function attachPlayerListeners(player: Player) {
 		player.on("timeupdate", async (data) => {
 			const currentTime = Math.floor(data.seconds);
@@ -121,9 +169,21 @@ export default function PlaylistPlayerPage() {
 		player.on("ended", async () => {
 			if (activeVideo) {
 				await saveProgress(activeVideo.id, lastUpdateTimeRef.current);
-				const nextIndex = videos.findIndex((v) => v.id === activeVideo.id) + 1;
-				if (nextIndex < videos.length) {
-					const nextVideo = videos[nextIndex];
+
+				// Find the current index of the active video in the updated videos list
+				const currentVideos = videosRef.current;
+
+				// Find the current index of the active video in the latest video order
+				const currentIndex = currentVideos.findIndex(
+					(v) => v.id === activeVideo.id
+				);
+
+				// Determine the next video based on the updated order
+				const nextVideo =
+					currentVideos[(currentIndex + 1) % currentVideos.length];
+
+				// Only update if the next video exists (avoid looping back if not desired)
+				if (nextVideo) {
 					setActiveVideo({ ...nextVideo, progress_seconds: 0 });
 					lastUpdateTimeRef.current = 0;
 				}
@@ -140,6 +200,13 @@ export default function PlaylistPlayerPage() {
 	}
 
 	async function saveProgress(videoId: number, progress: number) {
+		console.log(
+			"💾 Attempting to save progress: Video ID:",
+			videoId,
+			"Progress:",
+			progress
+		);
+
 		if (!videoId || progress <= 0) return;
 		try {
 			await axios.put(
@@ -168,10 +235,18 @@ export default function PlaylistPlayerPage() {
 	const activeVideoPosition =
 		videos.findIndex((video) => video.id === activeVideo.id) + 1;
 
+	function updateVideoOrder(newOrder: PlayerVideo[]) {
+		setVideos(newOrder);
+	}
+
 	return (
-		<div className={styles.container}>
-			<section className={styles.contentArea}>
-				<button onClick={() => router.back()} className={styles.backButton}>
+		<div className={styles.pageContainer}>
+			<div className={styles.contentArea}>
+				<button
+					onClick={() => router.back()}
+					className={styles.backButton}
+					aria-label="Exit workout"
+				>
 					<Image src={backArrowIcon} alt="" aria-hidden="true" />{" "}
 					<span>Exit workout</span>
 				</button>
@@ -187,7 +262,7 @@ export default function PlaylistPlayerPage() {
 
 					<p className={styles.videoDescription}>{activeVideo.description}</p>
 				</div>
-			</section>
+			</div>
 			<PlaylistPlayerVideos
 				videos={videos}
 				handleVideoClick={handleVideoClick}
@@ -198,6 +273,7 @@ export default function PlaylistPlayerPage() {
 				playlist_id={playlist_id}
 				userId={userId}
 				setVideos={setVideos}
+				updateVideoOrder={updateVideoOrder}
 			/>
 		</div>
 	);

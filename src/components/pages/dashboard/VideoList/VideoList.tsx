@@ -17,6 +17,7 @@ import { ChapterVideo } from "src/types/video";
 import { ContinuousVideo } from "src/app/(dashboard)/dashboard/page";
 import { usePlaylists } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
 import { useSavedPrograms } from "src/hooks/useSavedPrograms";
+import { parseDescription } from "src/utils/parseDescription";
 
 interface Chapter {
   id: number;
@@ -191,10 +192,32 @@ export default function VideoList({ video, type }: VideoListProps) {
                 />
               </button>
             </div>
-            <p className={styles.description}>
-              {video.description ||
-                "[Description goes here but it is currently empty]"}
-            </p>
+            {video.description ? (
+              (() => {
+                const { title, intro, body } = parseDescription(
+                  video.description
+                );
+                return (
+                  <>
+                    {title && (
+                      <blockquote
+                        className={styles.title}
+                      >{`"${title}"`}</blockquote>
+                    )}
+                    {intro && <p className={styles.intro}>{intro}</p>}
+                    {body && (
+                      <p style={{ display: "none" }} className={styles.body}>
+                        {body}
+                      </p>
+                    )}
+                  </>
+                );
+              })()
+            ) : (
+              <p className={styles.description}>
+                [Description goes here but it is currently empty]
+              </p>
+            )}
           </div>
           {type === "program" && (
             <button

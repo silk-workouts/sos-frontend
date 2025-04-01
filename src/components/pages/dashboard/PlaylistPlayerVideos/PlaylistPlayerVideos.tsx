@@ -32,6 +32,7 @@ interface PlaylistPlayerVideosProps {
 	playlist_id: string;
 	userId: string;
 	setVideos: (arg1: PlayerVideo[]) => void;
+	updateVideoOrder: (newOrder: PlayerVideo[]) => void;
 }
 
 export default function PlaylistPlayerVideos({
@@ -44,6 +45,7 @@ export default function PlaylistPlayerVideos({
 	playlist_id,
 	userId,
 	setVideos,
+	updateVideoOrder,
 }: PlaylistPlayerVideosProps) {
 	const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>(
 		undefined
@@ -80,6 +82,9 @@ export default function PlaylistPlayerVideos({
 			const newPos = getVideoPosition(over.id);
 			const newVideos = arrayMove(videos, originalPos, newPos);
 			setVideos(newVideos);
+
+			// Call the update order function from VideoPlayer
+			updateVideoOrder(newVideos);
 
 			const currVideo = videos[originalPos];
 			updateVideoPosition(newPos + 1, currVideo.id);
