@@ -149,7 +149,7 @@ export default function PlayerPage() {
 			injectedDivs?.forEach((div) => {
 				div.style.padding = "0";
 				div.style.position = "static";
-				div.style.height = "100%";
+				// div.style.height = "100%";
 			});
 		};
 
@@ -193,9 +193,10 @@ export default function PlayerPage() {
 		}
 	};
 
-	// const activeVideo = mergedData.filter(
-	// 	(video) => video.id === activeChapterIndex
-	// )[0];
+	const activeVideo = mergedData.filter(
+		(video) => video.id === activeChapterIndex
+	)[0];
+	console.log(chapters);
 
 	return (
 		<div className={styles.container}>
@@ -210,18 +211,14 @@ export default function PlayerPage() {
 
 				<div className={styles.videoDetails}>
 					<h1 className={styles.playlistTitle}>[showcase name]</h1>
-
-					<h2 className={styles.activeVideoTitle}>
-						{/* {activeVideo.title.toLowerCase()} */}
-					</h2>
-
-					{/* <p className={styles.videoDescription}>{activeVideo.description}</p> */}
+					<h2 className={styles.activeVideoTitle}>[active Video title]</h2>
+					<p className={styles.videoDescription}>[active Video description]</p>
 				</div>
 			</section>
 
 			{/* 📜 Chapter List */}
 			<section className={styles.chapter}>
-				<h2 className={styles.chapterTitle}>More from [showcase name]</h2>
+				<h2 className={styles.chapterTitle}>Chapters</h2>
 				<ul className={styles.chapterList}>
 					{mergedData.map((item, index) => {
 						return (

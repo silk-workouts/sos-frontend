@@ -58,6 +58,7 @@
 	width: 100%;
 	aspect-ratio: 16 / 9;
 	border: 0.5px solid #b7b4b4;
+	position: relative;
 
 	@include desktop {
 		min-width: 50.9375rem;
