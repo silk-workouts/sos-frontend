@@ -194,7 +194,7 @@ export default function PlayerPage() {
 	const handleChapterClick = (
 		chapter: VideoItem,
 		index: number,
-		event: MouseEvent
+		event: React.MouseEvent<HTMLLIElement>
 	) => {
 		if (
 			event.target instanceof HTMLElement &&
