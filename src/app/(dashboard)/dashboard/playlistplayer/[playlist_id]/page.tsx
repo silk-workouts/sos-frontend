@@ -12,197 +12,269 @@ import styles from "./page.module.scss";
 import PlaylistPlayerVideos from "@/components/pages/dashboard/PlaylistPlayerVideos/PlaylistPlayerVideos";
 
 export interface PlayerVideo extends PlaylistVideo {
-	playlist_id: string;
-	progress_seconds: number;
+  playlist_id: string;
+  progress_seconds: number;
 }
 
 export default function PlaylistPlayerPage() {
-	const router = useRouter();
-	const { playlist_id } = useParams<{ playlist_id: string }>()!;
-	const searchParams = useSearchParams()!;
-	const { userId } = usePlaylists();
+  const router = useRouter();
+  const { playlist_id } = useParams<{ playlist_id: string }>()!;
+  const searchParams = useSearchParams()!;
+  const { userId } = usePlaylists();
 
-	const searchParamsVideoId = useSearchParams()!;
-	const video_id =
-		searchParamsVideoId.get("video_id") ??
-		(() => {
-			throw new Error("Missing video_id param");
-		})();
-	const progress_seconds = Number(searchParams.get("progress") ?? "0");
+  const searchParamsVideoId = useSearchParams()!;
+  const video_id =
+    searchParamsVideoId.get("video_id") ??
+    (() => {
+      throw new Error("Missing video_id param");
+    })();
+  const progress_seconds = Number(searchParams.get("progress") ?? "0");
 
-	const [playlist, setPlaylist] = useState<Playlist | null>(null);
-	const [videos, setVideos] = useState<PlayerVideo[]>([]);
-	const [activeVideo, setActiveVideo] = useState<PlayerVideo | null>(null);
-	const [savedVideos, setSavedVideos] = useState<{ [key: string]: boolean }>(
-		{}
-	);
-	const playerContainerRef = useRef<HTMLDivElement | null>(null);
-	const vimeoPlayerRef = useRef<Player | null>(null);
-	const lastUpdateTimeRef = useRef<number>(0);
+  const [playlist, setPlaylist] = useState<Playlist | null>(null);
+  const [videos, setVideos] = useState<PlayerVideo[]>([]);
+  const [activeVideo, setActiveVideo] = useState<PlayerVideo | null>(null);
+  const [savedVideos, setSavedVideos] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+  const playerContainerRef = useRef<HTMLDivElement | null>(null);
+  const vimeoPlayerRef = useRef<Player | null>(null);
+  const lastUpdateTimeRef = useRef<number>(0);
+  const videosRef = useRef<PlayerVideo[]>([]);
 
-	//  Fetch playlist and set initial video
-	useEffect(() => {
-		async function fetchPlaylist() {
-			try {
-				const res = await axios.get(`/api/playlists/${playlist_id}`, {
-					headers: { "x-user-id": userId },
-				});
+  useEffect(() => {
+    videosRef.current = videos;
+  }, [videos]);
 
-				setPlaylist(res.data.playlist);
-				setVideos(res.data.videos);
+  //  Fetch playlist and set initial video
+  useEffect(() => {
+    async function fetchPlaylist() {
+      try {
+        const res = await axios.get(`/api/playlists/${playlist_id}`, {
+          headers: { "x-user-id": userId },
+        });
 
-				const startingVideo =
-					res.data.videos.find((v: PlayerVideo) => String(v.id) === video_id) ||
-					res.data.videos[0];
+        setPlaylist(res.data.playlist);
+        setVideos(res.data.videos);
 
-				setActiveVideo({ ...startingVideo, progress_seconds });
-			} catch (err) {
-				console.error("❌ Failed to fetch playlist:", err);
-			}
-		}
+        const startingVideo =
+          res.data.videos.find((v: PlayerVideo) => String(v.id) === video_id) ||
+          res.data.videos[0];
 
-		if (userId) fetchPlaylist();
-	}, [playlist_id, userId]);
+        setActiveVideo({ ...startingVideo, progress_seconds });
+      } catch (err) {
+        console.error("❌ Failed to fetch playlist:", err);
+      }
+    }
 
-	// Setup / Update player
-	useEffect(() => {
-		if (!playerContainerRef.current || !activeVideo) return;
+    if (userId) fetchPlaylist();
+  }, [playlist_id, userId]);
 
-		if (vimeoPlayerRef.current) {
-			vimeoPlayerRef.current.destroy().catch(console.error);
-			vimeoPlayerRef.current = null;
-		}
+  // Setup / Update player
+  useEffect(() => {
+    if (!playerContainerRef.current || !activeVideo) return;
 
-		const player = new Player(playerContainerRef.current, {
-			id: activeVideo.vimeo_video_id,
-			responsive: true,
-			autoplay: true,
-		});
+    if (vimeoPlayerRef.current) {
+      vimeoPlayerRef.current.destroy().catch(console.error);
+      vimeoPlayerRef.current = null;
+    }
 
-		vimeoPlayerRef.current = player;
+    const player = new Player(playerContainerRef.current, {
+      id: activeVideo.vimeo_video_id,
+      responsive: true,
+      autoplay: true,
+    });
 
-		player
-			.ready()
-			.then(() => {
-				if (activeVideo.progress_seconds > 0) {
-					player
-						.setCurrentTime(activeVideo.progress_seconds)
-						.catch(console.error);
-				}
-				lastUpdateTimeRef.current = 0;
-				attachPlayerListeners(player);
-			})
-			.catch((err) => console.error("❌ Player.ready() failed:", err));
-	}, [activeVideo]);
+    vimeoPlayerRef.current = player;
 
-	function attachPlayerListeners(player: Player) {
-		player.on("timeupdate", async (data) => {
-			const currentTime = Math.floor(data.seconds);
+    player
+      .ready()
+      .then(() => {
+        if (activeVideo.progress_seconds > 0) {
+          player
+            .setCurrentTime(activeVideo.progress_seconds)
+            .catch(console.error);
+        }
+        lastUpdateTimeRef.current = 0;
+        attachPlayerListeners(player);
+      })
+      .catch((err) => console.error("❌ Player.ready() failed:", err));
+  }, [activeVideo]);
 
-			if (currentTime - lastUpdateTimeRef.current >= 5) {
-				lastUpdateTimeRef.current = currentTime;
+  useEffect(() => {
+    async function handleBeforeUnload(event: BeforeUnloadEvent) {
+      console.log(
+        "🔄 Page refresh or close detected. Updating URL with latest progress."
+      );
 
-				try {
-					await axios.put(
-						"/api/playlists/progress",
-						{
-							playlist_id,
-							video_id: activeVideo?.id,
-							progress_seconds: currentTime,
-						},
-						{ headers: { "x-user-id": userId } }
-					);
-				} catch (err) {
-					console.error("❌ Failed to update progress:", err);
-				}
-			}
-		});
+      try {
+        // Fetch the latest progress from the API
+        const res = await axios.get(
+          `/api/playlists/progress?playlist_id=${playlist_id}`,
+          { headers: { "x-user-id": userId } }
+        );
 
-		player.on("ended", async () => {
-			if (activeVideo) {
-				await saveProgress(activeVideo.id, lastUpdateTimeRef.current);
-				const nextIndex = videos.findIndex((v) => v.id === activeVideo.id) + 1;
-				if (nextIndex < videos.length) {
-					const nextVideo = videos[nextIndex];
-					setActiveVideo({ ...nextVideo, progress_seconds: 0 });
-					lastUpdateTimeRef.current = 0;
-				}
-			}
-		});
-	}
+        const latestProgress = res.data.progress_seconds;
+        const latestVideoId = res.data.video_id;
 
-	async function handleVideoClick(video: PlayerVideo) {
-		if (activeVideo) {
-			await saveProgress(activeVideo.id, lastUpdateTimeRef.current);
-		}
-		setActiveVideo({ ...video, progress_seconds: 0 });
-		lastUpdateTimeRef.current = 0;
-	}
+        console.log(
+          "📥 Latest progress fetched before unload:",
+          latestProgress
+        );
 
-	async function saveProgress(videoId: number, progress: number) {
-		if (!videoId || progress <= 0) return;
-		try {
-			await axios.put(
-				"/api/playlists/progress",
-				{
-					playlist_id,
-					video_id: videoId,
-					progress_seconds: progress,
-				},
-				{ headers: { "x-user-id": userId } }
-			);
-		} catch (err) {
-			console.error("❌ Failed to save progress:", err);
-		}
-	}
+        // Update the URL with the latest video ID and progress
+        const newUrl = `/dashboard/playlistplayer/${playlist_id}?video_id=${latestVideoId}&progress=${latestProgress}`;
+        console.log("🌐 Redirecting to latest progress URL:", newUrl);
 
-	function handleBookmark(videoId: number) {
-		setSavedVideos((prev) => {
-			const isSaved = !prev[videoId];
-			return { ...prev, [videoId]: isSaved };
-		});
-	}
+        // Prevent the default unload to allow redirect
+        event.preventDefault();
+        event.returnValue = "";
+        window.location.replace(newUrl);
+      } catch (err) {
+        console.error("❌ Failed to update URL before unload:", err);
+      }
+    }
 
-	if (!playlist || !activeVideo) return <div>Loading...</div>;
+    // Attach event listener
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
-	const activeVideoPosition =
-		videos.findIndex((video) => video.id === activeVideo.id) + 1;
+    return () => {
+      // Clean up event listener on unmount
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [playlist_id, userId]);
 
-	return (
-		<div className={styles.pageContainer}>
-			<div className={styles.contentArea}>
-				<button
-					onClick={() => router.back()}
-					className={styles.backButton}
-					aria-label="Exit workout"
-				>
-					<Image src={backArrowIcon} alt="" aria-hidden="true" />{" "}
-					<span>Exit workout</span>
-				</button>
+  function attachPlayerListeners(player: Player) {
+    player.on("timeupdate", async (data) => {
+      const currentTime = Math.floor(data.seconds);
 
-				<div ref={playerContainerRef} className={styles.playerContainer} />
+      if (currentTime - lastUpdateTimeRef.current >= 5) {
+        lastUpdateTimeRef.current = currentTime;
 
-				<div className={styles.videoDetails}>
-					<h1 className={styles.playlistTitle}>{playlist.title}</h1>
+        try {
+          await axios.put(
+            "/api/playlists/progress",
+            {
+              playlist_id,
+              video_id: activeVideo?.id,
+              progress_seconds: currentTime,
+            },
+            { headers: { "x-user-id": userId } }
+          );
+        } catch (err) {
+          console.error("❌ Failed to update progress:", err);
+        }
+      }
+    });
 
-					<h2 className={styles.activeVideoTitle}>
-						{activeVideo.title.toLowerCase()}
-					</h2>
+    player.on("ended", async () => {
+      if (activeVideo) {
+        await saveProgress(activeVideo.id, lastUpdateTimeRef.current);
 
-					<p className={styles.videoDescription}>{activeVideo.description}</p>
-				</div>
-			</div>
-			<PlaylistPlayerVideos
-				videos={videos}
-				handleVideoClick={handleVideoClick}
-				handleBookmark={handleBookmark}
-				activeVideo={activeVideo}
-				activeVideoPosition={activeVideoPosition}
-				savedVideos={savedVideos}
-				playlist_id={playlist_id}
-				userId={userId}
-				setVideos={setVideos}
-			/>
-		</div>
-	);
+        // Find the current index of the active video in the updated videos list
+        const currentVideos = videosRef.current;
+
+        // Find the current index of the active video in the latest video order
+        const currentIndex = currentVideos.findIndex(
+          (v) => v.id === activeVideo.id
+        );
+
+        // Determine the next video based on the updated order
+        const nextVideo =
+          currentVideos[(currentIndex + 1) % currentVideos.length];
+
+        // Only update if the next video exists (avoid looping back if not desired)
+        if (nextVideo) {
+          setActiveVideo({ ...nextVideo, progress_seconds: 0 });
+          lastUpdateTimeRef.current = 0;
+        }
+      }
+    });
+  }
+
+  async function handleVideoClick(video: PlayerVideo) {
+    if (activeVideo) {
+      await saveProgress(activeVideo.id, lastUpdateTimeRef.current);
+    }
+    setActiveVideo({ ...video, progress_seconds: 0 });
+    lastUpdateTimeRef.current = 0;
+  }
+
+  async function saveProgress(videoId: number, progress: number) {
+    console.log(
+      "💾 Attempting to save progress: Video ID:",
+      videoId,
+      "Progress:",
+      progress
+    );
+
+    if (!videoId || progress <= 0) return;
+    try {
+      await axios.put(
+        "/api/playlists/progress",
+        {
+          playlist_id,
+          video_id: videoId,
+          progress_seconds: progress,
+        },
+        { headers: { "x-user-id": userId } }
+      );
+    } catch (err) {
+      console.error("❌ Failed to save progress:", err);
+    }
+  }
+
+  function handleBookmark(videoId: number) {
+    setSavedVideos((prev) => {
+      const isSaved = !prev[videoId];
+      return { ...prev, [videoId]: isSaved };
+    });
+  }
+
+  if (!playlist || !activeVideo) return <div>Loading...</div>;
+
+  const activeVideoPosition =
+    videos.findIndex((video) => video.id === activeVideo.id) + 1;
+
+  function updateVideoOrder(newOrder: PlayerVideo[]) {
+    setVideos(newOrder);
+  }
+
+  return (
+    <div className={styles.pageContainer}>
+      <div className={styles.contentArea}>
+        <button
+          onClick={() => router.back()}
+          className={styles.backButton}
+          aria-label="Exit workout"
+        >
+          <Image src={backArrowIcon} alt="" aria-hidden="true" />{" "}
+          <span>Exit workout</span>
+        </button>
+
+        <div ref={playerContainerRef} className={styles.playerContainer} />
+
+        <div className={styles.videoDetails}>
+          <h1 className={styles.playlistTitle}>{playlist.title}</h1>
+
+          <h2 className={styles.activeVideoTitle}>
+            {activeVideo.title.toLowerCase()}
+          </h2>
+
+          <p className={styles.videoDescription}>{activeVideo.description}</p>
+        </div>
+      </div>
+      <PlaylistPlayerVideos
+        videos={videos}
+        handleVideoClick={handleVideoClick}
+        handleBookmark={handleBookmark}
+        activeVideo={activeVideo}
+        activeVideoPosition={activeVideoPosition}
+        savedVideos={savedVideos}
+        playlist_id={playlist_id}
+        userId={userId}
+        setVideos={setVideos}
+        updateVideoOrder={updateVideoOrder}
+      />
+    </div>
+  );
 }
