@@ -16,6 +16,14 @@
 		padding: 0.5rem 1rem;
 		border-radius: 1rem;
 
+		&.player {
+			padding: 0.5rem;
+
+			@include desktop {
+				border-radius: 0;
+			}
+		}
+
 		@include tablet {
 			padding: 0.5rem 1.5rem;
 			gap: 1rem;
@@ -29,6 +37,8 @@
 	&__thumbnail-container {
 		width: 10rem;
 		aspect-ratio: 16 / 9;
+		background-color: rgba($color-black, 0.05);
+		border-radius: 0.625rem;
 		position: relative;
 		transition: all 0.3s ease-in-out;
 

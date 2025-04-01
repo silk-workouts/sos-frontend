@@ -7,6 +7,7 @@ import Player from "@vimeo/player";
 import Video from "@/components/pages/dashboard/Video/Video";
 import { Chapter } from "../../[continuous_video_name]/[continuous_video_id]/videos/page";
 import styles from "./page.module.scss";
+import axios from "axios";
 
 interface VideoThumbnails {
 	chapter_id: string;
@@ -37,7 +38,12 @@ export default function PlayerPage() {
 		? parseInt(searchParams.get("start_time") as string, 10)
 		: 0;
 	const autoplay = searchParams.get("autoplay") === "1";
-
+	const [continuousVideo, setContinuousVideo] = useState({
+		continuous_video_id: "",
+		continuous_video_title: "",
+		id: 0,
+		name: "",
+	});
 	const [chapters, setChapters] = useState<Chapter[]>([]);
 	const [videoThumbnails, setVideoThumbnails] = useState<VideoThumbnails[]>([]);
 	const [activeChapterIndex, setActiveChapterIndex] = useState<number | null>(
@@ -47,20 +53,23 @@ export default function PlayerPage() {
 
 	const playerContainerRef = useRef<HTMLDivElement | null>(null);
 	const vimeoPlayerRef = useRef<Player | null>(null);
-	//  Fetch chapters
+
+	//  Fetch chapters & continuous video
 	useEffect(() => {
-		async function fetchChapters() {
+		async function fetchData() {
 			try {
-				const res = await fetch(
-					`/api/chapters?continuous_vimeo_id=${continuous_vimeo_id}`
-				);
-				const data = await res.json();
-				setChapters(data);
+				const [chapterRes, continuosRes] = await Promise.all([
+					axios.get(`/api/chapters?continuous_vimeo_id=${continuous_vimeo_id}`),
+					axios.get(`/api/continuous-videos/${continuous_vimeo_id}`),
+				]);
+
+				setChapters(chapterRes.data);
+				setContinuousVideo(continuosRes.data.continuousVideo);
 			} catch (error) {
-				console.error("Failed to load chapters:", error);
+				console.error("Failed to load chapters & continuous video:", error);
 			}
 		}
-		fetchChapters();
+		fetchData();
 	}, [continuous_vimeo_id]);
 
 	//  Fetch video thumbnails
@@ -149,7 +158,7 @@ export default function PlayerPage() {
 			injectedDivs?.forEach((div) => {
 				div.style.padding = "0";
 				div.style.position = "static";
-				// div.style.height = "100%";
+				div.style.height = "100%";
 			});
 		};
 
@@ -182,7 +191,20 @@ export default function PlayerPage() {
 		};
 	});
 
-	const handleChapterClick = (chapter: VideoItem, index: number) => {
+	const handleChapterClick = (
+		chapter: VideoItem,
+		index: number,
+		event: MouseEvent
+	) => {
+		if (
+			event.target instanceof HTMLElement &&
+			(event.target.closest("button") ||
+				event.target.closest("input") ||
+				event.target.closest("label"))
+		) {
+			return;
+		}
+
 		if (vimeoPlayerRef.current) {
 			vimeoPlayerRef.current.setCurrentTime(chapter.start_time).then(() => {
 				vimeoPlayerRef.current?.play().catch((err) => {
@@ -192,11 +214,6 @@ export default function PlayerPage() {
 			});
 		}
 	};
-
-	const activeVideo = mergedData.filter(
-		(video) => video.id === activeChapterIndex
-	)[0];
-	console.log(chapters);
 
 	return (
 		<div className={styles.container}>
@@ -210,9 +227,19 @@ export default function PlayerPage() {
 				<div ref={playerContainerRef} className={styles.playerContainer} />
 
 				<div className={styles.videoDetails}>
-					<h1 className={styles.playlistTitle}>[showcase name]</h1>
-					<h2 className={styles.activeVideoTitle}>[active Video title]</h2>
-					<p className={styles.videoDescription}>[active Video description]</p>
+					<h1 className={styles.playlistTitle}>{continuousVideo.name}</h1>
+					{activeChapterIndex && activeChapterIndex >= 0 && (
+						<>
+							<h2 className={styles.activeVideoTitle}>
+								{mergedData[
+									activeChapterIndex
+								].corresponding_video_title.toLowerCase()}
+							</h2>
+							<p className={styles.videoDescription}>
+								[active Video description]
+							</p>
+						</>
+					)}
 				</div>
 			</section>
 
@@ -224,7 +251,7 @@ export default function PlayerPage() {
 						return (
 							<li
 								key={item.id || index}
-								onClick={() => handleChapterClick(item, index)}
+								onClick={(event) => handleChapterClick(item, index, event)}
 								className={`${styles.chapterItem} ${
 									activeChapterIndex === index ? styles.activeChapter : ""
 								}`}

@@ -33,11 +33,10 @@ interface MergedChapterVideo extends ChapterVideo {
 export default function SingleContinuousVideoPage() {
 	const router = useRouter();
 
-	const { continuous_video_name, continuous_video_id } =
-		useParams<{
-			continuous_video_name: string;
-			continuous_video_id: string;
-		}>() || {};
+	const { continuous_video_name, continuous_video_id } = useParams<{
+		continuous_video_name: string;
+		continuous_video_id: string;
+	}>()!;
 
 	const [loading, setLoading] = useState(true);
 	const [continuousVideo, setContinuousVideo] = useState<{
@@ -49,8 +48,9 @@ export default function SingleContinuousVideoPage() {
 	const [chapters, setChapters] = useState<Chapter[]>([]);
 	const [chapterVideos, setChapterVideos] = useState<ChapterVideo[]>([]);
 
-	const continuousVideoName =
-		continuous_video_name?.replaceAll("-", " ") || "Program";
+	const continuousVideoName = continuous_video_name
+		.replaceAll("-", " ")
+		.replace("100", "100%");
 
 	useEffect(() => {
 		async function fetchData() {

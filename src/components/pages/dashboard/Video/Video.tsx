@@ -33,7 +33,9 @@ export default function Video({
 
 	return (
 		<article
-			className={`${styles.card} ${display === "row" ? styles.row : ""}`}
+			className={`${styles.card} ${display === "row" ? styles.row : ""}  ${
+				type === "player" ? styles.player : ""
+			}`}
 		>
 			<Link
 				href={path}
@@ -43,9 +45,7 @@ export default function Video({
 			>
 				<Image
 					src={
-						chapterVideo.thumbnail_url?.startsWith("http")
-							? chapterVideo.thumbnail_url
-							: "/assets/images/default-thumbnail.jpg"
+						chapterVideo.thumbnail_url || "/assets/images/default-thumbnail.jpg"
 					}
 					className={styles.thumbnail}
 					alt={`A thumbnail image for ${chapterVideo.title} workout`}

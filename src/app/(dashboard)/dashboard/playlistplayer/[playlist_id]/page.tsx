@@ -240,7 +240,7 @@ export default function PlaylistPlayerPage() {
 	}
 
 	return (
-		<div className={styles.pageContainer}>
+		<div className={styles.container}>
 			<div className={styles.contentArea}>
 				<button
 					onClick={() => router.back()}
