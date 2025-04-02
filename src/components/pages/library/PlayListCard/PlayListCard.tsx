@@ -38,7 +38,6 @@ export default function PlayListCard({
         return;
       }
 
-      console.log("id: ", playlist.id);
       try {
         if (playlist.type === "savedProgram") {
           const response = await axios.get(

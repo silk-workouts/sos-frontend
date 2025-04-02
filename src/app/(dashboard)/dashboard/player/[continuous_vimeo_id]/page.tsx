@@ -43,8 +43,7 @@ export default function PlayerPage() {
   const [continuousVideo, setContinuousVideo] = useState({
     continuous_video_id: "",
     continuous_video_title: "",
-    id: 0,
-    name: "",
+    description: "",
     video_description: "",
   });
   const [chapters, setChapters] = useState<Chapter[]>([]);
@@ -223,10 +222,7 @@ export default function PlayerPage() {
     }
   };
 
-  console.log("MERGED", mergedData);
-
   function formatSilkTitle(continuousTitle: string): string {
-    console.log("TITLE: ", continuousTitle);
     const numberMap: Record<string, string> = {
       one: "1",
       two: "2",
@@ -247,25 +243,21 @@ export default function PlayerPage() {
 
     // Normalize the input by trimming and converting to lowercase
     const normalizedTitle = continuousTitle.trim().toLowerCase();
-    console.log("Normalized TITLE:", normalizedTitle);
 
     // Check for 'Silk Continuous' using lowercase comparison
     if (normalizedTitle.includes("silk continuous")) {
-      console.log("fired 1");
       return continuousTitle.replace(/silk continuous/i, "").trim();
     } else {
-      console.log(`didn't work: ${normalizedTitle}`);
+      console.error(`title no working: ${normalizedTitle}`);
     }
 
     // Check for 'Silk Workout' using lowercase comparison
     if (normalizedTitle.includes("silk workout")) {
-      console.log("fired 2");
       const words = continuousTitle
         .replace(/silk workout/i, "")
         .trim()
         .split(" ");
       const lastWord = words[words.length - 1].toLowerCase();
-      console.log("Last word after split:", lastWord);
 
       if (numberMap[lastWord]) {
         words[words.length - 1] = numberMap[lastWord];
@@ -292,7 +284,9 @@ export default function PlayerPage() {
         <div className={styles.videoDetails}>
           <h1 className={styles.playlistTitle}>
             {continuousVideo.continuous_video_title
-              ? formatSilkTitle(continuousVideo.continuous_video_title)
+              ? formatSilkTitle(
+                  continuousVideo.continuous_video_title
+                ).toLowerCase()
               : "Loading..."}
           </h1>
           {activeChapterIndex !== null && activeChapterIndex >= 0 && (
