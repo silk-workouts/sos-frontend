@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 import bookmarkIcon from "/public/assets/icons/bookmark-fill.svg";
 import bookmarkUnsavedIcon from "/public/assets/icons/bookmark-unsaved.svg";
@@ -7,9 +8,9 @@ import { PlayerVideo } from "src/app/(dashboard)/dashboard/playlistplayer/[playl
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import styles from "./SortablePlaylistPlayerVideo.module.scss";
-import { useState } from "react";
 import AddPlaylistModal from "../AddPlaylistModal/AddPlaylistModal";
+import { usePlaylists } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
+import styles from "./SortablePlaylistPlayerVideo.module.scss";
 
 interface SortableVideoProps {
 	video: PlayerVideo;
@@ -17,8 +18,6 @@ interface SortableVideoProps {
 	activeVideo: PlayerVideo;
 	handleVideoClick: (arg1: PlayerVideo) => Promise<void>;
 	videos: PlayerVideo[];
-	handleBookmark: (arg1: number) => void;
-	savedVideos: { [key: string]: boolean };
 }
 
 export default function SortablePlaylistPlayerVideo({
@@ -27,10 +26,9 @@ export default function SortablePlaylistPlayerVideo({
 	activeVideo,
 	handleVideoClick,
 	videos,
-	handleBookmark,
-	savedVideos,
 }: SortableVideoProps) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const { playlistVideoMap } = usePlaylists();
 
 	const { listeners, setNodeRef, setActivatorNodeRef, transform, transition } =
 		useSortable({ id: video.id, data: { video } });
@@ -101,14 +99,17 @@ export default function SortablePlaylistPlayerVideo({
 			<button
 				onClick={(e) => {
 					e.stopPropagation();
-					handleBookmark(video.id);
 					setIsModalOpen(true);
 				}}
 				className={styles.bookmarkButton}
 				aria-label="Save video"
 			>
 				<Image
-					src={savedVideos[video.id] ? bookmarkIcon : bookmarkUnsavedIcon}
+					src={
+						playlistVideoMap[video.vimeo_video_id]
+							? bookmarkIcon
+							: bookmarkUnsavedIcon
+					}
 					alt="Bookmark"
 					className={styles.icon}
 				/>

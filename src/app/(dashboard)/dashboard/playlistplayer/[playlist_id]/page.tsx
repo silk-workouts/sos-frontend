@@ -33,9 +33,6 @@ export default function PlaylistPlayerPage() {
 	const [playlist, setPlaylist] = useState<Playlist | null>(null);
 	const [videos, setVideos] = useState<PlayerVideo[]>([]);
 	const [activeVideo, setActiveVideo] = useState<PlayerVideo | null>(null);
-	const [savedVideos, setSavedVideos] = useState<{ [key: string]: boolean }>(
-		{}
-	);
 	const playerContainerRef = useRef<HTMLDivElement | null>(null);
 	const vimeoPlayerRef = useRef<Player | null>(null);
 	const lastUpdateTimeRef = useRef<number>(0);
@@ -223,13 +220,6 @@ export default function PlaylistPlayerPage() {
 		}
 	}
 
-	function handleBookmark(videoId: number) {
-		setSavedVideos((prev) => {
-			const isSaved = !prev[videoId];
-			return { ...prev, [videoId]: isSaved };
-		});
-	}
-
 	if (!playlist || !activeVideo) return <div>Loading...</div>;
 
 	const activeVideoPosition =
@@ -266,10 +256,8 @@ export default function PlaylistPlayerPage() {
 			<PlaylistPlayerVideos
 				videos={videos}
 				handleVideoClick={handleVideoClick}
-				handleBookmark={handleBookmark}
 				activeVideo={activeVideo}
 				activeVideoPosition={activeVideoPosition}
-				savedVideos={savedVideos}
 				playlist_id={playlist_id}
 				userId={userId}
 				setVideos={setVideos}

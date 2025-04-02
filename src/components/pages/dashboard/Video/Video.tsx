@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import bookmarkIcon from "public/assets/icons/bookmark-fill.svg";
 import bookmarkUnsaved from "public/assets/icons/bookmark-unsaved.svg";
 import AddPlaylistModal from "../AddPlaylistModal/AddPlaylistModal";
 import { ChapterVideo } from "src/types/video";
+import { usePlaylists } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
 import styles from "./Video.module.scss";
 
 interface VideoProps {
@@ -20,6 +22,7 @@ export default function Video({
 	type,
 }: VideoProps) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const { playlistVideoMap } = usePlaylists();
 
 	const formatDuration = (seconds: number) => {
 		const minutes = Math.floor(seconds / 60);
@@ -75,7 +78,11 @@ export default function Video({
 					aria-label="Add Menu"
 				>
 					<Image
-						src={bookmarkUnsaved}
+						src={
+							playlistVideoMap[chapterVideo.real_vimeo_video_id]
+								? bookmarkIcon
+								: bookmarkUnsaved
+						}
 						alt="Options"
 						className={`${styles.icon}  ${
 							type === "player" ? styles.player : ""

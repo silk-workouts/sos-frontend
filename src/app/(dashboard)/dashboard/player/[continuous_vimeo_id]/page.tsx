@@ -158,7 +158,6 @@ export default function PlayerPage() {
 			injectedDivs?.forEach((div) => {
 				div.style.padding = "0";
 				div.style.position = "static";
-				div.style.height = "100%";
 			});
 		};
 
