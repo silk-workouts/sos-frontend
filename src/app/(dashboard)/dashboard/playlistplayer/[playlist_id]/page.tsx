@@ -243,7 +243,7 @@ export default function PlaylistPlayerPage() {
 		<div className={styles.container}>
 			<div className={styles.contentArea}>
 				<button
-					onClick={() => router.back()}
+					onClick={() => router.push(`/dashboard/library/${playlist.id}`)}
 					className={styles.backButton}
 					aria-label="Exit workout"
 				>
