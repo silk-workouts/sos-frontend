@@ -16,9 +16,17 @@ export default function AddPlaylistModal({
 	setIsOpen,
 	video_id,
 }: PlaylistModalProps) {
-	const { playlists, loading, error, refreshPlaylists, userId } =
-		usePlaylists();
-	const [selectedPlaylists, setSelectedPlaylists] = useState<string[]>([]);
+	const {
+		playlists,
+		playlistVideoMap,
+		loading,
+		error,
+		refreshPlaylists,
+		userId,
+	} = usePlaylists();
+	const [selectedPlaylists, setSelectedPlaylists] = useState<string[]>(
+		playlistVideoMap[video_id] ? playlistVideoMap[video_id] : []
+	);
 	const [isOpenNewPlaylistModal, setIsOpenNewPlaylistModal] = useState(false);
 
 	function handleSelectCheckbox(playlistId: string) {
@@ -30,20 +38,39 @@ export default function AddPlaylistModal({
 	}
 
 	async function handleSavePlaylist() {
+		const prevSavedPlaylists = playlistVideoMap[video_id]
+			? playlistVideoMap[video_id]
+			: [];
+
 		try {
-			if (selectedPlaylists.length > 0) {
-				selectedPlaylists.map(async (playlistId) => {
-					await axios.post(
-						`/api/playlists/${playlistId}/videos`,
-						{
-							vimeo_video_id: video_id,
-						},
-						{ headers: { "x-user-id": userId } }
+			if (prevSavedPlaylists.length > 0 || selectedPlaylists.length > 0) {
+				//Save video to playlists that were not previously saved to
+				const saveRequests = selectedPlaylists
+					.filter((playlistId) => !prevSavedPlaylists.includes(playlistId))
+					.map((playlistId) =>
+						axios.post(
+							`/api/playlists/${playlistId}/videos`,
+							{
+								vimeo_video_id: video_id,
+							},
+							{ headers: { "x-user-id": userId } }
+						)
 					);
-				});
+
+				//Delete video from playlists that were previously saved to but are now unchecked
+				// const deleteRequests = prevSavedPlaylists
+				// 	.filter((playlistId) => !selectedPlaylists.includes(playlistId))
+				// 	.map((playlistId) =>
+				// 		axios.delete(`/api/playlists/${playlistId}/videos/${video_id}`, {
+				// 			headers: { "x-user-id": userId },
+				// 		})
+				// 	);
+
+				await Promise.all([...saveRequests /**...deleteRequests */]);
+
 				refreshPlaylists();
-				setIsOpen(false);
 			}
+			setIsOpen(false);
 		} catch (error) {
 			console.error(`Unable to save to playlists: ${error}`);
 		}
