@@ -25,10 +25,8 @@ import styles from "./PlaylistPlayerVideos.module.scss";
 interface PlaylistPlayerVideosProps {
 	videos: PlayerVideo[];
 	handleVideoClick: (arg1: PlayerVideo) => Promise<void>;
-	handleBookmark: (arg1: number) => void;
 	activeVideo: PlayerVideo;
 	activeVideoPosition: number;
-	savedVideos: { [key: string]: boolean };
 	playlist_id: string;
 	userId: string;
 	setVideos: (arg1: PlayerVideo[]) => void;
@@ -38,10 +36,8 @@ interface PlaylistPlayerVideosProps {
 export default function PlaylistPlayerVideos({
 	videos,
 	handleVideoClick,
-	handleBookmark,
 	activeVideo,
 	activeVideoPosition,
-	savedVideos,
 	playlist_id,
 	userId,
 	setVideos,
@@ -168,8 +164,6 @@ export default function PlaylistPlayerVideos({
 								activeVideo={activeVideo}
 								handleVideoClick={handleVideoClick}
 								videos={videos}
-								handleBookmark={handleBookmark}
-								savedVideos={savedVideos}
 							/>
 						))}
 					</SortableContext>
