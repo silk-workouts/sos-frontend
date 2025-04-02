@@ -32,7 +32,13 @@ export default function PlayListCard({
 
   useEffect(() => {
     async function getPlaylistData() {
-      setLoading(true);
+      if (!playlist?.id || playlist.id === "null") {
+        console.warn("Skipping API call: Playlist ID is null or undefined");
+        setLoading(false); // Set loading to false to prevent indefinite loading
+        return;
+      }
+
+      console.log("id: ", playlist.id);
       try {
         if (playlist.type === "savedProgram") {
           const response = await axios.get(

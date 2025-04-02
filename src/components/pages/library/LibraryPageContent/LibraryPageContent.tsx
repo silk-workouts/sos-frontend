@@ -35,7 +35,7 @@ export default function LibraryPageContent({
       {combinedPlaylists.map((playlist) => {
         return (
           <li
-            key={`${playlist.type}-${playlist.id}`}
+            key={`${playlist.title}-${playlist.id}`}
             className={styles.list__item}
           >
             <PlayListCard

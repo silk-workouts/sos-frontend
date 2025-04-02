@@ -215,9 +215,7 @@ export default function VideoList({ video, type }: VideoListProps) {
                 );
               })()
             ) : (
-              <p className={styles.description}>
-                [Description goes here but it is currently empty]
-              </p>
+              <p className={`${styles.description}`}>{video.description}</p>
             )}
           </div>
           {type === "program" && (

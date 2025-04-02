@@ -300,7 +300,7 @@ export default function PlayerPage() {
               <h2 className={styles.activeVideoTitle}>
                 {formatSilkTitle(
                   mergedData[activeChapterIndex].corresponding_video_title
-                )}
+                ).toLowerCase()}
               </h2>
               <p
                 className={styles.videoDescription}
