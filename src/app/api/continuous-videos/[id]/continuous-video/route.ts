@@ -18,7 +18,22 @@ export async function GET(req: NextRequest) {
       SELECT 
         continuous_video_id, 
         continuous_video_title,
-        description
+        (
+          SELECT description
+          FROM video_mappings AS vm
+          WHERE vm.continuous_video_id = video_mappings.continuous_video_id
+            AND vm.description IS NOT NULL
+          ORDER BY created_at ASC
+          LIMIT 1
+        ) AS description,
+        (
+          SELECT video_description
+          FROM video_mappings AS vm
+          WHERE vm.continuous_video_id = video_mappings.continuous_video_id
+            AND vm.video_description IS NOT NULL
+          ORDER BY created_at ASC
+          LIMIT 1
+        ) AS video_description
       FROM video_mappings
       WHERE continuous_video_id = ?
       LIMIT 1
@@ -26,12 +41,12 @@ export async function GET(req: NextRequest) {
       [continuous_video_id]
     );
 
-    if ((metaRows as any[]).length === 0) {
-      return NextResponse.json(
-        { error: "Continuous video not found" },
-        { status: 404 }
-      );
-    }
+    // if ((metaRows as any[]).length === 0) {
+    //   return NextResponse.json(
+    //     { error: "Continuous video not found" },
+    //     { status: 404 }
+    //   );
+    // }
 
     const continuousVideo = (metaRows as any[])[0];
 
@@ -44,6 +59,7 @@ export async function GET(req: NextRequest) {
         chapter_title,
         corresponding_video_title,
         real_vimeo_video_id,
+        video_description,
         thumbnail_url,
         created_at
       FROM video_mappings
