@@ -73,7 +73,8 @@ export default function AddPlaylistModal({
 
                 // Find the video with the matching vimeo_video_id
                 const video = response.data.videos.find(
-                  (v) => v.vimeo_video_id === parseInt(video_id)
+                  (v: { vimeo_video_id: number }) =>
+                    v.vimeo_video_id === parseInt(video_id)
                 );
 
                 if (video) {
