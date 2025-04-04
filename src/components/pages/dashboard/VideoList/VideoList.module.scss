@@ -184,12 +184,9 @@
 			height: 2.5rem;
 		}
 
-		&--disabled {
-			opacity: 0.3;
-			pointer-events: none;
-		}
-
 		&:hover {
+			border-width: 2px;
+
 			.scrollbar__icon {
 				transform: translateX(-0.2rem);
 
@@ -197,6 +194,11 @@
 					transform: rotate(180deg) translateX(-0.2rem);
 				}
 			}
+		}
+
+		&--disabled {
+			opacity: 0.3;
+			pointer-events: none;
 		}
 	}
 
