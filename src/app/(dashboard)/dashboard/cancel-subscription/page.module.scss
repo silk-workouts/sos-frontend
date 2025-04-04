@@ -1,11 +1,26 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/_mixins" as *;
+
 .container {
-  max-width: 500px;
-  margin: 40px auto;
+  // margin: 40px auto;
   padding: 24px;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__modal {
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .title {
@@ -16,49 +31,116 @@
 }
 
 .description {
+  width: 100%;
   color: #666;
   font-size: 1rem;
   margin-bottom: 20px;
+  max-width: 400px;
+  text-wrap: wrap;
+  text-align: center;
+  padding: 0 2rem;
 }
 
 .label {
   display: block;
-  text-align: left;
+  text-align: center;
   font-weight: 500;
   color: #444;
   margin-top: 16px;
 }
 
-.textarea {
-  width: 100%;
-  height: 80px;
-  margin-top: 8px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  resize: none;
+.radioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 16px 0;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+
+  .radioLabel {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 16px;
+    color: #333;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+
+  .radioInput {
+    margin-right: 8px;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+
+    &:checked {
+      border-color: #e63946;
+      background-color: #e63946;
+    }
+
+    &:checked::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .radioLabel.selected {
+    background-color: #e63946;
+    color: white;
+  }
 }
+
+// .textarea {
+//   margin-top: 8px;
+//   width: 100%;
+//   padding: 8px;
+//   border-radius: 8px;
+//   border: 1px solid #ccc;
+//   font-size: 16px;
+//   resize: vertical;
+// }
 
 .buttonContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-top: 24px;
 }
 
-.cancelButton {
-  background-color: #d9534f;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s;
-}
+// .cancelButton {
+//   font-size: 1.25rem;
+//   text-transform: capitalize;
+//   padding: 8px 16px;
+//   background-color: #b51c24;
+//   color: #fff;
+//   border-radius: 2.1875rem;
+//   display: inline-flex;
+//   white-space: nowrap;
+//   max-width: none;
+// }
 
 .cancelButton:hover {
-  background-color: #c9302c;
+  opacity: 0.7;
 }
 
 .keepButton {
@@ -66,14 +148,15 @@
   color: #333;
   padding: 10px 20px;
   border: none;
-  border-radius: 6px;
+  border-radius: 2.1875rem;
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.3s;
 }
 
 .keepButton:hover {
-  background-color: #bbb;
+  background-color: green;
+  color: #fff;
 }
 
 .supportText {

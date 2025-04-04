@@ -1,7 +1,11 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Toaster, toast } from "react-hot-toast";
+import { isValidEmail, sanitizeEmail } from "src/utils/authInputUtils";
 import Link from "next/link";
+import leftArrow from "public/assets/icons/arrow-left.svg";
 import Button from "@/components/ui/Button/Button";
 import styles from "./page.module.scss";
 
@@ -13,8 +17,12 @@ export default function ForgotPasswordPage() {
   async function handleForgotPassword(event: React.FormEvent) {
     event.preventDefault();
 
-    if (!email) {
-      setMessage("⚠️ Email is required!");
+    // Sanitize the email input
+    const sanitizedEmail = sanitizeEmail(email.trim());
+
+    // Validate the sanitized email
+    if (!sanitizedEmail || !isValidEmail(sanitizedEmail)) {
+      toast.error("Please enter a valid email address.");
       return;
     }
 
@@ -24,20 +32,22 @@ export default function ForgotPasswordPage() {
       const res = await fetch("/api/auth/request-reset", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: sanitizedEmail }),
       });
 
       const data = await res.json();
+      console.log(data, "DATA");
 
       if (res.ok) {
-        setMessage(
-          "✅ If your email exist, reset link sent! Check your email."
-        );
+        toast.success("If your email exists, a reset link has been sent!");
+        setEmail(""); // Clear the input field after success
       } else {
-        setMessage(`❌ ${data.error || "Failed to send reset link."}`);
+        console.error("❌ Failed to send reset link:", data);
+        toast.error(data.error || "❌ Failed to send reset link.");
       }
     } catch (error) {
-      setMessage("❌ An error occurred.");
+      console.error("❌ An error occurred:", error);
+      toast.error("❌ An error occurred while sending the reset link.");
     }
   }
 
@@ -46,7 +56,8 @@ export default function ForgotPasswordPage() {
       {/* ✅ Left panel with branding */}
       <div className={styles.panelLeft}>
         <Link href="/" className={styles.backLink}>
-          Back to Site
+          <Image src={leftArrow} alt="" aria-hidden="true" />
+          <span>Back to Site</span>
         </Link>
         <h1 className={styles.title}>Reset Your Password</h1>
       </div>
@@ -66,11 +77,10 @@ export default function ForgotPasswordPage() {
             </p> */}
             <label>Email Address</label>
             <input
-              type="email"
+              type="text"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
           </div>
 
@@ -95,6 +105,7 @@ export default function ForgotPasswordPage() {
           </p>
         </form>
       </div>
+      <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
     </div>
   );
 }

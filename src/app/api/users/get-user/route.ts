@@ -21,11 +21,11 @@ export async function GET(req: NextRequest) {
 
     if (email) {
       query =
-        "SELECT id, email, is_verified, age, location, gender, fitness_level FROM users WHERE email = ?";
+        "SELECT id, email, user_name, is_verified, age, location, gender, fitness_level FROM users WHERE email = ?";
       param = email;
     } else {
       query =
-        "SELECT id, email, is_verified, age, location, gender, fitness_level FROM users WHERE id = ?";
+        "SELECT id, email, user_name, is_verified, age, location, gender, fitness_level FROM users WHERE id = ?";
       param = userId!;
     }
 
