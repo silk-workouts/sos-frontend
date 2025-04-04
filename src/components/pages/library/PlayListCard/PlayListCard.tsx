@@ -3,6 +3,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { parseDescription } from "src/utils/parseDescription";
 import kebabIcon from "/public/assets/icons/kebab.svg";
 import rightArrow from "/public/assets/icons/arrow-right.svg";
 import playIcon from "/public/assets/icons/play.svg";
@@ -115,7 +116,37 @@ export default function PlayListCard({
       <div className={styles.card__headerContainer}>
         <header>
           <h2 className={styles.card__title}>{playlist.title}</h2>
-          <p className={styles.card__description}>{playlist.description}</p>
+          <div className={styles.card__description}>
+            {(() => {
+              const { title, listItems } = parseDescription(
+                playlist?.description || ""
+              );
+
+              return (
+                <>
+                  {title && (
+                    <blockquote
+                      className={styles.card__title}
+                    >{`"${title}"`}</blockquote>
+                  )}
+                  {listItems.length > 0 ? (
+                    <ul className={styles.card__starList}>
+                      {listItems.map((item, index) => (
+                        <li key={index} className={styles.card__listItem}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>
+                      {playlist?.description || "[No description provided]"}
+                    </p>
+                  )}
+                </>
+              );
+            })()}
+          </div>
+          {/* <p className={styles.card__description}>{playlist.description}</p> */}
         </header>
         <button
           className={styles.button}
