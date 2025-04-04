@@ -83,6 +83,15 @@
   border-top: 1px solid #dbdbdb;
 }
 
+.profile__name {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-top: none;
+  p {
+    color: #b51c24;
+  }
+}
+
 .profile__label {
   font-family: "Montserrat", sans-serif;
   font-style: normal;

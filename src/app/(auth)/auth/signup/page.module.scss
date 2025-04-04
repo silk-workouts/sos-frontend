@@ -19,7 +19,10 @@
 .panelLeft {
   width: 100vw;
   height: fit-content;
-  background: $color-grey-light;
+  background: rgba(255, 0, 0, 0.2) url("/assets/images/large-S.png");
+  background-size: calc(100% - 2rem) auto;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,9 +38,19 @@
   }
 
   .backLink {
+    margin-top: 3rem;
+    display: flex;
+    align-content: center;
     align-self: flex-start;
-    @extend .link;
+    // @extend .link;
     margin-bottom: $padding-small;
+    img {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .backLink:hover {
+    opacity: 0.7;
   }
 
   .title {
@@ -131,14 +144,54 @@
       }
     }
 
-    .errorMessage {
+    // .errorMessage {
+    //   position: absolute;
+    //   bottom: -1.5rem;
+    //   left: 0;
+    //   font-size: 14px;
+    //   font-weight: $font-weight-medium;
+    //   color: $color-red;
+    //   padding-right: 8px;
+    // }
+
+    .tooltipContainer {
+      position: relative;
+      display: inline-block;
+      width: 100%; /* Make sure the container matches input width */
+
+      &:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    .tooltip {
+      visibility: hidden;
+      width: 250px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      padding: 8px;
       position: absolute;
-      bottom: -1.5rem;
-      left: 0;
-      font-size: 14px;
-      font-weight: $font-weight-medium;
-      color: $color-red;
-      padding-right: 8px;
+      z-index: 1;
+      bottom: 100%; /* Adjust to position above input */
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+
+      /* Arrow at the bottom */
+      &::after {
+        content: "";
+        position: absolute;
+        top: 100%; /* Position at the bottom of the tooltip */
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #333 transparent transparent transparent;
+      }
     }
   }
 
