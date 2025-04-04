@@ -294,7 +294,6 @@ export default function VideoList({ video, type }: VideoListProps) {
 						/>
 					</button>
 					<div className={styles.scrollbar}>
-						{/* disable when it's reached the end */}
 						<button
 							className={`${styles.scrollbar__button} ${
 								scrollIsAtStart ? styles["scrollbar__button--disabled"] : ""

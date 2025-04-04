@@ -12,7 +12,7 @@
 
 	@include desktop {
 		flex-direction: row;
-		padding: 1.5rem;
+		padding: 0 1.5rem 1.5rem;
 	}
 }
 
@@ -119,6 +119,8 @@
 
 .chapter {
 	padding: 0 0.5rem;
+	display: flex;
+	flex-direction: column;
 
 	@include tablet {
 		padding: 0 1.5rem;
@@ -158,8 +160,9 @@
 	padding-bottom: 2rem;
 
 	@include desktop {
-		height: 100%;
+		flex-grow: 1;
 		overflow-y: scroll;
+		padding-bottom: 0;
 	}
 }
 

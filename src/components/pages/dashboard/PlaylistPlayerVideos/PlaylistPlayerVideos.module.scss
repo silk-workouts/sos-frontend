@@ -3,6 +3,8 @@
 
 .playlist {
 	padding: 0 0.5rem;
+	display: flex;
+	flex-direction: column;
 
 	@include tablet {
 		padding: 0 1.5rem;
@@ -42,7 +44,8 @@
 	padding-bottom: 2rem;
 
 	@include desktop {
-		height: 100%;
+		flex-grow: 1;
+		padding-bottom: 0;
 		overflow-y: scroll;
 	}
 }
