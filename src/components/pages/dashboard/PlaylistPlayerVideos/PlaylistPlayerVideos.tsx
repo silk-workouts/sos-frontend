@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
 	closestCorners,
 	DndContext,
@@ -46,6 +46,32 @@ export default function PlaylistPlayerVideos({
 	const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>(
 		undefined
 	);
+	const scrollableContainerRef = useRef<HTMLUListElement | null>(null);
+	const [isDesktop, setIsDesktop] = useState(false);
+
+	//Check if the screen is a desktop
+	useEffect(() => {
+		const checkScreenSize = () => {
+			setIsDesktop(window.innerWidth >= 1280);
+		};
+
+		checkScreenSize();
+
+		window.addEventListener("resize", checkScreenSize);
+
+		return () => window.removeEventListener("resize", checkScreenSize);
+	}, []);
+
+	//Enables auto scrolling for activeVideo to make sure it is always in view
+	useEffect(() => {
+		if (isDesktop && activeVideo && scrollableContainerRef.current) {
+			const currVideo = Array.from(
+				scrollableContainerRef.current.children
+			).find((item) => item.className.includes("active"));
+
+			currVideo?.scrollIntoView({ behavior: "smooth", block: "center" });
+		}
+	}, [activeVideo, isDesktop]);
 
 	async function updateVideoPosition(position: number, video_id: number) {
 		try {
@@ -151,7 +177,11 @@ export default function PlaylistPlayerVideos({
 				}}
 				sensors={sensors}
 			>
-				<ul className={styles.videoList} role="list">
+				<ul
+					className={styles.videoList}
+					role="list"
+					ref={scrollableContainerRef}
+				>
 					<SortableContext
 						items={videos}
 						strategy={verticalListSortingStrategy}

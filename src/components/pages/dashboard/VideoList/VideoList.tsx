@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import rightArrow from "/public/assets/icons/arrow-right.svg";
@@ -8,6 +8,7 @@ import bookmark from "public/assets/icons/bookmark-fill.svg";
 import bookmarkUnsaved from "public/assets/icons/bookmark-unsaved.svg";
 import playIcon from "/public/assets/icons/play.svg";
 import clockIcon from "/public/assets/icons/clock.svg";
+import chevronIcon from "/public/assets/icons/chevron-left.svg";
 import Video from "../Video/Video";
 import { playlistDuration } from "../../library/PlayListCard/PlayListCard";
 import { ChapterVideo } from "src/types/video";
@@ -45,6 +46,11 @@ interface VideoListProps {
 
 export default function VideoList({ video, type }: VideoListProps) {
   const router = useRouter();
+  const scrollableContainerRef = useRef<HTMLUListElement>(null);
+
+  const [scrollAmount, setScrollAmount] = useState(100);
+  const [scrollIsAtStart, setScrollIsAtStart] = useState(true);
+  const [scrollIsAtEnd, setScrollIsAtEnd] = useState(false);
   const [chapterVideos, setChapterVideos] = useState<ChapterVideo[]>([]);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [continuousVideo, setContinuousVideo] = useState<{
@@ -59,6 +65,41 @@ export default function VideoList({ video, type }: VideoListProps) {
     .toLowerCase()
     .replace(/\s+/g, "-")
     .replace(/[%\.]/g, "");
+
+  function scroll(direction: "left" | "right") {
+    scrollableContainerRef.current?.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  }
+
+  function checkScrollPosition() {
+    if (!scrollableContainerRef.current) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } =
+      scrollableContainerRef.current;
+
+    //Update whether state is at start or end to disable scrollbar buttons accordingly
+    setScrollIsAtStart(scrollLeft === 0);
+    setScrollIsAtEnd(scrollLeft + clientWidth >= scrollWidth);
+
+    //set scroll amount relative to the width of the videos
+    setScrollAmount(
+      (scrollableContainerRef.current.children[0] as HTMLElement)?.offsetWidth *
+        3 || clientWidth
+    );
+  }
+
+  useEffect(() => {
+    const container = scrollableContainerRef.current;
+
+    if (!container) return;
+
+    checkScrollPosition();
+
+    container.addEventListener("scroll", checkScrollPosition);
+    return () => container.removeEventListener("scroll", checkScrollPosition);
+  }, [scrollableContainerRef.current]);
 
   useEffect(() => {
     axios
@@ -143,14 +184,14 @@ export default function VideoList({ video, type }: VideoListProps) {
       return;
     }
 
-    const payload = {
-      user_id: userId,
-      continuous_vimeo_id: video.continuous_video_id,
-      title: video.name,
-      description: video.description || "",
-      videoCount: chapters.length,
-      duration: chapters.reduce((sum, ch) => sum + (ch.duration || 0), 0),
-    };
+    // const payload = {
+    // 	user_id: userId,
+    // 	continuous_vimeo_id: video.continuous_video_id,
+    // 	title: video.name,
+    // 	description: video.description || "",
+    // 	videoCount: chapters.length,
+    // 	duration: chapters.reduce((sum, ch) => sum + (ch.duration || 0), 0),
+    // };
 
     if (isSaved) {
       await deleteProgram(video.continuous_video_id);
@@ -196,7 +237,6 @@ export default function VideoList({ video, type }: VideoListProps) {
             {video.description ? (
               (() => {
                 const { title } = parseDescription(video.description);
-                console.log(title);
                 return (
                   <>
                     {title && (
@@ -245,10 +285,44 @@ export default function VideoList({ video, type }: VideoListProps) {
               aria-hidden
             />
           </button>
+          <div className={styles.scrollbar}>
+            <button
+              className={`${styles.scrollbar__button} ${
+                scrollIsAtStart ? styles["scrollbar__button--disabled"] : ""
+              }`}
+              aria-controls="scroll-area"
+              onClick={() => scroll("left")}
+              disabled={scrollIsAtStart}
+              aria-label="Click to view previous videos"
+            >
+              <Image
+                src={chevronIcon}
+                aria-hidden="true"
+                alt=""
+                className={styles.scrollbar__icon}
+              />
+            </button>
+            <button
+              className={`${styles.scrollbar__button} ${
+                scrollIsAtEnd ? styles["scrollbar__button--disabled"] : ""
+              }`}
+              aria-controls="scroll-area"
+              onClick={() => scroll("right")}
+              disabled={scrollIsAtEnd}
+              aria-label="Click to view next videos"
+            >
+              <Image
+                src={chevronIcon}
+                aria-hidden="true"
+                alt=""
+                className={`${styles.scrollbar__icon} ${styles["scrollbar__icon--right"]}`}
+              />
+            </button>
+          </div>
         </div>
       </div>
 
-      <ul className={styles.list}>
+      <ul className={styles.list} id="scroll-area" ref={scrollableContainerRef}>
         {mergedData.map((chapterVideo) => (
           <li
             key={chapterVideo.id}
