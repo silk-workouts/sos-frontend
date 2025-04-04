@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import {
 	closestCorners,
 	DndContext,
@@ -9,10 +11,6 @@ import {
 	useSensor,
 	useSensors,
 } from "@dnd-kit/core";
-import { PlayerVideo } from "src/app/(dashboard)/dashboard/playlistplayer/[playlist_id]/page";
-import styles from "./PlaylistPlayerVideos.module.scss";
-import { useState } from "react";
-import axios from "axios";
 import {
 	arrayMove,
 	SortableContext,
@@ -20,34 +18,60 @@ import {
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { Arguments } from "@dnd-kit/core/dist/components/Accessibility/types";
+import { PlayerVideo } from "src/app/(dashboard)/dashboard/playlistplayer/[playlist_id]/page";
 import SortablePlaylistPlayerVideo from "../SortablePlaylistPlayerVideo/SortablePlaylistPlayerVideo";
+import styles from "./PlaylistPlayerVideos.module.scss";
 
 interface PlaylistPlayerVideosProps {
 	videos: PlayerVideo[];
 	handleVideoClick: (arg1: PlayerVideo) => Promise<void>;
-	handleBookmark: (arg1: number) => void;
 	activeVideo: PlayerVideo;
 	activeVideoPosition: number;
-	savedVideos: { [key: string]: boolean };
 	playlist_id: string;
 	userId: string;
 	setVideos: (arg1: PlayerVideo[]) => void;
+	updateVideoOrder: (newOrder: PlayerVideo[]) => void;
 }
 
 export default function PlaylistPlayerVideos({
 	videos,
 	handleVideoClick,
-	handleBookmark,
 	activeVideo,
 	activeVideoPosition,
-	savedVideos,
 	playlist_id,
 	userId,
 	setVideos,
+	updateVideoOrder,
 }: PlaylistPlayerVideosProps) {
 	const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>(
 		undefined
 	);
+	const scrollableContainerRef = useRef<HTMLUListElement | null>(null);
+	const [isDesktop, setIsDesktop] = useState(false);
+
+	//Check if the screen is a desktop
+	useEffect(() => {
+		const checkScreenSize = () => {
+			setIsDesktop(window.innerWidth >= 1280);
+		};
+
+		checkScreenSize();
+
+		window.addEventListener("resize", checkScreenSize);
+
+		return () => window.removeEventListener("resize", checkScreenSize);
+	}, []);
+
+	//Enables auto scrolling for activeVideo to make sure it is always in view
+	useEffect(() => {
+		if (isDesktop && activeVideo && scrollableContainerRef.current) {
+			const currVideo = Array.from(
+				scrollableContainerRef.current.children
+			).find((item) => item.className.includes("active"));
+
+			currVideo?.scrollIntoView({ behavior: "smooth", block: "center" });
+		}
+	}, [activeVideo, isDesktop]);
 
 	async function updateVideoPosition(position: number, video_id: number) {
 		try {
@@ -80,6 +104,9 @@ export default function PlaylistPlayerVideos({
 			const newPos = getVideoPosition(over.id);
 			const newVideos = arrayMove(videos, originalPos, newPos);
 			setVideos(newVideos);
+
+			// Call the update order function from VideoPlayer
+			updateVideoOrder(newVideos);
 
 			const currVideo = videos[originalPos];
 			updateVideoPosition(newPos + 1, currVideo.id);
@@ -135,7 +162,7 @@ export default function PlaylistPlayerVideos({
     Press space or enter again to drop the item in its new position, or press escape to cancel.`;
 
 	return (
-		<div className={styles.playlist}>
+		<section className={styles.playlist}>
 			<h2 className={styles.videoListTitle}>
 				Playing {activeVideoPosition} of {videos.length}
 			</h2>
@@ -150,7 +177,11 @@ export default function PlaylistPlayerVideos({
 				}}
 				sensors={sensors}
 			>
-				<ul className={styles.videoList} role="list">
+				<ul
+					className={styles.videoList}
+					role="list"
+					ref={scrollableContainerRef}
+				>
 					<SortableContext
 						items={videos}
 						strategy={verticalListSortingStrategy}
@@ -163,13 +194,11 @@ export default function PlaylistPlayerVideos({
 								activeVideo={activeVideo}
 								handleVideoClick={handleVideoClick}
 								videos={videos}
-								handleBookmark={handleBookmark}
-								savedVideos={savedVideos}
 							/>
 						))}
 					</SortableContext>
 				</ul>
 			</DndContext>
-		</div>
+		</section>
 	);
 }

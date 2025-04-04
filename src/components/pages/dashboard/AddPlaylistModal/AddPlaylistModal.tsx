@@ -16,9 +16,17 @@ export default function AddPlaylistModal({
 	setIsOpen,
 	video_id,
 }: PlaylistModalProps) {
-	const { playlists, loading, error, refreshPlaylists, userId } =
-		usePlaylists();
-	const [selectedPlaylists, setSelectedPlaylists] = useState<string[]>([]);
+	const {
+		playlists,
+		playlistVideoMap,
+		loading,
+		error,
+		refreshPlaylists,
+		userId,
+	} = usePlaylists();
+	const [selectedPlaylists, setSelectedPlaylists] = useState<string[]>(
+		playlistVideoMap[video_id] ? playlistVideoMap[video_id] : []
+	);
 	const [isOpenNewPlaylistModal, setIsOpenNewPlaylistModal] = useState(false);
 
 	function handleSelectCheckbox(playlistId: string) {
@@ -30,20 +38,84 @@ export default function AddPlaylistModal({
 	}
 
 	async function handleSavePlaylist() {
+		const prevSavedPlaylists = playlistVideoMap[video_id]
+			? playlistVideoMap[video_id]
+			: [];
+
 		try {
-			if (selectedPlaylists.length > 0) {
-				selectedPlaylists.map(async (playlistId) => {
-					await axios.post(
-						`/api/playlists/${playlistId}/videos`,
-						{
-							vimeo_video_id: video_id,
-						},
-						{ headers: { "x-user-id": userId } }
+			if (prevSavedPlaylists.length > 0 || selectedPlaylists.length > 0) {
+				//Save video to playlist(s) that it was not previously saved to
+				const saveRequests = selectedPlaylists
+					.filter((playlistId) => !prevSavedPlaylists.includes(playlistId))
+					.map((playlistId) =>
+						axios.post(
+							`/api/playlists/${playlistId}/videos`,
+							{
+								vimeo_video_id: video_id,
+							},
+							{ headers: { "x-user-id": userId } }
+						)
 					);
-				});
+
+				//Delete video from playlists that were previously saved to but are now unchecked
+				const deleteRequests = await Promise.all(
+					prevSavedPlaylists
+						.filter((playlistId) => !selectedPlaylists.includes(playlistId))
+						.map(async (playlistId) => {
+							try {
+								// Fetch the playlist details to find the correct video id
+								const response = await axios.get(
+									`/api/playlists/${playlistId}`,
+									{
+										headers: { "x-user-id": userId },
+									}
+								);
+
+								// Find the video with the matching vimeo_video_id
+								const video = response.data.videos.find(
+									(v: { vimeo_video_id: number }) =>
+										v.vimeo_video_id === parseInt(video_id)
+								);
+
+								if (video) {
+									// Send the delete request with the correct video id
+									return axios.delete(
+										`/api/playlists/${playlistId}/videos/${video.id}`,
+										{
+											headers: { "x-user-id": userId },
+										}
+									);
+								} else {
+									console.warn(
+										`Video with Vimeo ID ${video_id} not found in playlist ${playlistId}`
+									);
+									return null;
+								}
+							} catch (error) {
+								if (error instanceof Error) {
+									console.error(
+										`Error fetching playlist ${playlistId}: ${error.message}`
+									);
+								} else {
+									console.error(
+										`Unknown error fetching playlist ${playlistId}: ${String(
+											error
+										)}`
+									);
+								}
+							}
+						})
+				);
+
+				// Filter out any null responses from failed delete requests
+				const successfulDeletes = deleteRequests.filter((req) => req !== null);
+
+				// Await all save and successful delete requests
+				await Promise.all([...saveRequests, ...successfulDeletes]);
+
 				refreshPlaylists();
-				setIsOpen(false);
 			}
+			setIsOpen(false);
 		} catch (error) {
 			console.error(`Unable to save to playlists: ${error}`);
 		}
@@ -61,7 +133,10 @@ export default function AddPlaylistModal({
 	return (
 		<div
 			className={styles["dialog-container"]}
-			onClick={(event) => handleCloseModal(event)}
+			onClick={(event) => {
+				event.stopPropagation();
+				handleCloseModal(event);
+			}}
 			id="dialog-container"
 			role="dialog button"
 		>
@@ -72,9 +147,7 @@ export default function AddPlaylistModal({
 							<h3 className={styles.header__title}>Save to...</h3>
 							<button
 								className={styles.button}
-								onClick={() => {
-									setIsOpen(false);
-								}}
+								onClick={() => setIsOpen(false)}
 								aria-label="Close Add To Playlist Modal"
 							>
 								<Image

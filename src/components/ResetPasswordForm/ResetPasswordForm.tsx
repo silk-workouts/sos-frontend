@@ -2,9 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import Image from "next/image";
+import { Toaster, toast } from "react-hot-toast";
+import leftArrow from "public/assets/icons/arrow-left.svg";
+import Link from "next/link";
 import styles from "./ResetPasswordForm.module.scss";
 import Button from "../ui/Button/Button";
+import { isValidPassword, sanitizePassword } from "src/utils/authInputUtils";
 
 type Props = {
   token: string;
@@ -23,21 +27,40 @@ export default function ResetPasswordForm({ token, userId }: Props) {
   }, []);
 
   const handleSubmit = async () => {
-    const res = await fetch("/api/auth/reset-password", {
-      method: "POST",
-      body: JSON.stringify({ token, userId, newPassword: password }),
-    });
+    // Sanitize the password
+    const sanitizedPassword = sanitizePassword(password);
 
-    if (res.ok) {
-      setSuccess(true);
-      toast.success("Your password was reset!");
-      setTimeout(() => {
-        router.push("/auth/login");
-      }, 1500);
-    } else {
-      const data = await res.json();
-      setError(data.error || "Something went wrong. Please try again.");
-      toast.error(data.error || "Something went wrong.");
+    // Validate the sanitized password
+    if (!sanitizedPassword || !isValidPassword(sanitizedPassword)) {
+      const errorMessage =
+        "Password must be at least 8 characters, contain one uppercase letter, one lowercase letter, and one number.";
+      // setError(errorMessage);
+      toast.error(errorMessage);
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/auth/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, userId, newPassword: sanitizedPassword }),
+      });
+
+      if (res.ok) {
+        setSuccess(true);
+        toast.success("Your password was reset!");
+        setTimeout(() => {
+          router.push("/auth/login");
+        }, 1500);
+      } else {
+        const data = await res.json();
+        // setError(data.error || "Something went wrong. Please try again.");
+        toast.error(data.error || "Something went wrong.");
+      }
+    } catch (err) {
+      console.error("❌ An error occurred:", err);
+      // setError("An unexpected error occurred.");
+      toast.error("❌ An unexpected error occurred.");
     }
   };
 
@@ -45,6 +68,10 @@ export default function ResetPasswordForm({ token, userId }: Props) {
     <div className={styles.resetContainer}>
       {/* Left panel with info */}
       <div className={styles.panelLeft}>
+        <Link href="/" className={styles.backLink}>
+          <Image src={leftArrow} alt="" aria-hidden="true" />
+          <span>Back to Site</span>
+        </Link>
         <h1 className={styles.title}>Reset Your Password</h1>
         <p className={styles.subtitle}>
           Choose a new password below to get back into your account.
@@ -89,6 +116,7 @@ export default function ResetPasswordForm({ token, userId }: Props) {
           )}
         </form>
       </div>
+      <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
     </div>
   );
 }
