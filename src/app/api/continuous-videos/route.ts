@@ -10,13 +10,20 @@ export async function GET(req: NextRequest) {
         continuous_video_id,
         continuous_video_title,
         name,
-        MIN(description) AS description,
+        (
+          SELECT description
+          FROM video_mappings AS vm
+          WHERE vm.continuous_video_id = video_mappings.continuous_video_id
+            AND vm.description IS NOT NULL
+          ORDER BY created_at ASC
+          LIMIT 1
+        ) AS description,
         MIN(thumbnail_url) AS thumbnail_url,
         MIN(created_at) AS created_at
       FROM video_mappings
       WHERE continuous_video_id IS NOT NULL
       GROUP BY continuous_video_id, continuous_video_title, name
-      ORDER BY created_at ASC
+      ORDER BY created_at ASC;
       `
     )) as [
       Array<{

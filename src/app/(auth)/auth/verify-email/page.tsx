@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import leftArrow from "public/assets/icons/arrow-left.svg";
 import Link from "next/link";
 import Button from "@/components/ui/Button/Button";
 import styles from "./page.module.scss";
@@ -36,8 +38,9 @@ export default function VerifyEmailPage() {
     <div className={styles.verifyContainer}>
       {/* ✅ Left panel with branding */}
       <div className={styles.panelLeft}>
-        <Link href="/" className={styles.backLink}>
-          ⬅️ Back to Site
+        <Link href="/" className={styles.backLink} aria-label="Navigate back">
+          <Image src={leftArrow} alt="" aria-hidden="true" />
+          <span>Back to Site</span>
         </Link>
         <h1 className={styles.title}>Email Verification</h1>
       </div>

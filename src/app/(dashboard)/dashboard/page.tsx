@@ -57,7 +57,15 @@ export default function DashboardPage() {
         : !video.name.toLowerCase().includes("prescription")
   );
 
-  filteredContinuousVideos.sort((a, b) => (a.name > b.name ? 1 : -1));
+  if (isSelected.element) {
+    filteredContinuousVideos.sort((a, b) => (a.name > b.name ? 1 : -1));
+  } else {
+    filteredContinuousVideos.sort((a, b) =>
+      a.name
+        .toLowerCase()
+        .localeCompare(b.name.toLowerCase(), undefined, { numeric: true })
+    );
+  }
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

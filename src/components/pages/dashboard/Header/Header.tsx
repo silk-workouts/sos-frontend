@@ -13,7 +13,7 @@ export default function Header() {
 		return;
 	}
 
-	if (pathname.startsWith("/dashboard/playlistplayer")) return;
+	if (/^\/dashboard\/(playlistplayer|player)/.test(pathname)) return;
 
 	if (pathname.startsWith("/dashboard/library") && pathnameSegment.length > 3) {
 		return;

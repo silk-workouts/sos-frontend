@@ -77,6 +77,7 @@ export default function PlaylistPage() {
             headers: { "x-user-id": userId },
           }
         );
+
         setProgress(res.data);
       } catch (error) {
         console.error("❌ Failed to fetch last progress:", error);
@@ -104,9 +105,23 @@ export default function PlaylistPage() {
   }
 
   function handleStartWorkout() {
-    router.push(
-      `/dashboard/playlistplayer/${playlist.id}?video_id=${progress.video_id}&progress=${progress.progress_seconds}`
-    );
+    // Check if there is saved progress
+    if (progress.video_id) {
+      console.log("✅ Resuming from last watched video:", progress.video_id);
+      router.push(
+        `/dashboard/playlistplayer/${playlist.id}?video_id=${progress.video_id}&progress=${progress.progress_seconds}`
+      );
+    } else {
+      // No progress, start from the first video in the (possibly reordered) list
+      const startVideo = playlistVideos[0];
+      console.log(
+        "🎬 Starting from the first video in the list:",
+        startVideo.id
+      );
+      router.push(
+        `/dashboard/playlistplayer/${playlist.id}?video_id=${startVideo.id}&progress=0`
+      );
+    }
   }
 
   const duration = playlistDuration(
@@ -145,6 +160,7 @@ export default function PlaylistPage() {
 
         {/* Playlist thumbnail */}
         <div className={styles["hero__image-container"]}>
+          {/* {playlist.title} */}
           <Image
             src={
               playlistVideos.length > 0

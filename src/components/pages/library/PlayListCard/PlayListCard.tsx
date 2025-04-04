@@ -32,7 +32,12 @@ export default function PlayListCard({
 
   useEffect(() => {
     async function getPlaylistData() {
-      setLoading(true);
+      if (!playlist?.id || playlist.id === "null") {
+        console.warn("Skipping API call: Playlist ID is null or undefined");
+        setLoading(false); // Set loading to false to prevent indefinite loading
+        return;
+      }
+
       try {
         if (playlist.type === "savedProgram") {
           const response = await axios.get(
@@ -72,24 +77,37 @@ export default function PlayListCard({
     }
   }
 
-  //   const duration = playlistDuration(
-  //     playlistVideos.reduce((prev, curr) => prev + curr.duration, 0)
-  //   );
+  // Rx icon mapper
+  const getRxIcon = (title: string) => {
+    // Extract the program number from the title (e.g., "Program 11")
+    const match = title.match(/Program\s?(\d+)/);
+    if (match) {
+      const programNumber = match[1];
+      return `/assets/icons/rx-icons/Rx${programNumber}.svg`;
+    }
+    // Return a default icon if no match is found
+    return "/assets/icons/rx-icons/default.svg";
+  };
 
   return (
     <article className={styles.card}>
-      <div className={styles["card__image-container"]}>
+      <div
+        className={styles["card__image-container"]}
+        style={{ backgroundColor: "transparent" }}
+      >
         {!loading && (
           <Image
             src={
-              Array.isArray(playlistVideos) && playlistVideos.length > 0
+              playlist.title.includes("Program")
+                ? getRxIcon(playlist.title)
+                : Array.isArray(playlistVideos) && playlistVideos.length > 0
                 ? playlistVideos[0].thumbnail_url
                 : defaultThumbnail
             }
             alt={`Thumbnail for ${playlist.title} playlist`}
             fill
             sizes="100%"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "contain" }}
             className={styles.card__image}
           />
         )}

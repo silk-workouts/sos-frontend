@@ -1,69 +1,94 @@
-'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Button from '@/components/ui/Button/Button';
-import styles from './page.module.scss';
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import leftArrow from "public/assets/icons/arrow-left.svg";
+import { Toaster, toast } from "react-hot-toast";
+import {
+  isValidEmail,
+  isValidPassword,
+  sanitizeEmail,
+  sanitizePassword,
+} from "src/utils/authInputUtils";
+import Link from "next/link";
+import Button from "@/components/ui/Button/Button";
+import styles from "./page.module.scss";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
 
   async function handleLogin(event: React.FormEvent) {
     event.preventDefault();
 
+    // Sanitize inputs
+    const sanitizedEmail = sanitizeEmail(email.trim());
+    const sanitizedPassword = sanitizePassword(password);
+
+    // Validate inputs
     let newErrors: { [key: string]: string } = {};
-    if (!email) newErrors.email = '⚠️ Required';
-    if (!password) newErrors.password = '⚠️ Required';
+    if (!sanitizedEmail) newErrors.email = "⚠️ Email is required";
+    if (!sanitizedPassword) newErrors.password = "⚠️ Password is required";
+
+    if (!isValidEmail(sanitizedEmail)) {
+      newErrors.email = "⚠️ Invalid email format";
+    }
+
+    if (!isValidPassword(sanitizedPassword)) {
+      newErrors.password =
+        "⚠️ Password must be at least 8 characters, contain one uppercase letter, one lowercase letter, and one number.";
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      toast.error("Please subit valid email and password.");
       return;
     }
 
     setErrors({});
 
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-      credentials: 'include', // Ensure cookies are sent and received
-    });
-
-    const data = await res.json();
-
-    //   if (res.ok) {
-    //     setMessage('✅ Login successful!');
-    //     document.cookie = `auth_token=${data.token}; path=/;`;
-    //     setTimeout(() => {
-    //       router.push('/dashboard');
-    //     }, 1000);
-    //   } else {
-    //     setMessage(`❌ ${data.error || 'Login failed'}`);
-    //   }
-    // }
-
-    if (res.ok) {
-      setMessage('✅ Login successful!');
-      // ✅ Immediately call /api/auth/verify-token after login
-      const verifyRes = await fetch('/api/auth/verify-token', {
-        method: 'GET',
-        credentials: 'include',
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: sanitizedEmail,
+          password: sanitizedPassword,
+        }),
+        credentials: "include",
       });
 
-      if (verifyRes.ok) {
-        setTimeout(() => {
-          router.push('/dashboard'); // ✅ Redirect after auth verification
-        }, 1000);
+      const data = await res.json();
+
+      if (res.ok) {
+        toast.success("Login successful!");
+
+        // Call /api/auth/verify-token after login
+        const verifyRes = await fetch("/api/auth/verify-token", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (verifyRes.ok) {
+          setTimeout(() => {
+            router.push("/dashboard"); // Redirect after auth verification
+          }, 1000);
+        } else {
+          toast.error("❌ Auth verification failed after login.");
+          console.warn("❌ Auth verification failed after login.");
+        }
       } else {
-        console.warn('❌ Auth verification failed after login.');
+        toast.error(data.error || "❌ Login failed.");
+        setErrors({ general: data.error || "Login failed" });
       }
-    } else {
-      setMessage(`❌ ${data.error || 'Login failed'}`);
+    } catch (error) {
+      console.error("❌ Unexpected error:", error);
+      toast.error("An unexpected error occurred.");
+      setErrors({ general: "An unexpected error occurred." });
     }
   }
 
@@ -72,9 +97,10 @@ export default function LoginPage() {
       {/* ✅ Left panel with login options */}
       <div className={styles.panelLeft}>
         <Link href="/" className={styles.backLink}>
-          Back to Site
+          <Image src={leftArrow} alt="" aria-hidden="true" />
+          <span>Back to Site</span>
         </Link>
-        <h1 className={styles.title}>Introducing Ballet</h1>
+        <h1 className={styles.title}>Login</h1>
       </div>
 
       {/* ✅ Right panel containing the login form */}
@@ -82,7 +108,7 @@ export default function LoginPage() {
         <form onSubmit={handleLogin} className={styles.loginForm}>
           <h1 className={styles.heading}>Welcome Back!</h1>
           <p className={styles.subtitle}>
-            Don’t have an account yet?{' '}
+            Don’t have an account yet?{" "}
             <Link className="link--emphasis" href="/auth/signup">
               Sign up now
             </Link>
@@ -91,15 +117,14 @@ export default function LoginPage() {
           <div className={styles.inputGroup}>
             <label>Email Address</label>
             <input
-              type="email"
+              type="tex†"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
-            {errors.email && (
+            {/* {errors.email && (
               <span className={styles.errorMessage}>{errors.email}</span>
-            )}
+            )} */}
           </div>
 
           {/* ✅ Password input field */}
@@ -110,11 +135,10 @@ export default function LoginPage() {
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
             />
-            {errors.password && (
+            {/* {errors.password && (
               <span className={styles.errorMessage}>{errors.password}</span>
-            )}
+            )} */}
           </div>
 
           {/* ✅ Remember me and forgot password options */}
@@ -145,6 +169,7 @@ export default function LoginPage() {
           <p className={styles.message}>{message}</p>
         </form>
       </div>
+      <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
     </div>
   );
 }

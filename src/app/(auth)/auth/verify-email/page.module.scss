@@ -19,7 +19,10 @@
 .panelLeft {
   width: 100vw;
   height: fit-content;
-  background: $color-grey-light;
+  background: rgba(255, 0, 0, 0.2) url("/assets/images/large-S.png");
+  background-size: calc(100% - 2rem) auto;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,9 +38,19 @@
   }
 
   .backLink {
+    margin-top: 3rem;
+    display: flex;
+    align-content: center;
     align-self: flex-start;
-    @extend .link;
+    // @extend .link;
     margin-bottom: $padding-small;
+    img {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .backLink:hover {
+    opacity: 0.6;
   }
 
   .title {

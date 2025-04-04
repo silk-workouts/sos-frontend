@@ -20,6 +20,12 @@
 	justify-content: space-between;
 	align-items: flex-start;
 	gap: 1rem;
+
+	blockquote {
+		color: black;
+		font-size: 1rem;
+		padding-bottom: 0.25rem;
+	}
 }
 
 .titleContainer {
@@ -37,6 +43,7 @@
 	font-weight: 400;
 	font-size: 16px;
 	text-transform: capitalize;
+	color: #e2211c;
 
 	@include tablet {
 		font-size: 1.25rem;
@@ -153,6 +160,63 @@
 	}
 }
 
+.scrollbar {
+	display: none;
+
+	@include tablet {
+		display: flex;
+		gap: 1.5rem;
+	}
+
+	&__button {
+		background-color: transparent;
+		border-radius: 50%;
+		border: 1px solid $color-black;
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 2rem;
+		height: 2rem;
+
+		@include desktop {
+			width: 2.5rem;
+			height: 2.5rem;
+		}
+
+		&:hover {
+			border-width: 2px;
+
+			.scrollbar__icon {
+				transform: translateX(-0.15rem);
+
+				&--right {
+					transform: rotate(180deg) translateX(-0.15rem);
+				}
+			}
+		}
+
+		&--disabled {
+			opacity: 0.3;
+			pointer-events: none;
+		}
+	}
+
+	&__icon {
+		width: 0.625rem;
+		height: 0.625rem;
+
+		&--right {
+			transform: rotate(180deg);
+		}
+
+		@include desktop {
+			width: 0.75rem;
+			height: 0.75rem;
+		}
+	}
+}
+
 /* Video List */
 .list {
 	list-style-type: none;
@@ -161,6 +225,8 @@
 	overflow-x: scroll;
 	scroll-snap-type: x mandatory;
 	-webkit-overflow-scrolling: touch;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 
 	&::-webkit-scrollbar {
 		width: 0;

@@ -43,7 +43,8 @@
     transition: transform 0.3s ease, filter 0.3s ease;
 
     // Default arrow color (black)
-    filter: brightness(0) invert(0);
+    // filter: brightness(0) invert(0);
+    filter: brightness(0) invert(1);
   }
 
   &--primary {
@@ -105,19 +106,20 @@
   }
 
   &--secondary {
-    font-size: $font-size-body2-desktop;
+    background-color: $color-primary;
+    // font-size: $font-size-body2-desktop;
+    font-size: 1rem;
     text-transform: capitalize;
-    padding: 8px 16px;
+    padding: 20px 16px;
     gap: 8px;
-    border: 1px solid $color-black;
+    // border: 1px solid $color-black;
     border-radius: 35px;
     // width: 100%;
     max-width: fit-content;
     height: 30px;
-    background-color: transparent;
-    color: $color-black;
-
-    &:hover {
+    // background-color: transparent;
+    color: #fff;
+    s &:hover {
       background-color: $color-red; // Red background on hover
       color: $color-white; // Ensure white text on hover
       border: $color-red;
@@ -139,20 +141,21 @@
     font-size: $font-size-body2-desktop;
     text-transform: capitalize;
     padding: 8px 16px;
-    background-color: transparent;
-    border: 1px solid $color-black;
-    color: $color-black;
+    // background-color: transparent;
+    background-color: $color-red;
+    // border: 1px solid $color-black;
+    color: #fff;
     border-radius: 2.1875rem;
     display: inline-flex;
     white-space: nowrap;
     max-width: none;
 
-    @include mobile {
-      padding: 0 16px;
-    }
-    @include tablet {
-      padding: 0 16px;
-    }
+    // @include mobile {
+    //   padding: 0 16px;
+    // }
+    // @include tablet {
+    //   padding: 0 16px;
+    // }
 
     &:hover {
       background-color: $color-red;
