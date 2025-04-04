@@ -160,6 +160,7 @@ export default function PlaylistPage() {
 
         {/* Playlist thumbnail */}
         <div className={styles["hero__image-container"]}>
+          {/* {playlist.title} */}
           <Image
             src={
               playlistVideos.length > 0

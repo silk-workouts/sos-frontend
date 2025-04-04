@@ -195,21 +195,14 @@ export default function VideoList({ video, type }: VideoListProps) {
             </div>
             {video.description ? (
               (() => {
-                const { title, intro, body } = parseDescription(
-                  video.description
-                );
+                const { title } = parseDescription(video.description);
+                console.log(title);
                 return (
                   <>
                     {title && (
                       <blockquote
                         className={styles.title}
                       >{`"${title}"`}</blockquote>
-                    )}
-                    {intro && <p className={styles.intro}>{intro}</p>}
-                    {body && (
-                      <p style={{ display: "none" }} className={styles.body}>
-                        {body}
-                      </p>
                     )}
                   </>
                 );
