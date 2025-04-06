@@ -5,8 +5,6 @@ import smallS from "/public/assets/images/small-S.png";
 import { useEffect, useRef, useState } from "react";
 import styles from "./Testimonials.module.scss";
 
-console.log(smallS);
-
 const testimonials = [
   {
     id: 1,

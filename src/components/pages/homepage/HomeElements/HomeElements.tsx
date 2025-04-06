@@ -13,8 +13,6 @@ import ubbEl from "/public/assets/icons/elements-white-bg/el-ubb-bg-white.svg";
 import Button from "@/components/ui/Button/Button";
 import { useRouter } from "next/navigation";
 
-console.log(ccEl);
-
 export default function HomeElements() {
   const router = useRouter();
 
