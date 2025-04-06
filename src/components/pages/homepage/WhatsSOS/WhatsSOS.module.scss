@@ -5,19 +5,31 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  gap: $padding-large;
-  margin-top: $padding-large;
+  padding: 6rem $padding-large;
+  flex-direction: column-reverse;
+  align-items: center;
 
-  @include mobile {
-    flex-direction: column-reverse;
-    padding: $padding-medium;
+  @include tablet {
+    padding: 6rem $padding-small 0;
     align-items: center;
   }
-  @include tablet {
-    flex-direction: row;
-    padding: $padding-medium;
 
-    align-items: center;
+  // custom breakpoing to this UI component
+  @media screen and (min-width: 1024px) {
+    flex-direction: row;
+    padding: 0 6rem;
+    height: 70vh;
+    gap: 3rem;
+  }
+
+  @media screen and (orientation: portrait) {
+    height: 50vh;
+  }
+
+  @include desktop {
+    padding: 0 8%;
+    gap: 1rem;
+    height: 80vh;
   }
 
   &__imageContainer {
@@ -26,45 +38,82 @@
     align-items: center;
     width: 100%;
     gap: $padding-large;
+    max-width: 350px;
+    margin-top: 2rem;
+
+    @include tablet {
+      margin-top: 0;
+      width: 60%;
+      max-width: 500px;
+      margin: -25px;
+      z-index: -2;
+    }
+
+    @media screen and (min-width: 1024px) {
+      max-width: 800px;
+      align-self: flex-end;
+    }
+  }
+
+  &__imageWrap {
+    background-color: rgb(182, 172, 172);
+    border: 2px soliod lightgray;
+    border-radius: 40px 20px 40px 40px;
+    padding: 0 1rem 0 0;
+    @include tablet {
+      background-color: unset;
+      border: unset;
+    }
   }
 
   &__image {
-    max-width: 150%;
+    max-width: 100%;
     height: auto;
     border-radius: $radius-1;
+    position: relative;
+    bottom: -5px;
   }
 
   &__mobileButton {
     display: none; // Hidden by default
-
-    @include mobile {
-      display: flex;
-      justify-content: center;
-      margin-top: 1rem; // Space between image and button
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem; // Space between image and button
+    @include tablet {
+      display: none; // Hide on tablet and desktop
     }
   }
 
-  &-container {
+  &__textContainer {
     align-self: center;
     display: flex;
     flex-direction: column;
     gap: 4.5rem;
+    gap: 0;
 
-    @include mobile {
-      gap: 0;
-    }
     @include tablet {
       gap: 0;
+      width: 50%;
+    }
+
+    @include desktop {
+      max-width: 500px;
+    }
+    @include mobile {
+      width: 100%;
+    }
+
+    h3 {
+      @media screen and (min-width: 1024px) {
+        padding-bottom: 1rem;
+      }
     }
   }
 
   &__info {
     padding-left: 2.5rem;
-
-    @include mobile {
-      padding-left: 0;
-      text-align: left;
-    }
+    padding-left: 0;
+    text-align: left;
 
     @include tablet {
       padding-left: 0;
@@ -73,20 +122,19 @@
 
   &__subHeading {
     text-transform: capitalize;
-    // margin-bottom: 1.5rem;
-
-    @include mobile {
-      margin-bottom: 0;
-    }
+    margin-bottom: 0;
   }
 
   &__desktopButton {
-    display: flex;
     justify-content: flex-start;
     margin-top: $padding-medium;
-
-    @include mobile {
-      display: none; // Hide on mobile to prevent duplication
+    display: none; // Hide on mobile to prevent duplication
+    @include tablet {
+      display: flex;
+      margin-bottom: 5rem;
+    }
+    @media screen and (min-width: 1024px) {
+      margin-bottom: 0;
     }
   }
 }

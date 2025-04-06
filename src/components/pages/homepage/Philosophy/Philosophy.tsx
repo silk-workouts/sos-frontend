@@ -1,39 +1,32 @@
 "use client";
 
 import Image from "next/image";
-import jumpRopeImage from "/public/assets/images/jumpRope.png";
+import DIDlogo from "/public/assets/icons/DID_logo.svg";
 import styles from "./Philosophy.module.scss";
 
 export default function Philosophy() {
   return (
     <section className={styles.philosophy}>
-      <div className={styles.founder}>
-        <Image src={jumpRopeImage} alt="A picture of Michael jump roping" />
-        <div className={styles.founder__name}>
-          <span className="text-small">
-            michael olajide,
-            <br className={styles.lineBreak} />
-            founder & trainer
-          </span>
-        </div>
+      <div className={styles.philosophy__logoCont}>
+        <Image src={DIDlogo} alt="do it different text logo" />
       </div>
-      <div className={styles["philosophy-container"]}>
-        {/* <h3 className="h3_title h3_title--accent">our philosophy</h3> */}
-        <div className={styles.philosophy__info}>
-          <h4 className="h2-title italic">
-            Do It Different<sup>&trade;</sup>
-          </h4>
+      <article className={styles.philosophy__copyCont}>
+        <div className={styles.philoshopy__copy}></div>
+        <h3 className="h3_title h3_title--accent">our philosophy</h3>
 
+        <div className={styles.philosophy__par}>
           <p className="body1">
-            When you think different, your results are different. They&#39;re
-            greater.
-            <br />
-            Leave the machines behind.
-            <br />
-            100% Silk fitness is key.
+            When you think different, your results are different.
+          </p>
+          <p className="body1">
+            <span>They&#39;re greater.</span>
+          </p>
+          <p className="body1">
+            {" "}
+            Leave the machines behind. 100% Silk fitness is key.
           </p>
         </div>
-      </div>
+      </article>
     </section>
   );
 }

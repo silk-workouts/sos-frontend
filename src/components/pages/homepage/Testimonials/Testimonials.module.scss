@@ -2,140 +2,159 @@
 @use "@/styles/partials/_mixins" as *;
 
 .testimonialsSection {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding: 96px 24px 72px;
-	background: $color-grey-dark-alt;
-	width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 9rem 24px 9rem;
+  width: 100%;
+  //   background: url("/assets/images/large-S.png");
+  background: url("/assets/images/large-S.png"),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(219, 219, 219, 0.8) 100%
+    );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
 
-	.testimonialsHeader {
-		font-family: "Montserrat", sans-serif;
-		font-size: 32px;
-		line-height: 39px;
-		text-align: center;
-		color: $color-white;
-	}
+  .testimonialsHeader {
+    font-family: "Montserrat", sans-serif;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    color: $color-red;
+    text-wrap: wrap;
+    width: 100%;
+  }
 
-	.carousel {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		gap: 24px;
-		width: 100%;
-		max-width: 1280px;
-		overflow-x: scroll;
-		scroll-snap-type: x mandatory;
-		padding-bottom: 10px;
-	}
+  .carousel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 1280px;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+  }
 
-	.testimonialCard {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		align-items: flex-start;
-		padding: 24px;
-		gap: 24px;
-		width: fit-content;
-		min-width: 236px;
-		height: 324px;
-		background: #ffffff;
-		border-radius: 10px;
-		scroll-snap-align: start;
+  .testimonialCard {
+    box-shadow: 2px 4px 11.6px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: fit-content;
+    min-width: 236px;
+    height: 350px;
+    background: #ffffff;
+    border-radius: 10px;
+    scroll-snap-align: start;
 
-		@include tablet {
-			min-width: 415px;
-		}
+    @include tablet {
+      min-width: 415px;
+    }
 
-		@include desktop {
-			min-width: 415px;
-		}
-	}
+    @include desktop {
+      min-width: 415px;
+    }
+  }
 
-	.testimonialAuthor {
-		font-family: "Montserrat", sans-serif;
-		font-weight: 400;
-		font-size: 16px;
-		text-align: center;
-		color: #000000;
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		margin-right: 8px; // Added spacing between icon and name
+  .testimonialText {
+    padding: 24px 24px 0 24px;
+    border-radius: 10px 10px 0 0;
+    height: 100%;
+  }
 
-		&::before {
-			content: "";
-			display: inline-block;
-			width: 1.5625rem;
-			height: 1.5625rem;
-			background: url("/assets/icons/s-single.svg") no-repeat center;
-			background-size: contain;
-		}
-	}
+  .testimonialImg {
+    width: 15%;
+    height: auto;
+    margin: 0 0.5rem;
+  }
 
-	@include mobile {
-		.carousel {
-			overflow-x: scroll;
-			padding: 16px;
-		}
-	}
+  .testimonialAuthor {
+    border-radius: 0 0 10px 10px;
+    padding: 1rem 0;
+    background: $color-red;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    color: $color-white;
+    width: 100%;
+    display: flex;
+
+    align-items: center;
+    gap: 8px;
+    margin-right: 8px; // Added spacing between icon and name
+  }
+
+  @include mobile {
+    .carousel {
+      overflow-x: scroll;
+      padding: 16px;
+    }
+  }
 }
 
 .scrollbar {
-	display: none;
+  display: none;
 
-	@include tablet {
-		display: flex;
-		gap: 1.5rem;
-		margin-top: 1.5rem;
-	}
+  @include tablet {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
 
-	&__button {
-		background-color: transparent;
-		border-radius: 50%;
-		border: 1px solid $color-black;
-		cursor: pointer;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 2rem;
-		height: 2rem;
+  &__button {
+    background-color: transparent;
+    border-radius: 50%;
+    border: 1px solid $color-black;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
 
-		@include desktop {
-			width: 2.5rem;
-			height: 2.5rem;
-		}
+    @include desktop {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
 
-		&:hover {
-			border-width: 2px;
+    &:hover {
+      border-width: 2px;
 
-			.scrollbar__icon {
-				transform: translateX(-0.15rem);
+      .scrollbar__icon {
+        transform: translateX(-0.15rem);
 
-				&--right {
-					transform: rotate(180deg) translateX(-0.15rem);
-				}
-			}
-		}
+        &--right {
+          transform: rotate(180deg) translateX(-0.15rem);
+        }
+      }
+    }
 
-		&--disabled {
-			opacity: 0.3;
-			pointer-events: none;
-		}
-	}
+    &--disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+  }
 
-	&__icon {
-		width: 0.625rem;
-		height: 0.625rem;
+  &__icon {
+    width: 0.625rem;
+    height: 0.625rem;
 
-		&--right {
-			transform: rotate(180deg);
-		}
+    &--right {
+      transform: rotate(180deg);
+    }
 
-		@include desktop {
-			width: 0.75rem;
-			height: 0.75rem;
-		}
-	}
+    @include desktop {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  }
 }

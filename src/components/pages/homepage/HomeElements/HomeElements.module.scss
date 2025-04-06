@@ -2,26 +2,60 @@
 @use "@/styles/partials/_mixins" as *;
 
 .elements {
+  position: relative;
+  padding: 8rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: $padding-large $padding-small;
-  margin: $padding-xl $padding-small;
-  border: 1px solid $color-black;
-  border-radius: $radius-1;
+  background-color: $color-red;
+  background: linear-gradient(360deg, #cc1e19 0%, #991613 100%);
 
-  .element-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  @include tablet {
+    border-radius: 24px;
+    padding: 5rem 9%;
   }
 
-  .element-box {
+  @include desktop {
+    flex-direction: row;
+    padding: 95px 130px;
+  }
+
+  &::before {
+    @include tablet {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 24px;
+      box-shadow: 0px 2px 10px 4px rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  &__headingCont {
+    display: flex;
+    justify-content: center;
+    @include desktop {
+      display: block;
+    }
+    h2,
+    span.bold {
+      text-align: center;
+      color: $color-white;
+      @include desktop {
+        text-align: left;
+      }
+    }
+  }
+
+  &__elementsBox {
     display: flex;
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 25px;
   }
 
   .workout-description {
@@ -40,21 +74,41 @@
     }
   }
 
-  .align-end {
-    margin-top: 2rem;
+  &__elementsButton {
+    margin-top: 5rem;
     align-self: center;
+    background: $color-white;
+    color: $color-red;
+    border: unset;
+    filter: unset;
+    span:nth-of-type(2) {
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+      background-size: contain !important;
+      background: url("/assets/icons/red-arrow-right.svg");
+      filter: unset;
+    }
+
+    &--hideMobile {
+      display: none;
+      @include desktop {
+        display: flex;
+        color: $color-red;
+      }
+      span {
+        @include desktop {
+          color: $color-red;
+        }
+      }
+    }
+    &--hideDesktop {
+      @include desktop {
+        display: none;
+      }
+    }
   }
 
   @include mobile {
-    .element-container {
-      flex-direction: column;
-      align-items: start;
-    }
-    .element-box {
-      display: flex;
-      flex-direction: row;
-      gap: 5px;
-    }
     .workout-description {
       width: 100%;
       display: flex;
@@ -66,9 +120,18 @@
 
   .element-container2 {
     @include tablet {
-      display: flex;
+      display: block;
       flex-direction: row;
       justify-content: center;
+    }
+  }
+
+  &__el {
+    width: 25%;
+    height: 25%;
+
+    @include tablet {
+      max-width: 190px;
     }
   }
 }
