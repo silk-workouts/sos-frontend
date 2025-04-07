@@ -130,7 +130,7 @@ export default function Header() {
               />{" "}
             </Link>
           ) : (
-            <Button variant="tertiary" className={styles.trialButton}>
+            <Button className={styles.header__trialButton}>
               <Link href="/auth/signup">30-Day Free Trial</Link>
             </Button>
           )}

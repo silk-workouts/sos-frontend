@@ -19,12 +19,15 @@ export default function About() {
         />
         <div className={styles.about__mobileButton}>
           {/* Button appears below the image only on mobile */}
-          <Button variant="secondary" onClick={() => router.push("/about")}>
+          <Button
+            className={styles.about__aboutButton}
+            onClick={() => router.push("/about")}
+          >
             More about Michael
           </Button>
         </div>
       </div>
-      <div className={styles["about-container"]}>
+      <div className={styles.about__textContainer}>
         <h3 className="h3_title h3_title--accent">about</h3>
         <div className={styles.about__info}>
           <h4 className={`h2-title ${styles.about__subHeading}`}>
@@ -38,7 +41,11 @@ export default function About() {
           </p>
           <div className={styles.about__desktopButton}>
             {/* Button remains in the original location on desktop */}
-            <Button variant="secondary" onClick={() => router.push("/about")}>
+            <Button
+              className={styles.about__aboutButton}
+              // variant="secondary"
+              onClick={() => router.push("/about")}
+            >
               More about Michael
             </Button>
           </div>
