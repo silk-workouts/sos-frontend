@@ -237,7 +237,12 @@ export default function PlaylistPlayerPage() {
 					className={styles.backButton}
 					aria-label="Exit workout"
 				>
-					<Image src={backArrowIcon} alt="" aria-hidden="true" />{" "}
+					<Image
+						src={backArrowIcon}
+						alt=""
+						aria-hidden="true"
+						className={styles.backButton__icon}
+					/>{" "}
 					<span>Exit workout</span>
 				</button>
 

@@ -306,7 +306,12 @@ export default function PlayerPage() {
 		<div className={styles.container}>
 			<section className={styles.contentArea}>
 				<button onClick={() => router.back()} className={styles.backButton}>
-					<Image src={backArrowIcon} alt="" aria-hidden="true" />
+					<Image
+						src={backArrowIcon}
+						alt=""
+						aria-hidden="true"
+						className={styles.backButton__icon}
+					/>
 					<span>Exit workout</span>
 				</button>
 

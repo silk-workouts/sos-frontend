@@ -82,6 +82,7 @@
 				display: flex;
 				position: absolute;
 				top: -4rem;
+				left: 0;
 			}
 
 			&::before,
@@ -97,14 +98,14 @@
 			&::before {
 				content: "[";
 				left: -5px;
-				top: 50%;
+				top: 1.0625rem;
 				transform: translateY(-50%);
 			}
 
 			&::after {
 				content: "]";
 				right: -5px;
-				top: 50%;
+				top: 1.0625rem;
 				transform: translateY(-50%);
 			}
 
