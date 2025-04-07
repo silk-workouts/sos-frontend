@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LibraryPageContent from "@/components/pages/library/LibraryPageContent/LibraryPageContent";
 import { usePlaylists } from "../context/PlaylistContext";
 import { useSavedPrograms } from "src/hooks/useSavedPrograms";
@@ -19,12 +19,24 @@ export default function Library() {
 
 	function handleSelect(selected: boolean) {
 		if (!selected) {
-			setIsSelected({
+			const newSelection = {
 				myFormula: !isSelected.myFormula,
 				program: !isSelected.program,
-			});
+			};
+
+			setIsSelected(newSelection);
+			sessionStorage.setItem("libraryTab", JSON.stringify(newSelection));
 		}
 	}
+
+	useEffect(() => {
+		//Get the last selected tab
+		const selectedTab = sessionStorage.getItem("libraryTab");
+
+		if (selectedTab) {
+			setIsSelected(JSON.parse(selectedTab));
+		}
+	}, []);
 
 	// Handle loading states for both playlists and saved programs
 	if (loading || savedLoading) {
