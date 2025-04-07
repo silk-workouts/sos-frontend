@@ -35,7 +35,7 @@ export default function HomeHero() {
           </h2>
         </div>
         <Image src={Logo} alt="Logo" />
-        <Button variant="primary" onClick={handleNavigate}>
+        <Button onClick={handleNavigate} className={styles.hero__button}>
           Start 30-day free trial
         </Button>
       </div>

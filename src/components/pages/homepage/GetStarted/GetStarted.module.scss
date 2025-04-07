@@ -8,7 +8,8 @@
   justify-content: center;
   padding: $padding-xl 0;
   gap: 24px;
-  background: $color-red;
+  background: $color-white;
+  color: $color-red;
   width: 100%;
   @include tablet {
     padding: $padding-xl $padding-medium;
@@ -34,7 +35,7 @@
 
   .mainTitle {
     text-align: center;
-    color: #ffffff;
+    color: $color-red;
     max-width: 250px;
     @include tablet {
       text-align: left;
@@ -52,16 +53,9 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    // min-width: 288px;
 
     @include desktop {
       max-width: 50%;
     }
   }
-
-  // @include mobile {
-  //   .container {
-  //     // max-width: 320px;
-  //   }
-  // }
 }

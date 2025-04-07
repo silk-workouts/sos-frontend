@@ -1,6 +1,7 @@
 //styles/partials/_fonts.scss
 
 @use "@/styles/partials/_variables" as *;
+@use "@/styles/partials/_mixins" as *;
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;800&family=Monomaniac+One&family=Anta&family=Montserrat:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap");
 
 // Colors
@@ -23,7 +24,7 @@
 
 .homehero {
   &_title {
-    font-family: $font-accent;
+    font-family: $font-primary;
     font-weight: $font-weight-regular;
     font-size: clamp($font-size-h1-mobile, 5vw, $font-size-h1-desktop);
     line-height: 1.2;
@@ -81,8 +82,8 @@
 }
 
 .h3_title {
-  font-family: $font-accent;
-  font-weight: $font-weight-regular;
+  font-family: $font-primary;
+  font-weight: $font-weight-medium;
   font-size: clamp(1.25rem, 1.8vw, 1.25rem);
   line-height: clamp(1.5rem, 2vw, 1.5rem);
   text-transform: uppercase;
@@ -101,6 +102,10 @@
   line-height: clamp(1.75rem, 2vw, 2.25rem);
   color: $color-black;
   padding-bottom: $padding-base;
+
+  @include desktop {
+    font-size: 1.25;
+  }
 }
 
 .body2 {

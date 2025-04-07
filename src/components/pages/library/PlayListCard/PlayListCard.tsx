@@ -3,6 +3,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { parseDescription } from "src/utils/parseDescription";
 import kebabIcon from "/public/assets/icons/kebab.svg";
 import rightArrow from "/public/assets/icons/arrow-right.svg";
 import playIcon from "/public/assets/icons/play.svg";
@@ -77,24 +78,37 @@ export default function PlayListCard({
     }
   }
 
-  //   const duration = playlistDuration(
-  //     playlistVideos.reduce((prev, curr) => prev + curr.duration, 0)
-  //   );
+  // Rx icon mapper
+  const getRxIcon = (title: string) => {
+    // Extract the program number from the title (e.g., "Program 11")
+    const match = title.match(/Program\s?(\d+)/);
+    if (match) {
+      const programNumber = match[1];
+      return `/assets/icons/rx-icons/Rx${programNumber}.svg`;
+    }
+    // Return a default icon if no match is found
+    return "/assets/icons/rx-icons/default.svg";
+  };
 
   return (
     <article className={styles.card}>
-      <div className={styles["card__image-container"]}>
+      <div
+        className={styles["card__image-container"]}
+        style={{ backgroundColor: "transparent" }}
+      >
         {!loading && (
           <Image
             src={
-              Array.isArray(playlistVideos) && playlistVideos.length > 0
+              playlist.title.includes("Program")
+                ? getRxIcon(playlist.title)
+                : Array.isArray(playlistVideos) && playlistVideos.length > 0
                 ? playlistVideos[0].thumbnail_url
                 : defaultThumbnail
             }
             alt={`Thumbnail for ${playlist.title} playlist`}
             fill
             sizes="100%"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "contain" }}
             className={styles.card__image}
           />
         )}
@@ -102,7 +116,37 @@ export default function PlayListCard({
       <div className={styles.card__headerContainer}>
         <header>
           <h2 className={styles.card__title}>{playlist.title}</h2>
-          <p className={styles.card__description}>{playlist.description}</p>
+          <div className={styles.card__description}>
+            {(() => {
+              const { title, listItems } = parseDescription(
+                playlist?.description || ""
+              );
+
+              return (
+                <>
+                  {title && (
+                    <blockquote
+                      className={styles.card__title}
+                    >{`"${title}"`}</blockquote>
+                  )}
+                  {listItems.length > 0 ? (
+                    <ul className={styles.card__starList}>
+                      {listItems.map((item, index) => (
+                        <li key={index} className={styles.card__listItem}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>
+                      {playlist?.description || "[No description provided]"}
+                    </p>
+                  )}
+                </>
+              );
+            })()}
+          </div>
+          {/* <p className={styles.card__description}>{playlist.description}</p> */}
         </header>
         <button
           className={styles.button}

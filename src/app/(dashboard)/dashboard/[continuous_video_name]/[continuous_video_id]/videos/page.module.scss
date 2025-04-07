@@ -199,6 +199,21 @@
 	&__description {
 		font-size: 0.875rem;
 	}
+
+	&__title {
+		font-weight: 700;
+	}
+
+	&__startList {
+		list-style-type: none; /* Remove default bullets */
+		padding-left: 1rem;
+	}
+
+	&__listItem::marker {
+		content: "★ "; /* Star character */
+		margin-right: 0.5rem;
+		font-size: 0.6em;
+	}
 }
 
 .videos {
