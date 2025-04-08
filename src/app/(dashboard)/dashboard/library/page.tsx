@@ -92,7 +92,7 @@ export default function Library() {
 				hidden={!isSelected.myFormula}
 				className={styles.content}
 			>
-				<LibraryPageContent playlists={playlists} />
+				<LibraryPageContent playlists={playlists} type="myFormula" />
 			</div>
 
 			{/* Saved Programs Section */}
@@ -106,6 +106,7 @@ export default function Library() {
 				<LibraryPageContent
 					savedPrograms={savedPrograms}
 					refreshSavedPrograms={refreshSavedPrograms}
+					type="program"
 				/>{" "}
 				{/* ✅ Pass refresh function */}
 			</div>
