@@ -200,3 +200,38 @@
 		padding-left: 31.25rem;
 	}
 }
+
+.empty {
+	padding: 10vh 1rem 10vh;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	text-align: center;
+	position: relative;
+
+	@include tablet {
+		padding: 10vh 1.5rem 10vh;
+		font-size: 1rem;
+	}
+
+	@include desktop {
+		padding: 15rem 1rem 0 32.1875rem;
+	}
+
+	&__title {
+		font-weight: 600;
+	}
+
+	&__message {
+		display: flex;
+		flex-direction: column;
+		font-size: 0.8125rem;
+		color: rgb(117, 117, 117);
+
+		@include tablet {
+			font-size: 0.875rem;
+		}
+	}
+}

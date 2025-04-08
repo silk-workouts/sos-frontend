@@ -229,6 +229,7 @@ export default function PlaylistPage() {
 					onClick={handleStartWorkout}
 					className={`${styles.hero__button} ${styles["hero__button--begin"]}`}
 					aria-label={`Play all videos in the ${playlist.title} playlist`}
+					disabled={playlistVideos.length === 0}
 				>
 					<span>Play all</span>
 					<Image
@@ -241,13 +242,23 @@ export default function PlaylistPage() {
 			</section>
 
 			{/* Video list */}
-			<PlaylistVideos
-				videos={playlistVideos}
-				setVideos={setPlaylistVideos}
-				handleDelete={handleDeleteVideo}
-				playlist_id={playlist_id}
-				userId={userId}
-			/>
+			{playlistVideos.length > 0 ? (
+				<PlaylistVideos
+					videos={playlistVideos}
+					setVideos={setPlaylistVideos}
+					handleDelete={handleDeleteVideo}
+					playlist_id={playlist_id}
+					userId={userId}
+				/>
+			) : (
+				<div className={styles.empty}>
+					<p className={styles.empty__title}>No videos yet</p>
+					<p className={styles.empty__message}>
+						<span>Scroll. Select. Save.</span>
+						<span>Formulate your fitness - one element at a time</span>
+					</p>{" "}
+				</div>
+			)}
 		</div>
 	);
 }
