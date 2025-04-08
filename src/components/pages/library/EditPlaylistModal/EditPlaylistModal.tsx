@@ -19,7 +19,7 @@ export default function EditPlaylistModal({
 }: EditPlaylistProps) {
 	const [data, setData] = useState({
 		title: playlist.title,
-		description: playlist.description,
+		description: playlist.description || "",
 	});
 
 	function handleCloseModal(event: React.MouseEvent<HTMLDivElement>) {
