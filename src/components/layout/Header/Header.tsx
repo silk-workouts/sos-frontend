@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import profileIcon from "/public/assets/icons/red-profile.svg";
+import profileIcon from "/public/assets/icons/profile-white-fill.svg";
 import Button from "@/components/ui/Button/Button";
 import styles from "./Header.module.scss";
 
