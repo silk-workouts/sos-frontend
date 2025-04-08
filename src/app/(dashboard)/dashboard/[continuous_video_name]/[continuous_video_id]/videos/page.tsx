@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import Video from "@/components/pages/dashboard/Video/Video";
 import Element from "@/components/Element/Element";
 import { playlistDuration } from "@/components/pages/library/PlayListCard/PlayListCard";
@@ -78,6 +78,9 @@ export default function SingleContinuousVideoPage() {
 				setChapterVideos(videoRes.data.chapters || []);
 				setChapters(chapterRes.data || []);
 			} catch (error) {
+				if (isAxiosError(error) && error.status === 404) {
+					router.push("/dashboard");
+				}
 				console.error("❌ Error loading continuous video page:", error);
 			} finally {
 				setLoading(false);

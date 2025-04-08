@@ -1,5 +1,5 @@
 "use client";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -63,6 +63,9 @@ export default function PlaylistPage() {
 
 				fetchLastProgress();
 			} catch (error) {
+				if (isAxiosError(error) && error.status === 404) {
+					router.push("/dashboard/library");
+				}
 				console.error(`❌ Unable to retrieve playlist:`, error);
 			} finally {
 				setLoading(false);

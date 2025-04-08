@@ -7,7 +7,7 @@ import Player from "@vimeo/player";
 import Video from "@/components/pages/dashboard/Video/Video";
 import { Chapter } from "../../[continuous_video_name]/[continuous_video_id]/videos/page";
 import styles from "./page.module.scss";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 
 interface VideoThumbnails {
 	chapter_id: string;
@@ -86,6 +86,9 @@ export default function PlayerPage() {
 				setChapters(chapterRes.data);
 				setContinuousVideo(continuosRes.data.continuousVideo);
 			} catch (error) {
+				if (isAxiosError(error) && error.status === 404) {
+					router.push("/dashboard");
+				}
 				console.error("Failed to load chapters & continuous video:", error);
 			}
 		}
