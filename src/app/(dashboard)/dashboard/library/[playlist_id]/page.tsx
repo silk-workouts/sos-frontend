@@ -1,8 +1,9 @@
 "use client";
-import axios, { isAxiosError } from "axios";
+import Link from "next/link";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import axios, { isAxiosError } from "axios";
 import defaultThumbnail from "/public/assets/images/defaultPlaylistThumbnail.png";
 import leftArrowIcon from "/public/assets/icons/chevron-left-white.svg";
 import leftArrow from "/public/assets/icons/arrow-left.svg";
@@ -257,8 +258,13 @@ export default function PlaylistPage() {
 				<div className={styles.empty}>
 					<p className={styles.empty__title}>No videos yet</p>
 					<p className={styles.empty__message}>
-						<span>Scroll. Select. Save.</span>
-						<span>Formulate your fitness - one element at a time</span>
+						<span>
+							Scroll. Select.{" "}
+							<Link href="/dashboard" id={styles.link}>
+								Save.
+							</Link>
+						</span>
+						<span>Formulate your workout - one element at a time</span>
 					</p>{" "}
 				</div>
 			)}

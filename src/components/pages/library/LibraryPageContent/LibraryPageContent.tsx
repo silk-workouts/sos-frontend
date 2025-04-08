@@ -48,15 +48,15 @@ export default function LibraryPageContent({
 
 				{type === "myFormula" && playlists.length === 0 ? (
 					<p className={styles.empty__message}>
-						Save the videos that challenge you, that excite you, that surprise
-						you. This is where it begins.
+						Save the videos that challenge you. That push you. That move you.
+						This is where it begins.
 					</p>
 				) : (
 					<p className={styles.empty__message}>
 						Start collecting programs you love by clicking on the{" "}
 						<Image
 							src={bookmarkIcon}
-							alt="boomark icon"
+							alt="bookmark icon"
 							aria-hidden="true"
 							className={styles.empty__icon}
 						/>{" "}

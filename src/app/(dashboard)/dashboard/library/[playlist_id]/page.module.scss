@@ -233,5 +233,10 @@
 		@include tablet {
 			font-size: 0.875rem;
 		}
+
+		#link {
+			color: #e2211c;
+			text-decoration: underline;
+		}
 	}
 }
