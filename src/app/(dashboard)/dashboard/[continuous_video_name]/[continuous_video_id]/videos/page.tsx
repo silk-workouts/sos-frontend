@@ -258,7 +258,7 @@ export default function SingleContinuousVideoPage() {
 						</div>
 					) : (
 						<h2 className={styles.hero__element}>
-							<Element name={continuousVideoName} />
+							<Element name={continuousVideoName} type="dashboard" />
 						</h2>
 					)}
 					<div className={styles.hero__info}>

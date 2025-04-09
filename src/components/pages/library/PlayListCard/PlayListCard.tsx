@@ -138,15 +138,16 @@ export default function PlayListCard({
 											))}
 										</ul>
 									) : (
-										<p>
-											{playlist?.description || "[No description provided]"}
-										</p>
+										playlist.description && (
+											<p className={styles.card__description}>
+												{playlist.description}
+											</p>
+										)
 									)}
 								</>
 							);
 						})()}
 					</div>
-					{/* <p className={styles.card__description}>{playlist.description}</p> */}
 				</header>
 				<button
 					id="menu"
