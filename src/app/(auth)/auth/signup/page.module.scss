@@ -3,110 +3,208 @@
 @use "@/styles/partials/_fonts" as *;
 
 .signupContainer {
+  margin-top: 64px;
+  background-color: $color-red;
+  color: #000;
   display: flex;
   flex-direction: column;
+  justify-self: center;
   align-items: center;
-  width: 100vw;
-  min-height: 100vh;
-  background: $background-color;
+  width: 100%;
+  padding-bottom: 2rem;
+  // min-height: 100vh;
 
   @include tablet {
-    flex-direction: row;
+    flex-direction: row-reverse;
+    margin-top: unset;
+    padding-bottom: unset;
+  }
+  @include desktop {
+    padding-bottom: 3rem;
   }
 }
 
 // ✅ Left panel with signup information
 .panelLeft {
-  width: 100vw;
-  height: fit-content;
-  background: rgba(255, 0, 0, 0.2) url("/assets/images/large-S.png");
-  background-size: calc(100% - 2rem) auto;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 100%;
+  margin-top: 24px;
+  margin-bottom: 28px;
+  // height: fit-content;
+  // background: rgba(255, 0, 0, 0.2) url("/assets/images/large-S.png");
+  // background-size: calc(100% - 2rem) auto;
+  // background-position: center;
+  // background-repeat: no-repeat;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  padding: $padding-medium;
+  // align-items: center;
+  // padding: $padding-medium;
   gap: $padding-medium;
 
   @include tablet {
-    max-width: 472px;
+    // max-width: 472px;
     width: 40%;
     height: 100vh;
+    flex-direction: column;
     justify-content: left;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  @include desktop {
+    width: 100%;
+    margin-right: 10%;
   }
 
   .backLink {
-    margin-top: 3rem;
+    color: $color-white;
+
+    margin-left: 16px;
     display: flex;
     align-content: center;
     align-self: flex-start;
     // @extend .link;
-    margin-bottom: $padding-small;
+    // margin-bottom: $padding-small;
     img {
       margin-right: 0.5rem;
+      filter: brightness(0) invert(1); // Makes the arrow white on hover
     }
+
+    &--hideDesktop {
+      @include tablet {
+        display: none;
+      }
+    }
+  }
+
+  .backLink:visited {
+    color: $color-white;
   }
 
   .backLink:hover {
     opacity: 0.7;
   }
 
-  .title {
-    @extend .h2-title;
-    text-align: center;
+  // .title {
+  //   @extend .h2-title;
+  //   text-align: center;
 
+  //   @include tablet {
+  //     text-align: left;
+  //   }
+  // }
+
+  // .subtitle {
+  //   color: #000;
+  //   @extend .body1;
+  //   text-align: center;
+  //   margin-top: $padding-small;
+
+  //   a {
+  //     font-weight: $font-weight-extrabold;
+  //     // text-decoration: none;
+  //     // color: $link-hover-color;
+  //   }
+  // }
+  &__sLogo {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 27px;
     @include tablet {
-      text-align: left;
+      width: 100%;
+      height: 100vh;
     }
-  }
-
-  .subtitle {
-    @extend .body1;
-    text-align: center;
-    margin-top: $padding-small;
-
-    a {
-      font-weight: $font-weight-extrabold;
-      text-decoration: none;
-      color: $link-hover-color;
+    @include desktop {
+      max-width: 490px;
     }
   }
 }
 
 // ✅ Right panel for the signup form
 .panelRight {
+  padding: 0 6%;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: $padding-medium;
+  // padding: $padding-medium;
 
   @include tablet {
     width: 60%;
+    align-items: flex-start;
   }
 
   @include desktop {
     width: 100%;
-    max-width: 968px;
-    padding: 0 $padding-xl;
+    // max-width: 968px;
+    // padding: 0 $padding-xl;
+  }
+
+  .backLink {
+    color: $color-white;
+
+    margin-left: 16px;
+    display: flex;
+    align-content: center;
+    align-self: flex-start;
+    // @extend .link;
+    // margin-bottom: $padding-small;
+    img {
+      margin-right: 0.5rem;
+      filter: brightness(0) invert(1); // Makes the arrow white on hover
+    }
+
+    &--hideMobile {
+      display: none;
+      @include tablet {
+        display: flex;
+        margin-left: 0;
+        margin-bottom: 56px;
+      }
+    }
+  }
+
+  .backLink:visited {
+    color: $color-white;
+  }
+
+  .backLink:hover {
+    opacity: 0.7;
   }
 }
 
 // ✅ Signup form styling
 .signupForm {
+  background: $color-white;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+
+  padding: 2rem 1rem;
+  border-radius: 35px;
   width: 100%;
-  max-width: 400px;
+  // max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: $padding-medium;
 
+  @include desktop {
+    max-width: 592px;
+  }
+
   .heading {
+    color: #000;
     @extend .h2-title;
     text-align: center;
+  }
+
+  .subtitle {
+    text-align: center;
+
+    a {
+      font-weight: 800;
+    }
   }
 
   .inputGroup {

@@ -4,7 +4,7 @@
 .hero {
   position: relative;
   width: 100%;
-  // min-width: 100vw;
+
   background-image: url("/assets/images/hero-background.jpg");
   background-size: cover;
   background-position: center top;
@@ -16,7 +16,7 @@
   padding: 16px;
 
   @include desktop {
-    height: 52.375rem; //838px
+    height: 52.375rem;
   }
 
   &__video {
@@ -57,12 +57,21 @@
         height: auto;
       }
     }
+  }
 
-    // h2 {
-    //   @include mobile {
-    //     font-size: 24px;
-    //     line-height: 28px;
-    //   }
-    // }
+  &__title {
+    color: $color-red;
+  }
+
+  &__button {
+    background: #fff;
+    opacity: 50%;
+    border: unset;
+    color: $color-red;
+    font-weight: $font-weight-medium;
+  }
+  &__button > span:nth-of-type(2) {
+    background-image: url("/assets/icons/red-arrow-right.svg");
+    filter: unset;
   }
 }
