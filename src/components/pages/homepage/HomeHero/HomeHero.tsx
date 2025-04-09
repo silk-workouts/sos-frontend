@@ -30,9 +30,6 @@ export default function HomeHero() {
           <h1 className={`homehero_title ${styles.hero__title}`}>
             System of Silk
           </h1>
-          <h2 className={`homehero_subtitle ${styles.hero__subheader}`}>
-            Fitness
-          </h2>
         </div>
         <Image src={Logo} alt="Logo" />
         <Button onClick={handleNavigate} className={styles.hero__button}>
