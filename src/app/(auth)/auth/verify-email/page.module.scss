@@ -3,12 +3,13 @@
 @use "@/styles/partials/_fonts" as *;
 
 .verifyContainer {
+  background: $color-red;
+  color: $color-white;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100vw;
   min-height: 100vh;
-  background: $background-color;
 
   @include tablet {
     flex-direction: row;
@@ -17,28 +18,30 @@
 
 // ✅ Left panel for branding & navigation
 .panelLeft {
-  width: 100vw;
-  height: fit-content;
-  background: rgba(255, 0, 0, 0.2) url("/assets/images/large-S.png");
-  background-size: calc(100% - 2rem) auto;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 100%;
+  margin-top: calc(64px + 45px);
+  padding: 0 1rem;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: $padding-medium;
-  gap: $padding-medium;
+  justify-content: space-between;
 
   @include tablet {
+    flex-direction: column;
+    background: url("/assets/images/large-S-white-dropshad.svg");
+    height: fit-content;
+    background-size: calc(100% - 2rem) auto;
+    background-position: center;
+    background-repeat: no-repeat;
     max-width: 472px;
     width: 40%;
     height: 100vh;
     justify-content: left;
+    align-items: center;
+    padding: $padding-medium;
+    gap: $padding-medium;
   }
 
   .backLink {
-    margin-top: 3rem;
+    // margin-top: 3rem;
     display: flex;
     align-content: center;
     align-self: flex-start;
@@ -46,6 +49,7 @@
     margin-bottom: $padding-small;
     img {
       margin-right: 0.5rem;
+      filter: brightness(0) invert(1); // Makes the arrow white on hover
     }
   }
 
@@ -59,6 +63,13 @@
 
     @include tablet {
       text-align: left;
+    }
+  }
+  &__img {
+    width: 65px;
+    height: 45px;
+    @include tablet {
+      display: none;
     }
   }
 }
@@ -85,6 +96,7 @@
 
 // ✅ Verification message styling
 .verifyMessage {
+  color: $color-white;
   width: 100%;
   max-width: 400px;
   display: flex;
@@ -99,13 +111,14 @@
   }
 
   .heading {
+    color: $color-white;
     @extend .h2-title;
     text-align: center;
   }
 
   .message {
     @extend .body1;
-    color: $color-black;
+    color: $color-white;
   }
 
   .errorMessage {
@@ -118,5 +131,16 @@
     display: flex;
     justify-content: center;
     margin-top: $padding-medium;
+  }
+
+  .verifyButton {
+    background-color: $color-white;
+    color: $color-red;
+    border: unset;
+  }
+
+  .verifyButton > span:nth-of-type(2) {
+    filter: unset;
+    background-image: url("/assets/icons/red-arrow-right.svg");
   }
 }
