@@ -1,5 +1,10 @@
 "use client";
-import upperBandsImage from "/public/assets/images/upperBands.jpg";
+import boxingGif from "/public/assets/gifs/boxing.gif";
+import coreCrusherGif from "/public/assets/gifs/core-crushers.gif";
+import isometricsGif from "/public/assets/gifs/isometrics.gif";
+import jumpRopeGif from "/public/assets/gifs/jump-rope.gif";
+import lowerBandsGif from "/public/assets/gifs/lowerbands.gif";
+import upperBandsGif from "/public/assets/gifs/upperbands.gif";
 import jumpRope from "/public/assets/images/jumpRopeShop.png";
 import ElementCard from "@/components/pages/theWorkout/ElementCard/ElementCard";
 import InstructionCard from "@/components/pages/theWorkout/InstructionCard/InstructionCard";
@@ -20,58 +25,58 @@ export default function TheWorkout() {
 			<div className={`body2 ${styles.container}`}>
 				<section className={styles.element}>
 					<div>
-						<h2 className="h2-title">
-							<span className="bold">The</span> Elements
+						<h2 className={`h2-title ${styles.element__title}`}>
+							The <span className="bold">Elements</span>
 						</h2>
 						<p className={styles.content}>
-							If your workout playlist is a formula, the elements are the videos
-							that make up that formula. There are currently six different types
-							of elements - Boxing, Jump Rope, Core Crushers, Lower Body bands,
-							Upper Body bands, and Isometrics. Each element type has 15
-							variations, or 15 videos.
+							Your workout is a formula, and each element is a key ingredient.
+							With six elements—Boxing, Jump Rope, Core Crushers, Lower Body
+							Bands, Upper Body Bands, and Isometrics—you have 15 videos per
+							category to mix, match, or master.
 						</p>
+
 						<p className={styles.content}>
-							Formulate your workouts by combining various elements, or focus on
-							one at a time!
+							Build your perfect workout by combining elements or honing in on
+							one at a time.
 						</p>
 					</div>
 					<div className={styles.elementCards}>
 						<ElementCard
 							element="Boxing"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit. "
-							imageSrc={upperBandsImage}
+							imageSrc={boxingGif}
 							imageAlt="A picture of Michael doing the boxing workout"
 						/>
 						<ElementCard
 							element="Jump Rope"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
-							imageSrc={upperBandsImage}
+							imageSrc={jumpRopeGif}
 							imageAlt="A picture of Michael doing the jump rope workout"
 							alternate={true}
 						/>
 						<ElementCard
 							element="Core Crushers"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
-							imageSrc={upperBandsImage}
+							imageSrc={coreCrusherGif}
 							imageAlt="A picture of Michael doing the core crushers workout"
 						/>
 						<ElementCard
 							element="Upper Body Bands"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
-							imageSrc={upperBandsImage}
+							imageSrc={upperBandsGif}
 							imageAlt="A picture of Michael doing the upper bands workout"
 							alternate={true}
 						/>
 						<ElementCard
 							element="Lower Body Bands"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
-							imageSrc={upperBandsImage}
+							imageSrc={lowerBandsGif}
 							imageAlt="A picture of Michael doing the lower bands workout"
 						/>
 						<ElementCard
 							element="Isometric"
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
-							imageSrc={upperBandsImage}
+							imageSrc={isometricsGif}
 							imageAlt="A picture of Michael doing the isometric workout"
 							alternate={true}
 						/>
@@ -80,7 +85,7 @@ export default function TheWorkout() {
 				<section className={styles.buildWorkout}>
 					<div>
 						<h2 className="h2-title">
-							<span className="bold">Building</span> Your Formula
+							<span className="bold">Create</span> Your Workout
 						</h2>
 						<p>
 							System of Silk is uniquely designed to fit your specific fitness
@@ -95,18 +100,18 @@ export default function TheWorkout() {
 						/>
 						<InstructionCard
 							number="2"
-							title="select"
-							content="Add videos to your queue to build a customized workout, or play them instantly for a focused workout."
+							title="build"
+							content="Add videos to your custom playlist, or play them instantly for a focused workout."
 						/>
 						<InstructionCard
 							number="3"
 							title="watch"
-							content="Once you have your queue built or playlist selected, seamlessly watch your videos back to back."
+							content="Select a custom playlist or pre-made program and seamlessly watch videos back to back."
 						/>
 						<InstructionCard
 							number="4"
-							title="save"
-							content="Save your queue and Prescription Programs as playlists to your library."
+							title="repeat"
+							content="Access your custom playlists and saved programs in the library to edit and master!"
 						/>
 					</div>
 				</section>
@@ -121,6 +126,12 @@ export default function TheWorkout() {
 							allowing your body to adapt to this new way of working out,
 							without any of the tools: Rope, bands or weights.
 						</p>
+						<Button
+							onClick={handleOpenShop}
+							className={styles.equipment__button}
+						>
+							view shop
+						</Button>
 					</div>
 					<div className={styles.equipments}>
 						<EquipmentCard
@@ -145,9 +156,6 @@ export default function TheWorkout() {
 							imageAlt="A picture with two jump ropes"
 						/>
 					</div>
-					<Button onClick={handleOpenShop} className={styles.equipment__button}>
-						view shop
-					</Button>
 				</section>
 			</div>
 		</>

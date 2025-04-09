@@ -60,11 +60,11 @@
 	max-width: $content-container-maximum;
 	display: flex;
 	flex-direction: column;
-	gap: 6rem;
-	padding-top: 4rem;
+	gap: 4rem;
 
 	@include desktop {
 		padding-top: $padding-xl;
+		gap: 6rem;
 		margin: 0 auto;
 	}
 }
@@ -86,6 +86,24 @@
 	}
 }
 
+.element {
+	padding: 4rem $padding-small;
+	background-color: $color-red;
+	color: $color-white;
+
+	@include tablet {
+		padding: 4rem 1.5rem;
+	}
+
+	@include desktop {
+		padding: $padding-xl;
+	}
+
+	&__title {
+		color: $color-white;
+	}
+}
+
 .content {
 	margin-bottom: 1rem;
 }
@@ -103,7 +121,7 @@
 }
 
 .equipment {
-	background-color: rgba(91, 91, 91, 1);
+	background-color: $color-red;
 	color: $color-white;
 	padding-top: 4rem;
 	padding-bottom: 4rem;
@@ -120,6 +138,7 @@
 	&__button {
 		align-self: center;
 		width: max-content;
+		margin-top: 1.25rem;
 	}
 }
 

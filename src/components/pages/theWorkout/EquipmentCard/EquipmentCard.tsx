@@ -27,14 +27,15 @@ export default function EquipmentCard({
 			<div className={styles.card__content}>
 				<h3 className={styles.card__title}>{title}</h3>
 				<p className={styles.card__description}>{content}</p>
+
+				<Button
+					onClick={handleOpenShop}
+					variant="tertiary"
+					className={styles.card__button}
+				>
+					shop
+				</Button>
 			</div>
-			<Button
-				onClick={handleOpenShop}
-				variant="tertiary"
-				className={styles.card__button}
-			>
-				shop
-			</Button>
 		</article>
 	);
 }

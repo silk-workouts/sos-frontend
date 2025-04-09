@@ -22,7 +22,7 @@ export default function ElementCard({
 			className={`${styles.card} ${alternate ? styles["card--alternate"] : ""}`}
 		>
 			<div className={styles.card__info}>
-				<Element name={element} />
+				<Element name={element} type="marketing" />
 				<p className={styles.card__message}>{content}</p>
 			</div>
 			<Image src={imageSrc} alt={imageAlt} className={styles.card__image} />
