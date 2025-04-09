@@ -185,7 +185,7 @@ const ProfilePage: React.FC = () => {
   return (
     <div className={styles.profile}>
       <div className={styles.profile__header}>
-        <h2 className={styles.profile__title}>Profile</h2>
+        <h1 className={styles.profile__title}>Profile</h1>
         {!isEditing && (
           <button
             className={styles.profile__editButton}
@@ -205,7 +205,7 @@ const ProfilePage: React.FC = () => {
               <div
                 className={`${styles.profile__infoGroup} ${styles.profile__name}`}
               >
-                <h2>Welcome Back!</h2>
+                <h2 className={styles.profile__subheading}>Welcome Back!</h2>
                 <span className={styles.profile__label}>Name</span>
                 <p>{name || "silk system user"}</p>
               </div>
@@ -239,123 +239,130 @@ const ProfilePage: React.FC = () => {
       )}
 
       {isEditing && (
-        <form className={styles.profile__form} onSubmit={handleSaveProfile}>
-          <div className={styles.profile__inputGroup}>
-            <label className={styles.profile__label}>Name</label>
-            <input
-              type="text"
-              className={styles.profile__input}
-              value={tempName}
-              onChange={(e) => setTempName(e.target.value)}
-            />
-          </div>
+        <div className={styles.profile__editFormWrap}>
+          <form className={styles.profile__form} onSubmit={handleSaveProfile}>
+            <div className={styles.profile__inputGroup}>
+              <label className={styles.profile__label}>Name</label>
+              <input
+                type="text"
+                className={styles.profile__input}
+                value={tempName}
+                onChange={(e) => setTempName(e.target.value)}
+              />
+            </div>
 
-          <div className={styles.profile__inputGroup}>
-            <label className={styles.profile__label}>Age</label>
-            <input
-              type="number"
-              min={0}
-              className={styles.profile__input}
-              value={tempAge ?? ""}
-              onChange={(e) =>
-                setTempAge(parseInt(e.target.value, 10) || undefined)
-              }
-            />
-          </div>
+            <div className={styles.profile__inputGroup}>
+              <label className={styles.profile__label}>Age</label>
+              <input
+                type="number"
+                min={0}
+                className={styles.profile__input}
+                value={tempAge ?? ""}
+                onChange={(e) =>
+                  setTempAge(parseInt(e.target.value, 10) || undefined)
+                }
+              />
+            </div>
 
-          <div className={styles.profile__inputGroup}>
-            <label className={styles.profile__label}>Location</label>
-            <input
-              type="text"
-              className={styles.profile__input}
-              value={tempLocation}
-              onChange={(e) => setTempLocation(e.target.value)}
-            />
-          </div>
+            <div className={styles.profile__inputGroup}>
+              <label className={styles.profile__label}>Location</label>
+              <input
+                type="text"
+                className={styles.profile__input}
+                value={tempLocation}
+                onChange={(e) => setTempLocation(e.target.value)}
+              />
+            </div>
 
-          <div className={styles.profile__inputGroup}>
-            <label className={styles.profile__label}>Gender</label>
-            <select
-              className={styles.profile__input}
-              value={tempGender}
-              onChange={(e) => setTempGender(e.target.value)}
-            >
-              <option value="">Select...</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
+            <div className={styles.profile__inputGroup}>
+              <label className={styles.profile__label}>Gender</label>
+              <select
+                className={styles.profile__input}
+                value={tempGender}
+                onChange={(e) => setTempGender(e.target.value)}
+              >
+                <option value="">Select...</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
 
-          <div className={styles.profile__inputGroup}>
-            <label className={styles.profile__label}>Fitness Level</label>
-            <select
-              className={styles.profile__input}
-              value={tempFitnessLevel}
-              onChange={(e) => setTempFitnessLevel(e.target.value)}
-            >
-              <option value="">Select...</option>
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
-          </div>
+            <div className={styles.profile__inputGroup}>
+              <label className={styles.profile__label}>Fitness Level</label>
+              <select
+                className={styles.profile__input}
+                value={tempFitnessLevel}
+                onChange={(e) => setTempFitnessLevel(e.target.value)}
+              >
+                <option value="">Select...</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
+            </div>
 
-          <div className={styles.profile__buttonGroup}>
-            <Button variant="text" onClick={handleCancelClick}>
-              Cancel
-            </Button>
-            <Button type="submit" variant="tertiary">
-              {isLoading ? "Updating..." : "Save Profile"}
-            </Button>
-          </div>
-        </form>
+            <div className={styles.profile__buttonGroup}>
+              <Button variant="text" onClick={handleCancelClick}>
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="tertiary"
+                className={styles.profile__saveProfileButton}
+              >
+                {isLoading ? "Updating..." : "Save Profile"}
+              </Button>
+            </div>
+          </form>
+        </div>
       )}
 
-      <div className={styles.profile__actions}>
-        <div className={styles.profile__links}>
-          <Link
-            href="/auth/forgot-password"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.profile__link}
-          >
-            Change Password
-          </Link>
-          <Link
-            href="mailto:michaelolajidejr@gmail.com"
-            className={styles.profile__link}
-          >
-            Request Email Update
-          </Link>
-          <Link
-            href="/dashboard/cancel-subscription"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.profile__link}
-          >
-            Cancel Subscription
-          </Link>
-          <Link
-            href="/contact"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.profile__link}
-          >
-            FAQ
-          </Link>
+      {!isEditing && (
+        <div className={styles.profile__actions}>
+          {isLoggedIn && (
+            <Button
+              variant="tertiary"
+              className={styles.profile__logoutButton}
+              onClick={handleLogout}
+            >
+              Log Out
+            </Button>
+          )}
+          <div className={styles.profile__links}>
+            <Link
+              href="/auth/forgot-password"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.profile__link}
+            >
+              Change Password
+            </Link>
+            <Link
+              href="mailto:michaelolajidejr@gmail.com"
+              className={styles.profile__link}
+            >
+              Request Email Update
+            </Link>
+            <Link
+              href="/dashboard/cancel-subscription"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.profile__link}
+            >
+              Cancel Subscription
+            </Link>
+            <Link
+              href="/contact"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.profile__link}
+            >
+              FAQ
+            </Link>
+          </div>
         </div>
-
-        {isLoggedIn && (
-          <Button
-            variant="tertiary"
-            className={styles.profile__logoutButton}
-            onClick={handleLogout}
-          >
-            Log Out
-          </Button>
-        )}
-      </div>
+      )}
     </div>
   );
 };

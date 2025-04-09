@@ -22,6 +22,12 @@
   color: $color-black;
 }
 
+h1.authForm {
+  font-size: 2.25rem !important;
+  font-weight: 500 !important;
+  padding-bottom: unset !important;
+}
+
 .homehero {
   &_title {
     font-family: $font-primary;
@@ -187,4 +193,11 @@
       transform: translateX(calc(100% - 100vw));
     }
   }
+}
+
+.inputError,
+.errorMessage {
+  color: darkred;
+  font-weight: $font-weight-medium;
+  font-size: 14px;
 }

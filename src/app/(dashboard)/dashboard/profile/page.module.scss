@@ -2,13 +2,37 @@
 @use "@/styles/partials/mixins" as *;
 
 .profile {
+  position: relative;
+  background-position: center calc(50% - 5rem);
+  background-repeat: no-repeat;
+  background-size: contain;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  // align-items: flex-start;
   width: 100%;
-  max-width: 534px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: $padding-small;
+  padding: $padding-medium !important; // layout
+  margin-top: 58px;
+
+  @include tablet {
+  }
+}
+
+.profile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/images/large-S.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center calc(50% - 12rem);
+  opacity: 0.15; // makes the image itself see-through
+  z-index: 0;
+
+  @include tablet {
+    background-position: center calc(50% - 4rem);
+  }
 }
 
 /* Profile Header */
@@ -18,7 +42,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0;
-  gap: 41px;
+  // gap: 41px;
   width: 100%;
   height: 29px;
   left: 16px;
@@ -36,8 +60,13 @@
   height: 29px;
 }
 
+.profile__subheading {
+  margin-bottom: 2rem;
+}
+
 /* Edit Button */
 .profile__editButton {
+  z-index: 2;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -49,7 +78,7 @@
   font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 16px;
   line-height: 160%;
   text-decoration-line: underline;
   color: $color-primary;
@@ -68,7 +97,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  margin-top: 24px;
+  // margin-top: 24px;
 }
 
 .profile__infoGroup {
@@ -79,16 +108,18 @@
   padding: 24px 0;
   gap: 8px;
   width: 100%;
-  height: 90px;
+  // height: 90px;
   border-top: 1px solid #dbdbdb;
 }
 
 .profile__name {
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
+  // padding-bottom: 2rem;
+  // margin-bottom: 2rem;
   border-top: none;
   p {
     color: #b51c24;
+    font-weight: 700;
+    font-size: 24px;
   }
 }
 
@@ -105,10 +136,10 @@
 .profile__value {
   font-family: "Montserrat", sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 14px;
   line-height: 17px;
-  color: #757575;
+  color: #1f1f1f;
   width: 100%;
 }
 
@@ -120,13 +151,14 @@
   width: 100%;
   margin-top: 24px;
   gap: 16px;
+  align-items: center;
 }
 
 /* Profile Links */
 .profile__links {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   width: 100%;
 }
@@ -136,7 +168,7 @@
   align-items: center;
   padding: 8px 0;
   gap: 8px;
-  width: 100%;
+  // width: 100%;
   height: 36px;
   border-radius: 10px;
   font-family: $font-primary;
@@ -156,11 +188,13 @@
 
 /* Logout Button */
 .profile__logoutButton {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
   width: 227px;
   background-color: $color-red;
-  border: 1px solid $color-black;
+  // border: 1px solid $color-black;
   font-family: $font-primary;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 16px;
   line-height: 20px;
   text-align: center;
@@ -174,17 +208,28 @@
     color: $color-red;
     border-color: $color-primary;
   }
+
+  @include desktop {
+    margin-top: 2rem;
+  }
 }
 
 /* Edit Profile Form */
+.profile__editFormWrap {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+  margin-bottom: 4rem;
+}
+
 .profile__form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  // align-items: flex-start;
   width: 100%;
-  gap: 16px;
+  gap: 2rem;
   margin-top: 24px;
-  min-height: 100%;
+  // min-height: 100%;
+  // margin-bottom: 14rem;
 }
 
 /* Input Fields - Wrapper */
@@ -213,6 +258,7 @@
 /* Input Field */
 .profile__input {
   box-sizing: border-box;
+  font-weight: 600;
   width: 100%;
   height: 48px;
   background: #f5f5f5;
@@ -233,7 +279,13 @@
 .profile__buttonGroup {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  // justify-content: space-around;
   width: 100%;
-  margin-top: 16px;
+  margin-top: 2rem;
+}
+
+.profile__saveProfileButton {
+  margin-left: 2rem;
+  font-size: 16px;
+  font-weight: 700;
 }
