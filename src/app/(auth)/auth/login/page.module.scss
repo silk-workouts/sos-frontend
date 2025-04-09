@@ -3,49 +3,80 @@
 @use "@/styles/partials/_fonts" as *;
 
 .loginContainer {
+  // border-top: 3px solid yellow;
+  // padding-top: 56px;
+  background: $color-red;
+  color: $color-white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
+  width: 100%;
+  margin-top: 64px; // compensate for header
   min-height: 100vh;
-  background: $background-color;
 
   @include tablet {
-    flex-direction: row-reverse;
+    flex-direction: row;
   }
 }
 
 // ✅ Left panel with login information
 .panelLeft {
-  width: 100vw;
-  height: fit-content;
-  background: rgba(255, 0, 0, 0.2) url("/assets/images/large-S.png");
-  background-size: calc(100% - 2rem) auto;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 100%;
+  // height: fit-content;
+  // background: rgba(255, 0, 0, 0.2) url("/assets/images/large-S.png");
+  // background-size: calc(100% - 2rem) auto;
+  // background-position: center;
+  // background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: $padding-medium;
-  gap: $padding-medium;
+  align-self: flex-start;
+  // padding: $padding-medium;
+  // gap: $padding-medium;
 
   @include tablet {
-    max-width: 472px;
+    // max-width: 472px;
     width: 40%;
-    height: 100vh;
+    // height: 100vh;
     justify-content: left;
+    // display: block;
+    padding: 0;
   }
 
-  .backLink {
-    margin-top: 3rem;
+  @include desktop {
+    width: 50%;
+  }
+
+  &__navHeader {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: $padding-medium;
+    padding: 56px 27px 0 16px;
+    @include tablet {
+      flex-direction: column;
+      padding: 0;
+    }
+  }
+
+  &__backLink {
+    // margin-top: 3rem;
     display: flex;
     align-content: center;
     align-self: flex-start;
     // @extend .link;
-    margin-bottom: $padding-small;
+    // margin-bottom: $padding-small;
+    @include tablet {
+      margin-left: 16px;
+      margin-top: 56px;
+    }
     img {
       margin-right: 0.5rem;
+      filter: brightness(0) invert(1); // Makes the arrow white on hover
+    }
+    span {
+      color: $color-white;
     }
   }
 
@@ -53,7 +84,21 @@
     opacity: 0.6;
   }
 
+  &__img {
+    width: 2rem;
+    height: auto;
+    @include tablet {
+      width: 100%;
+      height: 100vh;
+    }
+    @include desktop {
+      max-width: 490px;
+    }
+  }
+
   .title {
+    display: none;
+    color: $color-white;
     @extend .h2-title;
     text-align: center;
 
@@ -63,26 +108,22 @@
   }
 
   .subtitle {
+    color: #000;
+    text-align: center;
     @extend .body1;
     text-align: center;
     margin-top: $padding-small;
-
-    a {
-      font-weight: $font-weight-extrabold;
-      text-decoration: none;
-      color: $link-hover-color;
-    }
   }
 }
 
 // ✅ Right panel for the login form
 .panelRight {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: $padding-medium;
+  padding: $padding-medium 6%;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
 
   @include tablet {
     width: 60%;
@@ -93,24 +134,48 @@
     max-width: 968px;
     padding: 0 $padding-xl;
   }
+
+  &__wrap {
+    background: $color-white;
+    border-radius: 35px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 0 1rem;
+    display: flex;
+    justify-self: center;
+    width: 100%;
+    @include desktop {
+      max-width: 592px;
+    }
+  }
+
+  &__subtitle {
+    color: #000;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  &__signupLink {
+    margin-top: -1.5rem;
+    font-weight: $font-weight-extrabold;
+    text-decoration: none;
+    color: $link-hover-color;
+    text-align: le;
+  }
 }
 
 // ✅ Login form styling
 .loginForm {
   width: 100%;
-  max-width: 400px;
+  // max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: $padding-medium;
 
-  //   @include desktop {
-  //     width: 100%;
-  //     max-width: none;
-  //   }
-
   .heading {
-    padding-top: 2rem;
+    padding: 2rem 0;
+    padding-bottom: 0;
+    font-weight: 500;
     @extend .h2-title;
     text-align: center;
   }
@@ -159,19 +224,25 @@
     }
 
     .errorMessage {
-      position: absolute;
-      bottom: -1.5rem;
-      left: 0;
+      // position: absolute;
+      // bottom: -1.5rem;
+      // left: 0;
       font-size: 14px;
       font-weight: $font-weight-medium;
       color: $color-red;
       padding-right: 8px;
+    }
+
+    .pwErrorMessage {
+      // margin-top: 1rem !important;
+      position: unset;
     }
   }
 
   .optionsGroup {
     display: flex;
     justify-content: space-between;
+    gap: 2rem;
     align-items: center;
     width: 100%;
     font-size: 14px;
@@ -188,10 +259,11 @@
       }
     }
 
-    .forgotPassword {
+    &__forgotPassword {
       text-decoration: none;
       color: $link-hover-color;
       font-weight: $font-weight-medium;
+      font-size: 80%;
     }
   }
 

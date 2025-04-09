@@ -9,6 +9,7 @@ import {
   sanitizeEmail,
   sanitizePassword,
 } from "src/utils/authInputUtils";
+import whiteS from "public/assets/images/large-S-white-dropshad.svg";
 import leftArrow from "public/assets/icons/arrow-left.svg";
 import Button from "@/components/ui/Button/Button";
 import Link from "next/link";
@@ -86,23 +87,40 @@ export default function SignupPage() {
     <div className={styles.signupContainer}>
       {/* ✅ Left panel with signup information */}
       <div className={styles.panelLeft}>
-        <Link href="/" className={styles.backLink}>
+        <Link
+          href="/"
+          className={`${styles.backLink} ${styles["backLink--hideDesktop"]}`}
+        >
           <Image src={leftArrow} alt="" aria-hidden="true" />
           <span>Back to Site</span>
         </Link>
-        <h1 className={styles.title}>Join System of Silk</h1>
+        <Image
+          src={whiteS}
+          alt=""
+          aria-hidden="true"
+          className={styles.panelLeft__sLogo}
+        />
+
+        {/* <h1 className={styles.title}>Join System of Silk</h1> */}
       </div>
 
       {/* ✅ Right panel containing the signup form */}
       <div className={styles.panelRight}>
+        <Link
+          href="/"
+          className={`${styles.backLink} ${styles["backLink--hideMobile"]}`}
+        >
+          <Image src={leftArrow} alt="" aria-hidden="true" />
+          <span>Back to Site</span>
+        </Link>
         <form onSubmit={handleSignup} className={styles.signupForm}>
           <h1 className={styles.heading}>Create an Account</h1>
-          <p className={styles.subtitle}>
-            Already have an account?{" "}
+          <div className={styles.subtitle}>
+            <p>Already have an account? </p>
             <Link className="link--emphasis" href="/auth/login">
               Login
             </Link>
-          </p>
+          </div>
           {/* ✅ Email input field */}
           <div className={styles.inputGroup}>
             <label>Email Address</label>

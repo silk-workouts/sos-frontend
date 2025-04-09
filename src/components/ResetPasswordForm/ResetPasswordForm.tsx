@@ -6,6 +6,8 @@ import Image from "next/image";
 import { Toaster, toast } from "react-hot-toast";
 import leftArrow from "public/assets/icons/arrow-left.svg";
 import Link from "next/link";
+import whiteS from "public/assets/images/large-S-white-dropshad.svg";
+
 import styles from "./ResetPasswordForm.module.scss";
 import Button from "../ui/Button/Button";
 import { isValidPassword, sanitizePassword } from "src/utils/authInputUtils";
@@ -72,10 +74,15 @@ export default function ResetPasswordForm({ token, userId }: Props) {
           <Image src={leftArrow} alt="" aria-hidden="true" />
           <span>Back to Site</span>
         </Link>
-        <h1 className={styles.title}>Reset Your Password</h1>
-        <p className={styles.subtitle}>
-          Choose a new password below to get back into your account.
-        </p>
+        <Image
+          className={styles.panelLeft__img}
+          src={whiteS}
+          alt="small S for silk logo"
+        />
+        {/* <h1 className={styles.title}>Reset Your Password</h1>
+        // <p className={styles.subtitle}>
+        //   Choose a new password below to get back into your account.
+        // </p> */}
       </div>
 
       {/* Right panel with form */}
@@ -87,7 +94,7 @@ export default function ResetPasswordForm({ token, userId }: Props) {
           }}
           className={styles.resetForm}
         >
-          <h1 className={styles.heading}>Enter New Password</h1>
+          <h1 className={styles.heading}>Reset Password</h1>
 
           <div className={styles.inputGroup}>
             <label htmlFor="password">New Password</label>
