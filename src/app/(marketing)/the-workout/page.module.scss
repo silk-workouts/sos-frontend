@@ -3,7 +3,6 @@
 
 .hero {
 	margin-top: 4rem;
-	max-width: 1440px;
 	height: 40vh;
 	min-height: 11.25rem;
 	max-height: 48.75rem;
@@ -29,7 +28,6 @@
 		content: "";
 		position: absolute;
 		inset: 0;
-		max-width: 1440px;
 		background: url("/assets/images/workouts-hero-background.png") no-repeat
 			center center;
 		background-size: cover;
@@ -54,10 +52,14 @@
 	@include tablet {
 		font-size: 6rem;
 	}
+
+	@include desktop {
+		width: 90rem;
+		margin: 0 auto;
+	}
 }
 
 .container {
-	max-width: $content-container-maximum;
 	display: flex;
 	flex-direction: column;
 	gap: 4rem;
@@ -68,24 +70,6 @@
 
 	@include desktop {
 		gap: 6rem;
-		margin: 0 auto;
-	}
-}
-
-.element,
-.buildWorkout,
-.equipment {
-	display: flex;
-	flex-direction: column;
-	padding: 0 $padding-small;
-	gap: 4.5rem;
-
-	@include tablet {
-		padding: 0 1.5rem;
-	}
-
-	@include desktop {
-		padding: 0 $padding-xl;
 	}
 }
 
@@ -102,8 +86,42 @@
 		padding: $padding-xl;
 	}
 
+	&-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 4.5rem;
+
+		@include desktop {
+			max-width: $content-container-maximum;
+			margin: 0 auto;
+		}
+	}
+
 	&__title {
 		color: $color-white;
+	}
+}
+
+.buildWorkout {
+	padding: 0 $padding-small;
+
+	@include tablet {
+		padding: 0 1.5rem;
+	}
+
+	@include desktop {
+		padding: 0 $padding-xl;
+	}
+
+	&-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 4.5rem;
+
+		@include desktop {
+			max-width: $content-container-maximum;
+			margin: 0 auto;
+		}
 	}
 }
 
@@ -135,12 +153,25 @@
 .equipment {
 	background-color: $color-red;
 	color: $color-white;
-	padding-top: 4rem;
-	padding-bottom: 4rem;
+	padding: 4rem $padding-small;
+
+	@include tablet {
+		padding: 4rem 1.5rem;
+	}
 
 	@include desktop {
-		padding-top: $padding-xl;
-		padding-bottom: $padding-xl;
+		padding: $padding-xl;
+	}
+
+	&-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 4.5rem;
+
+		@include desktop {
+			max-width: $content-container-maximum;
+			margin: 0 auto;
+		}
 	}
 
 	&__title {
@@ -161,9 +192,5 @@
 		flex-direction: row;
 		justify-content: space-around;
 		gap: 1rem;
-	}
-
-	@include tablet {
-		max-width: 69.625rem;
 	}
 }
