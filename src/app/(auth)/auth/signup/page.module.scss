@@ -11,10 +11,13 @@
   justify-self: center;
   align-items: center;
   width: 100%;
+  padding-bottom: 2rem;
   // min-height: 100vh;
 
   @include tablet {
     flex-direction: row-reverse;
+    margin-top: unset;
+    padding-bottom: unset;
   }
   @include desktop {
     padding-bottom: 3rem;

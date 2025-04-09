@@ -12,7 +12,7 @@ import styles from "./page.module.scss";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
 
   async function handleForgotPassword(event: React.FormEvent) {
@@ -20,12 +20,20 @@ export default function ForgotPasswordPage() {
 
     // Sanitize the email input
     const sanitizedEmail = sanitizeEmail(email.trim());
+    const newErrors: { [key: string]: string } = {};
 
-    // Validate the sanitized email
-    if (!sanitizedEmail || !isValidEmail(sanitizedEmail)) {
-      toast.error("Please enter a valid email address.");
+    if (!sanitizedEmail) {
+      newErrors.email = "⚠️ Email is required.";
+    } else if (!isValidEmail(sanitizedEmail)) {
+      newErrors.email = "⚠️ Invalid email format.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
+
+    setErrors({});
 
     try {
       console.log("📩 Sending reset email...");
@@ -44,11 +52,11 @@ export default function ForgotPasswordPage() {
         setEmail(""); // Clear the input field after success
       } else {
         console.error("❌ Failed to send reset link:", data);
-        toast.error(data.error || "❌ Failed to send reset link.");
+        setErrors({ general: data.error || "❌ Failed to send reset link." });
       }
     } catch (error) {
       console.error("❌ An error occurred:", error);
-      toast.error("❌ An error occurred while sending the reset link.");
+      setErrors({ general: "❌ An unexpected error occurred." });
     }
   }
 
@@ -88,6 +96,9 @@ export default function ForgotPasswordPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && (
+              <span className={styles.errorMessage}>{errors.email}</span>
+            )}
           </div>
 
           {/* ✅ Send Reset Link button */}
@@ -98,9 +109,6 @@ export default function ForgotPasswordPage() {
           >
             Send Reset Link
           </Button>
-
-          {/* ✅ Display messages */}
-          <p className={styles.message}>{message}</p>
 
           {/* ✅ Link to login page */}
           <div className={styles.footerText}>

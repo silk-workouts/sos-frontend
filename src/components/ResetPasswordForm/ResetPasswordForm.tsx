@@ -19,7 +19,7 @@ type Props = {
 
 export default function ResetPasswordForm({ token, userId }: Props) {
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [success, setSuccess] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -32,14 +32,21 @@ export default function ResetPasswordForm({ token, userId }: Props) {
     // Sanitize the password
     const sanitizedPassword = sanitizePassword(password);
 
-    // Validate the sanitized password
-    if (!sanitizedPassword || !isValidPassword(sanitizedPassword)) {
-      const errorMessage =
-        "Password must be at least 8 characters, contain one uppercase letter, one lowercase letter, and one number.";
-      // setError(errorMessage);
-      toast.error(errorMessage);
+    const newErrors: { [key: string]: string } = {};
+
+    // Validate
+    if (!sanitizedPassword) {
+      newErrors.password = "⚠️ Password is required.";
+    } else if (!isValidPassword(sanitizedPassword)) {
+      newErrors.password = "⚠️ Invalid password format";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
+
+    setErrors({});
 
     try {
       const res = await fetch("/api/auth/reset-password", {
@@ -57,12 +64,12 @@ export default function ResetPasswordForm({ token, userId }: Props) {
       } else {
         const data = await res.json();
         // setError(data.error || "Something went wrong. Please try again.");
-        toast.error(data.error || "Something went wrong.");
+        setErrors({ general: data.error || "Something went wrong." });
       }
     } catch (err) {
       console.error("❌ An error occurred:", err);
       // setError("An unexpected error occurred.");
-      toast.error("❌ An unexpected error occurred.");
+      setErrors({ general: "An unexpected error occurred." });
     }
   };
 
@@ -98,16 +105,25 @@ export default function ResetPasswordForm({ token, userId }: Props) {
 
           <div className={styles.inputGroup}>
             <label htmlFor="password">New Password</label>
-            <input
-              ref={inputRef}
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your new password"
-              required
-            />
-            {error && <span className={styles.errorMessage}>{error}</span>}
+            <div className={styles.tooltipContainer}>
+              <input
+                ref={inputRef}
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your new password"
+                required
+                aria-describedby="passwordTooltip"
+              />
+              <span className={styles.tooltip} id="passwordTooltip">
+                Password must be at least 8 characters, contain one uppercase
+                letter, one lowercase letter, and one number.
+              </span>
+              {errors.password && (
+                <span className={styles.errorMessage}>{errors.password}</span>
+              )}
+            </div>
           </div>
 
           <Button
