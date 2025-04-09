@@ -40,8 +40,7 @@ export default function LoginPage() {
     }
 
     if (!isValidPassword(sanitizedPassword)) {
-      newErrors.password =
-        "⚠️ Password must be at least 8 characters, contain one uppercase letter, one lowercase letter, and one number.";
+      newErrors.password = "⚠️ Invalid password";
     }
 
     if (Object.keys(newErrors).length > 0) {
