@@ -62,8 +62,11 @@
 	flex-direction: column;
 	gap: 4rem;
 
+	@include tablet {
+		gap: 4.5rem;
+	}
+
 	@include desktop {
-		padding-top: $padding-xl;
 		gap: 6rem;
 		margin: 0 auto;
 	}
@@ -156,11 +159,11 @@
 
 	@include tablet {
 		flex-direction: row;
-		justify-content: center;
+		justify-content: space-around;
 		gap: 1rem;
 	}
 
 	@include tablet {
-		gap: 1.5rem;
+		max-width: 69.625rem;
 	}
 }

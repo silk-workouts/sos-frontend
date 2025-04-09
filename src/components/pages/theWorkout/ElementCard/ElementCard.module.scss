@@ -8,7 +8,7 @@
 
 	@include tablet {
 		flex-direction: row-reverse;
-		justify-content: center;
+		justify-content: flex-end;
 		gap: 3rem;
 	}
 
@@ -22,12 +22,12 @@
 		gap: 1rem;
 		align-items: center;
 		text-align: center;
-		max-width: 27.3125rem;
 
 		@include tablet {
 			align-items: flex-start;
 			text-align: unset;
 			gap: 1.5rem;
+			max-width: 28.125rem;
 		}
 	}
 
@@ -36,12 +36,10 @@
 		transition: font-size 0.3s ease-in-out;
 
 		@include tablet {
-			max-width: 18.75rem;
 			font-size: 1.125rem;
 		}
 
 		@include desktop {
-			max-width: 26.75rem;
 			font-size: 1.25rem;
 		}
 	}
