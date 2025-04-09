@@ -71,6 +71,8 @@
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+	color: $color-black;
+	font-size: 1rem;
 
 	@include tablet {
 		padding-right: 2rem;
