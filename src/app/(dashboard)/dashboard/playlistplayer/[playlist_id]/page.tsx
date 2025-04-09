@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import Image from "next/image";
 import Player from "@vimeo/player";
 import { useEffect, useState, useRef } from "react";
@@ -59,6 +59,9 @@ export default function PlaylistPlayerPage() {
 
 				setActiveVideo({ ...startingVideo, progress_seconds });
 			} catch (err) {
+				if (isAxiosError(err) && err.status === 404) {
+					router.push("/dashboard/library");
+				}
 				console.error("❌ Failed to fetch playlist:", err);
 			}
 		}
@@ -237,7 +240,12 @@ export default function PlaylistPlayerPage() {
 					className={styles.backButton}
 					aria-label="Exit workout"
 				>
-					<Image src={backArrowIcon} alt="" aria-hidden="true" />{" "}
+					<Image
+						src={backArrowIcon}
+						alt=""
+						aria-hidden="true"
+						className={styles.backButton__icon}
+					/>{" "}
 					<span>Exit workout</span>
 				</button>
 
