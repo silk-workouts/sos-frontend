@@ -25,6 +25,7 @@
 h1.authForm {
   font-size: 2.25rem !important;
   font-weight: 500 !important;
+  padding-bottom: unset !important;
 }
 
 .homehero {
@@ -192,4 +193,11 @@ h1.authForm {
       transform: translateX(calc(100% - 100vw));
     }
   }
+}
+
+.inputError,
+.errorMessage {
+  color: darkred;
+  font-weight: $font-weight-medium;
+  font-size: 14px;
 }

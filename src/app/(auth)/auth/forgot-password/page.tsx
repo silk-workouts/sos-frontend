@@ -82,7 +82,7 @@ export default function ForgotPasswordPage() {
           onSubmit={handleForgotPassword}
           className={styles.forgotPasswordForm}
         >
-          <h1 className={styles.heading}>Forgot Password</h1>
+          <h1 className={`${styles.heading} authForm`}>Forgot Password</h1>
 
           {/* ✅ Email input field */}
           <div className={styles.inputGroup}>

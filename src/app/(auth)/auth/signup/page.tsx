@@ -40,8 +40,7 @@ export default function SignupPage() {
     if (!sanitizedPassword) {
       newErrors.password = "⚠️ Password is required.";
     } else if (!isValidPassword(sanitizedPassword)) {
-      newErrors.password =
-        "⚠️ Password must be at least 8 characters, contain one uppercase letter, one lowercase letter, and one number.";
+      newErrors.password = "⚠️ Invalid password format";
     }
 
     // ✅ If any errors, update state and stop
@@ -161,14 +160,14 @@ export default function SignupPage() {
                 Password must be at least 8 characters, contain one uppercase
                 letter, one lowercase letter, and one number.
               </span>
-              {errors.password && (
-                <span
-                  className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
-                >
-                  {errors.password}
-                </span>
-              )}
             </div>
+            {errors.password && (
+              <span
+                className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
+              >
+                {errors.password}
+              </span>
+            )}
           </div>
 
           {/* ✅ Sign Up button */}

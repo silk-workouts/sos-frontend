@@ -117,7 +117,7 @@ export default function LoginPage() {
       <div className={styles.panelRight}>
         <div className={styles.panelRight__wrap}>
           <form onSubmit={handleLogin} className={styles.loginForm}>
-            <h1 className={styles.heading}>Welcome Back!</h1>
+            <h1 className={`${styles.heading} authForm`}>Welcome Back!</h1>
             <p className={styles.panelRight__subtitle}>
               Don’t have an account yet?{" "}
             </p>

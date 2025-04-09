@@ -101,7 +101,7 @@ export default function ResetPasswordForm({ token, userId }: Props) {
           }}
           className={styles.resetForm}
         >
-          <h1 className={styles.heading}>Reset Password</h1>
+          <h1 className={`${styles.heading} authForm`}>Reset Password</h1>
 
           <div className={styles.inputGroup}>
             <label htmlFor="password">New Password</label>
