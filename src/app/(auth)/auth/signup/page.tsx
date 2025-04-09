@@ -9,6 +9,7 @@ import {
   sanitizeEmail,
   sanitizePassword,
 } from "src/utils/authInputUtils";
+import whiteS from "public/assets/images/large-S-white-dropshad.svg";
 import leftArrow from "public/assets/icons/arrow-left.svg";
 import Button from "@/components/ui/Button/Button";
 import Link from "next/link";
@@ -17,7 +18,7 @@ import styles from "./page.module.scss";
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   async function handleSignup(event: React.FormEvent) {
     event.preventDefault(); // ✅ Prevent form from reloading the page
@@ -26,24 +27,30 @@ export default function SignupPage() {
     const sanitizedEmail = sanitizeEmail(email.trim());
     const sanitizedPassword = sanitizePassword(password);
 
-    // Validate inputs
-    if (!sanitizedEmail || !sanitizedPassword) {
-      toast.error("Email and password are required!");
+    // ✅ Initialize a fresh error object
+    const newErrors: { [key: string]: string } = {};
+
+    // ✅ Validation logic
+    if (!sanitizedEmail) {
+      newErrors.email = "⚠️ Email is required.";
+    } else if (!isValidEmail(sanitizedEmail)) {
+      newErrors.email = "⚠️ Invalid email format.";
+    }
+
+    if (!sanitizedPassword) {
+      newErrors.password = "⚠️ Password is required.";
+    } else if (!isValidPassword(sanitizedPassword)) {
+      newErrors.password = "⚠️ Invalid password format";
+    }
+
+    // ✅ If any errors, update state and stop
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
-    if (!isValidEmail(sanitizedEmail)) {
-      toast.error("Invalid email format.");
-      return;
-    }
-
-    if (!isValidPassword(sanitizedPassword)) {
-      toast.error(
-        "Password must be at least 8 characters, contain one uppercase letter, one lowercase letter, and one number."
-      );
-
-      return;
-    }
+    // ✅ Clear previous errors if validation passed
+    setErrors({});
 
     try {
       console.log("🛠️ Attempting signup...");
@@ -71,14 +78,18 @@ export default function SignupPage() {
         );
       } else if (res.status === 409) {
         // Handle duplicate email error
-        toast.error("This email is already registered. Please log in.");
+        // toast.error("This email is already registered. Please log in.");
+        setErrors({
+          general: "This email is already registered. Please log in.",
+        });
       } else {
         console.error("❌ Signup failed:", data);
-        toast.error(data.error || "Signup failed.");
+        setErrors({ general: data.error || "Signup failed." });
+        // toast.error(data.error || "Signup failed.");
       }
     } catch (error) {
       console.error("❌ Unexpected error:", error);
-      setMessage("An error occurred.");
+      setErrors({ general: "An unexpected error occurred." });
     }
   }
 
@@ -86,23 +97,40 @@ export default function SignupPage() {
     <div className={styles.signupContainer}>
       {/* ✅ Left panel with signup information */}
       <div className={styles.panelLeft}>
-        <Link href="/" className={styles.backLink}>
+        <Link
+          href="/"
+          className={`${styles.backLink} ${styles["backLink--hideDesktop"]}`}
+        >
           <Image src={leftArrow} alt="" aria-hidden="true" />
           <span>Back to Site</span>
         </Link>
-        <h1 className={styles.title}>Join System of Silk</h1>
+        <Image
+          src={whiteS}
+          alt=""
+          aria-hidden="true"
+          className={styles.panelLeft__sLogo}
+        />
+
+        {/* <h1 className={styles.title}>Join System of Silk</h1> */}
       </div>
 
       {/* ✅ Right panel containing the signup form */}
       <div className={styles.panelRight}>
+        <Link
+          href="/"
+          className={`${styles.backLink} ${styles["backLink--hideMobile"]}`}
+        >
+          <Image src={leftArrow} alt="" aria-hidden="true" />
+          <span>Back to Site</span>
+        </Link>
         <form onSubmit={handleSignup} className={styles.signupForm}>
-          <h1 className={styles.heading}>Create an Account</h1>
-          <p className={styles.subtitle}>
-            Already have an account?{" "}
+          <h1 className={`${styles.heading} authForm`}>Create an Account</h1>
+          <div className={styles.subtitle}>
+            <p>Already have an account? </p>
             <Link className="link--emphasis" href="/auth/login">
               Login
             </Link>
-          </p>
+          </div>
           {/* ✅ Email input field */}
           <div className={styles.inputGroup}>
             <label>Email Address</label>
@@ -112,6 +140,9 @@ export default function SignupPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && (
+              <span className={styles.errorMessage}>{errors.email}</span>
+            )}
           </div>
 
           {/* ✅ Password input field */}
@@ -130,6 +161,13 @@ export default function SignupPage() {
                 letter, one lowercase letter, and one number.
               </span>
             </div>
+            {errors.password && (
+              <span
+                className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
+              >
+                {errors.password}
+              </span>
+            )}
           </div>
 
           {/* ✅ Sign Up button */}

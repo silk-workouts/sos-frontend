@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import whiteS from "public/assets/images/large-S-white-dropshad.svg";
 import leftArrow from "public/assets/icons/arrow-left.svg";
 import Link from "next/link";
 import Button from "@/components/ui/Button/Button";
@@ -27,7 +28,9 @@ export default function VerifyEmailPage() {
       if (res.ok) {
         setMessage("✅ Email verified! You can now log in.");
       } else {
-        setMessage(`❌ ${data.error || "Verification failed."}`);
+        setMessage(
+          `❌ ${data.error || "Verification failed, please contact support."}`
+        );
       }
     };
 
@@ -42,7 +45,12 @@ export default function VerifyEmailPage() {
           <Image src={leftArrow} alt="" aria-hidden="true" />
           <span>Back to Site</span>
         </Link>
-        <h1 className={styles.title}>Email Verification</h1>
+        <Image
+          className={styles.panelLeft__img}
+          src={whiteS}
+          alt="small S for silk logo"
+        />
+        {/* <h1 className={styles.title}>Email Verification</h1> */}
       </div>
 
       {/* ✅ Right panel containing the verification message */}
@@ -53,7 +61,7 @@ export default function VerifyEmailPage() {
           <div className={styles.buttonContainer}>
             <Button
               onClick={() => router.push("/auth/login")}
-              variant="secondary"
+              // variant="secondary"
               className={styles.verifyButton}
             >
               Go to Login

@@ -5,13 +5,14 @@ import Image from "next/image";
 import { Toaster, toast } from "react-hot-toast";
 import { isValidEmail, sanitizeEmail } from "src/utils/authInputUtils";
 import Link from "next/link";
+import whiteS from "public/assets/images/large-S-white-dropshad.svg";
 import leftArrow from "public/assets/icons/arrow-left.svg";
 import Button from "@/components/ui/Button/Button";
 import styles from "./page.module.scss";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
 
   async function handleForgotPassword(event: React.FormEvent) {
@@ -19,12 +20,20 @@ export default function ForgotPasswordPage() {
 
     // Sanitize the email input
     const sanitizedEmail = sanitizeEmail(email.trim());
+    const newErrors: { [key: string]: string } = {};
 
-    // Validate the sanitized email
-    if (!sanitizedEmail || !isValidEmail(sanitizedEmail)) {
-      toast.error("Please enter a valid email address.");
+    if (!sanitizedEmail) {
+      newErrors.email = "⚠️ Email is required.";
+    } else if (!isValidEmail(sanitizedEmail)) {
+      newErrors.email = "⚠️ Invalid email format.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
+
+    setErrors({});
 
     try {
       console.log("📩 Sending reset email...");
@@ -43,11 +52,11 @@ export default function ForgotPasswordPage() {
         setEmail(""); // Clear the input field after success
       } else {
         console.error("❌ Failed to send reset link:", data);
-        toast.error(data.error || "❌ Failed to send reset link.");
+        setErrors({ general: data.error || "❌ Failed to send reset link." });
       }
     } catch (error) {
       console.error("❌ An error occurred:", error);
-      toast.error("❌ An error occurred while sending the reset link.");
+      setErrors({ general: "❌ An unexpected error occurred." });
     }
   }
 
@@ -59,7 +68,12 @@ export default function ForgotPasswordPage() {
           <Image src={leftArrow} alt="" aria-hidden="true" />
           <span>Back to Site</span>
         </Link>
-        <h1 className={styles.title}>Reset Your Password</h1>
+        <Image
+          className={styles.panelLeft__img}
+          src={whiteS}
+          alt="small S for silk logo"
+        />
+        {/* <h1 className={styles.title}>Reset Your Password</h1> */}
       </div>
 
       {/* ✅ Right panel containing the forgot password form */}
@@ -68,7 +82,7 @@ export default function ForgotPasswordPage() {
           onSubmit={handleForgotPassword}
           className={styles.forgotPasswordForm}
         >
-          {/* <h1 className={styles.heading}>Forgot Password</h1> */}
+          <h1 className={`${styles.heading} authForm`}>Forgot Password</h1>
 
           {/* ✅ Email input field */}
           <div className={styles.inputGroup}>
@@ -82,27 +96,27 @@ export default function ForgotPasswordPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && (
+              <span className={styles.errorMessage}>{errors.email}</span>
+            )}
           </div>
 
           {/* ✅ Send Reset Link button */}
           <Button
             type="submit"
-            variant="tertiary"
+            // variant="tertiary"
             className={styles.resetButton}
           >
             Send Reset Link
           </Button>
 
-          {/* ✅ Display messages */}
-          <p className={styles.message}>{message}</p>
-
           {/* ✅ Link to login page */}
-          <p className={styles.footerText}>
-            Remembered your password?{" "}
+          <div className={styles.footerText}>
+            <p>Remembered your password? </p>
             <Link className="link--emphasis" href="/auth/login">
               Log in
             </Link>
-          </p>
+          </div>
         </form>
       </div>
       <Toaster position="top-center" toastOptions={{ duration: 5000 }} />

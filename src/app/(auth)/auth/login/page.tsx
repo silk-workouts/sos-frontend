@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import leftArrow from "public/assets/icons/arrow-left.svg";
+import whiteS from "public/assets/images/large-S-white-dropshad.svg";
 import { Toaster, toast } from "react-hot-toast";
 import {
   isValidEmail,
@@ -39,13 +40,12 @@ export default function LoginPage() {
     }
 
     if (!isValidPassword(sanitizedPassword)) {
-      newErrors.password =
-        "⚠️ Password must be at least 8 characters, contain one uppercase letter, one lowercase letter, and one number.";
+      newErrors.password = "⚠️ Invalid password";
     }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      toast.error("Please subit valid email and password.");
+      // toast.error("Please subit valid email and password.");
       return;
     }
 
@@ -96,78 +96,99 @@ export default function LoginPage() {
     <div className={styles.loginContainer}>
       {/* ✅ Left panel with login options */}
       <div className={styles.panelLeft}>
-        <Link href="/" className={styles.backLink}>
-          <Image src={leftArrow} alt="" aria-hidden="true" />
-          <span>Back to Site</span>
-        </Link>
-        <h1 className={styles.title}>Login</h1>
+        <div className={styles.panelLeft__navHeader}>
+          <Link href="/" className={styles.panelLeft__backLink}>
+            <Image src={leftArrow} alt="" aria-hidden="true" />
+            <span>Back to Site</span>
+          </Link>
+
+          <Image
+            className={styles.panelLeft__img}
+            src={whiteS}
+            alt="small S for silk logo"
+          />
+        </div>
+
+        {/* <h1 className={styles.title}>Login</h1> */}
       </div>
 
       {/* ✅ Right panel containing the login form */}
       <div className={styles.panelRight}>
-        <form onSubmit={handleLogin} className={styles.loginForm}>
-          <h1 className={styles.heading}>Welcome Back!</h1>
-          <p className={styles.subtitle}>
-            Don’t have an account yet?{" "}
-            <Link className="link--emphasis" href="/auth/signup">
+        <div className={styles.panelRight__wrap}>
+          <form onSubmit={handleLogin} className={styles.loginForm}>
+            <h1 className={`${styles.heading} authForm`}>Welcome Back!</h1>
+            <p className={styles.panelRight__subtitle}>
+              Don’t have an account yet?{" "}
+            </p>
+            <Link
+              className={`link--emphasis ${styles.panelRight__signupLink}`}
+              href="/auth/signup"
+            >
               Sign up now
             </Link>
-          </p>
-          {/* ✅ Email input field */}
-          <div className={styles.inputGroup}>
-            <label>Email Address</label>
-            <input
-              type="tex†"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {/* {errors.email && (
-              <span className={styles.errorMessage}>{errors.email}</span>
-            )} */}
-          </div>
-
-          {/* ✅ Password input field */}
-          <div className={styles.inputGroup}>
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {/* {errors.password && (
-              <span className={styles.errorMessage}>{errors.password}</span>
-            )} */}
-          </div>
-
-          {/* ✅ Remember me and forgot password options */}
-          <div className={styles.optionsGroup}>
-            <label className={styles.checkboxContainer}>
+            {/* ✅ Email input field */}
+            <div className={styles.inputGroup}>
+              <label>Email Address</label>
               <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
+                type="tex†"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              Remember me
-            </label>
-            <Link href="/auth/forgot-password" className="link--emphasis">
-              Forgot password?
-            </Link>
-          </div>
+              {errors.email && (
+                <span className={styles.errorMessage}>{errors.email}</span>
+              )}
+            </div>
 
-          {/* ✅ Login button using the tertiary variant */}
-          <Button
-            type="submit"
-            variant="secondary"
-            className={styles.loginButton}
-          >
-            Log In
-          </Button>
+            {/* ✅ Password input field */}
+            <div className={styles.inputGroup}>
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {errors.password && (
+                <span
+                  className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
+                >
+                  {errors.password}
+                </span>
+              )}
+            </div>
 
-          {/* ✅ Display messages */}
-          <p className={styles.message}>{message}</p>
-        </form>
+            {/* ✅ Remember me and forgot password options */}
+            <div className={styles.optionsGroup}>
+              <label className={styles.checkboxContainer}>
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={() => setRememberMe(!rememberMe)}
+                />
+                Remember me
+              </label>
+              <Link
+                href="/auth/forgot-password"
+                className={`link--emphasis ${styles.optionsGroup__forgotPassword}`}
+              >
+                Forgot password?
+              </Link>
+            </div>
+
+            {/* ✅ Login button using the tertiary variant */}
+            <Button
+              type="submit"
+              variant="secondary"
+              className={styles.loginButton}
+            >
+              Log In
+            </Button>
+
+            {/* ✅ Display messages */}
+            <p className={styles.message}>{message}</p>
+          </form>
+        </div>
       </div>
       <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
     </div>
