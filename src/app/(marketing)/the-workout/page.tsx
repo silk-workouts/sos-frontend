@@ -52,7 +52,6 @@ export default function TheWorkout() {
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
 							imageSrc={jumpRopeGif}
 							imageAlt="A picture of Michael doing the jump rope workout"
-							alternate={true}
 						/>
 						<ElementCard
 							element="Core Crushers"
@@ -65,7 +64,6 @@ export default function TheWorkout() {
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
 							imageSrc={upperBandsGif}
 							imageAlt="A picture of Michael doing the upper bands workout"
-							alternate={true}
 						/>
 						<ElementCard
 							element="Lower Body Bands"
@@ -78,7 +76,6 @@ export default function TheWorkout() {
 							content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
 							imageSrc={isometricsGif}
 							imageAlt="A picture of Michael doing the isometric workout"
-							alternate={true}
 						/>
 					</div>
 				</section>
