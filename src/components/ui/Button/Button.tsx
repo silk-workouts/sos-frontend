@@ -7,10 +7,11 @@ import styles from "./Button.module.scss";
 
 interface ButtonProps {
 	type?: "button" | "submit";
-	variant?: "primary" | "secondary" | "tertiary" | "text" | "homeHero";
+	variant?: "primary" | "secondary" | "tertiary" | "homeHero" | "text";
 	children: ReactNode;
 	onClick?: () => void;
 	className?: string;
+	disabled?: boolean;
 }
 
 export default function Button({
@@ -19,6 +20,7 @@ export default function Button({
 	children,
 	onClick,
 	className = "",
+	disabled = false,
 }: ButtonProps) {
 	return (
 		<button
@@ -27,6 +29,7 @@ export default function Button({
 				styles[`button--${variant}`]
 			} ${className}`}
 			onClick={onClick}
+			disabled={disabled}
 		>
 			<span className={styles.button__text}>{children}</span>
 			{variant === "primary" && (

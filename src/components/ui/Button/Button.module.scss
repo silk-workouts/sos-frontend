@@ -63,21 +63,17 @@
 		}
 	}
 
-	//add variant for text
 	&--text {
-		background: transparent;
-		border: none;
-		color: $color-black;
-		font-family: $font-primary;
-		font-size: $font-size-body2-mobile;
-		cursor: pointer;
-		text-transform: capitalize;
+		background-color: transparent;
+		color: $color-red;
 
 		&:hover {
-			color: $link-hover-color;
-			&:hover {
-				box-shadow: none;
-			}
+			box-shadow: none;
+		}
+
+		@include tablet {
+			padding: 0.5rem 1rem;
+			font-size: 1.25rem;
 		}
 	}
 
