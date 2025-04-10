@@ -37,6 +37,7 @@
 		font-family: $font-primary;
 		width: max-content;
 		cursor: pointer;
+		font-size: 1rem;
 
 		&--begin {
 			color: $color-white;
@@ -164,24 +165,16 @@
 	}
 
 	&__title {
-		font-size: 1.125rem;
+		font-size: 1.25rem;
 		font-weight: $font-weight-extrabold;
-
-		@include tablet {
-			font-size: 1.25rem;
-		}
 	}
 
 	&__info {
 		margin-top: 0.5rem;
 		display: flex;
 		gap: 1rem;
-		font-size: 0.625rem;
+		font-size: 0.875rem;
 		font-weight: 600;
-
-		@include tablet {
-			font-size: 0.75rem;
-		}
 	}
 
 	&__message {
@@ -191,7 +184,7 @@
 
 	&__description {
 		margin-top: 1.5rem;
-		font-size: 0.875rem;
+		font-size: 1rem;
 	}
 }
 
@@ -206,14 +199,13 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
-	font-size: 0.875rem;
+	font-size: 1rem;
 	line-height: 1.25rem;
 	text-align: center;
 	position: relative;
 
 	@include tablet {
 		padding: 10vh 1.5rem 10vh;
-		font-size: 1rem;
 	}
 
 	@include desktop {
@@ -227,7 +219,7 @@
 	&__message {
 		display: flex;
 		flex-direction: column;
-		font-size: 0.8125rem;
+		font-size: 0.875rem;
 		color: rgb(117, 117, 117);
 
 		@include tablet {

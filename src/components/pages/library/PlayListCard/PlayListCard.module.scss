@@ -48,28 +48,16 @@
 
   &__title {
     font-weight: $font-weight-regular;
-    font-size: 1rem;
+    font-size: 1.125rem;
   }
 
   &__description {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     margin-top: 0.5rem;
 
     @include tablet {
       display: none;
     }
-  }
-
-  &__startList {
-    list-style-type: none; /* Remove default bullets */
-    padding-left: 1rem;
-  }
-
-  &__listItem::marker {
-    content: "★ "; /* Star character */
-    color: #000;
-    margin-right: 0.5rem;
-    font-size: 0.6em;
   }
 
   &__icon {
@@ -95,7 +83,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
 
     .info {
       display: flex;
@@ -104,10 +92,6 @@
 
       @include tablet {
         gap: 0.5rem;
-      }
-
-      @include desktop {
-        font-size: 0.875rem;
       }
     }
 

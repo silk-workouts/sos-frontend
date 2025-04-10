@@ -46,13 +46,11 @@
 	border-radius: 2.1875rem;
 	cursor: pointer;
 	padding: 0.25rem 0.5rem;
+	color: $color-black;
+	font-size: 1rem;
 
 	&:hover {
 		background-color: #d9d9d9;
-	}
-
-	@include tablet {
-		font-size: 1rem;
 	}
 
 	&--add {
@@ -78,7 +76,7 @@
 	}
 
 	&__title {
-		font-size: 1rem;
+		font-size: 1.125rem;
 		font-weight: $font-weight-regular;
 
 		@include tablet {

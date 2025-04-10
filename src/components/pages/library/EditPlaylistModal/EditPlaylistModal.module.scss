@@ -47,6 +47,9 @@
 	border-radius: 2.1875rem;
 	cursor: pointer;
 	padding: 0.25rem 0.5rem;
+	color: $color-black;
+	font-weight: 400;
+	font-size: 1rem;
 
 	&:hover {
 		background-color: #d9d9d9;
@@ -120,15 +123,12 @@
 		border: 0.5px solid #757575;
 		font-family: $font-primary;
 		padding: 0.5rem 1rem;
+		font-size: 1rem;
 
 		&--text {
 			height: 5.625rem;
 			resize: none;
 			line-height: 1.25rem;
-		}
-
-		@include tablet {
-			font-size: 1rem;
 		}
 	}
 }
