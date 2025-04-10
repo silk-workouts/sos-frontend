@@ -134,7 +134,7 @@
 .playlistTitle {
 	font-size: 0.875rem;
 	font-weight: 700;
-	color: #e2211c;
+	color: $color-red;
 	text-transform: capitalize;
 
 	@include tablet {
@@ -220,7 +220,7 @@
 	}
 
 	&.activeChapter {
-		border: 1px solid #e2211c;
-		background-color: rgba(#e2211c, 0.1);
+		border: 1px solid $color-red;
+		background-color: rgba($color-red, 0.1);
 	}
 }

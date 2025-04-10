@@ -6,7 +6,10 @@ interface ElementProps {
 }
 
 export default function Element({ name, type }: ElementProps) {
-	const nameSegments = name.split(" ");
+	//filter out body
+	const nameSegments = name
+		.split(" ")
+		.filter((word) => word.toLowerCase() !== "body");
 	let elementSymbol = "";
 
 	if (nameSegments.length == 1) {
@@ -28,7 +31,7 @@ export default function Element({ name, type }: ElementProps) {
 		>
 			<div className={styles.element}>
 				<div className={styles.symbol}>{elementSymbol.toLowerCase()}</div>
-				<div className={styles.name}>{name}</div>
+				<div className={styles.name}>{nameSegments.join(" ")}</div>
 			</div>
 		</div>
 	);

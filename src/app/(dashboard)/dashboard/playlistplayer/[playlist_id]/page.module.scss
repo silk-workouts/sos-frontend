@@ -133,7 +133,7 @@
 .playlistTitle {
 	font-size: 0.875rem;
 	font-weight: 700;
-	color: #e2211c;
+	color: $color-red;
 
 	@include tablet {
 		font-size: 1rem;

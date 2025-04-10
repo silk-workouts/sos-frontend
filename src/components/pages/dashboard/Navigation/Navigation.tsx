@@ -64,7 +64,7 @@ export default function Navigation() {
 							alt=""
 							className={styles.icon}
 						/>
-						<span id={styles.navOption}>home</span>
+						<span id={styles.navOption}>browse</span>
 					</Link>
 				</li>
 				<li className={styles.nav__item}>

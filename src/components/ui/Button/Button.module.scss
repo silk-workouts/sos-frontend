@@ -15,7 +15,7 @@
 		border-color 0.3s ease;
 
 	&:hover {
-		box-shadow: 0px 0px 12.9px 0px #e2211c;
+		box-shadow: 0px 0px 12.9px 0px $color-red;
 
 		.button__arrow {
 			transform: translateX(4px);

@@ -58,8 +58,8 @@
 	border-radius: 1rem;
 
 	&.active {
-		border: 1px solid #e2211c;
-		background-color: rgba(#e2211c, 0.1);
+		border: 1px solid $color-red;
+		background-color: rgba($color-red, 0.1);
 
 		.playContainer {
 			display: unset;
@@ -76,7 +76,7 @@
 	}
 
 	&:hover {
-		background-color: rgba(#e2211c, 0.1);
+		background-color: rgba($color-red, 0.1);
 
 		.grabButton {
 			display: unset;

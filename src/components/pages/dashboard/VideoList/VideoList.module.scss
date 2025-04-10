@@ -12,7 +12,7 @@
 .infoContainer {
 	display: flex;
 	flex-direction: column;
-	gap: 1.5rem;
+	gap: 1rem;
 }
 
 .headerContainer {
@@ -43,7 +43,7 @@
 	font-weight: 700;
 	font-size: 1.125rem;
 	text-transform: capitalize;
-	color: #e2211c;
+	color: $color-red;
 
 	@include tablet {
 		font-size: 1.25rem;
@@ -130,8 +130,8 @@
 	transition: all 0.3s ease-in-out;
 
 	&:hover {
-		background-color: #e2211c;
-		border-color: #e2211c;
+		background-color: $color-red;
+		border-color: $color-red;
 
 		.icon {
 			filter: invert(1);

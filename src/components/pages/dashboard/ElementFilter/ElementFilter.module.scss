@@ -27,20 +27,21 @@
 	border: 1px solid $color-black;
 	border-radius: 1rem;
 	min-width: max-content;
-
-	&:hover {
-		cursor: pointer;
-		border-color: #e2211c;
-	}
+	cursor: pointer;
 
 	@include tablet {
 		padding: 0.375rem 0.625rem;
+
+		&:hover {
+			border-color: $color-red;
+			color: $color-red;
+		}
 	}
 
 	&--selected {
-		border-color: #e2211c;
+		border-color: $color-red;
 		font-weight: $font-weight-extrabold;
-		background-color: #e2211c;
+		background-color: $color-red;
 		color: $color-white;
 	}
 }
