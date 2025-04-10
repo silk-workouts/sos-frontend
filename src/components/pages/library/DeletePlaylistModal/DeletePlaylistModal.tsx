@@ -1,6 +1,7 @@
 import Image from "next/image";
 import closeIcon from "/public/assets/icons/close.svg";
 import styles from "./DeletePlaylistModal.module.scss";
+import Button from "@/components/ui/Button/Button";
 
 interface DeletePlaylistProps {
 	handleClose: () => void;
@@ -40,12 +41,13 @@ export default function DeletePlaylistModal({
 					<span className={styles.title}>{title} </span>from your library?
 				</p>
 
-				<button
+				<Button
+					variant="secondary"
 					onClick={handleDelete}
-					className={`${styles.modal__button} ${styles["modal__button--delete"]}`}
+					className={styles["modal__button--delete"]}
 				>
 					Delete
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

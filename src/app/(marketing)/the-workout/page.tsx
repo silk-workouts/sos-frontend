@@ -44,19 +44,19 @@ export default function TheWorkout() {
 						<div className={styles.elementCards}>
 							<ElementCard
 								element="Boxing"
-								content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit. "
+								content="Boxing redefined—build strength, endurance, and precision without impact. Train footwork, power, and coordination. Get fit without getting hit."
 								imageSrc={boxingGif}
 								imageAlt="A picture of Michael doing the boxing workout"
 							/>
 							<ElementCard
 								element="Jump Rope"
-								content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
+								content="High-intensity cardio that burns fat, boosts endurance, and sharpens coordination. Every jump builds speed, agility, and confidence—before you fly, you jump."
 								imageSrc={jumpRopeGif}
 								imageAlt="A picture of Michael doing the jump rope workout"
 							/>
 							<ElementCard
 								element="Core Crushers"
-								content="My brand of boxing is different. It&#39;s brainfood. It&#39;s convenient, efficient and effective. Its getting fit without getting hit."
+								content="Boxing-inspired core training that strengthens balance, power, and agility. Every movement builds rotational strength and stability for a rock-solid foundation."
 								imageSrc={coreCrusherGif}
 								imageAlt="A picture of Michael doing the core crushers workout"
 							/>
@@ -129,10 +129,11 @@ export default function TheWorkout() {
 								without any of the tools: Rope, bands or weights.
 							</p>
 							<Button
+								variant="tertiary"
 								onClick={handleOpenShop}
 								className={styles.equipment__button}
 							>
-								view shop
+								View shop
 							</Button>
 						</div>
 						<div className={styles.equipments}>

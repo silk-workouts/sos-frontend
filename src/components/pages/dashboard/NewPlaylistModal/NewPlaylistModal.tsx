@@ -2,6 +2,7 @@ import axios from "axios";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import closeIcon from "/public/assets/icons/close.svg";
+import Button from "@/components/ui/Button/Button";
 import styles from "./NewPlaylistModal.module.scss";
 
 interface NewPlaylistProps {
@@ -100,10 +101,10 @@ export default function NewPlaylistModal({
 							className={`${styles.form__input} ${styles["form__input--text"]}`}
 						></textarea>
 					</div>
-					<button type="submit" className={styles.button}>
+					<Button type="submit" variant="secondary">
 						{" "}
 						Save
-					</button>
+					</Button>
 				</form>
 			</article>
 		</div>
