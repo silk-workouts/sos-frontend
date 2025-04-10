@@ -13,8 +13,30 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isProd = process.env.NODE_ENV === "production";
   return (
     <html lang="en">
+      <head>
+        {isProd && (
+          <>
+            {/* <!-- Google tag (gtag.js) --> */}
+            <script
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=G-K37Z5GTZ05"
+            ></script>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-K37Z5GTZ05');
+            `,
+              }}
+            />
+          </>
+        )}
+      </head>
       <body>
         <Header />
         <main>{children}</main>

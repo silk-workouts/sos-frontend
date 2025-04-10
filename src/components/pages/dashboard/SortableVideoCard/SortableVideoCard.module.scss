@@ -59,7 +59,7 @@
 
 	&__title {
 		font-weight: $font-weight-regular;
-		font-size: 0.75rem;
+		font-size: 0.875rem;
 		text-transform: capitalize;
 
 		@include tablet {
@@ -87,7 +87,7 @@
 		position: absolute;
 		bottom: 0.3125rem;
 		right: 0.3125rem;
-		font-size: 0.75rem;
+		font-size: 0.875rem;
 		background-color: rgba($color-black, 0.6);
 		border-radius: 0.25rem;
 		padding: 2px 4px;
@@ -95,8 +95,8 @@
 	}
 
 	&__icon {
-		width: 1rem;
-		height: 1rem;
+		width: 1.25rem;
+		height: 1.25rem;
 
 		@include tablet {
 			width: 1.5rem;
