@@ -2,132 +2,120 @@
 @use "@/styles/partials/mixins" as *;
 
 .card {
-	padding: 1rem;
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
-	@include tablet {
-		padding: 0;
-	}
+  @include tablet {
+    padding: 0;
+  }
 
-	&__image-container {
-		display: none;
-		position: relative;
-		width: 100%;
-		aspect-ratio: 16/9;
-		margin-bottom: -0.5rem;
-		border-radius: 0.75rem;
-		background-color: rgba($color-black, 0.05);
+  &__image-container {
+    display: none;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    margin-bottom: -0.5rem;
+    border-radius: 0.75rem;
+    background-color: rgba($color-black, 0.05);
 
-		@include tablet {
-			display: unset;
-		}
-	}
+    @include tablet {
+      display: unset;
+    }
+  }
 
-	&__image {
-		border-radius: 0.75rem;
-		border: 0.5px solid #dbdbdb;
-	}
+  &__image {
+    border-radius: 0.75rem;
+    border: 0.5px solid #dbdbdb;
+  }
 
-	&__headerContainer {
-		display: flex;
-		justify-content: space-between;
+  &__headerContainer {
+    display: flex;
+    justify-content: space-between;
 
-		@include tablet {
-			position: relative;
-		}
+    @include tablet {
+      position: relative;
+    }
 
-		.button {
-			height: max-content;
-			border: none;
-			background-color: $color-white;
-			cursor: pointer;
-		}
-	}
+    .button {
+      height: max-content;
+      border: none;
+      background-color: $color-white;
+      cursor: pointer;
+    }
+  }
 
-	&__title {
-		font-weight: $font-weight-regular;
-		font-size: 1.125rem;
-	}
+  &__title {
+    font-weight: $font-weight-regular;
+    font-size: 1.125rem;
+  }
 
-	&__description {
-		font-size: 0.875rem;
-		margin-top: 0.5rem;
+  &__description {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
 
-		@include tablet {
-			display: none;
-		}
-	}
+    @include tablet {
+      display: none;
+    }
+  }
 
-	&__startList {
-		list-style-type: none; /* Remove default bullets */
-		padding-left: 1rem;
-	}
+  &__icon {
+    width: 1rem;
+    height: 1rem;
+    vertical-align: middle;
+    transition: all 0.3s ease-in-out;
 
-	&__listItem::marker {
-		content: "★ "; /* Star character */
-		color: #000;
-		margin-right: 0.5rem;
-		font-size: 0.675em;
-	}
+    @include tablet {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
 
-	&__icon {
-		width: 1rem;
-		height: 1rem;
-		vertical-align: middle;
-		transition: all 0.3s ease-in-out;
+    &--go {
+      @include tablet {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
 
-		@include tablet {
-			width: 1.5rem;
-			height: 1.5rem;
-		}
+  &__infoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
 
-		&--go {
-			@include tablet {
-				width: 1rem;
-				height: 1rem;
-			}
-		}
-	}
+    .info {
+      display: flex;
+      gap: 1rem;
+      transition: all 0.3s ease-in-out;
 
-	&__infoContainer {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 0.875rem;
+      @include tablet {
+        gap: 0.5rem;
+      }
+    }
 
-		.info {
-			display: flex;
-			gap: 1rem;
-			transition: all 0.3s ease-in-out;
+    .button {
+      padding: 0.25rem 1rem;
+      border-radius: 2.1875rem;
+      border: 1px solid $color-black;
+      background-color: $color-white;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
 
-			@include tablet {
-				gap: 0.5rem;
-			}
-		}
+      &:hover {
+        background-color: #e2211c;
+        border-color: #e2211c;
 
-		.button {
-			padding: 0.25rem 1rem;
-			border-radius: 2.1875rem;
-			border: 1px solid $color-black;
-			background-color: $color-white;
-			cursor: pointer;
-			transition: all 0.3s ease-in-out;
+        .card__icon {
+          filter: invert(1);
+        }
+      }
+    }
+  }
 
-			&:hover {
-				background-color: #e2211c;
-				border-color: #e2211c;
-
-				.card__icon {
-					filter: invert(1);
-				}
-			}
-		}
-	}
-
-	&__message {
-		display: flex;
-		align-items: center;
-	}
+  &__message {
+    display: flex;
+    align-items: center;
+  }
 }
