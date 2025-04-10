@@ -21,7 +21,12 @@ export default function ElementCard({
 				<Element name={element} type="marketing" />
 				<p className={styles.card__message}>{content}</p>
 			</div>
-			<Image src={imageSrc} alt={imageAlt} className={styles.card__image} />
+			<Image
+				src={imageSrc}
+				alt={imageAlt}
+				className={styles.card__image}
+				unoptimized
+			/>
 		</article>
 	);
 }
