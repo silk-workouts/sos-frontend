@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import closeIcon from "/public/assets/icons/close.svg";
 import { Playlist } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
+import Button from "@/components/ui/Button/Button";
 import styles from "./EditPlaylistModal.module.scss";
 
 interface EditPlaylistProps {
@@ -113,10 +114,10 @@ export default function EditPlaylistModal({
 								className={`${styles.form__input} ${styles["form__input--text"]}`}
 							></textarea>
 						</div>
-						<button type="submit" className={styles.button}>
+						<Button type="submit" variant="secondary">
 							{" "}
 							Save
-						</button>
+						</Button>
 					</form>
 				</article>
 			</div>
