@@ -117,7 +117,7 @@ export default function Header() {
 							/>{" "}
 						</Link>
 					) : (
-						<Button variant="secondary">
+						<Button>
 							<Link href="/auth/signup">Sign up/Log in</Link>
 						</Button>
 					)}
@@ -133,8 +133,8 @@ export default function Header() {
 							/>{" "}
 						</Link>
 					) : (
-						<Button className={styles.header__trialButton}>
-							<Link href="/auth/signup">30-Day Free Trial</Link>
+						<Button variant="secondary">
+							<Link href="/auth/signup">30-day free trial</Link>
 						</Button>
 					)}
 					<button

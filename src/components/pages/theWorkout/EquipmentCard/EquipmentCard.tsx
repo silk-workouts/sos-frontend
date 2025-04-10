@@ -30,7 +30,7 @@ export default function EquipmentCard({
 
 				<Button
 					onClick={handleOpenShop}
-					variant="tertiary"
+					variant="secondary"
 					className={styles.card__button}
 				>
 					shop

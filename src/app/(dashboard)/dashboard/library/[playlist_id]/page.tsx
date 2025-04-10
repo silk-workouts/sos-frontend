@@ -231,7 +231,9 @@ export default function PlaylistPage() {
 				{/* CTA */}
 				<button
 					onClick={handleStartWorkout}
-					className={`${styles.hero__button} ${styles["hero__button--begin"]}`}
+					className={`${styles.hero__button} ${styles["hero__button--begin"]} ${
+						playlistVideos.length === 0 ? styles.disabled : ""
+					}`}
 					aria-label={`Play all videos in the ${playlist.title} playlist`}
 					disabled={playlistVideos.length === 0}
 				>

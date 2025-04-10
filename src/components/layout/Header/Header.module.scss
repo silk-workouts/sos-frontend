@@ -165,11 +165,4 @@
 			font-weight: $font-weight-extrabold;
 		}
 	}
-
-	&__trialButton {
-		background: transparent;
-		border: 1px solid $color-red !important;
-		color: $color-red;
-		display: none !important;
-	}
 }
