@@ -70,7 +70,7 @@ export default function Contact() {
 							Still looking for answers?
 						</h2>
 						<a href="mailto:michaelolajidejr@gmail.com">
-							<Button variant="primary">Contact Us</Button>
+							<Button>Contact Us</Button>
 						</a>
 					</div>
 				</div>

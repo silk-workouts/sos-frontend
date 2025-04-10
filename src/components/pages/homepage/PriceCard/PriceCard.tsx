@@ -1,12 +1,11 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button/Button";
 import styles from "./PriceCard.module.scss";
 
 export default function PriceCard() {
-	const handleStartTrial = () => {
-		window.open("https://buy.stripe.com/3csaF8cac3ZZd2w7st", "_blank");
-	};
+	const router = useRouter();
 
 	return (
 		<article className={styles.priceCard}>
@@ -17,7 +16,7 @@ export default function PriceCard() {
 				</h3>
 				<Button
 					variant="tertiary"
-					onClick={handleStartTrial}
+					onClick={() => router.push("/auth/signup")}
 					className={styles.priceCard__button}
 				>
 					Start Free Trial

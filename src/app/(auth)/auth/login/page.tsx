@@ -176,7 +176,6 @@ export default function LoginPage() {
 							</Link>
 						</div>
 
-						{/* ✅ Login button using the tertiary variant */}
 						<Button type="submit">Log In</Button>
 
 						{/* ✅ Display messages */}
