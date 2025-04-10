@@ -6,10 +6,6 @@
 	flex-direction: column;
 	gap: 3rem;
 
-	@include tablet {
-		gap: 4rem;
-	}
-
 	@include desktop {
 		flex-direction: row;
 		padding: 0 1.5rem 1.5rem;

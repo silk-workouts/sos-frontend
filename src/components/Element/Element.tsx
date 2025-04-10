@@ -1,11 +1,6 @@
 import styles from "./Element.module.scss";
 
-interface ElementProps {
-	name: string;
-	type: "dashboard" | "marketing";
-}
-
-export default function Element({ name, type }: ElementProps) {
+export default function Element({ name }: { name: string }) {
 	//filter out body
 	const nameSegments = name
 		.split(" ")
@@ -22,13 +17,7 @@ export default function Element({ name, type }: ElementProps) {
 	}
 
 	return (
-		<div
-			className={` ${
-				type === "marketing"
-					? styles["elementContainer--red"]
-					: styles.elementContainer
-			}`}
-		>
+		<div className={styles.elementContainer}>
 			<div className={styles.element}>
 				<div className={styles.symbol}>{elementSymbol.toLowerCase()}</div>
 				<div className={styles.name}>{nameSegments.join(" ")}</div>

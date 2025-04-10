@@ -200,11 +200,7 @@ export default function AddPlaylistModal({
 							/>
 							<span>New playlist</span>
 						</button>
-						<Button
-							variant="secondary"
-							className={styles.button}
-							onClick={handleSavePlaylist}
-						>
+						<Button variant="secondary" onClick={handleSavePlaylist}>
 							Save
 						</Button>
 					</article>

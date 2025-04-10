@@ -2,56 +2,6 @@
 @use "@/styles/partials/mixins" as *;
 
 .elementContainer {
-	border-radius: 0.5833rem;
-	background-color: rgba(245, 245, 245, 0.4);
-	padding: 0.8335rem;
-	min-width: 9.625rem;
-	height: 9.625rem;
-
-	@include tablet {
-		min-width: 12.375rem;
-		height: 12.1875rem;
-		padding: 1.0719rem;
-	}
-
-	.element {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-		height: 100%;
-		border: 1.67px solid $color-white;
-		border-radius: 0.4375rem;
-		padding: 0.3889rem 0.1944rem;
-		color: $color-white;
-		background-color: transparent;
-		text-transform: capitalize;
-
-		@include tablet {
-			border-width: 2.14px;
-			padding: 0.5rem 0.25rem;
-		}
-
-		.symbol {
-			font-size: 4.125rem;
-			font-weight: 700;
-
-			@include tablet {
-				font-size: 5.3581rem;
-			}
-		}
-
-		.name {
-			font-size: 1rem;
-			font-weight: 600;
-
-			@include tablet {
-				font-size: 1.3394rem;
-			}
-		}
-	}
-}
-
-.elementContainer--red {
 	border-radius: 0.525rem;
 	background-color: $color-white;
 	padding: 0.75rem;
