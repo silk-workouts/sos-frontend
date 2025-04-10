@@ -28,7 +28,9 @@ export default function About() {
         </div>
       </div>
       <div className={styles.about__textContainer}>
-        <h3 className="h3_title h3_title--accent">about</h3>
+        <h3 className={`h3_title h3_title--accent ${styles.about__title}`}>
+          about
+        </h3>
         <div className={styles.about__info}>
           <h4 className={`h2-title ${styles.about__subHeading}`}>
             <span className="bold">the godfather</span> of Boxing for Fitness

@@ -1,11 +1,12 @@
 @use "@/styles/partials/_variables" as *;
 @use "@/styles/partials/_mixins" as *;
 
-.about * {
-  color: $color-white;
-}
+// .about * {
+//   color: $color-white;
+// }
 
 .about {
+  color: $color-white;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -92,13 +93,22 @@
     }
   }
 
+  &__title {
+    color: $color-white;
+  }
+
   &__subHeading {
+    color: $color-white;
     text-transform: capitalize;
     // margin-bottom: 1.5rem;
 
     @include mobile {
       margin-bottom: 0;
     }
+  }
+
+  &__message {
+    color: $color-white;
   }
 
   &__desktopButton {
