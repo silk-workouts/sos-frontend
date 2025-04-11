@@ -322,7 +322,7 @@ const ProfilePage: React.FC = () => {
 				<div className={styles.profile__actions}>
 					{isLoggedIn && (
 						<Button
-							variant="primary"
+							variant="secondary"
 							className={styles.profile__logoutButton}
 							onClick={handleLogout}
 						>
