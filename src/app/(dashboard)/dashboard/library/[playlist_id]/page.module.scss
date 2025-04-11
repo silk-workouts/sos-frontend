@@ -184,6 +184,13 @@
 		gap: 1rem;
 		font-size: 0.875rem;
 		font-weight: 600;
+
+		@include tablet {
+			.hero__icon {
+				width: 1rem;
+				height: 1rem;
+			}
+		}
 	}
 
 	&__message {

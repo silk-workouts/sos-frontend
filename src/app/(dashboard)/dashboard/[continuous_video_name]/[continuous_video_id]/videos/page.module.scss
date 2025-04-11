@@ -154,13 +154,6 @@
 		align-self: center;
 	}
 
-	&__info {
-		display: flex;
-		gap: 1rem;
-		font-size: 0.875rem;
-		font-weight: 600;
-	}
-
 	&__icon {
 		width: 1rem;
 		height: 1rem;
@@ -174,6 +167,20 @@
 		@include tablet {
 			width: 1.5rem;
 			height: 1.5rem;
+		}
+	}
+
+	&__info {
+		display: flex;
+		gap: 1rem;
+		font-size: 0.875rem;
+		font-weight: 600;
+
+		@include tablet {
+			.hero__icon {
+				width: 1rem;
+				height: 1rem;
+			}
 		}
 	}
 

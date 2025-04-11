@@ -111,13 +111,6 @@
 	display: flex;
 	gap: 1rem;
 	color: #757575;
-
-	.icon {
-		@include tablet {
-			width: 1.5rem;
-			height: 1.5rem;
-		}
-	}
 }
 
 .bookmarkIcon {

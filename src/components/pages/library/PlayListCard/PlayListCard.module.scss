@@ -47,8 +47,9 @@
 	}
 
 	&__title {
-		font-weight: $font-weight-regular;
+		font-weight: 700;
 		font-size: 1.125rem;
+		color: $color-red;
 	}
 
 	&__description {
@@ -88,10 +89,16 @@
 		.info {
 			display: flex;
 			gap: 1rem;
+			color: #757575;
 			transition: all 0.3s ease-in-out;
 
 			@include tablet {
 				gap: 0.5rem;
+
+				.card__icon {
+					width: 1rem;
+					height: 1rem;
+				}
 			}
 		}
 
