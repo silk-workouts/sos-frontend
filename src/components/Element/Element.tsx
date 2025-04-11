@@ -1,7 +1,7 @@
 import styles from "./Element.module.scss";
 
 export default function Element({ name }: { name: string }) {
-	//filter out body
+	//filter out "body"
 	const nameSegments = name
 		.split(" ")
 		.filter((word) => word.toLowerCase() !== "body");
@@ -19,8 +19,8 @@ export default function Element({ name }: { name: string }) {
 	return (
 		<div className={styles.elementContainer}>
 			<div className={styles.element}>
-				<div className={styles.symbol}>{elementSymbol.toLowerCase()}</div>
-				<div className={styles.name}>{nameSegments.join(" ")}</div>
+				<span className={styles.symbol}>{elementSymbol.toLowerCase()}</span>
+				<span className={styles.name}>{nameSegments.join(" ")}</span>
 			</div>
 		</div>
 	);

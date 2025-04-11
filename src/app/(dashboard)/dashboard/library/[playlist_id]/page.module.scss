@@ -153,6 +153,12 @@
 		border-radius: 0.75rem;
 	}
 
+	&__header {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
 	&__title-container {
 		display: flex;
 		justify-content: space-between;
@@ -174,7 +180,6 @@
 	}
 
 	&__info {
-		margin-top: 0.5rem;
 		display: flex;
 		gap: 1rem;
 		font-size: 0.875rem;
@@ -187,7 +192,7 @@
 	}
 
 	&__description {
-		margin-top: 1.5rem;
+		margin-top: -1rem;
 		font-size: 1rem;
 	}
 }

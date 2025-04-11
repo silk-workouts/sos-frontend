@@ -215,24 +215,16 @@ export default function SingleContinuousVideoPage() {
 				</button>
 
 				{continuousVideoName.includes("prescription") && (
-					<div className={styles["hero__image-container"]}>
-						<Image
-							src={
-								continuousVideoName.includes("program")
-									? getRxIcon(continuousVideoName)
-									: Array.isArray(mergedData) &&
-									  mergedData.length > 0 &&
-									  mergedData[0].thumbnail_url
-									? mergedData[0].thumbnail_url
-									: "/assets/images/default-thumbnail.jpg"
-							}
-							alt={`${continuousVideoName} thumbnail`}
-							fill
-							sizes="(max-width: 1279px) 100%, 312px"
-							style={{ objectFit: "contain" }}
-							className={styles.hero__image}
-						/>
-					</div>
+					<Image
+						src={
+							getRxIcon(continuousVideoName) ||
+							"/assets/images/default-thumbnail.jpg"
+						}
+						alt={`${continuousVideoName} thumbnail`}
+						width={138}
+						height={138}
+						className={styles.hero__image}
+					/>
 				)}
 
 				<header className={styles.hero__header}>
@@ -261,6 +253,22 @@ export default function SingleContinuousVideoPage() {
 							<Element name={continuousVideoName} />
 						</h2>
 					)}
+
+					{(() => {
+						const { title, text } = parseDescription(
+							continuousVideo?.description || ""
+						);
+
+						return (
+							<>
+								{title && (
+									<h2 className={styles.hero__subTitle}>{`"${title}"`}</h2>
+								)}
+								{text && <p className={styles.hero__description}>{text}</p>}
+							</>
+						);
+					})()}
+
 					<div className={styles.hero__info}>
 						<span className={styles.hero__message}>
 							<Image
@@ -281,19 +289,6 @@ export default function SingleContinuousVideoPage() {
 							<span>{duration}</span>
 						</span>
 					</div>
-
-					{(() => {
-						const { title, text } = parseDescription(
-							continuousVideo?.description || ""
-						);
-
-						return (
-							<>
-								{title && <h2 className={styles.hero__title}>{title}</h2>}
-								{text && <p className={styles.hero__description}>{text}</p>}
-							</>
-						);
-					})()}
 				</header>
 
 				<button

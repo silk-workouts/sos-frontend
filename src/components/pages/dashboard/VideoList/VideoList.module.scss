@@ -20,12 +20,6 @@
 	justify-content: space-between;
 	align-items: flex-start;
 	gap: 1rem;
-
-	blockquote {
-		color: black;
-		font-size: 1.125rem;
-		padding-bottom: 0.25rem;
-	}
 }
 
 .titleContainer {
@@ -34,7 +28,7 @@
 	gap: 1rem;
 
 	@include tablet {
-		margin-bottom: 1rem;
+		margin-bottom: 0.75rem;
 	}
 }
 
@@ -47,6 +41,16 @@
 
 	@include tablet {
 		font-size: 1.25rem;
+	}
+}
+
+.subTitle {
+	font-weight: $font-weight-regular;
+	font-size: 1rem;
+	margin-top: 0.5rem;
+
+	@include tablet {
+		margin-top: 0;
 	}
 }
 

@@ -117,20 +117,9 @@
 			}
 		}
 	}
-
-	&__image-container {
-		position: relative;
-		width: 100%;
-		aspect-ratio: 16 / 9;
-		transition: all 0.3s ease-in-out;
-
-		@include desktop {
-			width: 19.5rem;
-		}
-	}
-
 	&__image {
-		border-radius: 0.75rem;
+		height: auto;
+		align-self: center;
 	}
 
 	&__header {
@@ -156,8 +145,12 @@
 		text-transform: capitalize;
 	}
 
+	&__subTitle {
+		font-weight: $font-weight-regular;
+		font-size: 1.125rem;
+	}
+
 	&__element {
-		font-weight: 400;
 		align-self: center;
 	}
 
@@ -191,6 +184,7 @@
 
 	&__description {
 		font-size: 1rem;
+		margin-top: -1rem;
 	}
 
 	&__title {

@@ -241,7 +241,7 @@ export default function VideoList({ video, type }: VideoListProps) {
 									<>
 										{title && (
 											<blockquote
-												className={styles.title}
+												className={styles.subTitle}
 											>{`"${title}"`}</blockquote>
 										)}
 									</>
