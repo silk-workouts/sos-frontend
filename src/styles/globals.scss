@@ -5,39 +5,39 @@
 
 // Global Reset
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: $font-primary;
 }
 
 body {
-  font-family: $font-primary;
-  color: $color-black;
-  background-color: $color-white;
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
+	color: $color-black;
+	background-color: $color-white;
+	min-height: 100vh;
+	position: relative;
+	overflow-x: hidden;
 }
 
 :root {
-  /* Remove default link styles */
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+	/* Remove default link styles */
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
 
-  /* Ensure visited links don't change color */
-  a:visited {
-    color: inherit;
-  }
+	/* Ensure visited links don't change color */
+	a:visited {
+		color: inherit;
+	}
 
-  /* Remove hover underline */
-  a:hover {
-    text-decoration: none;
-  }
+	/* Remove hover underline */
+	a:hover {
+		text-decoration: none;
+	}
 
-  /* Remove focus outline unless needed for accessibility */
-  a:focus {
-    outline: none;
-  }
+	/* Remove focus outline unless needed for accessibility */
+	a:focus {
+		outline: none;
+	}
 }
