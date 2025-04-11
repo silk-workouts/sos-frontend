@@ -11,16 +11,48 @@ import styles from "./Footer.module.scss";
 export default function Footer() {
 	const path = usePathname()!;
 
-	if (path.startsWith("/dashboard") || path.startsWith("/auth")) {
+	if (
+		path.startsWith("/dashboard") ||
+		path.startsWith("/auth") ||
+		path.startsWith("/account ")
+	) {
 		return;
 	}
 
 	return (
 		<footer className={styles.footer}>
-			<div className={styles.header}>
-				<Link href="/">
-					<Image src={logo} alt="System of Silk logo" className={styles.logo} />
-				</Link>
+			<div className={styles["footer-container"]}>
+				<nav aria-label="Footer" className={styles.nav}>
+					<ul className={styles.nav__list} role="list">
+						<li className={styles.nav__item} role="listitem">
+							<Link
+								href="/contact"
+								title="Customer Support"
+								id={styles.nav__link}
+							>
+								customer support
+							</Link>
+						</li>
+						<li className={styles.nav__item} role="listitem">
+							<Link
+								href="/privacy-policy"
+								title="Privacy Policy"
+								id={styles.nav__link}
+							>
+								privacy policy
+							</Link>
+						</li>
+						<li className={styles.nav__item} role="listitem">
+							<Link
+								href="/fitness-waiver"
+								title="Fitness Waiver"
+								id={styles.nav__link}
+							>
+								fitness waiver
+							</Link>
+						</li>
+					</ul>
+				</nav>
 				<div className={styles.socials}>
 					<a
 						href="https://www.instagram.com/aerospacenyc"
@@ -66,40 +98,17 @@ export default function Footer() {
 						</div>
 					</a>
 				</div>
+				<div className={styles["logo-container"]}>
+					<Link href="/">
+						<Image
+							src={logo}
+							alt="System of Silk logo"
+							className={styles.logo}
+						/>
+					</Link>
+					<span className={styles.copyright}>© 2025 all rights reserved</span>
+				</div>
 			</div>
-
-			<nav aria-label="Footer" className={styles.nav}>
-				<ul className={styles.nav__list}>
-					<li className={styles.nav__item}>
-						<Link
-							href="/contact"
-							title="Customer Support"
-							className={`link ${styles.nav__link}`}
-						>
-							customer support
-						</Link>
-					</li>
-					<li className={styles.nav__item}>
-						<Link
-							href="/privacy-policy"
-							title="Privacy Policy"
-							className={`link ${styles.nav__link}`}
-						>
-							privacy policy
-						</Link>
-					</li>
-					<li className={styles.nav__item}>
-						<Link
-							href="/fitness-waiver"
-							title="Fitness Waiver"
-							className={`link ${styles.nav__link}`}
-						>
-							fitness waiver
-						</Link>
-					</li>
-				</ul>
-			</nav>
-			<span className={styles.copyright}>© 2025 all rights reserved</span>
 		</footer>
 	);
 }
