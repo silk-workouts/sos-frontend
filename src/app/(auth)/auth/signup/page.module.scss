@@ -207,6 +207,11 @@
     }
   }
 
+  .loginLink:hover {
+    text-decoration: underline;
+    text-decoration-color: $link-hover-color;
+  }
+
   .inputGroup {
     display: flex;
     flex-direction: column;

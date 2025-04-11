@@ -159,7 +159,10 @@
     font-weight: $font-weight-extrabold;
     text-decoration: none;
     color: $link-hover-color;
-    text-align: le;
+    &:hover {
+      text-decoration: underline !important;
+      text-decoration-color: $color-red !important;
+    }
   }
 }
 
@@ -264,6 +267,10 @@
       color: $link-hover-color;
       font-weight: $font-weight-medium;
       font-size: 80%;
+      &:hover {
+        text-decoration: underline !important;
+        text-decoration-color: $link-hover-color !important;
+      }
     }
   }
 

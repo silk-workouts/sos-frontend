@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     }
 
     const decoded = verifyToken(token);
-    console.log(decoded);
+
     if (!decoded) {
       console.log("❌ Invalid token!");
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });

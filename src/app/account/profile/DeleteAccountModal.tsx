@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import Button from "@/components/ui/Button/Button";
 import { usePlaylists } from "../../(dashboard)/dashboard/context/PlaylistContext";
 import styles from "./DeleteAccountModal.module.scss";
@@ -58,7 +58,7 @@ export default function DeleteAccountModal({ onClose }: Props) {
       if (res.status === 200) {
         toast.success("Account deleted successfully.");
         onClose();
-        window.location.href = "/";
+        window.location.href = "/account-deleted";
       } else {
         toast.error("Failed to delete account.");
       }
@@ -97,6 +97,7 @@ export default function DeleteAccountModal({ onClose }: Props) {
           </Button>
         </div>
       </div>
+      <Toaster position="top-center" />
     </div>,
     document.body
   );
