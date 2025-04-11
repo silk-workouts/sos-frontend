@@ -95,6 +95,10 @@
 	@include desktop {
 		border-radius: 0;
 		padding: 0.5rem 0.5rem 0.5rem 0;
+
+		&:last-child {
+			border-radius: 0 0 0.625rem 0.625rem;
+		}
 	}
 }
 

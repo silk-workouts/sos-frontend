@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import bookmarkIcon from "public/assets/icons/bookmark-fill.svg";
 import bookmarkUnsaved from "public/assets/icons/bookmark-unsaved.svg";
+import playIcon from "/public/assets/icons/play-fill.svg";
 import AddPlaylistModalPortal from "../AddPlaylistModal/AddPlaylistModalPortal";
 import { ChapterVideo } from "src/types/video";
 import { usePlaylists } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
@@ -13,6 +14,7 @@ interface VideoProps {
 	display: string;
 	path: string;
 	type?: "player";
+	active?: boolean;
 }
 
 export default function Video({
@@ -20,6 +22,7 @@ export default function Video({
 	display,
 	path,
 	type,
+	active,
 }: VideoProps) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { playlistVideoMap } = usePlaylists();
@@ -34,12 +37,33 @@ export default function Video({
 		return `${minutes}:${formattedSeconds}`;
 	};
 
+	console.log(chapterVideo.title, active);
+
 	return (
 		<article
 			className={`${styles.card} ${display === "row" ? styles.row : ""}  ${
 				type === "player" ? styles.player : ""
-			}`}
+			} ${active === true ? styles.active : ""}`}
 		>
+			{type === "player" && (
+				<span className={styles.positionContainer}>
+					{chapterVideo.position + 1}
+				</span>
+			)}
+
+			{type === "player" && active && (
+				<span
+					aria-label={`Currently playing ${chapterVideo.title} video`}
+					className={styles.playContainer}
+				>
+					<Image
+						src={playIcon}
+						alt=""
+						aria-hidden="true"
+						className={`${styles.icon} ${styles.playIcon}`}
+					/>
+				</span>
+			)}
 			<Link
 				href={path}
 				className={`${styles["card__thumbnail-container"]} ${
