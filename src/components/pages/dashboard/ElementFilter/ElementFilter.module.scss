@@ -4,19 +4,12 @@
 .list {
 	list-style-type: none;
 	display: flex;
+	flex-flow: row wrap;
 	gap: 0.5rem;
-	padding-top: 1.5rem;
-	overflow-x: scroll;
-	scroll-snap-type: x mandatory;
-	-webkit-overflow-scrolling: touch;
-
-	&::-webkit-scrollbar {
-		width: 0;
-		height: 0;
-	}
+	padding: 1.5rem 0 1rem;
 
 	@include desktop {
-		padding-top: 2rem;
+		padding: 2rem 0 1rem;
 	}
 }
 
@@ -43,5 +36,9 @@
 		font-weight: $font-weight-extrabold;
 		background-color: $color-red;
 		color: $color-white;
+
+		&:hover {
+			color: $color-white;
+		}
 	}
 }

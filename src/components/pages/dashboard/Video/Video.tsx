@@ -37,8 +37,6 @@ export default function Video({
 		return `${minutes}:${formattedSeconds}`;
 	};
 
-	console.log(chapterVideo.title, active);
-
 	return (
 		<article
 			className={`${styles.card} ${display === "row" ? styles.row : ""}  ${
