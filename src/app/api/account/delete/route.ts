@@ -17,11 +17,12 @@ export async function DELETE(req: Request) {
     }
 
     // Step 2: Fetch user data for logging
-    const [userRows] = await pool.query(
+    const [userRows] = (await pool.query(
       `SELECT email FROM users WHERE id = ? LIMIT 1`,
       [userId]
-    );
-    const user = Array.isArray(userRows) && userRows[0];
+    )) as unknown as [Array<{ email: string }>];
+
+    const user = userRows[0];
 
     if (!user) {
       return new Response(JSON.stringify({ error: "User not found" }), {
