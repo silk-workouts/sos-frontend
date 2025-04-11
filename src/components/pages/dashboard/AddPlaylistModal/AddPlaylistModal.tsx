@@ -179,6 +179,7 @@ export default function AddPlaylistModal({
 													value={playlist.id}
 													checked={selectedPlaylists.includes(playlist.id)}
 													onChange={() => handleSelectCheckbox(playlist.id)}
+													className={styles.input}
 												/>{" "}
 												<span>{playlist.title}</span>
 											</label>
