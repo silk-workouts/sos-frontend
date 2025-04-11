@@ -47,6 +47,10 @@ export async function middleware(req: NextRequest) {
 
     const path = req.nextUrl.pathname;
 
+    if (path.startsWith("/stripe/success")) {
+      return NextResponse.next();
+    }
+
     if (!isPaidUser && path.startsWith("/dashboard")) {
       if (path !== "/dashboard/subscribe") {
         console.log("🚫 User is not paid, redirecting to subscribe page...");

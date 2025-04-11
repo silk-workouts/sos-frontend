@@ -45,7 +45,7 @@ export default function SubscribePage() {
           onClick={handleSubscribe}
           disabled={loading}
         >
-          {loading ? "Redirecting..." : "Subscribe Now"}
+          Subscribe Now
         </Button>
         <Link
           href="/account/profile"

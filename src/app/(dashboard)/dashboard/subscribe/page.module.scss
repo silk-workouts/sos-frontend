@@ -37,19 +37,24 @@
   margin-bottom: 20px;
 }
 
-.subscribeButton:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
+// .subscribeButton:disabled {
+//   background-color: #aaa;
+//   cursor: not-allowed;
+// }
+.subscribeButton {
+  margin-bottom: 1rem;
 }
 
 .actions {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
 
   &__link {
     color: $color-red;
     &:hover {
-      text-shadow: 0px 0px 20px #e2211c;
+      text-decoration: underline !important;
+      text-decoration-color: $color-red;
     }
   }
 }

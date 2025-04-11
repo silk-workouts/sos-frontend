@@ -8,6 +8,7 @@ import { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
+import DeleteAccountModal from "./DeleteAccountModal";
 import Button from "@/components/ui/Button/Button";
 import {
   sanitizeInput,
@@ -39,6 +40,7 @@ const ProfilePage: React.FC = () => {
   const [isLoadingProfile, setIsLoadingProfile] = useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -359,8 +361,47 @@ const ProfilePage: React.FC = () => {
             >
               FAQ
             </Link>
+            <span
+              className={styles.profile__link}
+              onClick={() => setShowDeleteModal(true)}
+            >
+              Delete Account
+            </span>
           </div>
         </div>
+      )}
+      {showDeleteModal && (
+        <DeleteAccountModal
+          onClose={() => setShowDeleteModal(false)}
+          onDelete={async () => {
+            const tokenRes = await fetch("/api/auth/verify-token", {
+              method: "GET",
+              credentials: "include",
+            });
+
+            if (!tokenRes.ok) {
+              toast.error("Session expired.");
+              return;
+            }
+
+            const { userId, token } = await tokenRes.json();
+
+            const res = await fetch("/api/account/delete", {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ userId, token }),
+            });
+
+            if (res.ok) {
+              toast.success("Account deleted.");
+              router.push("/goodbye"); // or "/" or whatever exit page you want
+            } else {
+              toast.error("Failed to delete account.");
+            }
+
+            setShowDeleteModal(false);
+          }}
+        />
       )}
     </div>
   );
