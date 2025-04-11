@@ -40,6 +40,7 @@
 	&--primary {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 0.25rem;
 
 		@include tablet {
@@ -50,6 +51,7 @@
 	&--tertiary {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 0.25rem;
 		background-color: $color-white;
 		color: $color-red;

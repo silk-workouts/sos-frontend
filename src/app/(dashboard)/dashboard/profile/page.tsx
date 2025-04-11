@@ -322,7 +322,7 @@ const ProfilePage: React.FC = () => {
 				<div className={styles.profile__actions}>
 					{isLoggedIn && (
 						<Button
-							variant="secondary"
+							variant="primary"
 							className={styles.profile__logoutButton}
 							onClick={handleLogout}
 						>
@@ -332,21 +332,21 @@ const ProfilePage: React.FC = () => {
 					<div className={styles.profile__links}>
 						<Link
 							href="/auth/forgot-password"
-							target="_blank"
 							rel="noopener noreferrer"
 							className={styles.profile__link}
 						>
 							Change Password
 						</Link>
-						<Link
+						<a
 							href="mailto:michaelolajidejr@gmail.com"
 							className={styles.profile__link}
 						>
+							{" "}
 							Request Email Update
-						</Link>
+						</a>
+
 						<Link
 							href="/dashboard/cancel-subscription"
-							target="_blank"
 							rel="noopener noreferrer"
 							className={styles.profile__link}
 						>
@@ -354,7 +354,6 @@ const ProfilePage: React.FC = () => {
 						</Link>
 						<Link
 							href="/contact"
-							target="_blank"
 							rel="noopener noreferrer"
 							className={styles.profile__link}
 						>
