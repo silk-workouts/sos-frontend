@@ -9,6 +9,7 @@ import styles from "./DeleteAccountModal.module.scss";
 
 interface Props {
   onClose: () => void;
+  onDelete: () => Promise<void>;
 }
 
 export default function DeleteAccountModal({ onClose }: Props) {
