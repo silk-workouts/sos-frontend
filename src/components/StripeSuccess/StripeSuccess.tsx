@@ -1,3 +1,6 @@
+// this component is needed b/c useSearchParams() is needed as part of the sucess process
+// but it's parent is a static route that Next.js won't allow usage of useSearchParams() in
+
 "use client";
 
 import { useEffect } from "react";
@@ -10,18 +13,9 @@ export default function StripeSuccessClient() {
 
   useEffect(() => {
     const sessionId = searchParams?.get("session_id") ?? "";
-
     if (!sessionId) return;
 
-    (async () => {
-      try {
-        await axios.post("/api/stripe/finalize", { sessionId });
-      } catch (err) {
-        console.error("Error finalizing Stripe session:", err);
-      }
-
-      router.replace("/dashboard");
-    })();
+    router.replace("/dashboard");
   }, [searchParams, router]);
 
   return null; // or a loading spinner if you want

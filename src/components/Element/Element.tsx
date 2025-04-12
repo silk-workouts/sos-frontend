@@ -1,12 +1,10 @@
 import styles from "./Element.module.scss";
 
-interface ElementProps {
-	name: string;
-	type: "dashboard" | "marketing";
-}
-
-export default function Element({ name, type }: ElementProps) {
-	const nameSegments = name.split(" ");
+export default function Element({ name }: { name: string }) {
+	//filter out "body"
+	const nameSegments = name
+		.split(" ")
+		.filter((word) => word.toLowerCase() !== "body");
 	let elementSymbol = "";
 
 	if (nameSegments.length == 1) {
@@ -19,16 +17,10 @@ export default function Element({ name, type }: ElementProps) {
 	}
 
 	return (
-		<div
-			className={` ${
-				type === "marketing"
-					? styles["elementContainer--red"]
-					: styles.elementContainer
-			}`}
-		>
+		<div className={styles.elementContainer}>
 			<div className={styles.element}>
-				<div className={styles.symbol}>{elementSymbol.toLowerCase()}</div>
-				<div className={styles.name}>{name}</div>
+				<span className={styles.symbol}>{elementSymbol.toLowerCase()}</span>
+				<span className={styles.name}>{nameSegments.join(" ")}</span>
 			</div>
 		</div>
 	);

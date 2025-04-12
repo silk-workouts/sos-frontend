@@ -13,7 +13,7 @@
 	}
 
 	&:hover {
-		background-color: rgba(#e2211c, 0.1);
+		background-color: rgba($color-red, 0.1);
 
 		.card__button--grab {
 			transform: scale(1.2);
@@ -21,7 +21,7 @@
 	}
 
 	&--active {
-		border: 1px solid #e2211c;
+		border: 1px solid $color-red;
 
 		.card__button--grab {
 			cursor: grabbing;

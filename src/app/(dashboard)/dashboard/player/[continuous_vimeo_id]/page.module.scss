@@ -6,10 +6,6 @@
 	flex-direction: column;
 	gap: 3rem;
 
-	@include tablet {
-		gap: 4rem;
-	}
-
 	@include desktop {
 		flex-direction: row;
 		padding: 0 1.5rem 1.5rem;
@@ -134,7 +130,7 @@
 .playlistTitle {
 	font-size: 0.875rem;
 	font-weight: 700;
-	color: #e2211c;
+	color: $color-red;
 	text-transform: capitalize;
 
 	@include tablet {
@@ -175,7 +171,7 @@
 	@include desktop {
 		border: 0.5px solid #b7b4b4;
 		border-radius: 0.625rem;
-		padding: 1rem 0 1rem;
+		padding: 1rem 0 0;
 		margin-top: 72px;
 		max-height: 38.75rem;
 		overflow: hidden;
@@ -217,10 +213,14 @@
 
 	@include desktop {
 		border-radius: 0;
+
+		&:last-child {
+			border-radius: 0 0 0.625rem 0.625rem;
+		}
 	}
 
 	&.activeChapter {
-		border: 1px solid #e2211c;
-		background-color: rgba(#e2211c, 0.1);
+		border: 1px solid $color-red;
+		background-color: rgba($color-red, 0.1);
 	}
 }

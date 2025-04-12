@@ -18,7 +18,7 @@ export default function ElementCard({
 	return (
 		<article className={styles.card}>
 			<div className={styles.card__info}>
-				<Element name={element} type="marketing" />
+				<Element name={element} />
 				<p className={styles.card__message}>{content}</p>
 			</div>
 			<Image

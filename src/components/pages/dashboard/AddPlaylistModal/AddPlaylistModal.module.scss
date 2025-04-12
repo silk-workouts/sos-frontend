@@ -39,19 +39,19 @@
 }
 
 .button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+
 	&--add {
 		font-family: $font-primary;
-		background-color: $color-white;
-		border: 1px solid $color-black;
 		border-radius: 2.1875rem;
-		cursor: pointer;
 		padding: 0.25rem 0.5rem;
 		color: $color-black;
 		font-size: 1rem;
 		display: flex;
 		gap: 0.5rem;
 		align-items: center;
-		border: none;
 		font-weight: 600;
 
 		&:hover {
@@ -112,4 +112,8 @@
 	@include tablet {
 		font-size: 1.125rem;
 	}
+}
+
+.input {
+	accent-color: #cc1e19;
 }

@@ -207,7 +207,9 @@ const ProfilePage: React.FC = () => {
               <div
                 className={`${styles.profile__infoGroup} ${styles.profile__name}`}
               >
-                <h2 className={styles.profile__subheading}>Welcome Back!</h2>
+                <h2 className={styles.profile__subheading}>
+                  Hey{name ? ` ${name}` : ""}!
+                </h2>
                 <span className={styles.profile__label}>Name</span>
                 <p>{name || "silk system user"}</p>
               </div>
@@ -324,7 +326,7 @@ const ProfilePage: React.FC = () => {
         <div className={styles.profile__actions}>
           {isLoggedIn && (
             <Button
-              variant="primary"
+              variant="secondary"
               className={styles.profile__logoutButton}
               onClick={handleLogout}
             >
@@ -393,8 +395,8 @@ const ProfilePage: React.FC = () => {
             });
 
             if (res.ok) {
+              // NOTE: DeleteAccountModal handles logic to redirect user to account account-delete page
               toast.success("Account deleted.");
-              router.push("/goodbye"); // or "/" or whatever exit page you want
             } else {
               toast.error("Failed to delete account.");
             }

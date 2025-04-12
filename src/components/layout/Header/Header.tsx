@@ -62,14 +62,17 @@ export default function Header() {
       if (
         isProfileDesktopMenuOpen &&
         profileDesktopRef.current &&
-        !profileDesktopRef.current.contains(target)
+        !profileDesktopRef.current.contains(target) &&
+        target.id !== "profile-menu-button-desktop"
       ) {
         setIsProfileDesktopMenuOpen(false);
       }
       if (
         isProfileMobileMenuOpen &&
         profileMobileRef.current &&
-        !profileMobileRef.current.contains(target)
+        !profileMobileRef.current.contains(target) &&
+        target.id !== "profile-menu-button-mobile" &&
+        !target.closest("#profile-menu-button-mobile")
       ) {
         setIsProfileMobileMenuOpen(false);
       }
@@ -136,7 +139,7 @@ export default function Header() {
                 onClick={() =>
                   setIsProfileDesktopMenuOpen(!isProfileDesktopMenuOpen)
                 }
-                id="profile-menu-button"
+                id="profile-menu-button-desktop"
                 className={styles.dashboardLink}
               >
                 <Image
@@ -193,10 +196,11 @@ export default function Header() {
           {isLoggedIn ? (
             <div className={styles.profileMenu}>
               <button
-                onClick={() =>
-                  setIsProfileMobileMenuOpen(!isProfileMobileMenuOpen)
-                }
-                id="profile-menu-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsProfileMobileMenuOpen(!isProfileMobileMenuOpen);
+                }}
+                id="profile-menu-button-mobile"
                 className={styles.dashboardLink}
               >
                 <Image

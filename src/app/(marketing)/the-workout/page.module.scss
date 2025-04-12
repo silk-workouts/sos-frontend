@@ -2,193 +2,192 @@
 @use "@/styles/partials/mixins" as *;
 
 .hero {
-	margin-top: 4rem;
-	height: 40vh;
-	min-height: 11.25rem;
-	max-height: 48.75rem;
-	position: relative;
-	display: flex;
-	align-items: center;
-	padding: $padding-small;
-	transition: all 0.3s ease-in-out;
+  margin-top: 4rem;
+  height: 40vh;
+  min-height: 11.25rem;
+  max-height: 48.75rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: $padding-small;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		height: 95vh;
-		min-height: 16.25rem;
-		padding: 1.5rem;
-	}
+  @include tablet {
+    height: 95vh;
+    min-height: 16.25rem;
+    padding: 1.5rem;
+  }
 
-	@include desktop {
-		padding: $padding-xl;
-		min-height: 26.25rem;
-		margin: 0 auto;
-	}
+  @include desktop {
+    padding: $padding-xl;
+    min-height: 26.25rem;
+    margin: 0 auto;
+  }
 
-	&::before {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background: url("/assets/images/workouts-hero-background.png") no-repeat
-			center center;
-		background-size: cover;
-		z-index: 1;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("/assets/images/workouts-hero-background.png") no-repeat
+      center center;
+    background-size: cover;
+    z-index: 1;
 
-		/* Dark overlay */
-		background-blend-mode: multiply;
-		background-color: rgba(0, 0, 0, 0.5);
-	}
+    /* Dark overlay */
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 }
 
 .hero__title {
-	font-family: "Anta";
-	font-style: normal;
-	font-weight: 400;
-	font-size: 2rem;
-	text-transform: uppercase;
-	color: $color-white;
-	z-index: 2;
-	transition: all 0.3s ease-in-out;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: $color-white;
+  z-index: 2;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		font-size: 6rem;
-	}
+  @include tablet {
+    font-size: 6rem;
+  }
 
-	@include desktop {
-		width: 90rem;
-		margin: 0 auto;
-	}
+  @include desktop {
+    width: 90rem;
+    margin: 0 auto;
+  }
 }
 
 .container {
-	display: flex;
-	flex-direction: column;
-	gap: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
 
-	@include tablet {
-		gap: 4.5rem;
-	}
+  @include tablet {
+    gap: 4.5rem;
+  }
 
-	@include desktop {
-		gap: 6rem;
-	}
+  @include desktop {
+    gap: 6rem;
+  }
 }
 
 .element {
-	padding: 4rem $padding-small;
-	background-color: $color-red;
-	color: $color-white;
+  padding: 4rem $padding-small;
+  background-color: $color-red;
+  color: $color-white;
 
-	@include tablet {
-		padding: 4rem 1.5rem;
-	}
+  @include tablet {
+    padding: 4rem 1.5rem;
+  }
 
-	@include desktop {
-		padding: $padding-xl;
-	}
+  @include desktop {
+    padding: $padding-xl;
+  }
 
-	&-wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: 4.5rem;
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4.5rem;
 
-		@include desktop {
-			max-width: $content-container-maximum;
-			margin: 0 auto;
-		}
-	}
+    @include desktop {
+      max-width: $content-container-maximum;
+      margin: 0 auto;
+    }
+  }
 
-	&__title {
-		color: $color-white;
-	}
+  &__title {
+    color: $color-white;
+  }
 }
 
 .buildWorkout {
-	padding: 0 $padding-small;
+  padding: 0 $padding-small;
 
-	@include tablet {
-		padding: 0 1.5rem;
-	}
+  @include tablet {
+    padding: 0 1.5rem;
+  }
 
-	@include desktop {
-		padding: 0 $padding-xl;
-	}
+  @include desktop {
+    padding: 0 $padding-xl;
+  }
 
-	&-wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: 4.5rem;
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4.5rem;
 
-		@include desktop {
-			max-width: $content-container-maximum;
-			margin: 0 auto;
-		}
-	}
+    @include desktop {
+      max-width: $content-container-maximum;
+      margin: 0 auto;
+    }
+  }
 }
 
 .content {
-	margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .instructions,
 .equipments {
-	display: flex;
-	flex-direction: column;
-	gap: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 
-	@include desktop {
-		gap: 4rem;
-	}
+  @include desktop {
+    gap: 4rem;
+  }
 }
 
 .elementCards {
-	display: flex;
-	flex-direction: column;
-	gap: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 
-	@include tablet {
-		gap: 4.5rem;
-	}
+  @include tablet {
+    gap: 4.5rem;
+  }
 }
 
 .equipment {
-	background-color: $color-red;
-	color: $color-white;
-	padding: 4rem $padding-small;
+  background-color: $color-red;
+  color: $color-white;
+  padding: 4rem $padding-small;
 
-	@include tablet {
-		padding: 4rem 1.5rem;
-	}
+  @include tablet {
+    padding: 4rem 1.5rem;
+  }
 
-	@include desktop {
-		padding: $padding-xl;
-	}
+  @include desktop {
+    padding: $padding-xl;
+  }
 
-	&-wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: 4.5rem;
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4.5rem;
 
-		@include desktop {
-			max-width: $content-container-maximum;
-			margin: 0 auto;
-		}
-	}
+    @include desktop {
+      max-width: $content-container-maximum;
+      margin: 0 auto;
+    }
+  }
 
-	&__title {
-		color: $color-white;
-	}
+  &__title {
+    color: $color-white;
+  }
 
-	&__button {
-		margin-top: 1.25rem;
-	}
+  &__button {
+    margin-top: 1.25rem;
+  }
 }
 
 .equipments {
-	align-items: center;
+  align-items: center;
 
-	@include tablet {
-		flex-direction: row;
-		justify-content: space-around;
-		gap: 1rem;
-	}
+  @include tablet {
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 1rem;
+  }
 }

@@ -1,13 +1,16 @@
+import { Filter } from "../DashboardPageContent/DashboardPageContent";
 import styles from "./ElementFilter.module.scss";
 
 interface FilterProps {
 	elementFilter: Set<string>;
 	handleFilter: (s: string) => void;
+	options: Filter[];
 }
 
 export default function ElementFilter({
 	elementFilter,
 	handleFilter,
+	options,
 }: FilterProps) {
 	return (
 		<ul
@@ -15,74 +18,25 @@ export default function ElementFilter({
 			role="tablist"
 			tabIndex={0}
 			aria-multiselectable="true"
-			aria-label="filter"
+			aria-label="Filter workout by element type"
 		>
-			<li
-				className={`${styles.item} ${
-					elementFilter.has("boxing") ? styles["item--selected"] : ""
-				}`}
-				role="tab"
-				tabIndex={0}
-				aria-selected={elementFilter.has("boxing")}
-				onClick={() => handleFilter("boxing")}
-			>
-				boxing
-			</li>
-			<li
-				className={`${styles.item} ${
-					elementFilter.has("jump rope") ? styles["item--selected"] : ""
-				}`}
-				role="tab"
-				tabIndex={0}
-				aria-selected={elementFilter.has("jump rope")}
-				onClick={() => handleFilter("jump rope")}
-			>
-				jump rope
-			</li>
-			<li
-				className={`${styles.item} ${
-					elementFilter.has("core crushers") ? styles["item--selected"] : ""
-				}`}
-				role="tab"
-				tabIndex={0}
-				aria-selected={elementFilter.has("core crushers")}
-				onClick={() => handleFilter("core crushers")}
-			>
-				core crushers
-			</li>
-			<li
-				className={`${styles.item} ${
-					elementFilter.has("isometric") ? styles["item--selected"] : ""
-				}`}
-				role="tab"
-				tabIndex={0}
-				aria-selected={elementFilter.has("isometric")}
-				onClick={() => handleFilter("isometric")}
-			>
-				isometric
-			</li>
-			<li
-				className={`${styles.item} ${
-					elementFilter.has("upper body bands") ? styles["item--selected"] : ""
-				}`}
-				role="tab"
-				tabIndex={0}
-				aria-selected={elementFilter.has("upper body bands")}
-				onClick={() => handleFilter("upper body bands")}
-			>
-				upper body bands
-			</li>
-			<li
-				className={`${styles.item} ${
-					elementFilter.has("lower body bands") ? styles["item--selected"] : ""
-				}`}
-				role="tab"
-				tabIndex={0}
-				aria-selected={elementFilter.has("lower body bands")}
-				onClick={() => handleFilter("lower body bands")}
-			>
-				lower body bands
-			</li>
+			{options.map((option) => {
+				const isSelected = elementFilter.has(option.name);
+				return (
+					<li
+						key={option.id}
+						className={`${styles.item} ${
+							isSelected ? styles["item--selected"] : ""
+						}`}
+						role="tab"
+						tabIndex={isSelected ? 0 : -1}
+						aria-selected={isSelected}
+						onClick={() => handleFilter(option.name)}
+					>
+						{option.name}
+					</li>
+				);
+			})}
 		</ul>
 	);
 }
