@@ -3,192 +3,202 @@
 @use "@/styles/partials/_fonts" as *;
 
 .forgotPasswordContainer {
-	color: $color-white;
-	background: $color-red;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100%;
-	min-height: 100vh;
+  color: $color-white;
+  background: $color-red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
 
-	@include tablet {
-		flex-direction: row;
-	}
+  @include tablet {
+    flex-direction: row;
+  }
 }
 
 // ✅ Left panel with branding & instructions
 .panelLeft {
-	width: 100%;
-	display: flex;
-	margin-top: calc(64px + 45px);
-	padding: 0 1rem;
-	justify-content: space-between;
+  width: 100%;
+  display: flex;
+  margin-top: calc(64px + 45px);
+  padding: 0 1rem;
+  justify-content: space-between;
 
-	@include tablet {
-		flex-direction: column;
-		background: url("/assets/images/large-S-white-dropshad.svg");
-		height: fit-content;
-		background-size: calc(100% - 2rem) auto;
-		background-position: center;
-		background-repeat: no-repeat;
-		max-width: 472px;
-		width: 40%;
-		height: 100vh;
-		justify-content: left;
-		align-items: center;
-		padding: $padding-medium;
-		gap: $padding-medium;
-	}
+  @include tablet {
+    flex-direction: column;
+    background: url("/assets/images/large-S-white-dropshad.svg");
+    height: fit-content;
+    background-size: calc(100% - 2rem) auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    max-width: 472px;
+    width: 40%;
+    height: 100vh;
+    justify-content: left;
+    align-items: center;
+    padding: $padding-medium;
+    gap: $padding-medium;
+  }
 
-	&__img {
-		width: 65px;
-		height: 45px;
-		@include tablet {
-			display: none;
-		}
-	}
+  &__img {
+    width: 65px;
+    height: 45px;
+    @include tablet {
+      display: none;
+    }
+  }
 
-	.backLink {
-		display: flex;
-		align-content: center;
-		align-self: flex-start;
-		// @extend .link;
-		margin-bottom: $padding-small;
-		img {
-			margin-right: 0.5rem;
-			filter: brightness(0) invert(1); // Makes the arrow white on hover
-		}
-	}
+  .backLink {
+    display: flex;
+    align-content: center;
+    align-self: flex-start;
+    // @extend .link;
+    margin-bottom: $padding-small;
+    img {
+      margin-right: 0.5rem;
+      filter: brightness(0) invert(1); // Makes the arrow white on hover
+    }
+  }
 
-	.backLink:hover {
-		opacity: 0.6;
-	}
+  .backLink:hover {
+    opacity: 0.6;
+  }
 
-	.title {
-		@extend .h2-title;
-		text-align: center;
+  .title {
+    @extend .h2-title;
+    text-align: center;
 
-		@include tablet {
-			text-align: left;
-		}
-	}
+    @include tablet {
+      text-align: left;
+    }
+  }
 
-	.subtitle {
-		@extend .body1;
-		text-align: center;
-		margin-top: $padding-small;
+  .subtitle {
+    @extend .body1;
+    text-align: center;
+    margin-top: $padding-small;
 
-		@include tablet {
-			text-align: left;
-		}
-	}
+    @include tablet {
+      text-align: left;
+    }
+  }
 }
 
 // ✅ Right panel for the forgot password form
 .panelRight {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	padding: $padding-medium;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $padding-medium;
 
-	@include tablet {
-		width: 60%;
-	}
+  @include tablet {
+    width: 60%;
+  }
 
-	@include desktop {
-		width: 100%;
-		max-width: 968px;
-		padding: 0 $padding-xl;
-	}
+  @include desktop {
+    width: 100%;
+    max-width: 968px;
+    padding: 0 $padding-xl;
+  }
 }
 
 // ✅ Forgot password form styling
 .forgotPasswordForm {
-	padding: 2rem 1rem;
-	background-color: $color-white;
-	border-radius: 35px;
-	width: 100%;
-	max-width: 400px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: $padding-medium;
+  padding: 2rem 1rem;
+  background-color: $color-white;
+  border-radius: 35px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $padding-medium;
 
-	@include desktop {
-		width: 100%;
-		max-width: none;
-	}
+  @include desktop {
+    width: 100%;
+    max-width: none;
+  }
 
-	.heading {
-		@extend .h2-title;
-		text-align: center;
-	}
+  .heading {
+    @extend .h2-title;
+    text-align: center;
+  }
 
-	.inputGroup {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 8px;
-		// width: 330px;
-		max-width: 100%;
-		height: 104px;
-		position: relative;
-		color: $color-white;
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    // width: 330px;
+    max-width: 100%;
+    height: 104px;
+    position: relative;
+    color: $color-white;
 
-		@include desktop {
-			width: 100%;
-		}
+    @include desktop {
+      width: 100%;
+    }
 
-		label {
-			font-weight: $font-weight-regular;
-			font-size: 20px;
-			line-height: 24px;
-			width: 100%;
-		}
+    label {
+      font-family: $font-primary;
+      font-weight: $font-weight-regular;
+      font-size: 20px;
+      line-height: 24px;
+      width: 100%;
+    }
 
-		input {
-			width: 330px;
-			max-width: 100%;
-			height: 72px;
-			background: $color-grey-light;
-			border-radius: 18px;
-			border: none;
-			padding: 12px;
-			font-size: 16px;
-			font-family: $font-primary;
-			outline: none;
-			transition: all 0.3s ease-in-out;
+    input {
+      width: 330px;
+      max-width: 100%;
+      height: 72px;
+      background: $color-grey-light;
+      border-radius: 18px;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      font-family: $font-primary;
+      outline: none;
+      transition: all 0.3s ease-in-out;
 
-			&:focus {
-				border: 2px solid $color-black;
-			}
+      &:focus {
+        border: 2px solid $color-black;
+      }
 
-			@include desktop {
-				width: 100%;
-			}
-		}
+      @include desktop {
+        width: 100%;
+      }
+    }
 
-		.errorMessage {
-			position: absolute;
-			bottom: -1.5rem;
-			left: 0;
-			font-size: 14px;
-			font-weight: $font-weight-medium;
-			color: $color-red;
-			padding-right: 8px;
-		}
-	}
+    .errorMessage {
+      position: absolute;
+      bottom: -1.5rem;
+      left: 0;
+      font-size: 14px;
+      font-weight: $font-weight-medium;
+      color: $color-red;
+      padding-right: 8px;
+    }
+  }
 
-	.message {
-		text-align: center;
-		@extend .body2;
-		color: $color-red;
-	}
+  .message {
+    text-align: center;
+    @extend .body2;
+    color: $color-red;
+  }
 
-	.footerText {
-		color: $color-red;
-		text-align: center;
-	}
+  .footerText {
+    color: $color-red;
+    text-align: center;
+  }
+
+  .loginLink {
+    font-weight: 600;
+  }
+
+  .loginLink:hover {
+    text-decoration: underline;
+    text-decoration-color: $color-red;
+  }
 }

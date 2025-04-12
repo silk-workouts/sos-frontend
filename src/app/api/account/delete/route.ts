@@ -3,9 +3,11 @@ import pool from "@/lib/db";
 
 export async function DELETE(req: Request) {
   try {
-    const { userId, token } = await req.json();
+    const rawBody = await req.text();
 
-    // Step 1: Verify token
+    const { userId, token } = JSON.parse(rawBody);
+
+    // Verify token
     const decoded = verifyToken(token);
     if (!decoded || decoded.id !== userId) {
       return new Response(
@@ -16,11 +18,13 @@ export async function DELETE(req: Request) {
       );
     }
 
-    // Step 2: Fetch user data for logging
+    // Fetch user data for logging
     const [userRows] = (await pool.query(
-      `SELECT email FROM users WHERE id = ? LIMIT 1`,
+      `SELECT email, stripe_customer_id FROM users WHERE id = ? LIMIT 1`,
       [userId]
-    )) as unknown as [Array<{ email: string }>];
+    )) as unknown as [
+      Array<{ email: string; stripe_customer_id: string | null }>
+    ];
 
     const user = userRows[0];
 
@@ -33,21 +37,42 @@ export async function DELETE(req: Request) {
     const ip = req.headers.get("x-forwarded-for") || "";
     const userAgent = req.headers.get("user-agent") || "";
 
-    // Step 3: Log account deletion
+    // Cancel Stripe subscription
+    if (user.stripe_customer_id) {
+      const stripeCancelRes = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/stripe/cancel-subscription`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            cookie: `auth_token=${token}`,
+          },
+          body: JSON.stringify({
+            reason: "User initiated deleting account",
+          }),
+        }
+      );
+
+      if (!stripeCancelRes.ok) {
+        console.error("⚠️ Failed to cancel subscription for user:", userId);
+      }
+    }
+
+    //  Log account deletion
     await pool.query(
-      `INSERT INTO account_deletion_logs (user_id, email, ip_address, user_agent)
-       VALUES (?, ?, ?, ?)`,
-      [userId, user.email, ip, userAgent]
+      `INSERT INTO account_deletion_logs (user_id, email, ip_address, user_agent, reason)
+       VALUES (?, ?, ?, ?, ?)`,
+      [userId, user.email, ip, userAgent, "User initiated deleting account"]
     );
 
-    // Step 4: Delete related user data (order matters if foreign key constraints exist)
+    //  Delete related user data (order matters if foreign key constraints exist)
     await pool.query(`DELETE FROM saved_programs WHERE user_id = ?`, [userId]);
     await pool.query(`DELETE FROM playlists WHERE user_id = ?`, [userId]);
 
-    // Step 5: Delete user
+    //Delete user
     await pool.query(`DELETE FROM users WHERE id = ?`, [userId]);
 
-    // Step 6: Clear auth cookie
+    //  Clear auth cookie
     const response = new Response(JSON.stringify({ success: true }), {
       status: 200,
     });

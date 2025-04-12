@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
       subscription_data: {
         trial_period_days: Number(process.env.STRIPE_TRIAL_DURATION),
       },
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?refresh=true&session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
     });
 

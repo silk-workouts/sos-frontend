@@ -20,7 +20,7 @@
   text-align: center;
 }
 
-.buttons {
+.deleteButtons {
   margin-top: 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -28,14 +28,7 @@
 }
 
 .cancel {
-  background: #ccc;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-}
-
-.delete {
-  background: #e2211c;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  color: #b21a16 !important;
+  background: white !important;
+  border: 1px solid #b21a16 !important;
 }
