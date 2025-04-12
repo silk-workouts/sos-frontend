@@ -180,7 +180,7 @@ export default function PlaylistPage() {
 				</div>
 
 				{/* Title, options, meta */}
-				<header>
+				<header className={styles.hero__header}>
 					<div className={styles["hero__title-container"]}>
 						<h1 className={styles.hero__title}>{playlist.title}</h1>
 						<button
@@ -202,6 +202,10 @@ export default function PlaylistPage() {
 						)}
 					</div>
 
+					{playlist.description && (
+						<p className={styles.hero__description}>{playlist.description}</p>
+					)}
+
 					<div className={styles.hero__info}>
 						<span className={styles.hero__message}>
 							<Image
@@ -222,10 +226,6 @@ export default function PlaylistPage() {
 							<span>{duration}</span>
 						</span>
 					</div>
-
-					{playlist.description && (
-						<p className={styles.hero__description}>{playlist.description}</p>
-					)}
 				</header>
 
 				{/* CTA */}

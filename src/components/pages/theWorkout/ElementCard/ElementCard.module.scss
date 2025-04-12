@@ -2,7 +2,7 @@
 
 .card {
 	display: flex;
-	flex-direction: column;
+	flex-direction: column-reverse;
 	align-items: center;
 	gap: 1rem;
 
@@ -13,7 +13,7 @@
 	}
 
 	@include desktop {
-		gap: 5rem;
+		gap: 6rem;
 	}
 
 	&__info {
@@ -27,15 +27,17 @@
 			align-items: flex-start;
 			text-align: unset;
 			gap: 1.5rem;
-			max-width: 28.125rem;
+			width: 50%;
 		}
 	}
 
 	&__message {
 		font-size: 0.875rem;
+		max-width: 30rem;
 		transition: font-size 0.3s ease-in-out;
 
 		@include tablet {
+			max-width: unset;
 			font-size: 1.125rem;
 		}
 
@@ -46,12 +48,11 @@
 
 	&__image {
 		border-radius: 1rem;
-		width: 70vw;
-		min-width: 18rem;
+		width: 100%;
 		height: auto;
 
 		@include tablet {
-			width: 32.125rem;
+			width: 50%;
 		}
 	}
 }

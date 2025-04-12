@@ -10,13 +10,13 @@
 
 	@include desktop {
 		margin-top: 0;
-		padding-left: 7.75rem;
 	}
 }
 
 .tab-container {
 	background-color: $color-white;
 	padding: 0 $padding-small;
+	border-bottom: 1px solid #a8a8a8;
 	position: sticky;
 	top: 3.6344rem;
 	will-change: transform;
@@ -29,30 +29,46 @@
 	@include desktop {
 		top: 0;
 		padding-top: 4.4375rem;
+		margin-left: 8.5rem;
 	}
 }
 
 .tabContent {
-	border-bottom: 1px solid $color-black;
 	list-style: none;
 	display: flex;
 	text-transform: capitalize;
 	font-size: 0.875rem;
+	gap: 1rem;
 }
 
 .tab {
 	padding: 0.5rem;
-	width: 50%;
 	text-align: center;
 	border-bottom: 2px solid $color-white;
 	cursor: pointer;
+	color: #757575;
 
 	&:focus {
 		font-weight: $font-weight-medium;
 	}
 
+	&:hover {
+		border-color: #757575;
+	}
+
 	&--selected {
 		font-weight: $font-weight-medium;
 		border-color: $color-black;
+		color: $color-black;
+
+		&:hover {
+			border-color: $color-black;
+		}
+	}
+}
+
+.content {
+	@include desktop {
+		padding-left: 9.25rem;
 	}
 }

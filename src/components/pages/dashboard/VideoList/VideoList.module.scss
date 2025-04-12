@@ -12,7 +12,7 @@
 .infoContainer {
 	display: flex;
 	flex-direction: column;
-	gap: 1.5rem;
+	gap: 1rem;
 }
 
 .headerContainer {
@@ -20,12 +20,6 @@
 	justify-content: space-between;
 	align-items: flex-start;
 	gap: 1rem;
-
-	blockquote {
-		color: black;
-		font-size: 1.125rem;
-		padding-bottom: 0.25rem;
-	}
 }
 
 .titleContainer {
@@ -34,19 +28,28 @@
 	gap: 1rem;
 
 	@include tablet {
-		margin-bottom: 1rem;
+		margin-bottom: 0.75rem;
 	}
 }
 
 .title {
-	font-family: $font-primary;
 	font-weight: 700;
 	font-size: 1.125rem;
 	text-transform: capitalize;
-	color: #e2211c;
+	color: $color-red;
 
 	@include tablet {
 		font-size: 1.25rem;
+	}
+}
+
+.subTitle {
+	font-weight: $font-weight-regular;
+	font-size: 1rem;
+	margin-top: 0.5rem;
+
+	@include tablet {
+		margin-top: 0;
 	}
 }
 
@@ -107,13 +110,6 @@
 	display: flex;
 	gap: 1rem;
 	color: #757575;
-
-	.icon {
-		@include tablet {
-			width: 1.5rem;
-			height: 1.5rem;
-		}
-	}
 }
 
 .bookmarkIcon {
@@ -130,8 +126,8 @@
 	transition: all 0.3s ease-in-out;
 
 	&:hover {
-		background-color: #e2211c;
-		border-color: #e2211c;
+		background-color: $color-red;
+		border-color: $color-red;
 
 		.icon {
 			filter: invert(1);

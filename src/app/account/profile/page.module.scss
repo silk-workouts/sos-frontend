@@ -2,266 +2,262 @@
 @use "@/styles/partials/mixins" as *;
 
 .profile {
-  position: relative;
-  background-position: center calc(50% - 5rem);
-  background-repeat: no-repeat;
-  background-size: contain;
-  display: flex;
-  flex-direction: column;
-  // align-items: flex-start;
-  width: 100%;
-  max-width: 1000px;
-  margin: 3.75rem auto 4rem;
-  padding: $padding-medium !important; // layout
+	position: relative;
+	background-position: center calc(50% - 5rem);
+	background-repeat: no-repeat;
+	background-size: contain;
+	display: flex;
+	flex-direction: column;
+	// align-items: flex-start;
+	width: 100%;
+	max-width: 1000px;
+	margin: 3.75rem auto 4rem;
+	padding: $padding-medium !important; // layout
 }
 
 .profile::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("/assets/images/large-S.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center calc(50% - 12rem);
-  opacity: 0.15; // makes the image itself see-through
-  z-index: -1;
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: url("/assets/images/large-S.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center calc(50% - 12rem);
+	opacity: 0.15; // makes the image itself see-through
+	z-index: -1;
 
-  @include tablet {
-    background-position: center calc(50% - 4rem);
-  }
+	@include tablet {
+		background-position: center calc(50% - 4rem);
+	}
 }
 
 /* Profile Header */
 .profile__header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0;
-  // gap: 41px;
-  width: 100%;
-  height: 29px;
-  left: 16px;
-  top: 120px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0;
+	// gap: 41px;
+	width: 100%;
+	height: 29px;
+	left: 16px;
+	top: 120px;
 }
 
 /* Profile Title */
 .profile__title {
-  font-family: "Montserrat", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 29px;
-  color: $color-black;
-  height: 29px;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 29px;
+	color: $color-black;
+	height: 29px;
 }
 
 .profile__subheading {
-  margin-bottom: 2rem;
+	margin-bottom: 2rem;
 }
 
 /* Edit Button */
 .profile__editButton {
-  z-index: 2;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 0;
-  gap: 8px;
-  height: 19px;
-  border-radius: 10px;
-  font-family: "Montserrat", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 160%;
-  text-decoration-line: underline;
-  color: $color-primary;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+	z-index: 2;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-end;
+	padding: 0;
+	gap: 8px;
+	height: 19px;
+	border-radius: 10px;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 160%;
+	text-decoration-line: underline;
+	color: $color-primary;
+	background: transparent;
+	border: none;
+	cursor: pointer;
 
-  &:hover {
-    color: #991613;
-  }
+	&:hover {
+		color: #991613;
+	}
 }
 
 /* Email & Password sections */
 .profile__info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  // margin-top: 24px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+	// margin-top: 24px;
 }
 
 .profile__infoGroup {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 24px 0;
-  gap: 8px;
-  width: 100%;
-  // height: 90px;
-  border-top: 1px solid #dbdbdb;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 24px 0;
+	gap: 8px;
+	width: 100%;
+	// height: 90px;
+	border-top: 1px solid #dbdbdb;
 }
 
 .profile__name {
-  // padding-bottom: 2rem;
-  // margin-bottom: 2rem;
-  border-top: none;
-  p {
-    color: #b51c24;
-    font-weight: 700;
-    font-size: 24px;
-  }
+	// padding-bottom: 2rem;
+	// margin-bottom: 2rem;
+	border-top: none;
+	p {
+		color: #b51c24;
+		font-weight: 700;
+		font-size: 24px;
+	}
 }
 
 .profile__label {
-  font-family: "Montserrat", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: #0f0f0f;
-  width: 100%;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+	color: #0f0f0f;
+	width: 100%;
 }
 
 .profile__value {
-  font-family: "Montserrat", sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 17px;
-  color: #1f1f1f;
-  width: 100%;
+	font-family: "Montserrat", sans-serif;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 17px;
+	color: #1f1f1f;
+	width: 100%;
 }
 
 /* Actions Container (Links + Logout Button) */
 .profile__actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  margin-top: 24px;
-  gap: 16px;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+	margin-top: 24px;
+	gap: 16px;
+	align-items: center;
 }
 
 /* Profile Links */
 .profile__links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
 }
 
 .profile__link {
-  display: flex;
-  align-items: center;
-  padding: 8px 0;
-  gap: 8px;
-  // width: 100%;
-  height: 36px;
-  border-radius: 10px;
-  font-family: $font-primary;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  text-decoration-line: underline !important;
-  color: $color-primary !important;
-  cursor: pointer;
+	display: flex;
+	align-items: center;
+	padding: 8px 0;
+	gap: 8px;
+	// width: 100%;
+	height: 36px;
+	border-radius: 10px;
+	font-family: $font-primary;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 20px;
+	text-decoration-line: underline !important;
+	color: $color-primary !important;
+	cursor: pointer;
 
-  &:hover {
-    color: $link-hover-color !important;
-    opacity: 0.7;
-  }
+	&:hover {
+		color: $link-hover-color !important;
+		opacity: 0.7;
+	}
 }
 
 /* Logout Button */
 .profile__logoutButton {
-  margin: 1rem 0 2rem;
-  width: 227px;
+	margin: 1rem 0 2rem;
+	width: 227px;
 
-  @include desktop {
-    margin-top: 2rem;
-  }
+	@include desktop {
+		margin-top: 2rem;
+	}
 }
 
 /* Edit Profile Form */
 .profile__editFormWrap {
-  padding-top: 2rem;
-  padding-bottom: 4rem;
-  margin-bottom: 4rem;
+	padding-top: 2rem;
+	padding-bottom: 4rem;
+	margin-bottom: 4rem;
 }
 
 .profile__form {
-  display: flex;
-  flex-direction: column;
-  // align-items: flex-start;
-  width: 100%;
-  gap: 2rem;
-  margin-top: 24px;
-  // min-height: 100%;
-  // margin-bottom: 14rem;
+	display: flex;
+	flex-direction: column;
+	// align-items: flex-start;
+	width: 100%;
+	gap: 2rem;
+	margin-top: 24px;
+	// min-height: 100%;
+	// margin-bottom: 14rem;
 }
 
 /* Input Fields - Wrapper */
 .profile__inputGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  gap: 8px;
-  width: 100%;
-  height: 73px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 0;
+	gap: 8px;
+	width: 100%;
+	height: 73px;
 }
 
 /* Label Styling */
 .profile__label {
-  font-family: "Montserrat", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: #000000;
-  width: 100%;
-  height: 17px;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	width: 100%;
+	height: 17px;
 }
 
 /* Input Field */
 .profile__input {
-  box-sizing: border-box;
-  font-weight: 600;
-  width: 100%;
-  height: 48px;
-  background: #f5f5f5;
-  border: 0.5px solid #757575;
-  border-radius: 12px;
-  padding: 10px;
-  font-family: "Montserrat", sans-serif;
-  font-size: 14px;
-  color: $color-black;
+	box-sizing: border-box;
+	font-weight: 600;
+	width: 100%;
+	height: 48px;
+	background: #f5f5f5;
+	border: 0.5px solid #757575;
+	border-radius: 12px;
+	padding: 10px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 14px;
+	color: $color-black;
 
-  &:focus {
-    outline: none;
-    border: 1px solid $color-primary;
-  }
+	&:focus {
+		outline: none;
+		border: 1px solid $color-primary;
+	}
 }
 
 /* Button Group - Pinned to Bottom */
 .profile__buttonGroup {
-  display: flex;
-  flex-direction: row;
-  // justify-content: space-around;
-  width: 100%;
-  margin-top: 2rem;
+	display: flex;
+	flex-direction: row;
+	// justify-content: space-around;
+	width: 100%;
+	margin-top: 2rem;
 }
 
 .profile__saveProfileButton {
-  margin-left: 2rem;
+	margin-left: 2rem;
 }
