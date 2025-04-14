@@ -86,5 +86,7 @@
 
   @include desktop {
     padding-left: 10rem;
+    max-width: 103rem;
+    margin: 0 auto;
   }
 }
