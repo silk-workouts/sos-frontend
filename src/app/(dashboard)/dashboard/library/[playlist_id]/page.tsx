@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios, { isAxiosError } from "axios";
 import defaultThumbnail from "/public/assets/images/defaultPlaylistThumbnail.png";
+import loadingSpinner from "/public/assets/gifs/spinner.svg";
 import leftArrowIcon from "/public/assets/icons/chevron-left-white.svg";
 import leftArrow from "/public/assets/icons/arrow-left.svg";
 import kebabIcon from "/public/assets/icons/kebab-white.svg";
@@ -93,10 +94,6 @@ export default function PlaylistPage() {
     }
   }, [playlists, playlist_id, userId]);
 
-  if (loading) {
-    return <div className={styles.loading}>Loading playlist...</div>;
-  }
-
   async function handleDeleteVideo(video_id: number) {
     try {
       await axios.delete(`/api/playlists/${playlist_id}/videos/${video_id}`, {
@@ -175,66 +172,67 @@ export default function PlaylistPage() {
               alt={`Thumbnail for ${playlist.title} playlist`}
               fill
               sizes="(max-width: 1279px) 100%, 312px"
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "contain" }}
               className={styles.hero__image}
             />
           </div>
 
           {/* Title, options, meta, CTA */}
           <div className={styles.hero__actions}>
-            <header className={styles.hero__header}>
-              <div className={styles["hero__title-container"]}>
-                <h1 className={styles.hero__title}>{playlist.title}</h1>
-                <button
-                  id="menu"
-                  aria-label={`View Options for ${playlist.title} playlist`}
-                  className={styles.hero__button}
-                  onClick={() => setIsOpenModal(!isOpenModal)}
-                >
-                  <Image
-                    id="menu-icon"
-                    src={kebabIcon}
-                    alt=""
-                    className={`${styles.hero__icon} ${styles["hero__icon--options"]}`}
-                    aria-hidden="true"
-                  />
-                </button>
-                {isOpenModal && (
-                  <PlaylistModal
-                    setIsOpen={setIsOpenModal}
-                    playlist={playlist}
-                  />
+            {!loading && (
+              <header className={styles.hero__header}>
+                <div className={styles["hero__title-container"]}>
+                  <h1 className={styles.hero__title}>{playlist.title}</h1>
+                  <button
+                    id="menu"
+                    aria-label={`View Options for ${playlist.title} playlist`}
+                    className={styles.hero__button}
+                    onClick={() => setIsOpenModal(!isOpenModal)}
+                  >
+                    <Image
+                      id="menu-icon"
+                      src={kebabIcon}
+                      alt=""
+                      className={`${styles.hero__icon} ${styles["hero__icon--options"]}`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  {isOpenModal && (
+                    <PlaylistModal
+                      setIsOpen={setIsOpenModal}
+                      playlist={playlist}
+                    />
+                  )}
+                </div>
+
+                {playlist.description && (
+                  <p className={styles.hero__description}>
+                    {playlist.description}
+                  </p>
                 )}
-              </div>
 
-              {playlist.description && (
-                <p className={styles.hero__description}>
-                  {playlist.description}
-                </p>
-              )}
-
-              <div className={styles.hero__info}>
-                <span className={styles.hero__message}>
-                  <Image
-                    src={playIcon}
-                    alt=""
-                    className={styles.hero__icon}
-                    aria-hidden="true"
-                  />
-                  <span>{playlistVideos.length} videos</span>
-                </span>
-                <span className={styles.hero__message}>
-                  <Image
-                    src={clockIcon}
-                    alt=""
-                    className={styles.hero__icon}
-                    aria-hidden="true"
-                  />
-                  <span>{duration}</span>
-                </span>
-              </div>
-            </header>
-
+                <div className={styles.hero__info}>
+                  <span className={styles.hero__message}>
+                    <Image
+                      src={playIcon}
+                      alt=""
+                      className={styles.hero__icon}
+                      aria-hidden="true"
+                    />
+                    <span>{playlistVideos.length} videos</span>
+                  </span>
+                  <span className={styles.hero__message}>
+                    <Image
+                      src={clockIcon}
+                      alt=""
+                      className={styles.hero__icon}
+                      aria-hidden="true"
+                    />
+                    <span>{duration}</span>
+                  </span>
+                </div>
+              </header>
+            )}
             {/* CTA */}
             <button
               onClick={handleStartWorkout}
@@ -257,27 +255,42 @@ export default function PlaylistPage() {
       </section>
 
       {/* Video list */}
-      {playlistVideos.length > 0 ? (
-        <PlaylistVideos
-          videos={playlistVideos}
-          setVideos={setPlaylistVideos}
-          handleDelete={handleDeleteVideo}
-          playlist_id={playlist_id}
-          userId={userId}
-        />
-      ) : (
-        <div className={styles.empty}>
-          <p className={styles.empty__title}>No videos yet</p>
-          <p className={styles.empty__message}>
-            <span>
-              Scroll. Select.{" "}
-              <Link href="/dashboard" id={styles.link}>
-                Save.
-              </Link>
-            </span>
-            <span>Formulate your workout - one element at a time</span>
-          </p>{" "}
+      {loading ? (
+        //If data has not yet been fetched, display loading spinner
+        <div className={styles.loading}>
+          <Image
+            src={loadingSpinner}
+            alt={`Workout videos are loading`}
+            width={36}
+            height={36}
+            className={styles.spinner}
+          />
         </div>
+      ) : (
+        <>
+          {playlistVideos.length > 0 ? (
+            <PlaylistVideos
+              videos={playlistVideos}
+              setVideos={setPlaylistVideos}
+              handleDelete={handleDeleteVideo}
+              playlist_id={playlist_id}
+              userId={userId}
+            />
+          ) : (
+            <div className={styles.empty}>
+              <p className={styles.empty__title}>No videos yet</p>
+              <p className={styles.empty__message}>
+                <span>
+                  Scroll. Select.{" "}
+                  <Link href="/dashboard" id={styles.link}>
+                    Save.
+                  </Link>
+                </span>
+                <span>Formulate your workout - one element at a time</span>
+              </p>{" "}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

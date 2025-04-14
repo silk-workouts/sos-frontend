@@ -2,22 +2,21 @@
 @use "@/styles/partials/mixins" as *;
 
 .videos {
-	padding-bottom: 1rem;
+  padding-bottom: 1rem;
 
-	@include desktop {
-		width: 100%;
-		padding-right: 1rem;
-		padding-left: 32.1875rem;
-	}
+  @include desktop {
+    width: 100%;
+    padding: 0 1rem 1.5rem 33.25rem;
+  }
 
-	&__list {
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
-		@include tablet {
-			gap: 1.5rem;
-		}
-	}
+    @include tablet {
+      gap: 1.5rem;
+    }
+  }
 }
