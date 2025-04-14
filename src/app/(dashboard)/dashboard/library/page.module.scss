@@ -2,73 +2,78 @@
 @use "@/styles/partials/mixins" as *;
 
 .container {
-	margin-top: 3.6344rem;
+  margin-top: 3.6344rem;
 
-	@include tablet {
-		margin-top: 4.4375rem;
-	}
+  @include tablet {
+    margin-top: 4.4375rem;
+  }
 
-	@include desktop {
-		margin-top: 0;
-	}
+  @include desktop {
+    margin-top: 0;
+  }
 }
 
 .tab-container {
-	background-color: $color-white;
-	padding: 0 $padding-small;
-	border-bottom: 1px solid #a8a8a8;
-	position: sticky;
-	top: 3.6344rem;
-	will-change: transform;
-	z-index: 900;
+  background-color: $color-white;
+  padding: 0 $padding-small;
+  border-bottom: 1px solid #a8a8a8;
+  position: sticky;
+  top: 3.6344rem;
+  will-change: transform;
+  z-index: 900;
 
-	@include tablet {
-		top: 4.4375rem;
-		padding: 0 1.5rem;
-	}
-	@include desktop {
-		top: 0;
-		padding-top: 4.4375rem;
-		margin-left: 8.5rem;
-	}
+  @include tablet {
+    top: 4.4375rem;
+    padding: 0 1.5rem;
+  }
+  @include desktop {
+    top: 0;
+    padding: 4.4375rem 3rem 0;
+    margin-left: 6.8125rem;
+  }
 }
 
 .tabContent {
-	list-style: none;
-	display: flex;
-	text-transform: capitalize;
-	font-size: 0.875rem;
-	gap: 1rem;
+  list-style: none;
+  display: flex;
+  text-transform: capitalize;
+  font-size: 0.875rem;
+  gap: 1rem;
+
+  @include desktop {
+    max-width: 90rem;
+    margin: 0 auto;
+  }
 }
 
 .tab {
-	padding: 0.5rem;
-	text-align: center;
-	border-bottom: 2px solid $color-white;
-	cursor: pointer;
-	color: #757575;
+  padding: 0.5rem;
+  text-align: center;
+  border-bottom: 2px solid $color-white;
+  cursor: pointer;
+  color: #757575;
 
-	&:focus {
-		font-weight: $font-weight-medium;
-	}
+  &:focus {
+    font-weight: $font-weight-medium;
+  }
 
-	&:hover {
-		border-color: #757575;
-	}
+  &:hover {
+    border-color: #757575;
+  }
 
-	&--selected {
-		font-weight: $font-weight-medium;
-		border-color: $color-black;
-		color: $color-black;
+  &--selected {
+    font-weight: $font-weight-medium;
+    border-color: $color-black;
+    color: $color-black;
 
-		&:hover {
-			border-color: $color-black;
-		}
-	}
+    &:hover {
+      border-color: $color-black;
+    }
+  }
 }
 
 .content {
-	@include desktop {
-		padding-left: 9.25rem;
-	}
+  @include desktop {
+    padding: 0 1.5rem 0 10rem;
+  }
 }
