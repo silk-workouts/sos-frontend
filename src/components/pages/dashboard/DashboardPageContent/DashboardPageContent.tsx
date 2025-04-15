@@ -11,6 +11,11 @@ interface ContentProps {
 	continuousVideos: ContinuousVideo[];
 	type: string;
 }
+
+export interface Filter {
+	id: number;
+	name: string;
+}
 export default function DashboardPageContent({
 	continuousVideos,
 	type,
@@ -36,6 +41,11 @@ export default function DashboardPageContent({
 		);
 	}
 
+	const filterOptions: Filter[] = continuousVideos.map((video) => ({
+		id: video.id,
+		name: video.name.toLowerCase(),
+	}));
+
 	useEffect(() => {
 		if (searchParams.get("refresh")) {
 			router.replace("/dashboard"); // Remove refresh param and reload
@@ -48,6 +58,7 @@ export default function DashboardPageContent({
 				<ElementFilter
 					elementFilter={elementFilter}
 					handleFilter={handleFilter}
+					options={filterOptions}
 				/>
 			)}
 			<ul className={styles.list} role="list">

@@ -47,7 +47,6 @@
 
 /* Profile Title */
 .profile__title {
-  font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -71,7 +70,6 @@
   gap: 8px;
   height: 19px;
   border-radius: 10px;
-  font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -120,7 +118,6 @@
 }
 
 .profile__label {
-  font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -172,13 +169,13 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  text-decoration-line: underline !important;
+
   color: $color-primary !important;
   cursor: pointer;
 
   &:hover {
     color: $link-hover-color !important;
-    opacity: 0.7;
+    text-decoration-line: underline !important;
   }
 }
 
@@ -223,7 +220,6 @@
 
 /* Label Styling */
 .profile__label {
-  font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;

@@ -7,9 +7,9 @@
 	cursor: grab;
 	touch-action: none;
 	padding: 0.5rem;
-	display: none;
 
 	@include tablet {
+		display: none;
 		padding: 1rem;
 	}
 
@@ -32,13 +32,12 @@
 }
 
 .positionContainer {
-	display: inline-block;
-	width: 2.25rem;
+	display: none;
 	flex-shrink: 0;
 	text-align: center;
-	font-size: 0.875rem;
 
 	@include tablet {
+		display: inline-block;
 		font-size: 1rem;
 		width: 3.5rem;
 	}
@@ -58,13 +57,14 @@
 	border-radius: 1rem;
 
 	&.active {
-		border: 1px solid #e2211c;
-		background-color: rgba(#e2211c, 0.1);
+		border: 1px solid $color-red;
+		background-color: rgba($color-red, 0.1);
 
 		.playContainer {
 			display: unset;
 		}
-		.positionContainer {
+		.positionContainer,
+		.grabButton {
 			display: none;
 		}
 	}
@@ -76,10 +76,10 @@
 	}
 
 	&:hover {
-		background-color: rgba(#e2211c, 0.1);
+		background-color: rgba($color-red, 0.1);
 
 		.grabButton {
-			display: unset;
+			display: block;
 		}
 
 		.playContainer,
@@ -95,6 +95,10 @@
 	@include desktop {
 		border-radius: 0;
 		padding: 0.5rem 0.5rem 0.5rem 0;
+
+		&:last-child {
+			border-radius: 0 0 0.625rem 0.625rem;
+		}
 	}
 }
 

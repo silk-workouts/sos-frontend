@@ -385,6 +385,7 @@ export default function PlayerPage() {
 									display="row"
 									type="player"
 									path="#" // Handled via click handler
+									active={activeChapterIndex === index}
 								/>
 							</li>
 						);

@@ -64,7 +64,7 @@ export default function Navigation() {
 							alt=""
 							className={styles.icon}
 						/>
-						<span id={styles.navOption}>home</span>
+						<span id={styles.navOption}>browse</span>
 					</Link>
 				</li>
 				<li className={styles.nav__item}>
@@ -90,13 +90,13 @@ export default function Navigation() {
 				</li>
 				<li className={styles.nav__item}>
 					<Link
-						href="/dashboard/profile"
+						href="/account/profile"
 						className={`${styles.nav__link} ${
-							path === "/dashboard/profile" ? styles["nav__link--active"] : ""
+							path === "/account/profile" ? styles["nav__link--active"] : ""
 						}`}
 					>
 						<Image
-							src={path === "/dashboard/profile" ? profile_filled : profileIcon}
+							src={path === "/account/profile" ? profile_filled : profileIcon}
 							alt=""
 							className={styles.icon}
 						/>
