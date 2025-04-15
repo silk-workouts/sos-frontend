@@ -210,6 +210,29 @@
   border: none;
   cursor: pointer;
   padding: 0.25rem;
+  min-width: 1.875rem;
+  min-height: 1.875rem;
+  margin-right: -5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba($color-black, 0.1);
+  }
+
+  @include tablet {
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+  }
+
+  @include desktop {
+    min-width: 1.875rem;
+    min-height: 1.875rem;
+    margin-right: 5px;
+  }
 }
 
 .icon {

@@ -120,6 +120,22 @@
         transform: translateY(-50%) scale(1.1);
       }
     }
+
+    &--menu {
+      min-width: 2.1875rem;
+      min-height: 2.1875rem;
+      margin-top: -5px;
+      margin-right: -5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: rgba($color-white, 0.2);
+      }
+    }
   }
 
   &__icon {

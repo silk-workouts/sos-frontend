@@ -186,7 +186,7 @@ export default function PlaylistPage() {
                   <button
                     id="menu"
                     aria-label={`View Options for ${playlist.title} playlist`}
-                    className={styles.hero__button}
+                    className={`${styles.hero__button} ${styles["hero__button--menu"]}`}
                     onClick={() => setIsOpenModal(!isOpenModal)}
                   >
                     <Image

@@ -73,7 +73,6 @@
   align-items: center;
 }
 
-/* Bookmark Button - No Border */
 .bookmarkButton {
   background: none;
   border: none;
@@ -83,8 +82,20 @@
   align-items: center;
   justify-content: center;
   font-family: $font-primary;
+  min-width: 2.1875rem;
+  min-height: 2.1875rem;
+  margin-top: -5px;
+  margin-right: -5px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease-in-out;
 
   &:hover {
+    background-color: rgba($color-black, 0.1);
+
+    @include tablet {
+      background-color: unset;
+    }
+
     .bookmarkIcon {
       filter: brightness(0.8);
     }

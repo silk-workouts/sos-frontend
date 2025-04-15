@@ -234,7 +234,7 @@ export default function SingleContinuousVideoPage() {
                 aria-label={`Save ${
                   mergedData[0]?.title?.toLowerCase() || "Untitled"
                 } to your library`}
-                className={styles.hero__button}
+                className={`${styles.hero__button} ${styles["hero__button--bookmark"]}`}
                 onClick={handleToggleSave}
               >
                 <Image

@@ -106,7 +106,9 @@ export default function Video({
         </h3>
 
         <button
-          className={styles.menuButton}
+          className={`${styles.menuButton}  ${
+            type === "player" ? styles.player : ""
+          }`}
           onClick={() => setIsModalOpen(!isModalOpen)}
           aria-label="Add Menu"
         >
