@@ -48,7 +48,7 @@
 /* Profile Title */
 .profile__title {
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 24px;
   line-height: 29px;
   color: $color-black;
@@ -112,7 +112,8 @@
   border-top: none;
   p {
     color: #b51c24;
-    font-weight: 700;
+    font-weight: 500;
+    text-shadow: 0 0 1px #b51c24;
     font-size: 24px;
   }
 }

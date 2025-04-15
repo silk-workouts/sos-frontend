@@ -11,6 +11,8 @@ import styles from "./Header.module.scss";
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isPaidUser, setIsPaidUser] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isProfileDesktopMenuOpen, setIsProfileDesktopMenuOpen] =
     useState(false);
@@ -45,6 +47,42 @@ export default function Header() {
 
     checkAuthStatus();
   }, [pathname]);
+
+  useEffect(() => {
+    async function fetchStatus() {
+      try {
+        const res = await fetch("/api/auth/paid-status", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.isPaidUser) {
+            setIsPaidUser(true);
+          } else {
+            setIsPaidUser(false);
+          }
+        } else if (res.status === 401) {
+          console.log("🔒 Not authenticated – skipping paid check");
+          setIsPaidUser(false);
+        } else {
+          console.error("❌ Server responded with error:", res.status);
+          setIsPaidUser(false);
+        }
+      } catch (err) {
+        console.error("❌ Unknown error fetching user status:", err);
+        setIsPaidUser(false);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchStatus();
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -155,13 +193,13 @@ export default function Header() {
                 >
                   <div className={styles.menuContainer}>
                     <Link
-                      href="/dashboard"
+                      href={isPaidUser ? "/dashboard" : "/dashboard/subscribe"}
                       className={styles.menuItem}
                       onClick={() => {
                         setIsProfileDesktopMenuOpen(false);
                       }}
                     >
-                      Dashboard
+                      {isPaidUser ? "Dashboard" : "Start Trial"}
                     </Link>
                     <Link
                       href="/account/profile"
@@ -216,11 +254,11 @@ export default function Header() {
                 >
                   <div className={styles.menuContainer}>
                     <Link
-                      href="/dashboard"
+                      href={isPaidUser ? "/dashboard" : "/dashboard/subscribe"}
                       className={styles.menuItem}
                       onClick={() => setIsProfileMobileMenuOpen(false)}
                     >
-                      Dashboard
+                      {isPaidUser ? "Dashboard" : "Start Trial"}
                     </Link>
                     <Link
                       href="/account/profile"

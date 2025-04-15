@@ -207,9 +207,9 @@ const ProfilePage: React.FC = () => {
               <div
                 className={`${styles.profile__infoGroup} ${styles.profile__name}`}
               >
-                <h2 className={styles.profile__subheading}>
+                {/* <h2 className={styles.profile__subheading}>
                   Hey{name ? ` ${name}` : ""}!
-                </h2>
+                </h2> */}
                 <span className={styles.profile__label}>Name</span>
                 <p>{name || "silk system user"}</p>
               </div>
