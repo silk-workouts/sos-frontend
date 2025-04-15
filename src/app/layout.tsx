@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header/Header";
+import AppLayoutShell from "@/components/layout/AppLayoutShell/AppLayoutShell";
+// import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
 import "@/styles/globals.scss";
 
@@ -38,10 +39,9 @@ export default function RootLayout({
         )}
       </head>
       <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <AppLayoutShell>{children}</AppLayoutShell>
         <div id="modal-root" />
+        <Footer />
       </body>
     </html>
   );
