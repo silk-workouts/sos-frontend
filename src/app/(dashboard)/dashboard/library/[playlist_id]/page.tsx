@@ -219,7 +219,10 @@ export default function PlaylistPage() {
                       className={styles.hero__icon}
                       aria-hidden="true"
                     />
-                    <span>{playlistVideos.length} videos</span>
+                    <span>
+                      {playlistVideos.length}{" "}
+                      {playlistVideos.length === 1 ? "video" : "video"}
+                    </span>
                   </span>
                   <span className={styles.hero__message}>
                     <Image

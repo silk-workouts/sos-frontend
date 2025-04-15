@@ -40,7 +40,7 @@ export default function ElementFilter({
           </li>
         );
       })}
-      {options.length > 0 && (
+      {options.length > 0 && elementFilter.size > 0 && (
         <li>
           <Button
             variant="text"

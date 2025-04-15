@@ -17,6 +17,7 @@ import {
 } from "src/app/(dashboard)/dashboard/context/PlaylistContext";
 import { PlaylistVideo } from "src/app/(dashboard)/dashboard/library/[playlist_id]/page";
 import styles from "./PlayListCard.module.scss";
+import Link from "next/link";
 
 export default function PlayListCard({
   playlist,
@@ -65,17 +66,16 @@ export default function PlayListCard({
     }
   }, [userId, playlist.id]);
 
-  function handleNavigate() {
-    if (playlist.type === "savedProgram") {
-      const routeName = playlist.title
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[%\.]/g, ""); // Clean up title for the route
+  let path = "";
+  if (playlist.type === "savedProgram") {
+    const routeName = playlist.title
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[%\.]/g, ""); // Clean up title for the route
 
-      router.push(`/dashboard/${routeName}/${playlist.id}/videos`);
-    } else {
-      router.push(`/dashboard/library/${playlist.id}`);
-    }
+    path = `/dashboard/${routeName}/${playlist.id}/videos`;
+  } else {
+    path = `/dashboard/library/${playlist.id}`;
   }
 
   // Rx icon mapper
@@ -100,25 +100,29 @@ export default function PlayListCard({
     <article className={styles.card}>
       <div className={styles["card__image-container"]}>
         {!loading && (
-          <Image
-            src={
-              playlist.type === "savedProgram"
-                ? getRxIcon(playlist.title)
-                : Array.isArray(playlistVideos) && playlistVideos.length > 0
-                ? playlistVideos[0].thumbnail_url
-                : defaultThumbnail
-            }
-            alt={`Thumbnail for ${playlist.title} playlist`}
-            fill
-            sizes="100%"
-            style={{ objectFit: "contain" }}
-            className={styles.card__image}
-          />
+          <Link href={path}>
+            <Image
+              src={
+                playlist.type === "savedProgram"
+                  ? getRxIcon(playlist.title)
+                  : Array.isArray(playlistVideos) && playlistVideos.length > 0
+                  ? playlistVideos[0].thumbnail_url
+                  : defaultThumbnail
+              }
+              alt={`Thumbnail for ${playlist.title} playlist`}
+              fill
+              sizes="100%"
+              style={{ objectFit: "contain" }}
+              className={styles.card__image}
+            />
+          </Link>
         )}
       </div>
       <div className={styles.card__headerContainer}>
         <header>
-          <h2 className={styles.card__title}>{playlist.title}</h2>
+          <h2 className={styles.card__title}>
+            <Link href={path}>{playlist.title}</Link>
+          </h2>
           <div className={styles.card__description}>
             {playlist?.description ? (
               (() => {
@@ -194,7 +198,7 @@ export default function PlayListCard({
 
         <button
           className={styles.button}
-          onClick={handleNavigate}
+          onClick={() => router.push(path)}
           aria-label="Go to playlist"
         >
           <Image

@@ -55,20 +55,22 @@
 }
 
 .list {
-  margin-bottom: 4rem;
+  margin-bottom: 4.4375rem;
   list-style: none;
   padding: 0 1rem;
 
   @include tablet {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
-    gap: 1rem;
+    row-gap: 2.5rem;
+    column-gap: 2rem;
     padding: 1.5rem;
   }
 
   @include desktop {
     padding: 1.5rem 0;
-    grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(15.625rem, 1fr));
+    margin-bottom: 0;
   }
 
   &__item {

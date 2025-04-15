@@ -27,7 +27,7 @@
 
   &__image {
     border-radius: 0.75rem;
-    border: 0.5px solid #dbdbdb;
+    border: 0.5px solid #a8a8a8;
   }
 
   &__headerContainer {
@@ -36,6 +36,7 @@
 
     @include tablet {
       position: relative;
+      gap: 0.5rem;
     }
 
     .button {

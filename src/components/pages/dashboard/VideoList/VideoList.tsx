@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -217,7 +218,13 @@ export default function VideoList({ video, type }: VideoListProps) {
         <div className={styles.headerContainer}>
           <div className={styles.header}>
             <div className={styles.titleContainer}>
-              <h2 className={styles.title}>{video.name.toLowerCase()}</h2>
+              <h2 className={styles.title}>
+                <Link
+                  href={`/dashboard/${routeName}/${video.continuous_video_id}/videos`}
+                >
+                  {video.name.toLowerCase()}
+                </Link>
+              </h2>
               <button
                 className={`${styles.button} ${styles["button--tablet"]}`}
                 onClick={handleShowVideoList}

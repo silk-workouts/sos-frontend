@@ -8,13 +8,13 @@
   right: 0;
   background-color: $color-white;
   padding: 0.5rem;
-  border-top: 0.5px solid #dbdbdb;
+  border-top: 0.5px solid #a8a8a8;
 
   @include desktop {
     top: 0;
     right: unset;
     border-top: none;
-    border-right: 0.5px solid #dbdbdb;
+    border-right: 0.5px solid #a8a8a8;
     padding: 1.5rem 0.75rem;
   }
 
@@ -57,7 +57,7 @@
     border-radius: 1rem;
 
     &:hover {
-      background-color: rgba(#b21a16, 0.25);
+      background-color: rgba($color-red, 0.25);
     }
   }
 
@@ -81,7 +81,7 @@
       font-weight: $font-weight-medium;
 
       #navOption {
-        color: #b21a16;
+        color: $color-red;
       }
     }
   }

@@ -4,13 +4,19 @@
 .list {
   list-style-type: none;
   display: flex;
-  flex-flow: row wrap;
+  overflow-x: scroll;
   align-items: center;
   gap: 0.5rem;
   padding: 1.5rem 0 1rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
   @include desktop {
     padding: 2rem 0 1rem;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -46,4 +52,5 @@
 
 .button {
   font-size: 0.875rem;
+  min-width: max-content;
 }

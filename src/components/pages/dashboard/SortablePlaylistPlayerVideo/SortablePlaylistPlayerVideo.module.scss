@@ -2,176 +2,227 @@
 @use "@/styles/partials/mixins" as *;
 
 .grabButton {
-	background-color: transparent;
-	border: none;
-	cursor: grab;
-	touch-action: none;
-	padding: 0.5rem;
+  background-color: transparent;
+  border: none;
+  cursor: grab;
+  touch-action: none;
+  padding: 0.5rem;
 
-	@include tablet {
-		display: none;
-		padding: 1rem;
-	}
+  @include tablet {
+    display: none;
+    padding: 1rem;
+  }
 
-	@include desktop {
-		padding: 0.5rem;
-	}
+  @include desktop {
+    padding: 0.5rem;
+  }
 }
 
 .playContainer {
-	padding: 0.5rem;
-	display: none;
+  padding: 0.5rem;
+  display: none;
 
-	@include tablet {
-		padding: 1rem;
-	}
+  @include tablet {
+    padding: 1rem;
+  }
 
-	@include desktop {
-		padding: 0.5rem;
-	}
+  @include desktop {
+    padding: 0.5rem;
+  }
 }
 
 .positionContainer {
-	display: none;
-	flex-shrink: 0;
-	text-align: center;
+  display: none;
+  flex-shrink: 0;
+  text-align: center;
 
-	@include tablet {
-		display: inline-block;
-		font-size: 1rem;
-		width: 3.5rem;
-	}
+  @include tablet {
+    display: inline-block;
+    font-size: 1rem;
+    width: 3.5rem;
+  }
 
-	@include desktop {
-		font-size: 0.875rem;
-		width: 2.25rem;
-	}
+  @include desktop {
+    font-size: 0.875rem;
+    width: 2.25rem;
+  }
 }
 
 .thumbnailCard {
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-	padding: 0.5rem 0.5rem 0.5rem 0;
-	background-color: $color-white;
-	border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem 0.5rem 0.5rem 0;
+  background-color: $color-white;
+  border-radius: 1rem;
 
-	&.active {
-		border: 1px solid $color-red;
-		background-color: rgba($color-red, 0.1);
+  &.active {
+    border: 1px solid $color-red;
+    background-color: rgba($color-red, 0.1);
 
-		.playContainer {
-			display: unset;
-		}
-		.positionContainer,
-		.grabButton {
-			display: none;
-		}
-	}
+    .playContainer {
+      display: unset;
+    }
+    .positionContainer,
+    .grabButton {
+      display: none;
+    }
+  }
 
-	&.grab {
-		.grabButton {
-			cursor: grabbing;
-		}
-	}
+  &.grab {
+    .grabButton {
+      cursor: grabbing;
+    }
+  }
 
-	&:hover {
-		background-color: rgba($color-red, 0.1);
+  &:hover {
+    background-color: rgba($color-red, 0.1);
 
-		.grabButton {
-			display: block;
-		}
+    .grabButton {
+      display: block;
+    }
 
-		.playContainer,
-		.positionContainer {
-			display: none;
-		}
-	}
+    .playContainer,
+    .positionContainer {
+      display: none;
+    }
+  }
 
-	@include tablet {
-		padding: 1rem 1rem 1rem 0;
-	}
+  @include tablet {
+    padding: 1rem 1rem 1rem 0;
+  }
 
-	@include desktop {
-		border-radius: 0;
-		padding: 0.5rem 0.5rem 0.5rem 0;
+  @include desktop {
+    border-radius: 0;
+    padding: 0.5rem 0.5rem 0.5rem 0;
 
-		&:last-child {
-			border-radius: 0 0 0.625rem 0.625rem;
-		}
-	}
+    &:last-child {
+      border-radius: 0 0 0.625rem 0.625rem;
+    }
+  }
 }
 
 .header {
-	display: flex;
-	gap: 0.5rem;
-	align-items: center;
-	flex: 1 1;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex: 1 1;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba($color-black, 0.2);
+  border-radius: 0.625rem;
+  display: none;
+
+  &-container {
+    border-radius: 50%;
+    background-color: rgba($color-black, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+
+    @include tablet {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    @include desktop {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+  }
+
+  &__icon {
+    width: 1rem;
+    height: 1rem;
+
+    @include tablet {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    @include desktop {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
 }
 
 .thumbnailContainer {
-	width: 10rem;
-	aspect-ratio: 16 / 9;
-	position: relative;
-	flex-shrink: 0;
-	transition: all 0.3s ease-in-out;
+  width: 10rem;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		width: 13.5rem;
-	}
+  @include tablet {
+    width: 13.5rem;
+  }
 
-	@include desktop {
-		width: 10rem;
-	}
+  @include desktop {
+    width: 10rem;
+  }
+
+  &:hover {
+    .overlay {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
 
 .thumbnailImage {
-	border-radius: 0.625rem;
-	border: 0.5px solid #dbdbdb;
+  border-radius: 0.625rem;
+  border: 0.5px solid #a8a8a8;
 }
 
 .duration {
-	position: absolute;
-	bottom: 0.3125rem;
-	right: 0.3125rem;
-	font-size: 0.875rem;
-	background-color: rgba($color-black, 0.6);
-	border-radius: 0.25rem;
-	padding: 2px 4px;
-	color: $color-white;
+  position: absolute;
+  bottom: 0.3125rem;
+  right: 0.3125rem;
+  font-size: 0.875rem;
+  background-color: rgba($color-black, 0.6);
+  border-radius: 0.25rem;
+  padding: 2px 4px;
+  color: $color-white;
 }
 
 .videoTitle {
-	font-size: 0.875rem;
-	text-transform: capitalize;
+  font-size: 0.875rem;
+  text-transform: capitalize;
 
-	@include tablet {
-		font-size: 1rem;
-	}
+  @include tablet {
+    font-size: 1rem;
+  }
 
-	@include desktop {
-		font-size: 0.875rem;
-	}
+  @include desktop {
+    font-size: 0.875rem;
+  }
 }
 
 .bookmarkButton {
-	background: none;
-	border: none;
-	cursor: pointer;
-	padding: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
 }
 
 .icon {
-	width: 1.25rem;
-	height: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
 
-	@include tablet {
-		width: 1.5rem;
-		height: 1.5rem;
-	}
+  @include tablet {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 
-	@include desktop {
-		width: 1.25rem;
-		height: 1.25rem;
-	}
+  @include desktop {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
 }
