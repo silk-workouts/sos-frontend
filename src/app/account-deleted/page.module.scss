@@ -1,0 +1,39 @@
+.accountDeleted {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h2 {
+    font-weight: 400;
+  }
+}
+
+.accountDeleted::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/images/large-S.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  opacity: 0.15; // makes the image itself see-through
+  z-index: -1;
+  //   background-position: center calc(50% - 4rem);
+}
+
+.accountDeleted * {
+  padding: 1rem;
+}
+
+.accountDeleted {
+  .homepageLink {
+    color: #b21a16 !important;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+      text-decoration-color: #b21a16;
+    }
+  }
+}

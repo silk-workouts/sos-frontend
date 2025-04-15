@@ -110,7 +110,7 @@ export default function DashboardPage() {
 								handleSelect(isSelected.program);
 							}}
 						>
-							prescription programs
+							100% prescription programs
 						</li>
 					</ul>
 				</div>

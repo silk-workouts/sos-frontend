@@ -1,57 +1,77 @@
 @use "@/styles/partials/mixins" as *;
 
 .card {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 1rem;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 1rem;
 
-	@include tablet {
-		flex-direction: row-reverse;
-		justify-content: flex-end;
-		gap: 3rem;
-	}
+  @include tablet {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 3rem;
+  }
 
-	@include desktop {
-		gap: 5rem;
-	}
+  @include desktop {
+    gap: 6rem;
+  }
 
-	&__info {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		align-items: center;
-		text-align: center;
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: left;
 
-		@include tablet {
-			align-items: flex-start;
-			text-align: unset;
-			gap: 1.5rem;
-			max-width: 28.125rem;
-		}
-	}
+    @include tablet {
+      align-items: flex-start;
+      text-align: unset;
+      gap: 1.5rem;
+      width: 50%;
+    }
+  }
 
-	&__message {
-		font-size: 0.875rem;
-		transition: font-size 0.3s ease-in-out;
+  &__message {
+    font-size: 1remrem;
+    max-width: 30rem;
+    transition: font-size 0.3s ease-in-out;
+    margin-bottom: 2rem;
+    padding: 0 2rem;
+    font-weight: 600;
 
-		@include tablet {
-			font-size: 1.125rem;
-		}
+    @include tablet {
+      max-width: unset;
+      font-size: 1.125rem;
+    }
 
-		@include desktop {
-			font-size: 1.25rem;
-		}
-	}
+    @include desktop {
+      font-size: 1.25rem;
+    }
+  }
 
-	&__image {
-		border-radius: 1rem;
-		width: 70vw;
-		min-width: 18rem;
-		height: auto;
+  &__image {
+    border-radius: 1rem;
+    width: 100%;
+    height: auto;
 
-		@include tablet {
-			width: 32.125rem;
-		}
-	}
+    @include tablet {
+      width: 50%;
+    }
+  }
+
+  &__hideMobile {
+    display: none;
+    @include tablet {
+      display: block;
+    }
+  }
+  &__hideDesktop {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+
+    @include tablet {
+      display: none;
+    }
+  }
 }

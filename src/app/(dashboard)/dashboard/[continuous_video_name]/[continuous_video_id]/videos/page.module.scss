@@ -117,20 +117,9 @@
 			}
 		}
 	}
-
-	&__image-container {
-		position: relative;
-		width: 100%;
-		aspect-ratio: 16 / 9;
-		transition: all 0.3s ease-in-out;
-
-		@include desktop {
-			width: 19.5rem;
-		}
-	}
-
 	&__image {
-		border-radius: 0.75rem;
+		height: auto;
+		align-self: center;
 	}
 
 	&__header {
@@ -156,16 +145,13 @@
 		text-transform: capitalize;
 	}
 
-	&__element {
-		font-weight: 400;
-		align-self: center;
+	&__subTitle {
+		font-weight: $font-weight-regular;
+		font-size: 1.125rem;
 	}
 
-	&__info {
-		display: flex;
-		gap: 1rem;
-		font-size: 0.875rem;
-		font-weight: 600;
+	&__element {
+		align-self: center;
 	}
 
 	&__icon {
@@ -184,6 +170,20 @@
 		}
 	}
 
+	&__info {
+		display: flex;
+		gap: 1rem;
+		font-size: 0.875rem;
+		font-weight: 600;
+
+		@include tablet {
+			.hero__icon {
+				width: 1rem;
+				height: 1rem;
+			}
+		}
+	}
+
 	&__message {
 		display: flex;
 		align-items: center;
@@ -191,6 +191,7 @@
 
 	&__description {
 		font-size: 1rem;
+		margin-top: -1rem;
 	}
 
 	&__title {
