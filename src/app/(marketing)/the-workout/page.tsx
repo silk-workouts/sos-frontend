@@ -121,7 +121,7 @@ export default function TheWorkout() {
         <section className={styles.equipment}>
           <div className={styles["equipment-wrapper"]}>
             <div>
-              <h2 className={`h2-title ${styles.equipment__title}`}>
+              <h2 className={`h2-title-white ${styles.equipment__title}`}>
                 <span className="bold">Recommended</span> Equipment
               </h2>
               <p>
