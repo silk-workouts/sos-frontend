@@ -91,3 +91,20 @@
     margin-bottom: 0;
   }
 }
+
+.loading {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .spinner {
+    width: 2.25rem;
+    height: 2.25rem;
+
+    @include tablet {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+}

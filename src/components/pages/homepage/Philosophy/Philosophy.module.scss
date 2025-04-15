@@ -16,7 +16,7 @@
 
   @include desktop {
     flex-direction: row;
-    max-width: 1600px;
+    max-width: 100rem;
   }
 
   h3 {
@@ -38,13 +38,13 @@
 
     img {
       @include mobile {
-        max-height: 400px;
+        max-height: 25rem;
         width: auto;
         max-width: 100%;
       }
 
       @include tablet {
-        max-height: 400px;
+        max-height: 25rem;
         width: auto;
       }
     }
@@ -67,7 +67,7 @@
   }
 
   &__copy {
-    max-width: 355px;
+    max-width: 22.1875rem;
   }
 
   &__par {

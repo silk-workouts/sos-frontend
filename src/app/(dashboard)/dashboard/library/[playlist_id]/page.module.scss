@@ -240,12 +240,6 @@
   }
 }
 
-.loading {
-  @include desktop {
-    padding-left: 31.25rem;
-  }
-}
-
 .empty {
   padding: 10vh 1rem 10vh;
   display: flex;
@@ -293,7 +287,7 @@
 
   @include desktop {
     height: 50vh;
-    margin-left: -5vw;
+    margin-left: 30vw;
   }
 
   .spinner {

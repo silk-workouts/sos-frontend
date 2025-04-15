@@ -2,35 +2,35 @@
 @use "@/styles/partials/mixins" as *;
 
 .elementContainer {
-	border-radius: 0.525rem;
-	background-color: $color-white;
-	padding: 0.75rem;
-	min-width: 8.625rem;
-	width: max-content;
-	box-shadow: 0px 4px 4px rgba($color-black, 0.25);
+  border-radius: 0.525rem;
+  background-color: $color-white;
+  padding: 0.75rem;
+  min-width: 8.625rem;
+  width: max-content;
+  box-shadow: 0px 4px 4px rgba($color-black, 0.25);
 
-	.element {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-		align-items: center;
-		gap: 1rem;
-		color: $color-red;
-		padding: 5.6px 2.8px;
-		border: 1.5px solid $color-red;
-		border-radius: 6px;
-		height: 7rem;
-		line-height: 1.75rem;
-		text-transform: capitalize;
-	}
+  .element {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    color: $color-red;
+    padding: 5.6px 2.8px;
+    border: 1.5px solid $color-red;
+    border-radius: 0.375rem;
+    height: 7rem;
+    line-height: 1.75rem;
+    text-transform: capitalize;
+  }
 
-	.symbol {
-		font-size: 3.75rem;
-		font-weight: 700;
-	}
+  .symbol {
+    font-size: 3.75rem;
+    font-weight: 700;
+  }
 
-	.name {
-		font-size: 1rem;
-		font-weight: 600;
-	}
+  .name {
+    font-size: 1rem;
+    font-weight: 600;
+  }
 }
