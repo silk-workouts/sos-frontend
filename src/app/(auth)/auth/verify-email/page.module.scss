@@ -3,133 +3,133 @@
 @use "@/styles/partials/_fonts" as *;
 
 .verifyContainer {
-	background: $color-red;
-	color: $color-white;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100vw;
-	min-height: 100vh;
+  background: $color-red;
+  color: $color-white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  min-height: 100vh;
 
-	@include tablet {
-		flex-direction: row;
-	}
+  @include tablet {
+    flex-direction: row;
+  }
 }
 
 // ✅ Left panel for branding & navigation
 .panelLeft {
-	width: 100%;
-	margin-top: calc(64px + 45px);
-	padding: 0 1rem;
-	display: flex;
-	justify-content: space-between;
+  width: 100%;
+  margin-top: calc(4rem + 2.8125rem);
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
 
-	@include tablet {
-		flex-direction: column;
-		background: url("/assets/images/large-S-white-dropshad.svg");
-		height: fit-content;
-		background-size: calc(100% - 2rem) auto;
-		background-position: center;
-		background-repeat: no-repeat;
-		max-width: 472px;
-		width: 40%;
-		height: 100vh;
-		justify-content: left;
-		align-items: center;
-		padding: $padding-medium;
-		gap: $padding-medium;
-	}
+  @include tablet {
+    flex-direction: column;
+    background: url("/assets/images/large-S-white-dropshad.svg");
+    height: fit-content;
+    background-size: calc(100% - 2rem) auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    max-width: 29.5rem;
+    width: 40%;
+    height: 100vh;
+    justify-content: left;
+    align-items: center;
+    padding: $padding-medium;
+    gap: $padding-medium;
+  }
 
-	.backLink {
-		// margin-top: 3rem;
-		display: flex;
-		align-content: center;
-		align-self: flex-start;
-		// @extend .link;
-		margin-bottom: $padding-small;
-		img {
-			margin-right: 0.5rem;
-			filter: brightness(0) invert(1); // Makes the arrow white on hover
-		}
-	}
+  .backLink {
+    // margin-top: 3rem;
+    display: flex;
+    align-content: center;
+    align-self: flex-start;
+    // @extend .link;
+    margin-bottom: $padding-small;
+    img {
+      margin-right: 0.5rem;
+      filter: brightness(0) invert(1); // Makes the arrow white on hover
+    }
+  }
 
-	.backLink:hover {
-		opacity: 0.6;
-	}
+  .backLink:hover {
+    opacity: 0.6;
+  }
 
-	.title {
-		@extend .h2-title;
-		text-align: center;
+  .title {
+    @extend .h2-title;
+    text-align: center;
 
-		@include tablet {
-			text-align: left;
-		}
-	}
-	&__img {
-		width: 65px;
-		height: 45px;
-		@include tablet {
-			display: none;
-		}
-	}
+    @include tablet {
+      text-align: left;
+    }
+  }
+  &__img {
+    width: 4.0625rem;
+    height: 2.8125rem;
+    @include tablet {
+      display: none;
+    }
+  }
 }
 
 // ✅ Right panel for verification message
 .panelRight {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	padding: $padding-medium;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $padding-medium;
 
-	@include tablet {
-		width: 60%;
-	}
+  @include tablet {
+    width: 60%;
+  }
 
-	@include desktop {
-		width: 100%;
-		max-width: 968px;
-		padding: 0 $padding-xl;
-	}
+  @include desktop {
+    width: 100%;
+    max-width: 60.5rem;
+    padding: 0 $padding-xl;
+  }
 }
 
 // ✅ Verification message styling
 .verifyMessage {
-	color: $color-white;
-	width: 100%;
-	max-width: 400px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	gap: $padding-medium;
+  color: $color-white;
+  width: 100%;
+  max-width: 25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $padding-medium;
 
-	@include desktop {
-		width: 100%;
-		max-width: none;
-	}
+  @include desktop {
+    width: 100%;
+    max-width: none;
+  }
 
-	.heading {
-		color: $color-white;
-		@extend .h2-title;
-		text-align: center;
-	}
+  .heading {
+    color: $color-white;
+    @extend .h2-title;
+    text-align: center;
+  }
 
-	.message {
-		@extend .body1;
-		color: $color-white;
-	}
+  .message {
+    @extend .body1;
+    color: $color-white;
+  }
 
-	.errorMessage {
-		color: $color-red;
-		font-weight: $font-weight-medium;
-	}
+  .errorMessage {
+    color: $color-red;
+    font-weight: $font-weight-medium;
+  }
 
-	.buttonContainer {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		margin-top: $padding-medium;
-	}
+  .buttonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: $padding-medium;
+  }
 }

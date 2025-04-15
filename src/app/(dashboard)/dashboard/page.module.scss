@@ -2,83 +2,109 @@
 @use "@/styles/partials/mixins" as *;
 
 .container {
-	margin-top: 3.6344rem;
+  margin-top: 3.6344rem;
 
-	@include tablet {
-		margin-top: 4.4375rem;
-	}
+  @include tablet {
+    margin-top: 4.4375rem;
+  }
 
-	@include desktop {
-		margin-top: 0;
-	}
+  @include desktop {
+    margin-top: 0;
+  }
 }
 
 .tab-container {
-	padding: 0 1rem;
-	background-color: $color-white;
-	border-bottom: 1px solid #a8a8a8;
-	position: sticky;
-	top: 3.6344rem;
-	will-change: transform;
-	z-index: 900;
+  padding: 0 1rem;
+  background-color: $color-white;
+  border-bottom: 1px solid #a8a8a8;
+  position: sticky;
+  top: 3.6344rem;
+  will-change: transform;
+  z-index: 900;
 
-	@include tablet {
-		top: 4.4375rem;
-	}
-	@include desktop {
-		top: 0;
-		padding-top: 4.4375rem;
-		margin-left: 8.5rem;
-	}
+  @include tablet {
+    padding: 0 1.5rem;
+    top: 4.4375rem;
+  }
+  @include desktop {
+    top: 0;
+    padding: 4.4375rem 3rem 0;
+    margin-left: 7rem;
+  }
 }
 
 .tabContent {
-	list-style: none;
-	display: flex;
-	text-transform: capitalize;
-	font-size: 0.875rem;
-	gap: 1rem;
+  list-style: none;
+  display: flex;
+  text-transform: capitalize;
+  font-size: 0.875rem;
+  gap: 1rem;
+
+  @include desktop {
+    max-width: 90rem;
+    margin: 0 auto;
+  }
 }
 
 .tab {
-	display: flex;
-	align-items: center;
-	flex-wrap: nowrap;
-	justify-content: center;
-	padding: 0.5rem;
-	text-align: center;
-	border-bottom: 2px solid $color-white;
-	cursor: pointer;
-	color: #757575;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: center;
+  padding: 0.5rem;
+  text-align: center;
+  border-bottom: 2px solid $color-white;
+  cursor: pointer;
+  color: #757575;
 
-	&:focus {
-		font-weight: $font-weight-medium;
-	}
+  &:focus {
+    font-weight: $font-weight-medium;
+  }
 
-	&:hover {
-		border-color: #757575;
-	}
+  &:hover {
+    border-color: #757575;
+  }
 
-	&--selected {
-		font-weight: $font-weight-medium;
-		border-color: $color-black;
-		color: $color-black;
+  &--selected {
+    font-weight: $font-weight-medium;
+    border-color: $color-black;
+    color: $color-black;
 
-		&:hover {
-			border-color: $color-black;
-		}
-	}
+    &:hover {
+      border-color: $color-black;
+    }
+  }
 }
 
 .content {
-	margin-bottom: 4.25rem;
-	padding: 0 1rem;
+  margin-bottom: 4.4375rem;
+  padding: 0 1rem;
 
-	@include tablet {
-		padding: 0 1.5rem;
-	}
+  @include tablet {
+    padding: 0 1.5rem;
+  }
 
-	@include desktop {
-		padding-left: 9.25rem;
-	}
+  @include desktop {
+    padding-left: 10rem;
+    max-width: 103rem;
+    margin: 0 auto;
+    margin-bottom: 0;
+  }
+}
+
+.loading {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .spinner {
+    width: 2.25rem;
+    height: 2.25rem;
+
+    @include tablet {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
 }
