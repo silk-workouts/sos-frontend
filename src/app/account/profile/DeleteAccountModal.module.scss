@@ -1,4 +1,6 @@
 /* components/modals/DeleteAccountModal.module.scss */
+@use "@/styles/partials/variables" as *;
+
 .overlay {
   position: fixed;
   top: 0;
