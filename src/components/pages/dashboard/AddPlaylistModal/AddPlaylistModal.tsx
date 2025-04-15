@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import Image from "next/image";
 import loadingSpinner from "/public/assets/gifs/spinner.svg";
 import closeIcon from "/public/assets/icons/close.svg";
@@ -127,10 +127,18 @@ export default function AddPlaylistModal({
 
         refreshPlaylists();
       }
+
       setIsSaving(false);
       setIsOpen(false);
     } catch (error) {
       console.error(`Unable to save to playlists: ${error}`);
+      setIsSaving(false);
+
+      if (isAxiosError(error)) {
+        alert(`Error: ${error.response?.statusText}`);
+      } else {
+        alert(error);
+      }
     }
   }
 
@@ -219,6 +227,7 @@ export default function AddPlaylistModal({
             <Button
               variant="secondary"
               onClick={handleSavePlaylist}
+              disabled={isSaving}
               className={styles["button--save"]}
             >
               {isSaving ? (
