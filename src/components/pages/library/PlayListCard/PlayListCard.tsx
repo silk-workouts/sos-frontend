@@ -3,7 +3,6 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { parseDescription } from "src/utils/parseDescription";
 import bookmarkIcon from "public/assets/icons/bookmark-fill.svg";
 import kebabIcon from "/public/assets/icons/kebab.svg";
 import rightArrow from "/public/assets/icons/arrow-right.svg";
@@ -123,24 +122,9 @@ export default function PlayListCard({
           <h2 className={styles.card__title}>
             <Link href={path}>{playlist.title}</Link>
           </h2>
-          <div className={styles.card__description}>
-            {playlist?.description ? (
-              (() => {
-                const { title } = parseDescription(playlist?.description || "");
-                return (
-                  <>
-                    {title && (
-                      <blockquote
-                        className={styles.title}
-                      >{`"${title}"`}</blockquote>
-                    )}
-                  </>
-                );
-              })()
-            ) : (
-              <p className={`${styles.description}`}>{playlist.description}</p>
-            )}
-          </div>
+          {playlist.description && (
+            <p className={styles.card__description}>{playlist.description}</p>
+          )}
         </header>
         <button
           id="menu"
