@@ -14,7 +14,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isProd = process.env.NODE_ENV === "production";
+  // modify if site needs to track subdomains in the future
+  const isProd = process.env.NEXT_PUBLIC_APP_URL === "https://systemofsilk.com";
+
   return (
     <html lang="en">
       <head>
