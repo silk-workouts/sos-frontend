@@ -18,12 +18,8 @@
     padding: 1.5rem 0.75rem;
   }
 
-  &--videolist {
+  &--hideNav {
     display: none;
-
-    @include desktop {
-      display: unset;
-    }
   }
 
   &__logo-link {
@@ -70,7 +66,7 @@
     cursor: pointer;
 
     @include tablet {
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 1rem; // MISSING in File 2 — optional to add
     }
 
     @include desktop {

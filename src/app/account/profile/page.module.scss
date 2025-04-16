@@ -8,11 +8,14 @@
   background-size: contain;
   display: flex;
   flex-direction: column;
-  // align-items: flex-start;
   width: 100%;
   max-width: 62.5rem;
   margin: 3.75rem auto 4rem;
   padding: $padding-medium !important; // layout
+
+  @include desktop {
+    margin-left: 167px;
+  }
 }
 
 .profile::before {
@@ -38,7 +41,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0;
-  // gap: 41px;
+  gap: 41px;
   width: 100%;
   height: 1.8125rem;
   left: 1rem;
@@ -48,7 +51,7 @@
 /* Profile Title */
 .profile__title {
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 1.5rem;
   line-height: 1.8125rem;
   color: $color-black;
@@ -107,13 +110,12 @@
 }
 
 .profile__name {
-  // padding-bottom: 2rem;
-  // margin-bottom: 2rem;
   border-top: none;
   p {
     color: #b51c24;
-    font-weight: 700;
-    font-size: 1.5rem;
+    font-weight: 500;
+    text-shadow: 0 0 1px #b51c24;
+    font-size: 1.5rem; // CONFLICT: 1.5rem in file 1
   }
 }
 
@@ -124,6 +126,7 @@
   line-height: 1.0625rem;
   color: #0f0f0f;
   width: 100%;
+  height: 17px;
 }
 
 .profile__value {
@@ -140,11 +143,10 @@
 .profile__actions {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
   margin-top: 1.5rem;
   gap: 1rem;
-  align-items: center;
 }
 
 /* Profile Links */
@@ -161,7 +163,6 @@
   align-items: center;
   padding: 0.5rem 0;
   gap: 0.5rem;
-  // width: 100%;
   height: 2.25rem;
   border-radius: 0.625rem;
   font-family: $font-primary;
@@ -182,7 +183,7 @@
 /* Logout Button */
 .profile__logoutButton {
   margin: 1rem 0 2rem;
-  width: 14.1875rem;
+  width: 14.1875;
 
   @include desktop {
     margin-top: 2rem;
@@ -199,12 +200,9 @@
 .profile__form {
   display: flex;
   flex-direction: column;
-  // align-items: flex-start;
   width: 100%;
   gap: 2rem;
   margin-top: 1.5rem;
-  // min-height: 100%;
-  // margin-bottom: 14rem;
 }
 
 /* Input Fields - Wrapper */
@@ -226,7 +224,7 @@
   line-height: 1.0625rem;
   color: #000000;
   width: 100%;
-  height: 1.0625rem;
+  height: 17px;
 }
 
 /* Input Field */
@@ -253,7 +251,6 @@
 .profile__buttonGroup {
   display: flex;
   flex-direction: row;
-  // justify-content: space-around;
   width: 100%;
   margin-top: 2rem;
 }
