@@ -30,7 +30,7 @@
     justify-content: left;
 
     @include desktop {
-      height: 100%;
+      height: 2.25rem;
       display: flex;
       align-items: center;
     }
@@ -48,6 +48,7 @@
 
       @include desktop {
         max-width: none;
+        margin-top: 7px;
       }
     }
   }
