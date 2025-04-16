@@ -7,7 +7,8 @@ import profileIcon from "/public/assets/icons/profile.svg";
 import profile_filled from "/public/assets/icons/profile-fill.svg";
 import weightsIcon from "/public/assets/icons/weights.svg";
 import weights_filled from "/public/assets/icons/weights-fill.svg";
-import logoIcon from "/public/assets/icons/s-single.svg";
+// import logoIcon from "/public/assets/icons/s-single.svg";
+import logoIcon from "/public/assets/images/large-S.png";
 import { usePathname } from "next/navigation";
 import styles from "./Navigation.module.scss";
 
@@ -16,16 +17,6 @@ export default function Navigation() {
   const pathSegment = path.split("/");
   let isVideolistPage = false;
 
-  // ✅ Merged route pattern to allow for deeper library routes (from File B)
-  // if (
-  // 	!/^\/dashboard$|^\/dashboard\/library$|^\/dashboard\/library\/[^/]+$|^\/dashboard\/profile$|^\/dashboard\/[^/]+\/[^/]+\/videos$/.test(
-  // 		path
-  // 	)
-  // ) {
-  // 	return <></>;
-  // }
-
-  // ✅ Logic from File B to detect if we're on a deeper playlist or showcase page
   if (
     (path.startsWith("/dashboard/library") && path.split("/").length > 3) ||
     (pathSegment.length === 5 && pathSegment[4] === "videos")

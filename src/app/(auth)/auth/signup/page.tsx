@@ -53,8 +53,6 @@ export default function SignupPage() {
     setErrors({});
 
     try {
-      console.log("🛠️ Attempting signup...");
-
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

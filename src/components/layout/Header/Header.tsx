@@ -123,7 +123,7 @@ export default function Header() {
   }, [isMobileMenuOpen, isProfileDesktopMenuOpen, isProfileMobileMenuOpen]);
 
   if (pathname.startsWith("/dashboard")) {
-    return;
+    return null;
   }
 
   return (
