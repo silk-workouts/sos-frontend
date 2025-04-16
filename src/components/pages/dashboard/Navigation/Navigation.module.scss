@@ -2,83 +2,79 @@
 @use "@/styles/partials/mixins" as *;
 
 .nav {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background-color: $color-white;
-	padding: 0.5rem;
-	border-top: 0.5px solid #dbdbdb;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: $color-white;
+  padding: 0.5rem;
+  border-top: 0.5px solid #dbdbdb;
 
-	@include desktop {
-		top: 0;
-		right: unset;
-		border-top: none;
-		border-right: 0.5px solid #dbdbdb;
-		padding: 1.5rem;
-	}
+  @include desktop {
+    top: 0;
+    right: unset;
+    border-top: none;
+    border-right: 0.5px solid #dbdbdb;
+    padding: 1.5rem;
+  }
 
-	&--videolist {
-		display: none;
+  &--hideNav {
+    display: none;
+  }
 
-		@include desktop {
-			display: unset;
-		}
-	}
+  &__logo-link {
+    display: none;
 
-	&__logo-link {
-		display: none;
+    @include desktop {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+  }
 
-		@include desktop {
-			display: flex;
-			justify-content: center;
-			margin-bottom: 1.5rem;
-		}
-	}
+  &__logo {
+    width: 3.5625rem;
+    height: auto;
+  }
 
-	&__logo {
-		width: 3.5625rem;
-		height: auto;
-	}
+  &__list {
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+    text-transform: capitalize;
+    font-size: 0.875rem;
 
-	&__list {
-		display: flex;
-		list-style: none;
-		justify-content: space-around;
-		text-transform: capitalize;
-		font-size: 0.875rem;
+    @include desktop {
+      flex-direction: column;
+    }
+  }
 
-		@include desktop {
-			flex-direction: column;
-		}
-	}
+  &__item {
+    border-radius: 1rem;
 
-	&__item {
-		border-radius: 1rem;
+    &:hover {
+      background-color: rgba(#b21a16, 0.25);
+    }
+  }
 
-		&:hover {
-			background-color: rgba(#b21a16, 0.25);
-		}
-	}
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
 
-	&__link {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.25rem;
-		padding: 0.25rem 0.5rem;
-		cursor: pointer;
+    @include desktop {
+      padding: 1rem;
+    }
 
-		@include desktop {
-			padding: 1rem;
-		}
+    &--active {
+      font-weight: $font-weight-medium;
 
-		&--active {
-			font-weight: $font-weight-medium;
-
-			#navOption {
-				color: #b21a16;
-			}
-		}
-	}
+      #navOption {
+        color: #b21a16;
+      }
+    }
+  }
 }

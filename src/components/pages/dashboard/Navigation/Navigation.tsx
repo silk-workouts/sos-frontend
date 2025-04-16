@@ -15,20 +15,11 @@ import styles from "./Navigation.module.scss";
 export default function Navigation() {
   const path = usePathname()!;
   const pathSegment = path.split("/");
-  let isVideolistPage = false;
-
-  if (
-    (path.startsWith("/dashboard/library") && path.split("/").length > 3) ||
-    (pathSegment.length === 5 && pathSegment[4] === "videos")
-  ) {
-    isVideolistPage = true;
-  }
+  const isPlayerPage = path.includes("player");
 
   return (
     <nav
-      className={`${styles.nav} ${
-        isVideolistPage ? styles["nav--videolist"] : ""
-      }`}
+      className={`${styles.nav} ${isPlayerPage ? styles["nav--hideNav"] : ""}`}
     >
       <Link
         href="/dashboard"
