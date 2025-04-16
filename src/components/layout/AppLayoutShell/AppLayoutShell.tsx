@@ -56,12 +56,9 @@ export default function AppLayoutShell({
 
   const isDashboard = pathname?.startsWith("/dashboard");
   const isProfile = pathname === "/account/profile";
+  const isMarketingPage = !isDashboard && !isProfile;
   const isAuthPage = pathname?.startsWith("/auth");
   const isSubscribePage = pathname === "/dashboard/subscribe";
-  const isMarketingPage =
-    pathname === "/" ||
-    pathname?.startsWith("/about") ||
-    pathname?.startsWith("/the-workout");
 
   // Wait for pathname + loading state to resolve
   if (!pathnameReady || isLoading || isPaidUser === null) {
