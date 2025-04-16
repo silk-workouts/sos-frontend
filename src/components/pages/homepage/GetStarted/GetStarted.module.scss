@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   padding: $padding-xl 0;
-  gap: 24px;
+  gap: 1.5rem;
   background: $color-white;
   color: $color-red;
   width: 100%;
@@ -19,9 +19,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: 1.5rem;
     width: 100%;
-    max-width: 320px;
+    max-width: 20rem;
     @include tablet {
       display: flex;
       flex-direction: row;
@@ -36,7 +36,7 @@
   .mainTitle {
     text-align: center;
     color: $color-red;
-    max-width: 250px;
+    max-width: 15.625rem;
     @include tablet {
       text-align: left;
       max-width: 50%;

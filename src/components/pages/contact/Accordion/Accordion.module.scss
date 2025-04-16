@@ -3,7 +3,7 @@
 
 .accordionItem {
   border-top: 1px solid $color-red;
-  padding-top: 20px;
+  padding-top: 1.25rem;
   //   border-bottom: 1px solid $color-red;
   //   display: flex;
   //   width: 100%;
@@ -37,7 +37,7 @@
 
 .accordion-panel {
   margin-left: 2.5rem;
-  max-height: 0px;
+  max-height: 0;
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
@@ -54,7 +54,7 @@
 
   &.expanded {
     display: block;
-    max-height: 1000px;
+    max-height: 62.5rem;
     opacity: 1;
     margin-bottom: 2rem;
     pointer-events: auto;

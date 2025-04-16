@@ -2,113 +2,113 @@
 @use "@/styles/partials/_mixins" as *;
 
 .container {
-	// margin: 40px auto;
-	padding: 24px;
-	background-color: #ffffff;
-	border-radius: 8px;
-	text-align: center;
-	min-height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+  // margin: 40px auto;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
-	&__modal {
-		padding: 1rem;
-		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-		max-width: 800px;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
+  &__modal {
+    padding: 1rem;
+    box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
+    max-width: 50rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .title {
-	font-size: 1.5rem;
-	font-weight: bold;
-	color: #333;
-	margin-bottom: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.625rem;
 }
 
 .description {
-	width: 100%;
-	color: #666;
-	font-size: 1rem;
-	margin-bottom: 20px;
-	max-width: 400px;
-	text-wrap: wrap;
-	text-align: center;
-	padding: 0 2rem;
+  width: 100%;
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  max-width: 25rem;
+  text-wrap: wrap;
+  text-align: center;
+  padding: 0 2rem;
 }
 
 .label {
-	display: block;
-	text-align: center;
-	font-weight: 500;
-	color: #444;
-	margin-top: 16px;
+  display: block;
+  text-align: center;
+  font-weight: 500;
+  color: #444;
+  margin-top: 1rem;
 }
 
 .radioGroup {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 12px;
-	justify-content: center;
-	margin: 16px 0;
-	flex-direction: column;
-	align-items: center;
-	text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 1rem 0;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
 
-	.radioLabel {
-		display: flex;
-		align-items: center;
-		background-color: #f5f5f5;
-		border-radius: 20px;
-		padding: 8px 12px;
-		cursor: pointer;
-		transition: background-color 0.3s ease, color 0.3s ease;
-		font-size: 16px;
-		color: #333;
+  .radioLabel {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 1.25rem;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1rem;
+    color: #333;
 
-		&:hover {
-			background-color: #e0e0e0;
-		}
-	}
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
 
-	.radioInput {
-		margin-right: 8px;
-		appearance: none;
-		width: 20px;
-		height: 20px;
-		border: 2px solid #ccc;
-		border-radius: 50%;
-		display: inline-block;
-		position: relative;
-		cursor: pointer;
-		transition: border-color 0.3s ease;
+  .radioInput {
+    margin-right: 0.5rem;
+    appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
 
-		&:checked {
-			border-color: #e63946;
-			background-color: #e63946;
-		}
+    &:checked {
+      border-color: #e63946;
+      background-color: #e63946;
+    }
 
-		&:checked::after {
-			content: "";
-			width: 10px;
-			height: 10px;
-			background-color: white;
-			border-radius: 50%;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-		}
-	}
+    &:checked::after {
+      content: "";
+      width: 0.625rem;
+      height: 0.625rem;
+      background-color: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 
-	.radioLabel.selected {
-		background-color: #e63946;
-		color: white;
-	}
+  .radioLabel.selected {
+    background-color: #e63946;
+    color: white;
+  }
 }
 
 // .textarea {
@@ -122,22 +122,22 @@
 // }
 
 .buttonContainer {
-	display: flex;
-	gap: 1rem;
-	margin-top: 24px;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 .supportText {
-	margin-top: 20px;
-	font-size: 0.9rem;
-	color: #666;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .supportLink {
-	color: #0070f3;
-	text-decoration: none;
+  color: #0070f3;
+  text-decoration: none;
 }
 
 .supportLink:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }

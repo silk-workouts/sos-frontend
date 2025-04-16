@@ -2,175 +2,245 @@
 @use "@/styles/partials/mixins" as *;
 
 .positionContainer {
-	display: inline-block;
-	flex-shrink: 0;
-	font-size: 0.875rem;
-	align-self: center;
-	padding: 0 0.25rem;
+  display: inline-block;
+  flex-shrink: 0;
+  font-size: 0.875rem;
+  align-self: center;
+  padding: 0 0.25rem;
 
-	@include tablet {
-		font-size: 1rem;
-		padding: 0 0.3rem;
-	}
+  @include tablet {
+    font-size: 1rem;
+    padding: 0 0.3rem;
+  }
 
-	@include desktop {
-		font-size: 0.875rem;
-		padding: 0 0.25rem;
-	}
+  @include desktop {
+    font-size: 0.875rem;
+    padding: 0 0.25rem;
+  }
 }
 
 .playContainer {
-	// padding: 0.5rem;
-	display: none;
-	align-self: center;
-
-	@include tablet {
-		// padding: 1rem;
-	}
-
-	@include desktop {
-		// padding: 0.5rem;
-	}
+  display: none;
+  align-self: center;
 }
 
 .card {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 
-	&.row {
-		flex-direction: row;
-		gap: 0.5rem;
-		padding: 0.5rem 1rem;
-		border-radius: 1rem;
+  &.row {
+    flex-direction: row;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
 
-		&.player {
-			padding: 0.5rem;
+    &.player {
+      padding: 0.5rem;
 
-			@include desktop {
-				border-radius: 0;
-			}
-		}
+      @include desktop {
+        border-radius: 0;
+      }
+    }
 
-		@include tablet {
-			padding: 0.5rem 1.5rem;
-			gap: 1rem;
-		}
+    @include tablet {
+      padding: 0.5rem 1.5rem;
+      gap: 1rem;
+    }
 
-		&:hover {
-			background-color: rgba($color-red, 0.1);
-		}
-	}
+    &:hover {
+      background-color: rgba($color-red, 0.1);
+    }
+  }
 
-	&.active {
-		.playContainer {
-			display: unset;
-		}
-		.positionContainer {
-			display: none;
-		}
-	}
+  &.active {
+    .playContainer {
+      display: unset;
+    }
+    .positionContainer {
+      display: none;
+    }
+  }
 
-	&__thumbnail-container {
-		width: 10rem;
-		aspect-ratio: 16 / 9;
-		background-color: rgba($color-black, 0.05);
-		border-radius: 0.625rem;
-		position: relative;
-		transition: all 0.3s ease-in-out;
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba($color-black, 0.2);
+    border-radius: 0.625rem;
+    display: none;
 
-		@include tablet {
-			width: 13.5rem;
-		}
+    &-container {
+      border-radius: 50%;
+      background-color: rgba($color-black, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 1.75rem;
+      height: 1.75rem;
 
-		@include desktop {
-			width: 18.75rem;
+      @include tablet {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
 
-			&.row {
-				width: 13.5rem;
-			}
+    &__icon {
+      width: 1rem;
+      height: 1rem;
 
-			&.player {
-				width: 10rem;
-			}
-		}
-	}
+      @include tablet {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
+  }
+
+  &__thumbnail-container {
+    width: 10rem;
+    aspect-ratio: 16 / 9;
+    background-color: rgba($color-black, 0.05);
+    border-radius: 0.625rem;
+    position: relative;
+    transition: all 0.25s ease-in-out;
+
+    @include tablet {
+      width: 13.5rem;
+    }
+
+    @include desktop {
+      width: 18.75rem;
+
+      &.row {
+        width: 13.5rem;
+      }
+
+      &.player {
+        width: 10rem;
+      }
+    }
+
+    &:hover {
+      .overlay {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &.player {
+        @include desktop {
+          .overlay {
+            &-container {
+              width: 1.75rem;
+              height: 1.75rem;
+            }
+
+            &__icon {
+              width: 1rem;
+              height: 1rem;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .thumbnail {
-	border-radius: 0.625rem;
-	border: 0.5px solid #dbdbdb;
+  border-radius: 0.625rem;
+  border: 0.5px solid #a8a8a8;
 }
 
 .duration {
-	position: absolute;
-	bottom: 0.3125rem;
-	right: 0.3125rem;
-	font-size: 0.875rem;
-	background-color: rgba($color-black, 0.6);
-	border-radius: 0.25rem;
-	padding: 2px 4px;
-	color: $color-white;
+  position: absolute;
+  bottom: 0.3125rem;
+  right: 0.3125rem;
+  font-size: 0.875rem;
+  background-color: rgba($color-black, 0.6);
+  border-radius: 0.25rem;
+  padding: 2px 4px;
+  color: $color-white;
 }
 
 .header {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	flex: 1;
-	gap: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex: 1;
+  gap: 0.25rem;
 
-	@include tablet {
-		gap: 0.5rem;
-	}
+  @include tablet {
+    gap: 0.5rem;
+  }
 
-	&.row {
-		align-items: center;
-	}
+  &.row {
+    align-items: center;
+  }
 }
 
 .title {
-	font-size: 0.875rem;
-	font-weight: $font-weight-regular;
-	text-transform: capitalize;
+  font-size: 0.875rem;
+  font-weight: $font-weight-regular;
+  text-transform: capitalize;
 
-	@include tablet {
-		font-size: 1rem;
-	}
+  @include tablet {
+    font-size: 1rem;
+  }
 
-	@include desktop {
-		&.player {
-			font-size: 0.875rem;
-		}
-	}
+  @include desktop {
+    &.player {
+      font-size: 0.875rem;
+    }
+  }
 }
 
 .menuButton {
-	display: flex;
-	align-items: center;
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  min-width: 1.875rem;
+  min-height: 1.875rem;
+  margin-top: -5px;
+  margin-right: -5px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba($color-black, 0.1);
+  }
+
+  @include tablet {
+    min-width: 2.125rem;
+    min-height: 2.125rem;
+  }
+
+  @include desktop {
+    &.player {
+      min-width: 1.75rem;
+      min-height: 1.75rem;
+    }
+  }
 }
 
 .icon {
-	width: 1.25rem;
-	height: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
 
-	@include tablet {
-		width: 1.5rem;
-		height: 1.5rem;
-	}
+  @include tablet {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 
-	@include desktop {
-		&.player {
-			width: 1.125rem;
-			height: 1.125rem;
-		}
+  @include desktop {
+    &.player {
+      width: 1.125rem;
+      height: 1.125rem;
+    }
 
-		&.playIcon {
-			width: 1.25rem;
-			height: 1.25rem;
-		}
-	}
+    &.playIcon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
 }

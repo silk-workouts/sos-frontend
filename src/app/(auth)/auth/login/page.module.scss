@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 64px; // compensate for header
+  margin-top: 4rem; // compensate for header
   min-height: 100vh;
 
   @include tablet {
@@ -53,7 +53,7 @@
     justify-content: space-between;
     align-items: center;
     padding: $padding-medium;
-    padding: 56px 27px 0 16px;
+    padding: 3.5rem 1.6875rem 0 1rem;
     @include tablet {
       flex-direction: column;
       padding: 0;
@@ -68,8 +68,8 @@
     // @extend .link;
     // margin-bottom: $padding-small;
     @include tablet {
-      margin-left: 16px;
-      margin-top: 56px;
+      margin-left: 1rem;
+      margin-top: 3.5rem;
     }
     img {
       margin-right: 0.5rem;
@@ -92,7 +92,7 @@
       height: 100vh;
     }
     @include desktop {
-      max-width: 490px;
+      max-width: 30.625rem;
     }
   }
 
@@ -131,27 +131,27 @@
 
   @include desktop {
     width: 100%;
-    max-width: 968px;
+    max-width: 60.5rem;
     padding: 0 $padding-xl;
   }
 
   &__wrap {
     background: $color-white;
-    border-radius: 35px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 2.1875rem;
+    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
     padding: 0 1rem;
     display: flex;
     justify-self: center;
     width: 100%;
     @include desktop {
-      max-width: 592px;
+      max-width: 37rem;
     }
   }
 
   &__subtitle {
     color: #000;
     text-align: center;
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   &__signupLink {
@@ -187,9 +187,9 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 0.5rem;
     width: 100%;
-    height: 104px;
+    height: 6.5rem;
     position: relative;
 
     @include desktop {
@@ -198,20 +198,20 @@
 
     label {
       font-weight: $font-weight-regular;
-      font-size: 20px;
-      line-height: 24px;
+      font-size: 1.25rem;
+      line-height: 1.5rem;
       color: $color-black;
       width: 100%;
     }
 
     input {
       width: 100%;
-      height: 72px;
+      height: 4.5rem;
       background: $color-grey-light;
-      border-radius: 18px;
+      border-radius: 1.125rem;
       border: none;
-      padding: 12px;
-      font-size: 16px;
+      padding: 0.75rem;
+      font-size: 1rem;
       font-family: $font-primary;
       outline: none;
       transition: all 0.3s ease-in-out;
@@ -229,10 +229,10 @@
       // position: absolute;
       // bottom: -1.5rem;
       // left: 0;
-      font-size: 14px;
+      font-size: 0.875rem;
       // font-weight: $font-weight-medium;
       // color: $color-red;
-      padding-right: 8px;
+      padding-right: 0.5rem;
     }
 
     .pwErrorMessage {
@@ -247,17 +247,17 @@
     gap: 2rem;
     align-items: center;
     width: 100%;
-    font-size: 14px;
+    font-size: 0.875rem;
     color: $color-black;
 
     .checkboxContainer {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
 
       input {
-        width: 16px;
-        height: 16px;
+        width: 1rem;
+        height: 1rem;
       }
     }
 
