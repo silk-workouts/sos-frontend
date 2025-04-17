@@ -52,7 +52,6 @@
   &__sLogo {
     width: 3rem;
     height: auto;
-    transition: width 0.2s ease-in-out;
 
     @include tablet {
       width: 100%;
