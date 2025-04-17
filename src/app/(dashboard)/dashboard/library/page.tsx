@@ -1,10 +1,12 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import LibraryPageContent from "@/components/pages/library/LibraryPageContent/LibraryPageContent";
 import { usePlaylists } from "../context/PlaylistContext";
 import { useSavedPrograms } from "src/hooks/useSavedPrograms";
 import loadingSpinner from "/public/assets/gifs/spinner.svg";
+import logo from "/public/assets/images/logo.png";
 import styles from "./page.module.scss";
 
 export default function Library() {
@@ -43,6 +45,14 @@ export default function Library() {
   return (
     <div className={styles.container}>
       <div className={styles["tab-container"]}>
+        <Link href="/dashboard">
+          <Image
+            src={logo}
+            width={300}
+            alt="System of Silk logo"
+            className={styles.container__logo}
+          />
+        </Link>
         <ul className={styles.tabContent} role="tablist" tabIndex={0}>
           <li
             role="tab"

@@ -2,14 +2,17 @@
 @use "@/styles/partials/mixins" as *;
 
 .container {
-  margin-top: 3.6344rem;
-
-  @include tablet {
-    margin-top: 4.4375rem;
-  }
-
   @include desktop {
     margin-top: 0;
+  }
+
+  &__logo {
+    width: 6rem;
+    height: auto;
+
+    @include desktop {
+      display: none;
+    }
   }
 }
 
@@ -18,19 +21,23 @@
   background-color: $color-white;
   border-bottom: 1px solid #a8a8a8;
   position: sticky;
-  top: 3.6344rem;
+  top: 0;
   will-change: transform;
   z-index: 900;
 
   @include tablet {
     padding: 0 1.5rem;
-    top: 4.4375rem;
   }
   @include desktop {
-    top: 0;
     padding: 4.4375rem 3rem 0;
     margin-left: 7rem;
   }
+}
+
+.tab-container::before {
+  content: "";
+  display: block;
+  height: 1rem; // spacing above before stickiness kicks in
 }
 
 .tabContent {
