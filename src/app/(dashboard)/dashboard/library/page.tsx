@@ -15,14 +15,14 @@ export default function Library() {
     refreshSavedPrograms,
   } = useSavedPrograms(); // ✅ Add refreshSavedPrograms
   const [isSelected, setIsSelected] = useState({
-    myFormula: true,
+    myWorkout: true,
     program: false,
   });
 
   function handleSelect(selected: boolean) {
     if (!selected) {
       const newSelection = {
-        myFormula: !isSelected.myFormula,
+        myWorkout: !isSelected.myWorkout,
         program: !isSelected.program,
       };
 
@@ -46,18 +46,18 @@ export default function Library() {
         <ul className={styles.tabContent} role="tablist" tabIndex={0}>
           <li
             role="tab"
-            tabIndex={isSelected.myFormula ? 0 : -1}
-            id="myFormula-tab"
-            aria-selected={isSelected.myFormula}
-            aria-controls="myFormula-panel"
+            tabIndex={isSelected.myWorkout ? 0 : -1}
+            id="myWorkout-tab"
+            aria-selected={isSelected.myWorkout}
+            aria-controls="myWorkout-panel"
             className={`${styles.tab} ${
-              isSelected.myFormula ? styles["tab--selected"] : ""
+              isSelected.myWorkout ? styles["tab--selected"] : ""
             }`}
             onClick={() => {
-              handleSelect(isSelected.myFormula);
+              handleSelect(isSelected.myWorkout);
             }}
           >
-            my formulas
+            my workouts
           </li>
           <li
             role="tab"
@@ -96,13 +96,13 @@ export default function Library() {
             <>
               {/* My Formulas Section */}
               <div
-                id="myFormula-panel"
+                id="myWorkout-panel"
                 role="tabpanel"
-                aria-labelledby="myFormula-tab"
-                hidden={!isSelected.myFormula}
+                aria-labelledby="myWorkout-tab"
+                hidden={!isSelected.myWorkout}
                 className={styles.content}
               >
-                <LibraryPageContent playlists={playlists} type="myFormula" />
+                <LibraryPageContent playlists={playlists} type="myWorkout" />
               </div>
               {/* Saved Programs Section */}
               <div
