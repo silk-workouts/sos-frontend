@@ -98,112 +98,114 @@ export default function LoginPage() {
 
   return (
     <div className={styles.loginContainer}>
-      {/* ✅ Left panel with login options */}
-      <div className={styles.panelLeft}>
-        <Link href="/" className={styles.panelLeft__backLink}>
-          <Image src={leftArrow} alt="" aria-hidden="true" />
-          <span>Back to Site</span>
-        </Link>
+      <div className={styles["loginContainer-wrapper"]}>
+        {/* ✅ Left panel with login options */}
+        <div className={styles.panelLeft}>
+          <Link href="/" className={styles.panelLeft__backLink}>
+            <Image src={leftArrow} alt="" aria-hidden="true" />
+            <span>Back to Site</span>
+          </Link>
 
-        <Image
-          className={styles.panelLeft__img}
-          src={whiteS}
-          alt="small S for silk logo"
-        />
-      </div>
-
-      {/* ✅ Right panel containing the login form */}
-      <div className={styles.panelRight}>
-        <div className={styles.panelRight__header}>
-          <h1 className="authForm">Welcome Back!</h1>
-          <p className={styles.panelRight__subtitle}>
-            <span> Don&#39;t have an account yet?</span>{" "}
-            <span>
-              <Link
-                className={`link--emphasis ${styles.panelRight__signupLink}`}
-                href="/auth/signup"
-              >
-                Sign up
-              </Link>
-            </span>
-          </p>
+          <Image
+            className={styles.panelLeft__img}
+            src={whiteS}
+            alt="small S for silk logo"
+          />
         </div>
-        <form onSubmit={handleLogin} className={styles.loginForm}>
-          <div className={styles["loginForm__input-container"]}>
-            {/* ✅ Email input field */}
-            <div className={styles.inputGroup}>
-              <label>Email</label>
-              <input
-                type="tex†"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setErrors({ ...errors, email: "" });
-                }}
-                className={errors.email ? styles.error : ""}
-              />
-              {errors.email && (
-                <span className={styles.errorMessage}>{errors.email}</span>
-              )}
-            </div>
 
-            {/* ✅ Password input field */}
-            <div className={styles.inputGroup}>
-              <label>Password</label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setErrors({ ...errors, password: "" });
-                }}
-                className={errors.password ? styles.error : ""}
-              />
-              {errors.password && (
-                <span
-                  className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
-                >
-                  {errors.password}
-                </span>
-              )}
-              <Link
-                href="/auth/forgot-password"
-                className={`link--emphasis ${styles.forgotPassword}`}
-              >
-                Forgot password?
-              </Link>
-            </div>
-          </div>
-
-          <Button
-            type="submit"
-            disabled={isLoggingIn}
-            className={styles.button}
-          >
-            {" "}
-            {isLoggingIn ? (
+        {/* ✅ Right panel containing the login form */}
+        <div className={styles.panelRight}>
+          <div className={styles.panelRight__header}>
+            <h1 className="authForm">Welcome Back!</h1>
+            <p className={styles.panelRight__subtitle}>
+              <span> Don&#39;t have an account yet?</span>{" "}
               <span>
-                <Image
-                  src={loadingSpinner}
-                  alt={`List of playlists is loading`}
-                  width={20}
-                  height={20}
-                  className={styles.icon}
-                />
-                <span>Logging in...</span>
+                <Link
+                  className={`link--emphasis ${styles.panelRight__signupLink}`}
+                  href="/auth/signup"
+                >
+                  Sign up
+                </Link>
               </span>
-            ) : (
-              <span>Log In</span>
-            )}
-          </Button>
+            </p>
+          </div>
+          <form onSubmit={handleLogin} className={styles.loginForm}>
+            <div className={styles["loginForm__input-container"]}>
+              {/* ✅ Email input field */}
+              <div className={styles.inputGroup}>
+                <label>Email</label>
+                <input
+                  type="tex†"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setErrors({ ...errors, email: "" });
+                  }}
+                  className={errors.email ? styles.error : ""}
+                />
+                {errors.email && (
+                  <span className={styles.errorMessage}>{errors.email}</span>
+                )}
+              </div>
 
-          {/* ✅ Display messages */}
-          {message && <p className={styles.message}>{message}</p>}
-        </form>
+              {/* ✅ Password input field */}
+              <div className={styles.inputGroup}>
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setErrors({ ...errors, password: "" });
+                  }}
+                  className={errors.password ? styles.error : ""}
+                />
+                {errors.password && (
+                  <span
+                    className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
+                  >
+                    {errors.password}
+                  </span>
+                )}
+                <Link
+                  href="/auth/forgot-password"
+                  className={`link--emphasis ${styles.forgotPassword}`}
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isLoggingIn}
+              className={styles.button}
+            >
+              {" "}
+              {isLoggingIn ? (
+                <span>
+                  <Image
+                    src={loadingSpinner}
+                    alt={`List of playlists is loading`}
+                    width={20}
+                    height={20}
+                    className={styles.icon}
+                  />
+                  <span>Logging in...</span>
+                </span>
+              ) : (
+                <span>Log In</span>
+              )}
+            </Button>
+
+            {/* ✅ Display messages */}
+            {message && <p className={styles.message}>{message}</p>}
+          </form>
+        </div>
+        <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
       </div>
-      <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
     </div>
   );
 }
