@@ -7,7 +7,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import DeleteAccountModal from "./DeleteAccountModal";
 import Button from "@/components/ui/Button/Button";
 import {
@@ -121,7 +121,7 @@ const ProfilePage: React.FC = () => {
 
     // Validate inputs using utility functions
     if (!isValidAge(tempAge)) {
-      toast.error("Please enter a valid age between 0 and 120.");
+      toast.error("Please enter a valid age between 13 and 120");
       setIsLoading(false);
       return;
     }
@@ -262,9 +262,10 @@ const ProfilePage: React.FC = () => {
                 min={0}
                 className={styles.profile__input}
                 value={tempAge ?? ""}
-                onChange={(e) =>
-                  setTempAge(parseInt(e.target.value, 10) || undefined)
-                }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setTempAge(value === "" ? undefined : Number(value));
+                }}
               />
             </div>
 
@@ -286,9 +287,10 @@ const ProfilePage: React.FC = () => {
                 onChange={(e) => setTempGender(e.target.value)}
               >
                 <option value="">Select...</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="male">male</option>
+                <option value="female">female</option>
+                <option value="non-binary">non-binary</option>
+                <option value="prefer not to say">prefer not to say</option>
               </select>
             </div>
 
@@ -405,6 +407,7 @@ const ProfilePage: React.FC = () => {
           }}
         />
       )}
+      <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
     </div>
   );
 };
