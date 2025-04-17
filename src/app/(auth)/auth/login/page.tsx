@@ -19,7 +19,6 @@ import styles from "./page.module.scss";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
@@ -37,16 +36,15 @@ export default function LoginPage() {
     if (!sanitizedPassword) newErrors.password = "⚠️ Password is required";
 
     if (!isValidEmail(sanitizedEmail)) {
-      newErrors.email = "⚠️ Invalid email format";
+      newErrors.email = "⚠️ Incorrect email";
     }
 
     if (!isValidPassword(sanitizedPassword)) {
-      newErrors.password = "⚠️ Invalid password";
+      newErrors.password = "⚠️ Incorrect password";
     }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      // toast.error("Please submit valid email and password.");
       return;
     }
 
@@ -133,8 +131,9 @@ export default function LoginPage() {
             <div className={styles["loginForm__input-container"]}>
               {/* ✅ Email input field */}
               <div className={styles.inputGroup}>
-                <label>Email</label>
+                <label htmlFor="email">Email</label>
                 <input
+                  id="email"
                   type="tex†"
                   placeholder="Enter your email"
                   value={email}
@@ -151,8 +150,9 @@ export default function LoginPage() {
 
               {/* ✅ Password input field */}
               <div className={styles.inputGroup}>
-                <label>Password</label>
+                <label htmlFor="password">Password</label>
                 <input
+                  id="password"
                   type="password"
                   placeholder="Enter your password"
                   value={password}
@@ -199,9 +199,6 @@ export default function LoginPage() {
                 <span>Log In</span>
               )}
             </Button>
-
-            {/* ✅ Display messages */}
-            {message && <p className={styles.message}>{message}</p>}
           </form>
         </div>
         <Toaster position="top-center" toastOptions={{ duration: 5000 }} />

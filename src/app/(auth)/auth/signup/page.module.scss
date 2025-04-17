@@ -3,225 +3,253 @@
 @use "@/styles/partials/_fonts" as *;
 
 .signupContainer {
-  margin-top: 4rem;
-  background-color: $color-red;
-  color: #000;
-  display: flex;
-  flex-direction: column;
-  justify-self: center;
-  align-items: center;
-  width: 100%;
-  padding-bottom: 2rem;
-  // min-height: 100vh;
+  background: $color-red;
+  color: $color-white;
+  margin-top: 4rem; // compensate for header
+  padding: 1.875rem 1rem;
+  min-height: 100vh;
+  transition: all 0.3s ease-in-out;
 
   @include tablet {
-    flex-direction: row-reverse;
-    margin-top: unset;
-    padding-bottom: unset;
+    padding: 3rem 1.5rem;
   }
-  @include desktop {
-    padding-bottom: 3rem;
+
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.875rem;
+
+    @include tablet {
+      flex-direction: row-reverse;
+      gap: 3rem;
+    }
+
+    @include desktop {
+      max-width: 90rem;
+      margin: 0 auto;
+    }
   }
 }
 
 // ✅ Left panel with signup information
 .panelLeft {
-  width: 100%;
-  margin-top: 1.5rem;
-  margin-bottom: 1.75rem;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: $padding-medium;
 
   @include tablet {
-    width: 40%;
-    height: 100vh;
     flex-direction: column;
-    justify-content: left;
-    margin-bottom: 0;
-    margin-top: 0;
+    align-items: flex-start;
+    flex-shrink: 1;
+    max-height: 55rem;
   }
 
-  @include desktop {
-    width: 100%;
-    margin-right: 10%;
-  }
-
-  .backLink {
-    color: $color-white;
-
-    margin-left: 1rem;
-    display: flex;
-    align-content: center;
-    align-self: flex-start;
-
-    img {
-      margin-right: 0.5rem;
-      filter: brightness(0) invert(1); // Makes the arrow white on hover
-    }
-
-    &--hideDesktop {
-      @include tablet {
-        display: none;
-      }
-    }
-  }
-
-  .backLink:visited {
-    color: $color-white;
-  }
-
-  .backLink:hover {
-    opacity: 0.7;
+  @include tablet {
+    align-items: unset;
+    justify-content: flex-end;
   }
 
   &__sLogo {
-    width: 2rem;
-    height: 2rem;
-    margin-right: 1.6875rem;
+    width: 3rem;
+    height: auto;
+    transition: width 0.2s ease-in-out;
+
     @include tablet {
       width: 100%;
-      height: 100vh;
+      max-width: 35.625rem;
     }
-    @include desktop {
-      max-width: 30.625rem;
+  }
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  position: relative;
+  margin-left: 0.625rem;
+  color: $color-white !important;
+
+  @include tablet {
+    font-size: 1.25rem;
+  }
+
+  img {
+    filter: brightness(0) invert(1);
+  }
+
+  &--hideDesktop {
+    @include tablet {
+      display: none;
     }
+  }
+
+  &--hideMobile {
+    display: none;
+
+    @include tablet {
+      display: flex;
+      position: absolute;
+      top: -3rem;
+      left: 0;
+    }
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    font-size: 1.7rem;
+    font-weight: 400;
+    opacity: 0;
+    color: $color-white;
+    transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+
+    @include tablet {
+      font-size: 2rem;
+    }
+  }
+
+  &::before {
+    content: "[";
+    left: -0.875rem;
+    top: 0.6563rem;
+    transform: translateY(-50%);
+  }
+
+  &::after {
+    content: "]";
+    right: -0.875rem;
+    top: 0.6563rem;
+    transform: translateY(-50%);
+  }
+
+  &:hover::before,
+  &:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
   }
 }
 
 // ✅ Right panel for the signup form
 .panelRight {
-  padding: 0 6%;
-  width: 100%;
+  border-radius: 2.1875rem;
+  background: $color-white;
+  box-shadow: 0px 4px 1.0875rem 0px rgba($color-black, 0.25);
+  padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  // padding: $padding-medium;
+  gap: 2.5rem;
+  color: $color-black;
+  transition: all 0.3s ease-in-out;
 
   @include tablet {
-    width: 60%;
-    align-items: flex-start;
+    padding: 3.5rem 2rem;
+    gap: 4.5rem;
+    flex-grow: 1;
+    height: max-content;
+    position: relative;
+    margin-top: 3rem;
   }
 
-  @include desktop {
-    width: 100%;
-  }
-
-  .backLink {
-    color: $color-white;
-
-    margin-left: 1rem;
+  &__header {
     display: flex;
-    align-content: center;
-    align-self: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
 
-    img {
-      margin-right: 0.5rem;
-      filter: brightness(0) invert(1); // Makes the arrow white on hover
-    }
+  &__subtitle {
+    font-size: 1rem;
 
-    &--hideMobile {
-      display: none;
-      @include tablet {
-        display: flex;
-        margin-left: 0;
-        margin-bottom: 3.5rem;
-      }
+    @include tablet {
+      font-size: 1.25rem;
     }
   }
 
-  .backLink:visited {
-    color: $color-white;
-  }
+  .loginLink {
+    font-weight: $font-weight-extrabold;
+    text-decoration: none;
+    color: $link-hover-color;
 
-  .backLink:hover {
-    opacity: 0.7;
+    &:hover {
+      text-decoration: underline !important;
+    }
+
+    @include tablet {
+      font-size: 1.25rem;
+    }
   }
 }
 
 // ✅ Signup form styling
 .signupForm {
-  background: $color-white;
-  box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
-
-  padding: 2rem 1rem;
-  border-radius: 2.1875rem;
-  width: 100%;
-  // max-width: 400px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: $padding-medium;
+  gap: 2.5rem;
+  max-width: 30.25rem;
+  width: 100%;
+  margin: 0 auto;
 
-  @include desktop {
-    max-width: 37rem;
+  @include tablet {
+    gap: 3.5rem;
   }
 
-  .heading {
-    color: #000;
-    @extend .h2-title;
-    text-align: center;
-  }
+  &__input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    font-size: 1rem;
 
-  .subtitle {
-    text-align: center;
-
-    a {
-      font-weight: 800;
+    @include tablet {
+      gap: 2rem;
     }
-  }
-
-  .loginLink:hover {
-    text-decoration: underline;
-    text-decoration-color: $link-hover-color;
   }
 
   .inputGroup {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     gap: 0.5rem;
-    width: 100%;
-    height: 6.5rem;
     position: relative;
 
     label {
       font-weight: $font-weight-regular;
-      font-size: 1.25rem;
       line-height: 1.5rem;
       color: $color-black;
-      width: 100%;
+      text-transform: capitalize;
     }
 
     input {
-      width: 100%;
-      height: 4.5rem;
-      background: $color-grey-light;
-      border-radius: 1.125rem;
-      border: none;
-      padding: 0.75rem;
-      font-size: 1rem;
+      height: 2.8125rem;
+      border-radius: 1rem;
+      background-color: #f5f5f5;
+      border: 0.5px solid #a8a8a8;
       font-family: $font-primary;
-      outline: none;
-      transition: all 0.3s ease-in-out;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      width: 100%;
 
+      &:active,
       &:focus {
-        border: 2px solid $color-black;
+        outline: 1px solid $color-black;
+      }
+
+      &.error {
+        border: 1px solid $color-red;
+        outline: 1px solid $color-red;
       }
     }
 
-    // .errorMessage {
-    //   position: absolute;
-    //   bottom: -1.5rem;
-    //   left: 0;
-    //   font-size: 14px;
-    //   font-weight: $font-weight-medium;
-    //   color: $color-red;
-    //   padding-right: 8px;
-    // }
+    .errorMessage {
+      position: absolute;
+      bottom: -1.125rem;
+      color: $color-red;
+      font-size: 0.75rem;
+
+      @include tablet {
+        font-size: 0.875rem;
+        bottom: -1.5rem;
+      }
+    }
 
     .tooltipContainer {
       position: relative;
@@ -238,7 +266,7 @@
       visibility: hidden;
       width: 15.625rem;
       background-color: #333;
-      color: #fff;
+      color: $color-white;
       text-align: center;
       border-radius: 5px;
       padding: 0.5rem;
@@ -264,9 +292,16 @@
     }
   }
 
-  .message {
-    text-align: center;
-    @extend .body2;
-    color: $color-red;
+  .button {
+    span {
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+      text-transform: capitalize;
+    }
+
+    .icon {
+      filter: invert(1);
+    }
   }
 }

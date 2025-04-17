@@ -87,8 +87,9 @@ export default function ForgotPasswordPage() {
             {/* <p className={styles.subtitle}>
               Enter your email to receive a password reset link.
             </p> */}
-            <label>Email Address</label>
+            <label htmlFor="email">Email</label>
             <input
+              id="email"
               type="text"
               placeholder="Enter your email"
               value={email}
