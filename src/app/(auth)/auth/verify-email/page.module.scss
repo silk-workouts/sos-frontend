@@ -111,6 +111,9 @@
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+  max-width: 40.125rem;
+  width: 100%;
+  margin: 0 auto;
 
   @include tablet {
     padding: 3.5rem 2rem;

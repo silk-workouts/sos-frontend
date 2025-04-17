@@ -22,6 +22,8 @@
     @include tablet {
       flex-direction: row-reverse;
       gap: 3rem;
+      position: relative;
+      justify-content: space-between;
     }
 
     @include desktop {
@@ -88,7 +90,7 @@
     @include tablet {
       display: flex;
       position: absolute;
-      top: -3rem;
+      top: 0;
       left: 0;
     }
   }
@@ -140,13 +142,13 @@
   gap: 2.5rem;
   color: $color-black;
   transition: all 0.3s ease-in-out;
+  max-width: 40.125rem;
 
   @include tablet {
     padding: 3.5rem 2rem;
     gap: 4.5rem;
     flex-grow: 1;
     height: max-content;
-    position: relative;
     margin-top: 3rem;
   }
 
