@@ -193,12 +193,12 @@ export default function LoginPage() {
                     height={20}
                     className={styles.icon}
                   />
-                  <span className={styles.button_buttonText}>
+                  <span className={styles.button__buttonText}>
                     Logging in...
                   </span>
                 </span>
               ) : (
-                <span className={styles.button_buttonText}>Log In</span>
+                <span className={styles.button__buttonText}>Log In</span>
               )}
             </Button>
           </form>
