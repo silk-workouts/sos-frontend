@@ -3,279 +3,261 @@
 @use "@/styles/partials/_fonts" as *;
 
 .loginContainer {
-  // border-top: 3px solid yellow;
-  // padding-top: 56px;
   background: $color-red;
   color: $color-white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
   margin-top: 4rem; // compensate for header
+  padding: 1.875rem 1rem;
   min-height: 100vh;
+  transition: all 0.3s ease-in-out;
 
   @include tablet {
-    flex-direction: row;
+    padding: 3rem 1.5rem;
+  }
+
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.875rem;
+
+    @include tablet {
+      flex-direction: row;
+      gap: 3rem;
+    }
+
+    @include desktop {
+      max-width: 90rem;
+      margin: 0 auto;
+    }
   }
 }
 
 // ✅ Left panel with login information
 .panelLeft {
-  width: 100%;
-  // height: fit-content;
-  // background: rgba(255, 0, 0, 0.2) url("/assets/images/large-S.png");
-  // background-size: calc(100% - 2rem) auto;
-  // background-position: center;
-  // background-repeat: no-repeat;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-self: flex-start;
-  // padding: $padding-medium;
-  // gap: $padding-medium;
+  justify-content: space-between;
+  align-items: center;
 
   @include tablet {
-    // max-width: 472px;
-    width: 40%;
-    // height: 100vh;
-    justify-content: left;
-    // display: block;
-    padding: 0;
-  }
-
-  @include desktop {
-    width: 50%;
-  }
-
-  &__navHeader {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    padding: $padding-medium;
-    padding: 3.5rem 1.6875rem 0 1rem;
-    @include tablet {
-      flex-direction: column;
-      padding: 0;
-    }
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 1;
+    max-height: 55rem;
   }
 
   &__backLink {
-    // margin-top: 3rem;
     display: flex;
-    align-content: center;
-    align-self: flex-start;
-    // @extend .link;
-    // margin-bottom: $padding-small;
-    @include tablet {
-      margin-left: 1rem;
-      margin-top: 3.5rem;
-    }
-    img {
-      margin-right: 0.5rem;
-      filter: brightness(0) invert(1); // Makes the arrow white on hover
-    }
-    span {
-      color: $color-white;
-    }
-  }
+    align-items: center;
+    gap: 0.25rem;
+    position: relative;
+    margin-left: 0.625rem;
 
-  .backLink:hover {
-    opacity: 0.6;
+    @include tablet {
+      font-size: 1.25rem;
+    }
+
+    img {
+      filter: brightness(0) invert(1);
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      font-size: 1.7rem;
+      font-weight: 400;
+      opacity: 0;
+      transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+
+      @include tablet {
+        font-size: 2rem;
+      }
+    }
+
+    &::before {
+      content: "[";
+      left: -0.875rem;
+      top: 0.6563rem;
+      transform: translateY(-50%);
+    }
+
+    &::after {
+      content: "]";
+      right: -0.875rem;
+      top: 0.6563rem;
+      transform: translateY(-50%);
+    }
+
+    &:hover::before,
+    &:hover::after {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.1);
+    }
   }
 
   &__img {
-    width: 2rem;
+    width: 3rem;
     height: auto;
+
     @include tablet {
       width: 100%;
-      height: 100vh;
+      max-width: 35.625rem;
     }
-    @include desktop {
-      max-width: 30.625rem;
-    }
-  }
-
-  .title {
-    display: none;
-    color: $color-white;
-    @extend .h2-title;
-    text-align: center;
-
-    @include tablet {
-      text-align: left;
-    }
-  }
-
-  .subtitle {
-    color: #000;
-    text-align: center;
-    @extend .body1;
-    text-align: center;
-    margin-top: $padding-small;
   }
 }
 
 // ✅ Right panel for the login form
 .panelRight {
+  border-radius: 2.1875rem;
+  background: $color-white;
+  box-shadow: 0px 4px 1.0875rem 0px rgba($color-black, 0.25);
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  color: $color-black;
+  transition: all 0.3s ease-in-out;
+  max-width: 40.125rem;
   width: 100%;
-  padding: $padding-medium 6%;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
+  margin: 0 auto;
 
   @include tablet {
-    width: 60%;
+    padding: 3.5rem 2rem;
+    gap: 4.5rem;
+    flex-grow: 1;
+    height: max-content;
   }
 
-  @include desktop {
-    width: 100%;
-    max-width: 60.5rem;
-    padding: 0 $padding-xl;
-  }
-
-  &__wrap {
-    background: $color-white;
-    border-radius: 2.1875rem;
-    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
-    padding: 0 1rem;
+  &__header {
     display: flex;
-    justify-self: center;
-    width: 100%;
-    @include desktop {
-      max-width: 37rem;
-    }
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
   }
 
   &__subtitle {
-    color: #000;
-    text-align: center;
     font-size: 1rem;
+
+    @include tablet {
+      font-size: 1.25rem;
+    }
   }
 
   &__signupLink {
-    margin-top: -1.5rem;
     font-weight: $font-weight-extrabold;
     text-decoration: none;
     color: $link-hover-color;
+
     &:hover {
       text-decoration: underline !important;
-      text-decoration-color: $color-red !important;
+    }
+
+    @include tablet {
+      font-size: 1.25rem;
     }
   }
 }
 
 // ✅ Login form styling
 .loginForm {
-  width: 100%;
-  // max-width: 400px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: $padding-medium;
+  gap: 2.5rem;
+  max-width: 30.25rem;
+  width: 100%;
+  margin: 0 auto;
 
-  .heading {
-    padding: 2rem 0;
-    padding-bottom: 0;
-    font-weight: 500;
-    @extend .h2-title;
-    text-align: center;
+  @include tablet {
+    gap: 3.5rem;
+  }
+
+  &__input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    font-size: 1rem;
+
+    @include tablet {
+      gap: 2rem;
+    }
   }
 
   .inputGroup {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     gap: 0.5rem;
-    width: 100%;
-    height: 6.5rem;
     position: relative;
-
-    @include desktop {
-      width: 100%;
-    }
 
     label {
       font-weight: $font-weight-regular;
-      font-size: 1.25rem;
       line-height: 1.5rem;
       color: $color-black;
-      width: 100%;
+      text-transform: capitalize;
     }
 
     input {
-      width: 100%;
-      height: 4.5rem;
-      background: $color-grey-light;
-      border-radius: 1.125rem;
-      border: none;
-      padding: 0.75rem;
-      font-size: 1rem;
+      height: 2.8125rem;
+      border-radius: 1rem;
+      background-color: #f5f5f5;
+      border: 0.5px solid #a8a8a8;
       font-family: $font-primary;
-      outline: none;
-      transition: all 0.3s ease-in-out;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
 
+      &:active,
       &:focus {
-        border: 2px solid $color-black;
+        outline: 1px solid $color-black;
       }
 
-      @include desktop {
-        width: 100%;
+      &.error {
+        border: 1px solid $color-red;
+        outline: 1px solid $color-red;
       }
     }
 
     .errorMessage {
-      // position: absolute;
-      // bottom: -1.5rem;
-      // left: 0;
-      font-size: 0.875rem;
-      // font-weight: $font-weight-medium;
-      // color: $color-red;
-      padding-right: 0.5rem;
-    }
+      position: absolute;
+      bottom: -1.125rem;
+      color: $color-red;
+      font-size: 0.75rem;
 
+      @include tablet {
+        font-size: 0.875rem;
+        bottom: -1.5rem;
+      }
+    }
     .pwErrorMessage {
-      // margin-top: 1rem !important;
-      position: unset;
-    }
-  }
+      bottom: 0;
+      top: 5rem;
 
-  .optionsGroup {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    align-items: center;
-    width: 100%;
-    font-size: 0.875rem;
-    color: $color-black;
-
-    .checkboxContainer {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-
-      input {
-        width: 1rem;
-        height: 1rem;
+      @include tablet {
+        top: 5.3125rem;
       }
     }
 
-    &__forgotPassword {
+    .forgotPassword {
+      align-self: flex-end;
       text-decoration: none;
       color: $link-hover-color;
       font-weight: $font-weight-medium;
-      font-size: 80%;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+
       &:hover {
         text-decoration: underline !important;
-        text-decoration-color: $link-hover-color !important;
       }
     }
   }
 
-  .message {
-    text-align: center;
-    @extend .body2;
-    color: $color-red;
+  .button {
+    span {
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+      text-transform: capitalize;
+    }
+
+    .icon {
+      filter: invert(1);
+    }
   }
 }

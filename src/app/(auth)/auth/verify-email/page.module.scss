@@ -5,131 +5,144 @@
 .verifyContainer {
   background: $color-red;
   color: $color-white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
+  margin-top: 4rem; // compensate for header
+  padding: 1.875rem 1rem;
   min-height: 100vh;
+  transition: all 0.3s ease-in-out;
 
   @include tablet {
-    flex-direction: row;
+    padding: 3rem 1.5rem;
+  }
+
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.875rem;
+
+    @include tablet {
+      flex-direction: row;
+      gap: 3rem;
+    }
+
+    @include desktop {
+      max-width: 90rem;
+      margin: 0 auto;
+    }
   }
 }
 
 // ✅ Left panel for branding & navigation
 .panelLeft {
-  width: 100%;
-  margin-top: calc(4rem + 2.8125rem);
-  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   @include tablet {
     flex-direction: column;
-    background: url("/assets/images/large-S-white-dropshad.svg");
-    height: fit-content;
-    background-size: calc(100% - 2rem) auto;
-    background-position: center;
-    background-repeat: no-repeat;
-    max-width: 29.5rem;
-    width: 40%;
-    height: 100vh;
-    justify-content: left;
-    align-items: center;
-    padding: $padding-medium;
-    gap: $padding-medium;
+    align-items: flex-start;
+    flex-shrink: 1;
+    max-height: 55rem;
+    gap: 6.25rem;
   }
 
   .backLink {
-    // margin-top: 3rem;
     display: flex;
-    align-content: center;
-    align-self: flex-start;
-    // @extend .link;
-    margin-bottom: $padding-small;
-    img {
-      margin-right: 0.5rem;
-      filter: brightness(0) invert(1); // Makes the arrow white on hover
-    }
-  }
-
-  .backLink:hover {
-    opacity: 0.6;
-  }
-
-  .title {
-    @extend .h2-title;
-    text-align: center;
+    align-items: center;
+    gap: 0.25rem;
+    position: relative;
+    margin-left: 0.625rem;
 
     @include tablet {
-      text-align: left;
+      font-size: 1.25rem;
+    }
+
+    img {
+      filter: brightness(0) invert(1);
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      font-size: 1.7rem;
+      font-weight: 400;
+      opacity: 0;
+      transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+
+      @include tablet {
+        font-size: 2rem;
+      }
+    }
+
+    &::before {
+      content: "[";
+      left: -0.875rem;
+      top: 0.6563rem;
+      transform: translateY(-50%);
+    }
+
+    &::after {
+      content: "]";
+      right: -0.875rem;
+      top: 0.6563rem;
+      transform: translateY(-50%);
+    }
+
+    &:hover::before,
+    &:hover::after {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.1);
     }
   }
   &__img {
-    width: 4.0625rem;
-    height: 2.8125rem;
+    width: 3rem;
+    height: auto;
+
     @include tablet {
-      display: none;
+      width: 100%;
+      max-width: 35.625rem;
     }
   }
 }
 
 // ✅ Right panel for verification message
 .panelRight {
-  width: 100%;
+  padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: $padding-medium;
+  gap: 2.5rem;
+  max-width: 40.125rem;
+  width: 100%;
+  margin: 0 auto;
 
   @include tablet {
-    width: 60%;
+    padding: 3.5rem 2rem;
+    gap: 4.5rem;
+    flex-grow: 1;
+    height: max-content;
   }
 
-  @include desktop {
-    width: 100%;
-    max-width: 60.5rem;
-    padding: 0 $padding-xl;
+  .heading {
+    text-align: center;
   }
 }
 
 // ✅ Verification message styling
 .verifyMessage {
-  color: $color-white;
-  width: 100%;
-  max-width: 25rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: $padding-medium;
+  gap: 1.5rem;
+  max-width: 30.25rem;
+  width: 100%;
+  margin: 0 auto;
 
-  @include desktop {
-    width: 100%;
-    max-width: none;
-  }
-
-  .heading {
-    color: $color-white;
-    @extend .h2-title;
-    text-align: center;
+  @include tablet {
+    gap: 2rem;
   }
 
   .message {
     @extend .body1;
     color: $color-white;
-  }
-
-  .errorMessage {
-    color: $color-red;
-    font-weight: $font-weight-medium;
-  }
-
-  .buttonContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: $padding-medium;
+    text-align: center;
   }
 }

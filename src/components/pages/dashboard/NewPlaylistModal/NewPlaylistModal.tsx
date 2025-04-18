@@ -88,6 +88,7 @@ export default function NewPlaylistModal({
               setIsOpen(false);
               setIsOpenNewPlaylistModal(false);
             }}
+            disabled={isSaving}
             aria-label="Close add to new playlist modal"
           >
             <Image src={closeIcon} alt="" className={styles.header__icon} />
@@ -124,6 +125,7 @@ export default function NewPlaylistModal({
           <div className={styles["form__button-container"]}>
             <Button
               variant="text"
+              disabled={isSaving}
               onClick={() => {
                 setIsOpen(false);
                 setIsOpenNewPlaylistModal(false);

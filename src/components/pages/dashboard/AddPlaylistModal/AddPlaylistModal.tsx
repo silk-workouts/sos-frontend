@@ -169,6 +169,7 @@ export default function AddPlaylistModal({
               <button
                 className={styles.button}
                 onClick={() => setIsOpen(false)}
+                disabled={isSaving}
                 aria-label="Close Add To Playlist Modal"
               >
                 <Image
