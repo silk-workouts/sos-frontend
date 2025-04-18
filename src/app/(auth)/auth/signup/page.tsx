@@ -205,7 +205,10 @@ export default function SignupPage() {
                   <span>Signing up...</span>
                 </span>
               ) : (
-                <span> Sign Up</span>
+                <span style={{ color: "white", fontWeight: "600" }}>
+                  {" "}
+                  Sign Up
+                </span>
               )}
             </Button>
           </form>

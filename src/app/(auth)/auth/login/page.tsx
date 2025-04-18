@@ -196,7 +196,9 @@ export default function LoginPage() {
                   <span>Logging in...</span>
                 </span>
               ) : (
-                <span>Log In</span>
+                <span style={{ color: "white", fontWeight: "600" }}>
+                  Log In
+                </span>
               )}
             </Button>
           </form>

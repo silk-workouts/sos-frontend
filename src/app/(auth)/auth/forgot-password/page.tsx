@@ -134,7 +134,9 @@ export default function ForgotPasswordPage() {
                   <span>Sending...</span>
                 </span>
               ) : (
-                <span>Send Reset Link</span>
+                <span style={{ color: "white", fontWeight: "600" }}>
+                  Send Reset Link
+                </span>
               )}
             </Button>
             {errors.general && <p className={styles.error}>{errors.general}</p>}
