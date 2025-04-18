@@ -10,7 +10,7 @@ interface LibraryContentProps {
   playlists?: Playlist[];
   savedPrograms?: SavedProgram[];
   refreshSavedPrograms?: () => void;
-  type: "myFormula" | "program";
+  type: "myWorkout" | "program";
 }
 
 export default function LibraryPageContent({
@@ -35,18 +35,18 @@ export default function LibraryPageContent({
   ];
 
   if (
-    (type === "myFormula" && playlists.length === 0) ||
+    (type === "myWorkout" && playlists.length === 0) ||
     (type === "program" && savedPrograms.length === 0)
   ) {
     return (
       <div className={styles.empty}>
         <p className={styles.empty__title}>
-          {type === "myFormula" && playlists.length === 0
-            ? "Build your Silk formula"
+          {type === "myWorkout" && playlists.length === 0
+            ? "Build your Silk Workout"
             : "You haven't saved any 100% Prescription Programs yet"}
         </p>
 
-        {type === "myFormula" && playlists.length === 0 ? (
+        {type === "myWorkout" && playlists.length === 0 ? (
           <p className={styles.empty__message}>
             Save the videos that challenge you. That push you. That move you.
             This is where it begins.

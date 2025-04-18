@@ -246,8 +246,11 @@ const ProfilePage: React.FC = () => {
         <div className={styles.profile__editFormWrap}>
           <form className={styles.profile__form} onSubmit={handleSaveProfile}>
             <div className={styles.profile__inputGroup}>
-              <label className={styles.profile__label}>Name</label>
+              <label htmlFor="name" className={styles.profile__label}>
+                Name
+              </label>
               <input
+                id="name"
                 type="text"
                 className={styles.profile__input}
                 value={tempName}
@@ -256,8 +259,11 @@ const ProfilePage: React.FC = () => {
             </div>
 
             <div className={styles.profile__inputGroup}>
-              <label className={styles.profile__label}>Age</label>
+              <label htmlFor="age" className={styles.profile__label}>
+                Age
+              </label>
               <input
+                id="age"
                 type="number"
                 min={0}
                 className={styles.profile__input}
@@ -270,8 +276,11 @@ const ProfilePage: React.FC = () => {
             </div>
 
             <div className={styles.profile__inputGroup}>
-              <label className={styles.profile__label}>Location</label>
+              <label htmlFor="location" className={styles.profile__label}>
+                Location
+              </label>
               <input
+                id="location"
                 type="text"
                 className={styles.profile__input}
                 value={tempLocation}
@@ -280,8 +289,11 @@ const ProfilePage: React.FC = () => {
             </div>
 
             <div className={styles.profile__inputGroup}>
-              <label className={styles.profile__label}>Gender</label>
+              <label htmlFor="gender" className={styles.profile__label}>
+                Gender
+              </label>
               <select
+                id="gender"
                 className={styles.profile__input}
                 value={tempGender}
                 onChange={(e) => setTempGender(e.target.value)}
@@ -295,8 +307,11 @@ const ProfilePage: React.FC = () => {
             </div>
 
             <div className={styles.profile__inputGroup}>
-              <label className={styles.profile__label}>Fitness Level</label>
+              <label htmlFor="fitness" className={styles.profile__label}>
+                Fitness Level
+              </label>
               <select
+                id="fitness"
                 className={styles.profile__input}
                 value={tempFitnessLevel}
                 onChange={(e) => setTempFitnessLevel(e.target.value)}
