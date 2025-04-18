@@ -22,9 +22,13 @@
 }
 
 h1.authForm {
-  font-size: 2.25rem !important;
+  font-size: 2rem !important;
   font-weight: 500 !important;
   padding-bottom: unset !important;
+
+  @include tablet {
+    font-size: 3rem !important;
+  }
 }
 
 .homehero {
@@ -49,10 +53,10 @@ h1.authForm {
 
 .heroTitle {
   width: 90%;
-  max-width: 671px;
+  max-width: 41.9375rem;
   font-style: normal;
   font-weight: 400;
-  font-size: clamp(48px, 8vw, 96px);
+  font-size: clamp(3rem, 8vw, 6rem);
   line-height: 1.2;
   text-transform: uppercase;
   color: $color-white;
@@ -210,5 +214,5 @@ h1.authForm {
 .errorMessage {
   color: $color-red;
   font-weight: $font-weight-medium;
-  font-size: 14px;
+  font-size: 0.875rem;
 }

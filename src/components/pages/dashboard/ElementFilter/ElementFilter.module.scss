@@ -2,43 +2,55 @@
 @use "@/styles/partials/mixins" as *;
 
 .list {
-	list-style-type: none;
-	display: flex;
-	flex-flow: row wrap;
-	gap: 0.5rem;
-	padding: 1.5rem 0 1rem;
+  list-style-type: none;
+  display: flex;
+  overflow-x: scroll;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 0 1rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
-	@include desktop {
-		padding: 2rem 0 1rem;
-	}
+  @include desktop {
+    padding: 2rem 0 1rem;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .item {
-	font-size: 0.875rem;
-	text-transform: capitalize;
-	padding: 0.25rem 0.5rem;
-	border: 1px solid $color-black;
-	border-radius: 1rem;
-	min-width: max-content;
-	cursor: pointer;
+  font-size: 0.875rem;
+  text-transform: capitalize;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid $color-black;
+  border-radius: 1rem;
+  min-width: max-content;
+  cursor: pointer;
 
-	@include tablet {
-		padding: 0.375rem 0.625rem;
+  @include tablet {
+    padding: 0.375rem 0.625rem;
 
-		&:hover {
-			border-color: $color-red;
-			color: $color-red;
-		}
-	}
+    &:hover {
+      border-color: $color-red;
+      color: $color-red;
+    }
+  }
 
-	&--selected {
-		border-color: $color-red;
-		font-weight: $font-weight-extrabold;
-		background-color: $color-red;
-		color: $color-white;
+  &--selected {
+    border-color: $color-red;
+    font-weight: $font-weight-extrabold;
+    background-color: $color-red;
+    color: $color-white;
 
-		&:hover {
-			color: $color-white;
-		}
-	}
+    &:hover {
+      color: $color-white;
+    }
+  }
+}
+
+.button {
+  font-size: 0.875rem;
+  min-width: max-content;
 }

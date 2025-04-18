@@ -2,39 +2,39 @@
 @use "@/styles/partials/mixins" as *;
 
 .container {
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 24px;
+  max-width: 31.25rem;
+  margin: 2.5rem auto;
+  padding: 1.5rem;
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .imageWrapper {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .image {
-  border-radius: 8px;
+  border-radius: 0.5rem;
   max-width: 100%;
   height: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.2);
 }
 
 .title {
   font-size: 1.8rem;
   font-weight: bold;
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
 .description {
   color: #666;
   font-size: 1rem;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 // .subscribeButton:disabled {
@@ -46,7 +46,7 @@
 }
 
 .actions {
-  margin-top: 10px;
+  margin-top: 0.625rem;
   display: flex;
   flex-direction: column;
 

@@ -7,7 +7,7 @@ export function isValidName(name: string): boolean {
 }
 
 export function isValidAge(age: number | undefined): boolean {
-  return age !== undefined && age >= 0 && age <= 120 && Number.isInteger(age);
+  return age !== undefined && age >= 13 && age <= 120 && Number.isInteger(age);
 }
 
 export function isValidLocation(location: string): boolean {
@@ -15,7 +15,7 @@ export function isValidLocation(location: string): boolean {
 }
 
 export function isValidGender(gender: string): boolean {
-  return ["male", "female", "other"].includes(gender);
+  return ["male", "female", "non-binary", "prefer not to say"].includes(gender);
 }
 
 export function isValidFitnessLevel(level: string): boolean {

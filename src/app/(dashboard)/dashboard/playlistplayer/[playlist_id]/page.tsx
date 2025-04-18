@@ -5,6 +5,7 @@ import Image from "next/image";
 import Player from "@vimeo/player";
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useParams, useRouter } from "next/navigation";
+import loadingSpinner from "/public/assets/gifs/spinner.svg";
 import backArrowIcon from "/public/assets/icons/arrow-left.svg";
 import { Playlist, usePlaylists } from "../../context/PlaylistContext";
 import { PlaylistVideo } from "../../library/[playlist_id]/page";
@@ -223,7 +224,18 @@ export default function PlaylistPlayerPage() {
     }
   }
 
-  if (!playlist || !activeVideo) return <div>Loading...</div>;
+  if (!playlist || !activeVideo)
+    return (
+      <div className={styles.loading}>
+        <Image
+          src={loadingSpinner}
+          alt={`Playlist videos are loading`}
+          width={36}
+          height={36}
+          className={styles.spinner}
+        />
+      </div>
+    );
 
   const activeVideoPosition =
     videos.findIndex((video) => video.id === activeVideo.id) + 1;
