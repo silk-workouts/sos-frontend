@@ -259,5 +259,10 @@
     .icon {
       filter: invert(1);
     }
+
+    &__buttonText {
+      color: $color-white;
+      font-weight: 600;
+    }
   }
 }
