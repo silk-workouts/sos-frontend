@@ -122,6 +122,11 @@
       margin: 0 auto;
     }
   }
+
+  &__tagline {
+    font-weight: 500;
+    text-shadow: 0 0 1px black;
+  }
 }
 
 .content {

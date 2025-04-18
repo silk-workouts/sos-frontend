@@ -2,79 +2,98 @@
 @use "@/styles/partials/mixins" as *;
 
 .dialog-container {
-	position: fixed;
-	inset: 0;
-	z-index: 2000;
-	background-color: rgba($color-black, 0.25);
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  animation: fadeIn 0.2s forwards ease-out;
 
-	@include tablet {
-		position: absolute;
-		top: 1.875rem;
-		right: 0;
-		bottom: unset;
-	}
+  @include tablet {
+    position: absolute;
+    top: 1.875rem;
+    right: 0;
+    bottom: unset;
+  }
+
+  @keyframes fadeIn {
+    from {
+      background-color: rgba($color-black, 0);
+    }
+    to {
+      background-color: rgba($color-black, 0.25);
+    }
+  }
 }
 
 .dialog {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	list-style: none;
-	border-radius: 1rem 1rem 0 0;
-	background-color: $color-white;
+  position: fixed;
+  right: 0;
+  left: 0;
+  list-style: none;
+  border-radius: 1rem 1rem 0 0;
+  background-color: $color-white;
+  animation: slideIn 0.3s forwards ease;
 
-	@include tablet {
-		position: absolute;
-		top: 0;
-		left: unset;
-		bottom: unset;
-		z-index: 2000;
-		box-shadow: 0px 0px 7.7px 0px rgba($color-black, 0.1);
-		border-radius: 1rem;
-	}
+  @keyframes slideIn {
+    from {
+      bottom: -100%;
+    }
+    to {
+      bottom: 0;
+    }
+  }
 
-	&__option {
-		cursor: pointer;
+  @include tablet {
+    position: absolute;
+    top: 0;
+    left: unset;
+    bottom: unset;
+    z-index: 2000;
+    box-shadow: 0px 0px 10px 0px rgba($color-black, 0.2);
+    border-radius: 1rem;
+    animation: unset;
+  }
 
-		&:hover {
-			background-color: rgb(223, 222, 222);
-		}
+  &__option {
+    cursor: pointer;
 
-		&:first-child {
-			border-radius: 1rem 1rem 0 0;
-		}
+    &:hover {
+      background-color: rgb(223, 222, 222);
+    }
 
-		&:last-child {
-			@include tablet {
-				border-radius: 0 0 1rem 1rem;
-			}
-		}
+    &:first-child {
+      border-radius: 1rem 1rem 0 0;
+    }
 
-		.tablet {
-			display: none;
+    &:last-child {
+      @include tablet {
+        border-radius: 0 0 1rem 1rem;
+      }
+    }
 
-			@include tablet {
-				display: unset;
-			}
-		}
-	}
+    .tablet {
+      display: none;
+
+      @include tablet {
+        display: unset;
+      }
+    }
+  }
 }
 
 .option__button {
-	font-family: $font-primary;
-	background-color: transparent;
-	border: none;
-	padding: $padding-small;
-	cursor: pointer;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	color: $color-black;
-	font-size: 1rem;
+  font-family: $font-primary;
+  background-color: transparent;
+  border: none;
+  padding: $padding-small;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $color-black;
+  font-size: 1rem;
 
-	@include tablet {
-		padding-right: 2rem;
-	}
+  @include tablet {
+    padding-right: 2rem;
+  }
 }

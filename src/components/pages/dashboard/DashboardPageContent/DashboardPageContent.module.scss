@@ -2,18 +2,18 @@
 @use "@/styles/partials/mixins" as *;
 
 .list {
-	list-style: none;
+  list-style: none;
 }
 
 .listItem {
-	padding: 1.5rem 0;
-	border-bottom: 1px solid rgb(202, 202, 202);
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #a8a8a8;
 
-	&:last-child {
-		border: none;
-	}
+  &:last-child {
+    border: none;
+  }
 
-	@include desktop {
-		padding: 3rem 0;
-	}
+  @include desktop {
+    padding: 3rem 0;
+  }
 }

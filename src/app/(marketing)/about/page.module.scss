@@ -23,7 +23,7 @@
 
     @include tablet {
       padding-left: 10%;
-      height: 783px;
+      height: 48.9375rem;
     }
 
     &__title {
@@ -76,13 +76,13 @@
   .accentImage {
     width: 100%;
     height: auto;
-    max-width: 420px;
+    max-width: 26.25rem;
     transition: all 0.3s ease-in-out;
 
     @include tablet {
       width: 50%;
       height: auto;
-      max-width: 550px;
+      max-width: 34.375rem;
     }
   }
 
@@ -93,11 +93,11 @@
     transition: all 0.3s ease-in-out;
 
     @include tablet {
-      height: 348px;
+      height: 21.75rem;
     }
 
     @include desktop {
-      height: 592px;
+      height: 37rem;
     }
 
     img {
@@ -151,7 +151,7 @@
         height: 50%;
       }
       @include desktop {
-        max-width: 550px;
+        max-width: 34.375rem;
       }
     }
   }

@@ -2,33 +2,48 @@ import { NextRequest, NextResponse } from "next/server";
 import { edgeDb } from "@/lib/edge-db";
 
 export async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  // ✅ Skip auth routes manually
+  if (pathname.startsWith("/auth")) {
+    return NextResponse.next();
+  }
+
   const token = req.headers
     .get("cookie")
     ?.split("; ")
     .find((c) => c.startsWith("auth_token="))
     ?.split("=")[1];
 
+  const res = NextResponse.next();
+
   if (!token) {
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+    const redirectRes = NextResponse.redirect(new URL("/auth/login", req.url));
+    redirectRes.cookies.set("is_paid_user", "false", { path: "/" });
+    return redirectRes;
   }
 
   try {
     const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/verify-token`;
 
-    const res = await fetch(verifyUrl, {
-      method: "GET", // Use GET method to align with the verify-token route
+    const verifyRes = await fetch(verifyUrl, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Cookie: `auth_token=${token}`,
       },
-      credentials: "include", // Ensure cookies are sent
+      credentials: "include",
     });
 
-    if (!res.ok) {
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+    if (!verifyRes.ok) {
+      const redirectRes = NextResponse.redirect(
+        new URL("/auth/login", req.url)
+      );
+      redirectRes.cookies.set("is_paid_user", "false", { path: "/" });
+      return redirectRes;
     }
 
-    const { userId } = await res.json();
+    const { userId } = await verifyRes.json();
 
     const result = await edgeDb.execute(
       "SELECT is_paid_user FROM users WHERE id = ?",
@@ -39,35 +54,41 @@ export async function middleware(req: NextRequest) {
     const user = rows.length > 0 ? rows[0] : undefined;
 
     if (!user) {
-      console.log("❌ No user found in database, redirecting to login...");
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      const redirectRes = NextResponse.redirect(
+        new URL("/auth/login", req.url)
+      );
+      redirectRes.cookies.set("is_paid_user", "false", { path: "/" });
+      return redirectRes;
     }
 
     const isPaidUser = Boolean(user.is_paid_user);
+    res.cookies.set("is_paid_user", String(isPaidUser), { path: "/" });
 
     const path = req.nextUrl.pathname;
 
     if (path.startsWith("/stripe/success")) {
-      return NextResponse.next();
+      return res;
     }
 
     if (!isPaidUser && path.startsWith("/dashboard")) {
       if (path !== "/dashboard/subscribe") {
-        console.log("🚫 User is not paid, redirecting to subscribe page...");
-        return NextResponse.redirect(new URL("/dashboard/subscribe", req.url));
-      } else {
-        console.log("🛑 Already on subscribe page, not redirecting.");
-        return NextResponse.next();
+        const redirectRes = NextResponse.redirect(
+          new URL("/dashboard/subscribe", req.url)
+        );
+        redirectRes.cookies.set("is_paid_user", "false", { path: "/" });
+        return redirectRes;
       }
     }
 
-    return NextResponse.next();
+    return res;
   } catch (error) {
     console.error("❌ Middleware error:", error);
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+    const redirectRes = NextResponse.redirect(new URL("/auth/login", req.url));
+    redirectRes.cookies.set("is_paid_user", "false", { path: "/" });
+    return redirectRes;
   }
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/account/:path*"], // Only match dashboard routes
+  matcher: ["/dashboard/:path*", "/account/:path*"],
 };

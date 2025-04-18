@@ -2,50 +2,50 @@
 @use "@/styles/partials/mixins" as *;
 
 .playlist {
-	padding: 0 0.5rem;
-	display: flex;
-	flex-direction: column;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
 
-	@include tablet {
-		padding: 0 1.5rem;
-	}
+  @include tablet {
+    padding: 0 1.5rem;
+  }
 
-	@include desktop {
-		border: 0.5px solid #b7b4b4;
-		border-radius: 0.625rem;
-		padding: 1rem 0 0;
-		margin-top: 72px;
-		max-height: 38.75rem;
-		overflow: hidden;
-	}
+  @include desktop {
+    border: 0.5px solid #a8a8a8;
+    border-radius: 0.625rem;
+    padding: 1rem 0 0;
+    margin-top: 4.5rem;
+    max-height: 38.75rem;
+    overflow: hidden;
+  }
 }
 
 .videoListTitle {
-	font-weight: 400;
-	font-size: 1.125rem;
-	margin-bottom: 1rem;
-	padding-left: 0.5rem;
+  font-weight: 400;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
 
-	@include tablet {
-		padding-left: 0;
-		margin-bottom: 1.25rem;
-	}
+  @include tablet {
+    padding-left: 0;
+    margin-bottom: 1.25rem;
+  }
 
-	@include desktop {
-		padding-left: 1rem;
-	}
+  @include desktop {
+    padding-left: 1rem;
+  }
 }
 
 .videoList {
-	list-style: none;
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	padding-bottom: 2rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 2rem;
 
-	@include desktop {
-		flex-grow: 1;
-		padding-bottom: 0;
-		overflow-y: scroll;
-	}
+  @include desktop {
+    flex-grow: 1;
+    padding-bottom: 0;
+    overflow-y: scroll;
+  }
 }

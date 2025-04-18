@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header/Header";
-import Footer from "@/components/layout/Footer/Footer";
+import AppLayoutShell from "@/components/layout/AppLayoutShell/AppLayoutShell";
+// import Header from "@/components/layout/Header/Header";
+// import Footer from "@/components/layout/Footer/Footer";
 import "@/styles/globals.scss";
 
 export const metadata: Metadata = {
@@ -13,10 +14,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isProd = process.env.NODE_ENV === "production";
+  // modify if site needs to track subdomains in the future
+  const isProd = process.env.NEXT_PUBLIC_APP_URL === "https://systemofsilk.com";
+
   return (
     <html lang="en">
       <head>
+        <meta name="version" content="1.0.0" />
         {isProd && (
           <>
             {/* <!-- Google tag (gtag.js) --> */}
@@ -38,10 +42,9 @@ export default function RootLayout({
         )}
       </head>
       <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <AppLayoutShell>{children}</AppLayoutShell>
         <div id="modal-root" />
+        {/* <Footer /> */}
       </body>
     </html>
   );

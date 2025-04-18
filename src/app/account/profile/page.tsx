@@ -7,7 +7,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import DeleteAccountModal from "./DeleteAccountModal";
 import Button from "@/components/ui/Button/Button";
 import {
@@ -121,7 +121,7 @@ const ProfilePage: React.FC = () => {
 
     // Validate inputs using utility functions
     if (!isValidAge(tempAge)) {
-      toast.error("Please enter a valid age between 0 and 120.");
+      toast.error("Please enter a valid age between 13 and 120");
       setIsLoading(false);
       return;
     }
@@ -207,9 +207,9 @@ const ProfilePage: React.FC = () => {
               <div
                 className={`${styles.profile__infoGroup} ${styles.profile__name}`}
               >
-                <h2 className={styles.profile__subheading}>
+                {/* <h2 className={styles.profile__subheading}>
                   Hey{name ? ` ${name}` : ""}!
-                </h2>
+                </h2> */}
                 <span className={styles.profile__label}>Name</span>
                 <p>{name || "silk system user"}</p>
               </div>
@@ -246,8 +246,11 @@ const ProfilePage: React.FC = () => {
         <div className={styles.profile__editFormWrap}>
           <form className={styles.profile__form} onSubmit={handleSaveProfile}>
             <div className={styles.profile__inputGroup}>
-              <label className={styles.profile__label}>Name</label>
+              <label htmlFor="name" className={styles.profile__label}>
+                Name
+              </label>
               <input
+                id="name"
                 type="text"
                 className={styles.profile__input}
                 value={tempName}
@@ -256,21 +259,28 @@ const ProfilePage: React.FC = () => {
             </div>
 
             <div className={styles.profile__inputGroup}>
-              <label className={styles.profile__label}>Age</label>
+              <label htmlFor="age" className={styles.profile__label}>
+                Age
+              </label>
               <input
+                id="age"
                 type="number"
                 min={0}
                 className={styles.profile__input}
                 value={tempAge ?? ""}
-                onChange={(e) =>
-                  setTempAge(parseInt(e.target.value, 10) || undefined)
-                }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setTempAge(value === "" ? undefined : Number(value));
+                }}
               />
             </div>
 
             <div className={styles.profile__inputGroup}>
-              <label className={styles.profile__label}>Location</label>
+              <label htmlFor="location" className={styles.profile__label}>
+                Location
+              </label>
               <input
+                id="location"
                 type="text"
                 className={styles.profile__input}
                 value={tempLocation}
@@ -279,22 +289,29 @@ const ProfilePage: React.FC = () => {
             </div>
 
             <div className={styles.profile__inputGroup}>
-              <label className={styles.profile__label}>Gender</label>
+              <label htmlFor="gender" className={styles.profile__label}>
+                Gender
+              </label>
               <select
+                id="gender"
                 className={styles.profile__input}
                 value={tempGender}
                 onChange={(e) => setTempGender(e.target.value)}
               >
                 <option value="">Select...</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="male">male</option>
+                <option value="female">female</option>
+                <option value="non-binary">non-binary</option>
+                <option value="prefer not to say">prefer not to say</option>
               </select>
             </div>
 
             <div className={styles.profile__inputGroup}>
-              <label className={styles.profile__label}>Fitness Level</label>
+              <label htmlFor="fitness" className={styles.profile__label}>
+                Fitness Level
+              </label>
               <select
+                id="fitness"
                 className={styles.profile__input}
                 value={tempFitnessLevel}
                 onChange={(e) => setTempFitnessLevel(e.target.value)}
@@ -405,6 +422,7 @@ const ProfilePage: React.FC = () => {
           }}
         />
       )}
+      <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
     </div>
   );
 };

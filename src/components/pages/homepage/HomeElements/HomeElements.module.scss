@@ -2,107 +2,107 @@
 @use "@/styles/partials/_mixins" as *;
 
 .elements {
-	position: relative;
-	padding: 8rem 0;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	background-color: $color-red;
-	background: linear-gradient(360deg, #cc1e19 0%, #991613 100%);
+  position: relative;
+  padding: 8rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: $color-red;
+  background: linear-gradient(360deg, #cc1e19 0%, #991613 100%);
 
-	@include tablet {
-		border-radius: 24px;
-		padding: 5rem 9%;
-	}
+  @include tablet {
+    border-radius: 1.5rem;
+    padding: 5rem 9%;
+  }
 
-	@include desktop {
-		flex-direction: row;
-		padding: 95px 130px;
-	}
+  @include desktop {
+    flex-direction: row;
+    padding: 5.9375rem 8.125rem;
+  }
 
-	&__headingCont {
-		display: flex;
-		justify-content: center;
-		@include desktop {
-			display: block;
-		}
-		h2,
-		span.bold {
-			text-align: center;
-			color: $color-white;
-			@include desktop {
-				text-align: left;
-			}
-		}
-	}
+  &__headingCont {
+    display: flex;
+    justify-content: center;
+    @include desktop {
+      display: block;
+    }
+    h2,
+    span.bold {
+      text-align: center;
+      color: $color-white;
+      @include desktop {
+        text-align: left;
+      }
+    }
+  }
 
-	&__elementsBox {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 25px;
-	}
+  &__elementsBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5625rem;
+  }
 
-	.workout-description {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
-		position: relative;
-		@include tablet {
-			display: flex;
-			flex-direction: row;
-		}
+  .workout-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    @include tablet {
+      display: flex;
+      flex-direction: row;
+    }
 
-		.underline {
-			border-bottom: 2px solid $color-black;
-		}
-	}
+    .underline {
+      border-bottom: 2px solid $color-black;
+    }
+  }
 
-	&__elementsButton {
-		margin-top: 5rem;
-		align-self: center;
+  &__elementsButton {
+    margin-top: 5rem;
+    align-self: center;
 
-		&--hideMobile {
-			display: none;
+    &--hideMobile {
+      display: none;
 
-			@include desktop {
-				display: flex;
-			}
-		}
-		&--hideDesktop {
-			@include desktop {
-				display: none;
-			}
-		}
-	}
+      @include desktop {
+        display: flex;
+      }
+    }
+    &--hideDesktop {
+      @include desktop {
+        display: none;
+      }
+    }
+  }
 
-	@include mobile {
-		.workout-description {
-			width: 100%;
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			margin-top: $padding-medium;
-		}
-	}
+  @include mobile {
+    .workout-description {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: $padding-medium;
+    }
+  }
 
-	.element-container2 {
-		@include tablet {
-			display: block;
-			flex-direction: row;
-			justify-content: center;
-		}
-	}
+  .element-container2 {
+    @include tablet {
+      display: block;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
 
-	&__el {
-		width: 25%;
-		height: 25%;
+  &__el {
+    width: 25%;
+    height: 25%;
 
-		@include tablet {
-			max-width: 190px;
-		}
-	}
+    @include tablet {
+      max-width: 11.875rem;
+    }
+  }
 }

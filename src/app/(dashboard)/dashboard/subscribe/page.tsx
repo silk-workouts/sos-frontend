@@ -53,10 +53,7 @@ export default function SubscribePage() {
         >
           Account
         </Link>
-        <Link
-          href="/account/profile"
-          className={`${styles.actions__link} link--emphasis`}
-        >
+        <Link href="/" className={`${styles.actions__link} link--emphasis`}>
           Main Site
         </Link>
       </div>

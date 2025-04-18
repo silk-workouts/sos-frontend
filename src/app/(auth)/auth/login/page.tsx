@@ -4,186 +4,207 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import leftArrow from "public/assets/icons/arrow-left.svg";
 import whiteS from "public/assets/images/large-S-white-dropshad.svg";
+import loadingSpinner from "/public/assets/gifs/spinner.svg";
 import { Toaster, toast } from "react-hot-toast";
 import {
-	isValidEmail,
-	isValidPassword,
-	sanitizeEmail,
-	sanitizePassword,
+  isValidEmail,
+  isValidPassword,
+  sanitizeEmail,
+  sanitizePassword,
 } from "src/utils/authInputUtils";
 import Link from "next/link";
 import Button from "@/components/ui/Button/Button";
 import styles from "./page.module.scss";
 
 export default function LoginPage() {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [rememberMe, setRememberMe] = useState(false);
-	const [message, setMessage] = useState("");
-	const [errors, setErrors] = useState<{ [key: string]: string }>({});
-	const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const router = useRouter();
 
-	async function handleLogin(event: React.FormEvent) {
-		event.preventDefault();
+  async function handleLogin(event: React.FormEvent) {
+    event.preventDefault();
 
-		// Sanitize inputs
-		const sanitizedEmail = sanitizeEmail(email.trim());
-		const sanitizedPassword = sanitizePassword(password);
+    // Sanitize inputs
+    const sanitizedEmail = sanitizeEmail(email.trim());
+    const sanitizedPassword = sanitizePassword(password);
 
-		// Validate inputs
-		let newErrors: { [key: string]: string } = {};
-		if (!sanitizedEmail) newErrors.email = "⚠️ Email is required";
-		if (!sanitizedPassword) newErrors.password = "⚠️ Password is required";
+    // Validate inputs
+    const newErrors: { [key: string]: string } = {};
+    if (!sanitizedEmail) newErrors.email = "⚠️ Email is required";
+    if (!sanitizedPassword) newErrors.password = "⚠️ Password is required";
 
-		if (!isValidEmail(sanitizedEmail)) {
-			newErrors.email = "⚠️ Invalid email format";
-		}
+    if (!isValidEmail(sanitizedEmail)) {
+      newErrors.email = "⚠️ Incorrect email";
+    }
 
-		if (!isValidPassword(sanitizedPassword)) {
-			newErrors.password = "⚠️ Invalid password";
-		}
+    if (!isValidPassword(sanitizedPassword)) {
+      newErrors.password = "⚠️ Incorrect password";
+    }
 
-		if (Object.keys(newErrors).length > 0) {
-			setErrors(newErrors);
-			// toast.error("Please subit valid email and password.");
-			return;
-		}
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
-		setErrors({});
+    setErrors({});
 
-		try {
-			const res = await fetch("/api/auth/login", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					email: sanitizedEmail,
-					password: sanitizedPassword,
-				}),
-				credentials: "include",
-			});
+    try {
+      setIsLoggingIn(true);
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: sanitizedEmail,
+          password: sanitizedPassword,
+        }),
+        credentials: "include",
+      });
 
-			const data = await res.json();
+      const data = await res.json();
 
-			if (res.ok) {
-				toast.success("Login successful!");
+      if (res.ok) {
+        toast.success("Login successful!");
 
-				// Call /api/auth/verify-token after login
-				const verifyRes = await fetch("/api/auth/verify-token", {
-					method: "GET",
-					credentials: "include",
-				});
+        // Call /api/auth/verify-token after login
+        const verifyRes = await fetch("/api/auth/verify-token", {
+          method: "GET",
+          credentials: "include",
+        });
 
-				if (verifyRes.ok) {
-					setTimeout(() => {
-						router.push("/dashboard"); // Redirect after auth verification
-					}, 1000);
-				} else {
-					toast.error("❌ Auth verification failed after login.");
-					console.warn("❌ Auth verification failed after login.");
-				}
-			} else {
-				toast.error(data.error || "❌ Login failed.");
-				setErrors({ general: data.error || "Login failed" });
-			}
-		} catch (error) {
-			console.error("❌ Unexpected error:", error);
-			toast.error("An unexpected error occurred.");
-			setErrors({ general: "An unexpected error occurred." });
-		}
-	}
+        if (verifyRes.ok) {
+          setTimeout(() => {
+            router.push("/dashboard"); // Redirect after auth verification
+          }, 1000);
+        } else {
+          toast.error("❌ Auth verification failed after login.");
+          console.warn("❌ Auth verification failed after login.");
+        }
+      } else {
+        toast.error(data.error || "❌ Login failed.");
+        setErrors({ general: data.error || "Login failed" });
+      }
+    } catch (error) {
+      console.error("❌ Unexpected error:", error);
+      toast.error("An unexpected error occurred.");
+      setErrors({ general: "An unexpected error occurred." });
+    } finally {
+      setIsLoggingIn(false);
+    }
+  }
 
-	return (
-		<div className={styles.loginContainer}>
-			{/* ✅ Left panel with login options */}
-			<div className={styles.panelLeft}>
-				<div className={styles.panelLeft__navHeader}>
-					<Link href="/" className={styles.panelLeft__backLink}>
-						<Image src={leftArrow} alt="" aria-hidden="true" />
-						<span>Back to Site</span>
-					</Link>
+  return (
+    <div className={styles.loginContainer}>
+      <div className={styles["loginContainer-wrapper"]}>
+        {/* ✅ Left panel with login options */}
+        <div className={styles.panelLeft}>
+          <Link href="/" className={styles.panelLeft__backLink}>
+            <Image src={leftArrow} alt="" aria-hidden="true" />
+            <span>Back to Site</span>
+          </Link>
 
-					<Image
-						className={styles.panelLeft__img}
-						src={whiteS}
-						alt="small S for silk logo"
-					/>
-				</div>
+          <Image
+            className={styles.panelLeft__img}
+            src={whiteS}
+            alt="small S for silk logo"
+          />
+        </div>
 
-				{/* <h1 className={styles.title}>Login</h1> */}
-			</div>
+        {/* ✅ Right panel containing the login form */}
+        <div className={styles.panelRight}>
+          <div className={styles.panelRight__header}>
+            <h1 className="authForm">Welcome Back!</h1>
+            <p className={styles.panelRight__subtitle}>
+              <span> Don&#39;t have an account yet?</span>{" "}
+              <span>
+                <Link
+                  className={`link--emphasis ${styles.panelRight__signupLink}`}
+                  href="/auth/signup"
+                >
+                  Sign up
+                </Link>
+              </span>
+            </p>
+          </div>
+          <form onSubmit={handleLogin} className={styles.loginForm}>
+            <div className={styles["loginForm__input-container"]}>
+              {/* ✅ Email input field */}
+              <div className={styles.inputGroup}>
+                <label htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  type="tex†"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setErrors({ ...errors, email: "" });
+                  }}
+                  className={errors.email ? styles.error : ""}
+                />
+                {errors.email && (
+                  <span className={styles.errorMessage}>{errors.email}</span>
+                )}
+              </div>
 
-			{/* ✅ Right panel containing the login form */}
-			<div className={styles.panelRight}>
-				<div className={styles.panelRight__wrap}>
-					<form onSubmit={handleLogin} className={styles.loginForm}>
-						<h1 className={`${styles.heading} authForm`}>Welcome Back!</h1>
-						<p className={styles.panelRight__subtitle}>
-							Don’t have an account yet?{" "}
-						</p>
-						<Link
-							className={`link--emphasis ${styles.panelRight__signupLink}`}
-							href="/auth/signup"
-						>
-							Sign up now
-						</Link>
-						{/* ✅ Email input field */}
-						<div className={styles.inputGroup}>
-							<label>Email Address</label>
-							<input
-								type="tex†"
-								placeholder="Enter your email"
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-							/>
-							{errors.email && (
-								<span className={styles.errorMessage}>{errors.email}</span>
-							)}
-						</div>
+              {/* ✅ Password input field */}
+              <div className={styles.inputGroup}>
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setErrors({ ...errors, password: "" });
+                  }}
+                  className={errors.password ? styles.error : ""}
+                />
+                {errors.password && (
+                  <span
+                    className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
+                  >
+                    {errors.password}
+                  </span>
+                )}
+                <Link
+                  href="/auth/forgot-password"
+                  className={`link--emphasis ${styles.forgotPassword}`}
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            </div>
 
-						{/* ✅ Password input field */}
-						<div className={styles.inputGroup}>
-							<label>Password</label>
-							<input
-								type="password"
-								placeholder="Enter your password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-							/>
-							{errors.password && (
-								<span
-									className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
-								>
-									{errors.password}
-								</span>
-							)}
-						</div>
-
-						{/* ✅ Remember me and forgot password options */}
-						<div className={styles.optionsGroup}>
-							<label className={styles.checkboxContainer}>
-								<input
-									type="checkbox"
-									checked={rememberMe}
-									onChange={() => setRememberMe(!rememberMe)}
-								/>
-								Remember me
-							</label>
-							<Link
-								href="/auth/forgot-password"
-								className={`link--emphasis ${styles.optionsGroup__forgotPassword}`}
-							>
-								Forgot password?
-							</Link>
-						</div>
-
-						<Button type="submit">Log In</Button>
-
-						{/* ✅ Display messages */}
-						<p className={styles.message}>{message}</p>
-					</form>
-				</div>
-			</div>
-			<Toaster position="top-center" toastOptions={{ duration: 5000 }} />
-		</div>
-	);
+            <Button
+              type="submit"
+              disabled={isLoggingIn}
+              className={styles.button}
+            >
+              {" "}
+              {isLoggingIn ? (
+                <span>
+                  <Image
+                    src={loadingSpinner}
+                    alt={`List of playlists is loading`}
+                    width={20}
+                    height={20}
+                    className={styles.icon}
+                  />
+                  <span className={styles.button__buttonText}>
+                    Logging in...
+                  </span>
+                </span>
+              ) : (
+                <span className={styles.button__buttonText}>Log In</span>
+              )}
+            </Button>
+          </form>
+        </div>
+        <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
+      </div>
+    </div>
+  );
 }
