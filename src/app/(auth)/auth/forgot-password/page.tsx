@@ -131,10 +131,10 @@ export default function ForgotPasswordPage() {
                     height={20}
                     className={styles.icon}
                   />
-                  <span>Sending...</span>
+                  <span className={styles.button_buttonText}>Sending...</span>
                 </span>
               ) : (
-                <span style={{ color: "white", fontWeight: "600" }}>
+                <span className={styles.button_buttonText}>
                   Send Reset Link
                 </span>
               )}

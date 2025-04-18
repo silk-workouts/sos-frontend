@@ -202,13 +202,12 @@ export default function SignupPage() {
                     height={20}
                     className={styles.icon}
                   />
-                  <span>Signing up...</span>
+                  <span className={styles.button_buttonText}>
+                    Signing up...
+                  </span>
                 </span>
               ) : (
-                <span style={{ color: "white", fontWeight: "600" }}>
-                  {" "}
-                  Sign Up
-                </span>
+                <span className={styles.button_buttonText}> Sign Up</span>
               )}
             </Button>
           </form>
