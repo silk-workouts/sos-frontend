@@ -89,9 +89,20 @@ export default function Testimonials() {
     return () => container.removeEventListener("scroll", checkScrollPosition);
   }, [scrollableContainerRef.current]);
 
-  const truncate = (str: string, max = 230) => {
-    if (str.length <= max) return str;
-    return str.slice(0, str.lastIndexOf(" ", max)) + "...";
+  const truncate = (text: string, max = 280) => {
+    if (text.length <= max) return text;
+
+    // Find the last period before or at the max length
+    const truncated = text.slice(0, max);
+    const lastPeriodIndex = truncated.lastIndexOf(".");
+
+    // If there's a period, return up to that (include the period)
+    if (lastPeriodIndex !== -1) {
+      return truncated.slice(0, lastPeriodIndex + 1);
+    }
+
+    // If no period found, fall back to just adding ellipsis
+    return truncated + "...";
   };
 
   return (
