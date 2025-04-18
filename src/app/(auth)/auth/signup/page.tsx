@@ -202,12 +202,12 @@ export default function SignupPage() {
                     height={20}
                     className={styles.icon}
                   />
-                  <span className={styles.button_buttonText}>
+                  <span className={styles.button__buttonText}>
                     Signing up...
                   </span>
                 </span>
               ) : (
-                <span className={styles.button_buttonText}> Sign Up</span>
+                <span className={styles.button__buttonText}> Sign Up</span>
               )}
             </Button>
           </form>
