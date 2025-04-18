@@ -143,7 +143,7 @@
   }
 
   &__signupLink {
-    font-weight: $font-weight-extrabold;
+    font-weight: $font-weight-extrabold !important;
     text-decoration: none;
     color: $link-hover-color;
 
