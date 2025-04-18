@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import axios, { isAxiosError } from "axios";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
@@ -73,7 +74,9 @@ export default function EditPlaylistModal({
     }
   }
 
-  return (
+  const modalRoot = document.getElementById("modal-root") || document.body;
+
+  return createPortal(
     <div
       className={styles["dialog-container"]}
       onClick={(event) => handleCloseModal(event)}
@@ -161,6 +164,7 @@ export default function EditPlaylistModal({
           </form>
         </article>
       </div>
-    </div>
+    </div>,
+    modalRoot
   );
 }
