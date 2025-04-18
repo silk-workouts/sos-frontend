@@ -228,3 +228,11 @@
     background-color: rgba($color-red, 0.1);
   }
 }
+
+.activeDetailVisible {
+  display: block;
+}
+
+.activeDetailHidden {
+  display: none;
+}

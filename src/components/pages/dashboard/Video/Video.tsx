@@ -102,7 +102,13 @@ export default function Video({
             type === "player" ? styles.player : ""
           }`}
         >
-          <Link href={path}>{chapterVideo.title.toLowerCase()}</Link>
+          <Link href={path}>
+            {chapterVideo.title
+              .toLowerCase()
+              .replace(/\brd\.\s*/gi, "round ")
+              .split(":")[0]
+              .trim()}
+          </Link>
         </h3>
 
         <button
