@@ -7,7 +7,6 @@ import profileIcon from "/public/assets/icons/profile.svg";
 import profile_filled from "/public/assets/icons/profile-fill.svg";
 import weightsIcon from "/public/assets/icons/weights.svg";
 import weights_filled from "/public/assets/icons/weights-fill.svg";
-// import logoIcon from "/public/assets/icons/s-single.svg";
 import logoIcon from "/public/assets/images/large-S.png";
 import { usePathname } from "next/navigation";
 import styles from "./Navigation.module.scss";
