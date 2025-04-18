@@ -5,7 +5,7 @@ import Link from "next/link";
 import axios from "axios";
 import { Suspense, useEffect, useState } from "react";
 import loadingSpinner from "/public/assets/gifs/spinner.svg";
-import logo from "/public/assets/images/logo.png";
+import logo from "/public/assets/images/large-S.png";
 import DashboardPageContent from "@/components/pages/dashboard/DashboardPageContent/DashboardPageContent";
 import styles from "./page.module.scss";
 

@@ -6,7 +6,7 @@ import LibraryPageContent from "@/components/pages/library/LibraryPageContent/Li
 import { usePlaylists } from "../context/PlaylistContext";
 import { useSavedPrograms } from "src/hooks/useSavedPrograms";
 import loadingSpinner from "/public/assets/gifs/spinner.svg";
-import logo from "/public/assets/images/logo.png";
+import logo from "/public/assets/images/large-S.png";
 import styles from "./page.module.scss";
 
 export default function Library() {
