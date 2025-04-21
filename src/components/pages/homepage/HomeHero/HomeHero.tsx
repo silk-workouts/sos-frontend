@@ -6,10 +6,12 @@ import { useRouter } from "next/navigation"; // For navigation
 import Logo from "public/assets/images/logo.png";
 import playIcon from "public/assets/images/play-white-50px.png";
 import pauseIcon from "public/assets/images/pause-white-50px.png";
+import loadingGif from "public/assets/gifs/sos-pulse-144w.gif";
 import styles from "./HomeHero.module.scss";
 
 export default function HomeHero() {
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
 
@@ -45,6 +47,7 @@ export default function HomeHero() {
           <Image src={playIcon} alt="Play" />
         )}
       </button>
+
       <video
         ref={videoRef}
         className={styles.hero__video}
@@ -54,8 +57,15 @@ export default function HomeHero() {
         loop
         playsInline
         aria-label="Background video of the System of Silk experience"
+        onWaiting={() => setIsLoading(true)}
+        onCanPlayThrough={() => setIsLoading(false)}
       />
-      <div className={styles.hero__overlay}>
+
+      <div
+        className={`${styles.hero__overlay} ${
+          !isLoading ? styles.visible : ""
+        }`}
+      >
         <div>
           <h1 className={`homehero_title ${styles.hero__title}`}>
             System of Silk

@@ -9,66 +9,66 @@ import twitterIcon from "/public/assets/icons/twitter.svg";
 import styles from "./Footer.module.scss";
 
 export default function Footer() {
-	const path = usePathname()!;
+  const path = usePathname()!;
 
-	if (
-		path.startsWith("/dashboard") ||
-		path.startsWith("/auth") ||
-		path.startsWith("/account ")
-	) {
-		return;
-	}
+  if (
+    path.startsWith("/dashboard") ||
+    path.startsWith("/auth") ||
+    path.startsWith("/account ")
+  ) {
+    return;
+  }
 
-	return (
-		<footer className={styles.footer}>
-			<div className={styles["footer-container"]}>
-				<nav aria-label="Footer" className={styles.nav}>
-					<ul className={styles.nav__list} role="list">
-						<li className={styles.nav__item} role="listitem">
-							<Link
-								href="/contact"
-								title="Customer Support"
-								id={styles.nav__link}
-							>
-								customer support
-							</Link>
-						</li>
-						<li className={styles.nav__item} role="listitem">
-							<Link
-								href="/privacy-policy"
-								title="Privacy Policy"
-								id={styles.nav__link}
-							>
-								privacy policy
-							</Link>
-						</li>
-						<li className={styles.nav__item} role="listitem">
-							<Link
-								href="/fitness-waiver"
-								title="Fitness Waiver"
-								id={styles.nav__link}
-							>
-								fitness waiver
-							</Link>
-						</li>
-					</ul>
-				</nav>
-				<div className={styles.socials}>
-					<a
-						href="https://www.instagram.com/aerospacenyc"
-						target="_blank"
-						title="Follow us on Instagram"
-						className={styles.socials__link}
-					>
-						<div className={styles["socials__icon-container"]}>
-							<Image
-								src={instagramIcon}
-								alt="Follow us on Instagram"
-								className={styles.socials__icon}
-							/>
-						</div>
-					</a>
-					<a
+  return (
+    <footer className={styles.footer}>
+      <div className={styles["footer-container"]}>
+        <nav aria-label="Footer" className={styles.nav}>
+          <ul className={styles.nav__list} role="list">
+            <li className={styles.nav__item} role="listitem">
+              <Link
+                href="/contact"
+                title="Customer Support"
+                id={styles.nav__link}
+              >
+                customer support
+              </Link>
+            </li>
+            <li className={styles.nav__item} role="listitem">
+              <Link
+                href="/privacy-policy"
+                title="Privacy Policy"
+                id={styles.nav__link}
+              >
+                privacy policy
+              </Link>
+            </li>
+            <li className={styles.nav__item} role="listitem">
+              <Link
+                href="/fitness-waiver"
+                title="Fitness Waiver"
+                id={styles.nav__link}
+              >
+                fitness waiver
+              </Link>
+            </li>
+          </ul>
+        </nav>
+        <div className={styles.socials}>
+          <a
+            href="https://www.instagram.com/systemofsilk"
+            target="_blank"
+            title="Follow us on Instagram"
+            className={styles.socials__link}
+          >
+            <div className={styles["socials__icon-container"]}>
+              <Image
+                src={instagramIcon}
+                alt="Follow us on Instagram"
+                className={styles.socials__icon}
+              />
+            </div>
+          </a>
+          {/* <a
 						href="https://x.com/Michaelolajide1"
 						target="_blank"
 						title="Follow us on Twitter"
@@ -96,19 +96,19 @@ export default function Footer() {
 								className={styles.socials__icon}
 							/>
 						</div>
-					</a>
-				</div>
-				<div className={styles["logo-container"]}>
-					<Link href="/">
-						<Image
-							src={logo}
-							alt="System of Silk logo"
-							className={styles.logo}
-						/>
-					</Link>
-					<span className={styles.copyright}>© 2025 all rights reserved</span>
-				</div>
-			</div>
-		</footer>
-	);
+					</a> */}
+        </div>
+        <div className={styles["logo-container"]}>
+          <Link href="/">
+            <Image
+              src={logo}
+              alt="System of Silk logo"
+              className={styles.logo}
+            />
+          </Link>
+          <span className={styles.copyright}>© 2025 all rights reserved</span>
+        </div>
+      </div>
+    </footer>
+  );
 }

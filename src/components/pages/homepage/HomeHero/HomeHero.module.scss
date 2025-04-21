@@ -4,8 +4,6 @@
 .hero {
   position: relative;
   width: 100%;
-
-  background-image: url("/assets/images/hero-background.jpg");
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -74,6 +72,8 @@
     height: auto; // Allow flexible height adjustment
     gap: $padding-xl;
     width: 100%;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
 
     @include mobile {
       position: relative; // Prevent absolute positioning on mobile
@@ -81,6 +81,10 @@
       left: unset;
       transform: none;
       gap: $padding-large;
+    }
+
+    &.visible {
+      opacity: 1;
     }
 
     img {
@@ -93,5 +97,8 @@
 
   &__title {
     color: $color-red;
+  }
+
+  &__spinner {
   }
 }
