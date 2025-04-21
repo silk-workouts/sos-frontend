@@ -226,7 +226,7 @@
 }
 
 .list {
-  padding: 0 0 $padding-large;
+  padding: 0 0 4.375rem;
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -234,6 +234,7 @@
 
   @include tablet {
     gap: 1.5rem;
+    padding-bottom: 4.875rem;
   }
 
   @include desktop {

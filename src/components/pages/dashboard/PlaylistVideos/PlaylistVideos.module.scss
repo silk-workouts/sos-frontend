@@ -2,7 +2,11 @@
 @use "@/styles/partials/mixins" as *;
 
 .videos {
-  padding-bottom: 1rem;
+  padding-bottom: 5.375rem;
+
+  @include tablet {
+    padding-bottom: 5.875rem;
+  }
 
   @include desktop {
     width: 100%;
