@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"; // For navigation
 import Logo from "public/assets/images/logo.png";
 import playIcon from "public/assets/images/play-white-50px.png";
 import pauseIcon from "public/assets/images/pause-white-50px.png";
-import loadingGif from "public/assets/gifs/sos-pulse-144w.gif";
 import styles from "./HomeHero.module.scss";
 
 export default function HomeHero() {
