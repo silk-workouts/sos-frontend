@@ -3,28 +3,32 @@
 
 .about {
   color: $color-white;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 2rem;
   background-color: $color-red;
-  flex-direction: column-reverse;
   padding: 3rem 1rem;
-  align-items: center;
   text-align: center;
 
   @include tablet {
-    flex-direction: row-reverse;
-    align-items: flex-end;
-    padding: $padding-medium;
-    align-items: center;
-    padding: 5rem $padding-medium;
+    padding: 5rem 1.5rem;
     text-align: left;
   }
 
-  @include desktop {
-    padding: 8rem 15%;
-    justify-content: space-around;
+  &--wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 2rem;
+
+    @include tablet {
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 5rem;
+    }
+
+    @include desktop {
+      justify-content: center;
+      max-width: $content-container-maximum;
+      margin: 0 auto;
+    }
   }
 
   &__imageContainer {
@@ -32,34 +36,28 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    gap: 1.5rem;
+    gap: 1.75rem;
 
     @include tablet {
-      width: 50%;
+      flex: 0.75;
+      max-width: 31.25rem;
     }
-
-    @include desktop {
-      align-items: flex-end;
-    }
-  }
-
-  &__imgWrap {
-    background-color: green;
   }
 
   &__image {
-    max-width: 100%;
+    width: 100%;
     height: auto;
     border-radius: $radius-1;
+    max-width: 25rem;
+
+    @include tablet {
+      max-width: unset;
+    }
   }
 
   &__mobileButton {
-    display: none; // Hidden by default
-
-    @include mobile {
-      display: flex;
-      justify-content: center;
-      margin-top: 1rem; // Space between image and button
+    @include tablet {
+      display: none;
     }
   }
 
@@ -70,10 +68,8 @@
     gap: 1.5rem;
 
     @include tablet {
-      width: 65%;
-    }
-    @include desktop {
-      width: 50%;
+      flex: 1.25;
+      max-width: 37.5rem;
     }
   }
 
@@ -97,12 +93,10 @@
     color: $color-white;
     text-transform: capitalize;
     text-align: center;
-
-    @include mobile {
-      margin-bottom: 0;
-    }
+    margin: 0;
 
     @include tablet {
+      margin: unset;
       text-align: left;
     }
   }
@@ -114,16 +108,17 @@
 
     @include tablet {
       text-align: left;
+      font-size: 1.25rem;
     }
   }
 
   &__desktopButton {
-    display: flex;
-    justify-content: flex-start;
+    display: none; // Hide on mobile to prevent duplication
     margin-top: $padding-medium;
 
-    @include mobile {
-      display: none; // Hide on mobile to prevent duplication
+    @include tablet {
+      display: flex;
+      justify-content: flex-start;
     }
   }
 }

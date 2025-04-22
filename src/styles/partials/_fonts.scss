@@ -5,18 +5,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap");
 
 // Font Styles
-.h1 {
-  font-size: $font-size-h1-mobile;
-  font-weight: $font-weight-regular;
-  line-height: 1.2;
-  color: $color-black;
-  transition: font-size 0.3s ease-in-out;
-
-  @include tablet {
-    font-size: $font-size-h1-desktop;
-  }
-}
-
 h1.authForm {
   font-size: 2rem !important;
   font-weight: 500 !important;
@@ -95,21 +83,6 @@ h1.authForm {
 .h2-title-white {
   @extend .h2-title;
   color: $color-white;
-}
-
-.h3 {
-  font-size: $font-size-h3-mobile;
-  font-weight: $font-weight-regular;
-  line-height: 1.2;
-  color: $color-black;
-  position: absolute;
-  top: $desktop-gutter;
-  left: $desktop-gutter * 3;
-  transition: font-size 0.3s ease-in-out;
-
-  @include tablet {
-    font-size: $font-size-h3-desktop;
-  }
 }
 
 .h3_title {
