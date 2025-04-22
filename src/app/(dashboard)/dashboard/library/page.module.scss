@@ -48,7 +48,7 @@
   gap: 1rem;
 
   @include desktop {
-    max-width: 90rem;
+    max-width: $content-container-maximum;
     margin: 0 auto;
   }
 }
@@ -82,7 +82,7 @@
 .content {
   @include desktop {
     padding: 0 1.5rem 0 10rem;
-    max-width: 103rem;
+    max-width: $content-container-maximum + 13rem;
     margin: 0 auto;
   }
 }

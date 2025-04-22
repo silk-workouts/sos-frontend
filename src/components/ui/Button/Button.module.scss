@@ -2,101 +2,111 @@
 @use "@/styles/partials/_mixins" as *;
 
 .button {
-	font-family: $font-primary;
-	font-weight: 600;
-	padding: 0.375rem 0.625rem;
-	border-radius: 0.75rem;
-	background-color: $color-red;
-	color: $color-white;
-	cursor: pointer;
-	border: none;
-	font-size: 1rem;
-	transition: background-color 0.3s ease, color 0.3s ease,
-		border-color 0.3s ease;
+  font-family: $font-primary;
+  font-weight: 600;
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.75rem;
+  background-color: $color-red;
+  color: $color-white;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 
-	&:hover {
-		box-shadow: 0px 0px 12.9px 0px $color-red;
+  &:hover {
+    box-shadow: 0px 0px 12.9px 0px $color-red;
 
-		.button__arrow {
-			transform: translateX(4px);
-		}
-	}
+    .button__arrow {
+      transform: translateX(4px);
+    }
+  }
 
-	@include tablet {
-		padding: 0.5rem 1rem;
-		font-size: 1.25rem;
-	}
+  @include tablet {
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+  }
 
-	&__arrow {
-		width: 1rem;
-		height: 1rem;
+  &__arrow {
+    width: 1rem;
+    height: 1rem;
 
-		@include tablet {
-			width: 1.5rem;
-			height: 1.5rem;
-		}
-	}
+    @include tablet {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
 
-	&--primary {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.25rem;
+  &--primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
 
-		@include tablet {
-			gap: 0.5rem;
-		}
-	}
+    @include tablet {
+      gap: 0.5rem;
+    }
+  }
 
-	&--tertiary {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.25rem;
-		background-color: $color-white;
-		color: $color-red;
+  &--tertiary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    background-color: $color-white;
+    color: $color-red;
 
-		&:hover {
-			box-shadow: 0px 0px 12.9px 0px $color-white;
-		}
+    &:hover {
+      box-shadow: 0px 0px 12.9px 0px $color-white;
+    }
 
-		@include tablet {
-			gap: 0.5rem;
-		}
-	}
+    @include tablet {
+      gap: 0.5rem;
+    }
+  }
 
-	&--text {
-		background-color: transparent;
-		color: $color-red;
+  &--text {
+    background-color: transparent;
+    color: $color-red;
 
-		&:hover {
-			box-shadow: none;
-		}
+    &:hover {
+      box-shadow: none;
+    }
 
-		@include tablet {
-			padding: 0.5rem 1rem;
-			font-size: 1.25rem;
-		}
-	}
+    @include tablet {
+      padding: 0.5rem 1rem;
+      font-size: 1.25rem;
+    }
+  }
 
-	&--homeHero {
-		padding: 0.7875rem 1.575rem;
-		display: flex;
-		align-items: center;
-		gap: 0.7875rem;
-		background-color: rgba($color-white, 0.8);
-		color: $color-red;
-		font-size: 2rem;
-		border-radius: 1.25rem;
-		font-weight: 400;
+  &--homeHero {
+    padding: 0.3937rem 0.7875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7875rem;
+    background-color: rgba($color-white, 0.8);
+    color: $color-red;
+    font-size: 1.575rem;
+    border-radius: 1.25rem;
+    font-weight: 400;
 
-		&:hover {
-			box-shadow: 0px 0px 12.9px 0px $color-white;
-		}
+    @include tablet {
+      font-size: 2rem;
+      padding: 0.7875rem 1.575rem;
+    }
 
-		.heroArrow {
-			width: 2.3625rem;
-			height: 2.3625rem;
-		}
-	}
+    &:hover {
+      box-shadow: 0px 0px 12.9px 0px $color-white;
+    }
+
+    .heroArrow {
+      width: 1.575rem;
+      height: 1.575rem;
+
+      @include tablet {
+        width: 2.3625rem;
+        height: 2.3625rem;
+      }
+    }
+  }
 }

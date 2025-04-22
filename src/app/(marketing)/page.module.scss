@@ -4,20 +4,6 @@
 .container {
   display: flex;
   flex-direction: column;
-  // align-items: center;
   justify-content: center;
   margin-top: 4rem;
-
-  @include mobile {
-    max-width: 100%;
-  }
-
-  @include tablet {
-    max-width: 100vw;
-  }
-
-  @include desktop {
-    max-width: $content-container-maximum;
-    margin: 0 auto;
-  }
 }

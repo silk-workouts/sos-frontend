@@ -4,21 +4,17 @@
 @use "@/styles/partials/_mixins" as *;
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap");
 
-// Colors
-.text__secondary--color {
-  color: $color-secondary;
-}
-
-.italic {
-  font-style: italic;
-}
-
 // Font Styles
 .h1 {
-  font-size: clamp($font-size-h1-mobile, 5vw, $font-size-h1-desktop);
+  font-size: $font-size-h1-mobile;
   font-weight: $font-weight-regular;
   line-height: 1.2;
   color: $color-black;
+  transition: font-size 0.3s ease-in-out;
+
+  @include tablet {
+    font-size: $font-size-h1-desktop;
+  }
 }
 
 h1.authForm {
@@ -34,20 +30,30 @@ h1.authForm {
 .homehero {
   &_title {
     font-weight: $font-weight-regular;
-    font-size: clamp($font-size-h1-mobile, 5vw, $font-size-h1-desktop);
+    font-size: $font-size-h1-mobile;
     line-height: 1.2;
     text-transform: uppercase;
     text-align: center;
+    transition: font-size 0.3s ease-in-out;
+
+    @include tablet {
+      font-size: $font-size-h1-desktop;
+    }
   }
 
   &_subtitle {
     font-weight: $font-weight-light;
-    font-size: clamp($font-size-h2-mobile, 4vw, $font-size-h2-desktop);
+    font-size: $font-size-h2-mobile;
     line-height: 1.2;
     letter-spacing: 0.25em;
     text-align: center;
     margin-top: $padding-base;
     color: $color-red;
+    transition: font-size 0.3s ease-in-out;
+
+    @include tablet {
+      font-size: $font-size-h2-desktop;
+    }
   }
 }
 
@@ -56,19 +62,30 @@ h1.authForm {
   max-width: 41.9375rem;
   font-style: normal;
   font-weight: 400;
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: 3rem;
   line-height: 1.2;
   text-transform: uppercase;
   color: $color-white;
   z-index: 2;
+  transition: font-size 0.3s ease-in-out;
+
+  @include tablet {
+    font-size: 6rem;
+  }
 }
 
 .h2-title {
-  font-size: clamp($font-size-h2-mobile, 4vw, $font-size-h2-desktop);
+  font-size: $font-size-h2-mobile;
   font-weight: $font-weight-light;
-  line-height: clamp(2.5rem, 4.5vw, 3.625rem);
+  line-height: 2.5rem;
   color: $color-black;
   padding-bottom: $padding-medium;
+  transition: all 0.3s ease-in-out;
+
+  @include tablet {
+    font-size: $font-size-h2-desktop;
+    line-height: 3.625rem;
+  }
 
   .bold {
     font-weight: $font-weight-extrabold;
@@ -76,143 +93,92 @@ h1.authForm {
 }
 
 .h2-title-white {
-  font-size: clamp($font-size-h2-mobile, 4vw, $font-size-h2-desktop);
-  font-weight: $font-weight-light;
-  line-height: clamp(2.5rem, 4.5vw, 3.625rem);
+  @extend .h2-title;
   color: $color-white;
-  padding-bottom: $padding-medium;
-
-  .bold {
-    font-weight: $font-weight-extrabold;
-  }
 }
 
 .h3 {
-  font-size: clamp($font-size-h3-mobile, 2vw, $font-size-h3-desktop);
+  font-size: $font-size-h3-mobile;
   font-weight: $font-weight-regular;
   line-height: 1.2;
   color: $color-black;
   position: absolute;
   top: $desktop-gutter;
   left: $desktop-gutter * 3;
+  transition: font-size 0.3s ease-in-out;
+
+  @include tablet {
+    font-size: $font-size-h3-desktop;
+  }
 }
 
 .h3_title {
   font-weight: $font-weight-medium;
-  font-size: clamp(1.25rem, 1.8vw, 1.25rem);
-  line-height: clamp(1.5rem, 2vw, 1.5rem);
+  font-size: 1rem;
   text-transform: uppercase;
-  padding-bottom: $padding-large;
   color: $color-black;
+  transition: font-size 0.3s ease-in-out;
 
   &--accent {
     color: $color-red;
+  }
+
+  @include tablet {
+    font-size: 1.25rem;
   }
 }
 
 .body1 {
   font-weight: $font-weight-regular;
-  font-size: clamp(0.9375rem, 1.5vw, 1.25rem);
-  line-height: clamp(1.75rem, 2vw, 2.25rem);
+  font-size: 0.9375rem;
+  line-height: 1.75rem;
   color: $color-black;
   padding-bottom: $padding-base;
+  transition: all 0.3s ease-in-out;
 
-  @include desktop {
-    font-size: 1.25;
+  @include tablet {
+    font-size: 1.25rem;
+    line-height: 2rem;
   }
 }
 
 .body1-white {
-  font-weight: $font-weight-regular;
-  font-size: clamp(0.9375rem, 1.5vw, 1.25rem);
-  line-height: clamp(1.75rem, 2vw, 2.25rem);
+  @extend .body1;
   color: $color-white;
-  padding-bottom: $padding-base;
-
-  @include desktop {
-    font-size: 1.25;
-  }
 }
 
 .body2 {
-  font-size: clamp($font-size-body2-mobile, 1.8vw, $font-size-body2-desktop);
+  font-size: $font-size-body2-mobile;
   font-weight: $font-weight-regular;
   color: $color-black;
-  line-height: clamp(1.75rem, 2vw, 2.25rem);
-}
+  line-height: 1.75rem;
+  transition: all 0.3s ease-in-out;
 
-.button {
-  font-size: clamp($font-size-button-mobile, 1.5vw, $font-size-button-desktop);
-  font-weight: $font-weight-regular;
-  text-transform: uppercase;
-  color: $button-text-color;
+  @include tablet {
+    font-size: $font-size-body2-desktop;
+    line-height: 2rem;
+  }
 }
 
 .link {
-  font-size: clamp($font-size-body2-mobile, 1.5vw, $font-size-body2-desktop);
+  font-size: $font-size-body2-mobile;
   font-weight: $font-weight-regular;
-  line-height: clamp(1.75rem, 2vw, 2.25rem);
+  line-height: 1.75rem;
   color: $link-color;
   text-decoration: none;
+  transition: all 0.3s ease-in-out;
+
+  @include tablet {
+    font-size: $font-size-body2-desktop;
+    line-height: 2rem;
+  }
 
   &:hover {
     color: $link-hover-color;
   }
 
   &--emphasis {
-    font-size: clamp($font-size-body2-mobile, 1.5vw, $font-size-body2-desktop);
-    font-weight: $font-weight-regular;
-    line-height: clamp(1.75rem, 2vw, 2.25rem);
+    @extend .link;
     color: $link-hover-color !important;
-    text-decoration: underline;
   }
-}
-
-.text-small {
-  font-size: 0.875rem;
-  text-transform: capitalize;
-  color: $color-black;
-}
-
-.slogan {
-  background: url(/assets/images/dumbbell.png);
-  height: 100vh;
-  min-height: 25.625rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 2.75rem;
-  font-size: 5.5rem;
-  font-family: "Montserrat", sans-serif;
-  overflow-x: hidden;
-
-  &__message {
-    width: max-content;
-    animation: adjust-position linear forwards;
-    animation-timeline: scroll(root block);
-
-    &--bottom {
-      animation-direction: reverse;
-    }
-  }
-
-  @keyframes adjust-position {
-    /* Start position: shift entire row left, but not so that it goes out of view */
-    from {
-      transform: translateX(calc(-100% + 100vw));
-    }
-
-    /* End position: shift entire row right, but not so that it goes out of view */
-    to {
-      transform: translateX(calc(100% - 100vw));
-    }
-  }
-}
-
-.inputError,
-.errorMessage {
-  color: $color-red;
-  font-weight: $font-weight-medium;
-  font-size: 0.875rem;
 }

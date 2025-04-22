@@ -60,8 +60,8 @@ export default function HomeHero() {
           <h1 className={`homehero_title ${styles.hero__title}`}>
             System of Silk
           </h1>
+          <Image src={Logo} alt="Logo" />
         </div>
-        <Image src={Logo} alt="Logo" />
         <Button variant="homeHero" onClick={handleNavigate}>
           Start 30-day free trial
         </Button>
