@@ -10,11 +10,16 @@
   flex-direction: column;
   width: 100%;
   max-width: 62.5rem;
-  margin: 3.75rem auto 4rem;
+  margin: 3.75rem auto 4.4375rem;
   padding: $padding-medium !important; // layout
 
+  @include tablet {
+    margin-bottom: 5rem;
+  }
+
   @include desktop {
-    margin-left: 167px;
+    margin-left: 10.4375rem;
+    margin-bottom: 0;
   }
 }
 
