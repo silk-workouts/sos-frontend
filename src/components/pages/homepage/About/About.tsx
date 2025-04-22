@@ -28,9 +28,7 @@ export default function About() {
           </Button>
         </div>
         <div className={styles.about__textContainer}>
-          <h3 className={`h3_title h3_title--accent ${styles.about__title}`}>
-            about
-          </h3>
+          <h3 className={`h3_title ${styles.about__title}`}>about</h3>
           <div className={styles.about__info}>
             <h4 className={`h2-title-white ${styles.about__subHeading}`}>
               <span className="bold">the godfather</span> of Boxing for Fitness
@@ -38,7 +36,7 @@ export default function About() {
             <p className={`body1-white ${styles.about__message}`}>
               Michael “Silk” Olajide Jr., began his career as a prizefighter. He
               was a highly respected championship boxer whose fights were
-              televised internationally. In 1991 he retired from an eye injury
+              televised internationally. In 1991, he retired from an eye injury
               and ushered in the age of boxing fitness.
             </p>
             <div className={styles.about__desktopButton}>

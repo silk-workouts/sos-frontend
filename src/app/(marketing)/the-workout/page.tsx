@@ -16,7 +16,6 @@ import InstructionCard from "@/components/pages/theWorkout/InstructionCard/Instr
 import EquipmentCard from "@/components/pages/theWorkout/EquipmentCard/EquipmentCard";
 import Button from "@/components/ui/Button/Button";
 import styles from "./page.module.scss";
-import { BADHINTS } from "node:dns/promises";
 
 export default function TheWorkout() {
   const handleOpenShop = () => {
@@ -55,22 +54,22 @@ export default function TheWorkout() {
                 imageAlt="A picture of Michael doing the boxing workout"
               />
               <ElementCard
-                element="Jump Rope"
-                content="High-intensity cardio that burns fat, boosts endurance, and sharpens coordination. Every jump builds speed, agility, and confidence—before you fly, you jump."
-                imageSrc={jumpRopeGif}
-                imageAlt="A picture of Michael doing the jump rope workout"
-              />
-              <ElementCard
                 element="Core Crushers"
                 content="Boxing-inspired core training that strengthens balance, power, and agility. Every movement builds rotational strength and stability for a rock-solid foundation."
                 imageSrc={coreCrusherGif}
                 imageAlt="A picture of Michael doing the core crushers workout"
               />
               <ElementCard
-                element="Upper Body Bands"
-                content="Resistance training for powerful, enduring arms, shoulders, and back. Build strength, control, and NGT: Never Get Tired. Train like a fighter."
-                imageSrc={upperBandsGif}
-                imageAlt="A picture of Michael doing the upper bands workout"
+                element="Isometric"
+                content="Master control and endurance with deep, stabilizing holds. Strengthen joints, sharpen focus, and push past limits—true strength is in stillness."
+                imageSrc={isometricsGif}
+                imageAlt="A picture of Michael doing the isometric workout"
+              />
+              <ElementCard
+                element="Jump Rope"
+                content="High-intensity cardio that burns fat, boosts endurance, and sharpens coordination. Every jump builds speed, agility, and confidence—before you fly, you jump."
+                imageSrc={jumpRopeGif}
+                imageAlt="A picture of Michael doing the jump rope workout"
               />
               <ElementCard
                 element="Lower Body Bands"
@@ -79,10 +78,10 @@ export default function TheWorkout() {
                 imageAlt="A picture of Michael doing the lower bands workout"
               />
               <ElementCard
-                element="Isometric"
-                content="Master control and endurance with deep, stabilizing holds. Strengthen joints, sharpen focus, and push past limits—true strength is in stillness."
-                imageSrc={isometricsGif}
-                imageAlt="A picture of Michael doing the isometric workout"
+                element="Upper Body Bands"
+                content="Resistance training for powerful, enduring arms, shoulders, and back. Build strength, control, and NGT: Never Get Tired. Train like a fighter."
+                imageSrc={upperBandsGif}
+                imageAlt="A picture of Michael doing the upper bands workout"
               />
             </div>
           </div>

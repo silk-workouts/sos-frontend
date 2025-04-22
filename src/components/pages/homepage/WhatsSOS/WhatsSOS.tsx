@@ -39,9 +39,10 @@ export default function WhatsSOS() {
               <span className="bold">System of Silk?</span>
             </h4>
             <p className={`body1 ${styles.about__message}`}>
-              The only boxing fitness program that will enhance a professional
-              boxer’s fight and the non-boxer’s level of fitness. Designed by
-              former professional boxer, Michael Olajide Jr.
+              Break free from boring workouts. SOS challenges both pros and
+              beginners with 90 mix-and-match workouts across six disciplines,
+              putting the power in your hands. No matter where you start, SOS
+              will make you sleeker, faster, stronger, and sharper.
             </p>
             <div className={styles.about__desktopButton}>
               {/* Button remains in the original location on desktop */}
