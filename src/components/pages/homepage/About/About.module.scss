@@ -37,6 +37,7 @@
     align-items: center;
     width: 100%;
     gap: 1.75rem;
+    max-width: 21.875rem;
 
     @include tablet {
       flex: 0.75;
@@ -48,10 +49,8 @@
     width: 100%;
     height: auto;
     border-radius: $radius-1;
-    max-width: 25rem;
 
     @include tablet {
-      max-width: unset;
     }
   }
 
@@ -105,10 +104,12 @@
     color: $color-white;
     text-align: center;
     font-size: 1rem;
+    max-width: 39.5rem;
 
     @include tablet {
       text-align: left;
       font-size: 1.25rem;
+      max-width: unset;
     }
   }
 
