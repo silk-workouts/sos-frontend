@@ -3,21 +3,15 @@
 
 .hero {
   position: relative;
-  width: 100%;
-
   background-image: url("/assets/images/hero-background.jpg");
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
-  height: calc(100vh - 4rem); //minus height of header (64px)
-  min-height: 24.0625rem;
-  display: flex;
-  align-items: center; // Ensures text stays visible within the image
-  justify-content: center;
-  padding: 1rem;
+  height: 100vh;
+  min-height: 30.9375rem;
 
   @include tablet {
-    min-height: 28.625rem;
+    min-height: 32.5rem;
   }
 
   @include desktop {
@@ -29,9 +23,9 @@
     position: absolute;
     bottom: 0.5rem;
     right: 0.5rem;
-    border-radius: 35px;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
+    border-radius: 2.1875rem;
+    background-color: rgba($color-black, 0.8);
+    color: $color-white;
     border: none;
     padding: 0.25rem 0.5rem;
     margin-top: 1rem;
@@ -45,12 +39,12 @@
 
     &:hover,
     &:focus {
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: rgba($color-black, 0.7);
       z-index: 2;
     }
 
     img {
-      width: 16px;
+      width: 1rem;
       height: auto;
       opacity: 0.8;
     }
@@ -69,24 +63,15 @@
   &__overlay {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     text-align: center;
-    position: relative;
-    gap: 6rem;
-    width: 100%;
+    position: absolute;
+    inset: 0;
+    padding: 5rem 1rem 0;
 
     @include tablet {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      height: auto; // Allow flexible height adjustment
-      gap: 8rem;
-    }
-
-    @include desktop {
-      gap: 10rem;
+      padding: 5rem 1.5rem 0;
     }
 
     img {
@@ -99,6 +84,6 @@
 
   &__title {
     color: $color-red;
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
   }
 }

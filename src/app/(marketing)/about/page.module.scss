@@ -4,7 +4,6 @@
 .container {
   width: 100%;
   flex-direction: column;
-  margin-top: 4rem;
 
   .heroSection {
     margin-bottom: 2rem;
@@ -14,7 +13,6 @@
     width: 100%;
     align-items: center;
     transition: all 0.3s ease-in-out;
-    margin-top: 4rem;
     height: 40vh;
     min-height: 11.25rem;
     max-height: 48.75rem;

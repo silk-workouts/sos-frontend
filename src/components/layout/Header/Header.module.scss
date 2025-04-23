@@ -8,10 +8,17 @@
   z-index: 1000;
   background: #ffffff;
   box-shadow: 0px 4px 3.8937rem rgba($color-black, 0.25);
+  transition: background-color 0.3s ease-in-out;
 
-  // &.home {
-  //   background-color: green;
-  // }
+  &.hero {
+    background-color: transparent;
+    color: $color-white;
+    box-shadow: none;
+
+    .hamburger {
+      color: $color-white;
+    }
+  }
 
   .headerContent {
     display: flex;
