@@ -4,7 +4,10 @@
 .testimonialsSection {
   padding: 3.5rem 0rem;
   margin-top: 1rem;
-  background: url("/assets/images/large-S.png"), rgba($color-white, 0.75);
+  // background: url("/assets/images/large-S.png"), rgba($color-white, 0.75);
+  background: url("/assets/images/large-S.png"),
+    linear-gradient(to bottom, rgba($color-white, 0.7), rgba(#dbdbdb, 1));
+
   background-size: contain;
   background-position: top 35% left 50%;
   background-repeat: no-repeat;
@@ -12,7 +15,7 @@
 
   @include tablet {
     margin-top: 2rem;
-    padding: 4rem 0rem;
+    padding: 5rem 0rem;
   }
 
   &--wrapper {
@@ -22,7 +25,7 @@
     justify-content: center;
 
     @include tablet {
-      gap: 1rem;
+      gap: 2rem;
     }
 
     @include desktop {
@@ -116,7 +119,6 @@
   @include tablet {
     display: flex;
     gap: 1.5rem;
-    margin-top: 2rem;
   }
 
   &__button {
