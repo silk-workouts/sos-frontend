@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import profileIcon from "/public/assets/icons/profile-white-fill.svg";
@@ -21,7 +20,6 @@ export default function Header() {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const profileDesktopRef = useRef<HTMLDivElement | null>(null);
   const profileMobileRef = useRef<HTMLDivElement | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     async function checkAuthStatus() {
@@ -127,7 +125,9 @@ export default function Header() {
   }
 
   return (
-    <header className={styles.header}>
+    <header
+      className={`${styles.header} ${pathname === "/" ? styles.home : ""}`}
+    >
       <div className={styles.headerContent}>
         <div className={styles.logo}>
           <Link href="/">
@@ -171,7 +171,9 @@ export default function Header() {
           >
             Shop
           </a>
-          {isLoggedIn ? (
+          {isLoading ? (
+            <div></div>
+          ) : isLoggedIn ? (
             <div className={styles.profileMenu}>
               <button
                 onClick={() =>
@@ -225,13 +227,13 @@ export default function Header() {
             </div>
           ) : (
             <Button>
-              <Link href="/auth/signup">Sign up/Log in</Link>
+              <Link href="/auth/login">Sign up/Log in</Link>
             </Button>
           )}
         </nav>
 
         <div className={styles.mobileActions}>
-          {isLoggedIn ? (
+          {!isLoading && isLoggedIn ? (
             <div className={styles.profileMenu}>
               <button
                 onClick={(e) => {
@@ -281,9 +283,11 @@ export default function Header() {
               )}
             </div>
           ) : (
-            <Button variant="secondary">
-              <Link href="/auth/signup">30-day free trial</Link>
-            </Button>
+            !isLoading && (
+              <Button variant="secondary">
+                <Link href="/auth/signup">30-day free trial</Link>
+              </Button>
+            )
           )}
           <button
             id="menu"
