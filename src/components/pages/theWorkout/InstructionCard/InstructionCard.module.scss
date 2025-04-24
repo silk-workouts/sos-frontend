@@ -9,11 +9,12 @@
   @include tablet {
     flex-direction: row;
     align-items: center;
+    gap: 3rem;
   }
 
   &__content {
     @include tablet {
-      flex: 1;
+      width: 40%;
     }
   }
 
@@ -21,15 +22,12 @@
     font-size: 1rem;
     color: $color-red;
     text-transform: uppercase;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     transition: all 0.3s ease-in-out;
 
     @include tablet {
       font-size: 1.25rem;
-    }
-
-    @include desktop {
-      margin-bottom: 3rem;
+      margin-bottom: 1rem;
     }
   }
 
@@ -37,11 +35,12 @@
     font-weight: $font-weight-regular;
     font-size: 1.5rem;
     text-transform: capitalize;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     transition: all 0.3s ease-in-out;
 
     @include tablet {
       font-size: 2rem;
+      margin-bottom: 1.25rem;
     }
 
     @include desktop {
@@ -49,29 +48,15 @@
     }
   }
 
-  &__image {
-    height: 12.5rem;
-    background-color: rgba(217, 217, 217, 1);
-    transition: height 0.3s ease-in-out;
-
-    @include tablet {
-      flex: 1;
-    }
-
-    @include desktop {
-      height: 16.9375rem;
-    }
-  }
-
   &__gif {
-    border-width: 8px 4px 4px 4px;
-    border-style: solid;
-    border-color: var(--red-2, #b21a16);
+    border: 4px solid $color-red;
+    border-radius: 0.75rem;
     width: 100%;
     height: auto;
 
     @include tablet {
-      width: 50%;
+      width: 60%;
+      flex-grow: 1;
     }
   }
 }

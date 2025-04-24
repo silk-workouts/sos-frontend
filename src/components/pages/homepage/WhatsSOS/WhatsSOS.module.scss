@@ -3,11 +3,15 @@
 
 .about {
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 4rem 1rem;
 
-  // custom breakpoing to this UI component
+  @include tablet {
+    padding: 5rem 1.5rem;
+  }
+
+  // custom breakpoint to this UI component
   @media screen and (min-width: 950px) {
-    padding: 5rem 1.5rem 0;
+    padding-bottom: 0;
     text-align: left;
   }
 

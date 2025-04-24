@@ -2,7 +2,7 @@
 @use "@/styles/partials/_mixins" as *;
 
 .testimonialsSection {
-  padding: 3.5rem 0rem;
+  padding: 3.5rem 0rem 4rem;
   margin-top: 1rem;
   // background: url("/assets/images/large-S.png"), rgba($color-white, 0.75);
   background: url("/assets/images/large-S.png"),
@@ -124,7 +124,7 @@
   &__button {
     background-color: transparent;
     border-radius: 50%;
-    border: 1px solid $color-black;
+    border: 1.5px solid $color-black;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -152,6 +152,7 @@
     &--disabled {
       opacity: 0.3;
       pointer-events: none;
+      border-width: 1.5px;
     }
   }
 

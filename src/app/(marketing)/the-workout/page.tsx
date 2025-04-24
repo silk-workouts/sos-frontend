@@ -150,13 +150,6 @@ export default function TheWorkout() {
               </Button>
             </div>
             <div className={styles.equipments}>
-              {/* <EquipmentCard
-                link="https://shop.systemofsilk.com/"
-                title="handweights"
-                content="Can be used in various different exercises and easy to adapt."
-                imageSrc={jumpRope}
-                imageAlt="A picture with two jump ropes"
-              /> */}
               <EquipmentCard
                 link="https://shop.systemofsilk.com/"
                 title="Jump Rope"
@@ -169,7 +162,7 @@ export default function TheWorkout() {
                 title="bands"
                 content="Ditch the machines. Strengthen your entire body with resistance bands—building sleek, powerful muscle through your natural range of motion. Stay energized. No bulk, all strength."
                 imageSrc={bands}
-                imageAlt="A picture with two jump ropes"
+                imageAlt="A picture of three resistance band styles"
               />
             </div>
           </div>

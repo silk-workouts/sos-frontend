@@ -3,13 +3,13 @@
 
 .elements {
   border-radius: 1.5rem;
-  padding: 3rem 0.5rem;
+  padding: 4rem 0.5rem;
   background: linear-gradient(360deg, #cc1e19 0%, #991613 100%);
 
-  // custom breakpoing to this UI component
+  // custom breakpoint to this UI component
   @media (min-width: 550px) {
     margin: 0 1rem;
-    padding: 3rem 1rem;
+    padding: 4rem 1rem;
   }
 
   @include tablet {
