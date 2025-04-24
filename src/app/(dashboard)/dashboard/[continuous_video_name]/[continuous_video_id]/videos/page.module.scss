@@ -2,8 +2,14 @@
 @use "@/styles/partials/mixins" as *;
 
 .container {
+  padding-bottom: 4.375rem;
+
+  @include tablet {
+    padding-bottom: 4.875rem;
+  }
   @include desktop {
     margin-top: 5rem;
+    padding: 0;
   }
 }
 
@@ -226,7 +232,6 @@
 }
 
 .list {
-  padding: 0 0 4.375rem;
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -234,11 +239,6 @@
 
   @include tablet {
     gap: 1.5rem;
-    padding-bottom: 4.875rem;
-  }
-
-  @include desktop {
-    padding: 0;
   }
 }
 
