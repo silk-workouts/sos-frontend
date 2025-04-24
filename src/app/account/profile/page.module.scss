@@ -198,6 +198,10 @@
   justify-content: center;
   padding: 10vh 0 0;
 
+  @include tablet {
+    height: 39.6875rem;
+  }
+
   .spinner {
     width: 2.25rem;
     height: 2.25rem;
