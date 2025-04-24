@@ -4,11 +4,6 @@
 .hero {
   position: relative;
   width: 100%;
-
-  background-image: url("/assets/images/hero-background.jpg");
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
   height: 100vh;
   min-height: 30.9375rem;
 
@@ -74,10 +69,6 @@
 
     @include tablet {
       padding: 5rem 1.5rem 0;
-    }
-
-    &.visible {
-      opacity: 1;
     }
 
     img {
