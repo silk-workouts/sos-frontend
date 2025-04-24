@@ -13,6 +13,7 @@
   /* Dark overlay */
   background-blend-mode: multiply;
   background-color: rgba($color-black, 0.5);
+  transition: all 0.3s ease-in-out;
 
   @include tablet {
     height: 100vh;
@@ -23,7 +24,6 @@
   @include desktop {
     padding: $padding-xl;
     min-height: 35rem;
-    margin: 0 auto;
   }
 }
 
