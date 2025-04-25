@@ -192,6 +192,19 @@
   flex: 1;
 }
 
+.profile__saveProfileButton {
+  .loadingText {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    text-transform: capitalize;
+  }
+
+  .icon {
+    filter: invert(1);
+  }
+}
+
 .loading {
   height: 35.9375rem;
   display: flex;

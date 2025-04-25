@@ -126,12 +126,13 @@ export default function ForgotPasswordPage() {
                 <span>
                   <Image
                     src={loadingSpinner}
-                    alt={`List of playlists is loading`}
+                    alt=""
                     width={20}
                     height={20}
+                    aria-hidden="true"
                     className={styles.icon}
                   />
-                  <span className={styles.button__buttonText}>Sending...</span>
+                  <span className={styles.button__buttonText}>Sending</span>
                 </span>
               ) : (
                 <span className={styles.button__buttonText}>

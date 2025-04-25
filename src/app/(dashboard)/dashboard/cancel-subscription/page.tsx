@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "react-hot-toast";
+import loadingSpinner from "/public/assets/gifs/spinner.svg";
 import Button from "@/components/ui/Button/Button";
 import styles from "./page.module.scss"; // Import SCSS styles
 
@@ -30,7 +32,7 @@ export default function CancelSubscription() {
           { position: "top-center" }
         );
         setTimeout(() => {
-          router.push("/dashboard/profile");
+          router.push("/account/profile");
         }, 1500);
       } else {
         toast.error("Failed to cancel. Please try again or contact support.");
@@ -92,12 +94,33 @@ export default function CancelSubscription() {
         <div className={styles.buttonContainer}>
           <Button
             variant="text"
-            onClick={() => router.push("/dashboard/profile")}
+            onClick={() => router.push("/account/profile")}
+            className={styles.keepButton}
           >
             Keep Subscription
           </Button>
-          <Button type="submit" variant="secondary" onClick={handleCancel}>
-            {isLoading ? "Canceling..." : "Confirm Cancellation"}
+          <Button
+            type="submit"
+            variant="secondary"
+            onClick={handleCancel}
+            disabled={isLoading}
+            className={styles.cancelButton}
+          >
+            {isLoading ? (
+              <span>
+                <Image
+                  src={loadingSpinner}
+                  alt=""
+                  width={20}
+                  height={20}
+                  aria-hidden="true"
+                  className={styles.icon}
+                />
+                <span>Canceling</span>
+              </span>
+            ) : (
+              <span>Confirm Cancellation</span>
+            )}
           </Button>
         </div>
 

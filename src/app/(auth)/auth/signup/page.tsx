@@ -197,14 +197,13 @@ export default function SignupPage() {
                 <span>
                   <Image
                     src={loadingSpinner}
-                    alt={`List of playlists is loading`}
+                    alt=""
                     width={20}
                     height={20}
+                    aria-hidden="true"
                     className={styles.icon}
                   />
-                  <span className={styles.button__buttonText}>
-                    Signing up...
-                  </span>
+                  <span className={styles.button__buttonText}>Signing up</span>
                 </span>
               ) : (
                 <span className={styles.button__buttonText}> Sign Up</span>

@@ -181,6 +181,7 @@ const ProfilePage: React.FC = () => {
       setIsEditing(false);
     } catch (error) {
       toast.error("Error updating profile. Try again.");
+      console.error(`Unable to update profile: ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -208,7 +209,7 @@ const ProfilePage: React.FC = () => {
             <div className={styles.loading}>
               <Image
                 src={loadingSpinner}
-                alt={`List of playlists is loading`}
+                alt={`Profile information is loading`}
                 width={36}
                 height={36}
                 className={styles.spinner}
@@ -351,8 +352,23 @@ const ProfilePage: React.FC = () => {
               type="submit"
               variant="secondary"
               className={styles.profile__saveProfileButton}
+              disabled={isLoading}
             >
-              {isLoading ? "Updating..." : "Save Profile"}
+              {isLoading ? (
+                <span className={styles.loadingText}>
+                  <Image
+                    src={loadingSpinner}
+                    alt=""
+                    width={20}
+                    height={20}
+                    aria-hidden="true"
+                    className={styles.icon}
+                  />
+                  <span className={styles.text}>Updating</span>
+                </span>
+              ) : (
+                <span className={styles.text}>Save Profile</span>
+              )}
             </Button>
           </div>
         </form>

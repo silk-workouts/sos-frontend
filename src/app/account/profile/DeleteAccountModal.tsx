@@ -114,12 +114,13 @@ export default function DeleteAccountModal({ onClose }: Props) {
               <span>
                 <Image
                   src={loadingSpinner}
-                  alt={`List of playlists is loading`}
+                  alt=""
                   width={20}
                   height={20}
+                  aria-hidden="true"
                   className={styles.icon}
                 />
-                <span>Deleting...</span>
+                <span>Deleting</span>
               </span>
             ) : (
               <span>Delete</span>

@@ -94,7 +94,7 @@ export default function Library() {
         <div className={styles.loading}>
           <Image
             src={loadingSpinner}
-            alt={`Workout videos are loading`}
+            alt={`Workout playlists are loading`}
             width={36}
             height={36}
             className={styles.spinner}

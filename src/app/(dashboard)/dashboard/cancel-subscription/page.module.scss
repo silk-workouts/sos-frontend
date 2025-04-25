@@ -115,6 +115,19 @@
   margin-top: 1.5rem;
 }
 
+.cancelButton {
+  span {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    text-transform: capitalize;
+  }
+
+  .icon {
+    filter: invert(1);
+  }
+}
+
 .supportText {
   margin-top: 1.25rem;
   font-size: 0.9rem;

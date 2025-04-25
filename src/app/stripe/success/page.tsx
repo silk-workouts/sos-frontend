@@ -11,9 +11,10 @@ export default function StripeSuccessPage() {
         <span>Finishing up your subscription </span>{" "}
         <Image
           src={loadingSpinner}
-          alt={`List of playlists is loading`}
+          alt=""
           width={30}
           height={30}
+          aria-hidden="true"
           className={styles.icon}
         />
       </h1>
