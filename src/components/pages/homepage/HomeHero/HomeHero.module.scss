@@ -79,8 +79,29 @@
     }
   }
 
+  &__header {
+    animation: 0.5s slideInFromBottom ease-out 0.1s forwards;
+    opacity: 0;
+  }
+
+  &__trialButton {
+    animation: 0.5s slideInFromBottom ease-out 0.4s forwards;
+    opacity: 0;
+  }
+
   &__title {
     color: $color-red;
     margin-bottom: 1.75rem;
+  }
+
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(20%) scale(0.9);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
   }
 }

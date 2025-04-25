@@ -65,13 +65,17 @@ export default function HomeHero() {
           !isLoading ? styles.visible : ""
         }`}
       >
-        <div>
+        <div className={styles.hero__header}>
           <h1 className={`homehero_title ${styles.hero__title}`}>
             System of Silk
           </h1>
           <Image src={Logo} alt="Logo" />
         </div>
-        <Button variant="homeHero" onClick={handleNavigate}>
+        <Button
+          variant="homeHero"
+          onClick={handleNavigate}
+          className={styles.hero__trialButton}
+        >
           Start 30-day free trial
         </Button>
       </div>
