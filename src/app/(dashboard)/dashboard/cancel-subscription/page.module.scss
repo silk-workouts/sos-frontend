@@ -4,14 +4,14 @@
 .container {
   background-color: rgba($color-black, 0.25);
   min-height: calc(100vh - 4.375rem);
-  padding: 3rem 1rem;
+  padding: 2rem 1rem;
   margin-bottom: 4.375rem;
   display: flex;
   justify-content: center;
   align-items: center;
 
   @include tablet {
-    padding: 4rem 1.5rem;
+    padding: 2rem 1.5rem;
     min-height: calc(100vh - 4.8438rem);
     margin-bottom: 4.8438rem;
   }
@@ -133,6 +133,7 @@
     display: flex;
     gap: 0.25rem;
     align-items: center;
+    justify-content: center;
     text-transform: capitalize;
   }
 
