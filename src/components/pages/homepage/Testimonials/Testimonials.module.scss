@@ -2,94 +2,113 @@
 @use "@/styles/partials/_mixins" as *;
 
 .testimonialsSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 9rem 1.5rem 9rem;
-  width: 100%;
-  //   background: url("/assets/images/large-S.png");
-  background: url("/assets/images/large-S.png"), rgba($color-white, 0.75);
-  background-size: cover;
-  background-position: center;
+  padding: 3.5rem 0rem 4rem;
+  margin-top: 1rem;
+  // background: url("/assets/images/large-S.png"), rgba($color-white, 0.75);
+  background: url("/assets/images/large-S.png"),
+    linear-gradient(to bottom, rgba($color-white, 0.7), rgba(#dbdbdb, 1));
+
+  background-size: contain;
+  background-position: top 35% left 50%;
   background-repeat: no-repeat;
   background-blend-mode: overlay;
 
+  @include tablet {
+    margin-top: 2rem;
+    padding: 5rem 0rem;
+  }
+
+  &--wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @include tablet {
+      gap: 2rem;
+    }
+
+    @include desktop {
+      margin: 0 auto;
+    }
+  }
+
   .testimonialsHeader {
-    font-size: 2rem;
-    line-height: 2.4375rem;
     text-align: center;
     color: $color-red;
-    text-wrap: wrap;
-    width: 100%;
   }
 
   .carousel {
+    list-style-type: none;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 1.5rem;
     width: 100%;
-    max-width: 80rem;
     overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 0.625rem;
+    scrollbar-width: none;
+    padding: 1rem;
+
+    @include tablet {
+      padding: 1rem 1.5rem;
+    }
   }
 
   .testimonialCard {
-    box-shadow: 2px 4px 0.725rem rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 4px 0.825rem rgba($color-black, 0.5);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-start;
     width: fit-content;
-    min-width: 14.75rem;
+    min-width: 16.25rem;
     height: 21.875rem;
-    background: #ffffff;
+    background-color: $color-white;
     border-radius: 0.625rem;
-    scroll-snap-align: start;
 
     @include tablet {
-      min-width: 25.9375rem;
-    }
-
-    @include desktop {
-      min-width: 25.9375rem;
+      min-width: 25rem;
     }
   }
 
   .testimonialText {
-    padding: 1.5rem 1.5rem 0 1.5rem;
-    border-radius: 0.625rem 0.625rem 0 0;
+    line-height: 1.5rem;
+    padding: 1.5rem;
     height: 100%;
+    max-height: 18.3125rem;
+    display: flex;
+    align-items: center;
+
+    @include tablet {
+      max-height: 17.875rem;
+      font-size: 1.125rem;
+      line-height: 1.875rem;
+    }
   }
 
   .testimonialImg {
     width: 15%;
     height: auto;
-    margin: 0 0.5rem;
+
+    @include tablet {
+      height: 2rem;
+      width: auto;
+    }
   }
 
   .testimonialAuthor {
     border-radius: 0 0 0.625rem 0.625rem;
-    padding: 1rem 0;
+    padding: 1rem 0.5rem;
     background: $color-red;
     font-weight: 600;
     font-size: 1rem;
-    text-align: center;
     color: $color-white;
     width: 100%;
     display: flex;
-
     align-items: center;
-    gap: 0.5rem;
-    margin-right: 0.5rem; // Added spacing between icon and name
-  }
+    gap: 1rem;
 
-  @include mobile {
-    .carousel {
-      overflow-x: scroll;
-      padding: 1rem;
+    @include tablet {
+      font-size: 1.125rem;
     }
   }
 }
@@ -100,13 +119,12 @@
   @include tablet {
     display: flex;
     gap: 1.5rem;
-    margin-top: 1.5rem;
   }
 
   &__button {
     background-color: transparent;
     border-radius: 50%;
-    border: 1px solid $color-black;
+    border: 1.5px solid $color-black;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -134,6 +152,7 @@
     &--disabled {
       opacity: 0.3;
       pointer-events: none;
+      border-width: 1.5px;
     }
   }
 

@@ -44,13 +44,22 @@ export default function DeletePlaylistModal({
           <span className={styles.title}>{title} </span>from your library?
         </p>
 
-        <Button
-          variant="secondary"
-          onClick={handleDelete}
-          className={styles["modal__button--delete"]}
-        >
-          Delete
-        </Button>
+        <div className={styles.modal__actionButtons}>
+          <Button
+            variant="text"
+            className={styles["modal__button--cancel"]}
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={handleDelete}
+            className={styles["modal__button--delete"]}
+          >
+            Delete
+          </Button>
+        </div>
       </div>
     </div>,
     modalRoot

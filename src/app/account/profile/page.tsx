@@ -7,7 +7,9 @@
 import { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Toaster, toast } from "react-hot-toast";
+import loadingSpinner from "/public/assets/gifs/spinner.svg";
 import DeleteAccountModal from "./DeleteAccountModal";
 import Button from "@/components/ui/Button/Button";
 import {
@@ -179,6 +181,7 @@ const ProfilePage: React.FC = () => {
       setIsEditing(false);
     } catch (error) {
       toast.error("Error updating profile. Try again.");
+      console.error(`Unable to update profile: ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -187,7 +190,9 @@ const ProfilePage: React.FC = () => {
   return (
     <div className={styles.profile}>
       <div className={styles.profile__header}>
-        <h1 className={styles.profile__title}>Profile</h1>
+        <h1 className={styles.profile__title}>
+          {isEditing ? "Edit Profile" : "Profile"}
+        </h1>
         {!isEditing && (
           <button
             className={styles.profile__editButton}
@@ -201,17 +206,24 @@ const ProfilePage: React.FC = () => {
       {!isEditing && (
         <section className={styles.profile__info}>
           {isLoadingProfile ? (
-            <div>Loading ..</div>
+            <div className={styles.loading}>
+              <Image
+                src={loadingSpinner}
+                alt={`Profile information is loading`}
+                width={36}
+                height={36}
+                className={styles.spinner}
+              />
+            </div>
           ) : (
             <>
               <div
                 className={`${styles.profile__infoGroup} ${styles.profile__name}`}
               >
-                {/* <h2 className={styles.profile__subheading}>
-                  Hey{name ? ` ${name}` : ""}!
-                </h2> */}
                 <span className={styles.profile__label}>Name</span>
-                <p>{name || "silk system user"}</p>
+                <span className={styles.profile__value}>
+                  {name || "silk system user"}
+                </span>
               </div>
               <div className={styles.profile__infoGroup}>
                 <span className={styles.profile__label}>Email</span>
@@ -229,11 +241,17 @@ const ProfilePage: React.FC = () => {
               </div>
               <div className={styles.profile__infoGroup}>
                 <span className={styles.profile__label}>Gender</span>
-                <span className={styles.profile__value}>{gender || "N/A"}</span>
+                <span
+                  className={`${styles.profile__value} ${styles.capitalize}`}
+                >
+                  {gender || "N/A"}
+                </span>
               </div>
               <div className={styles.profile__infoGroup}>
                 <span className={styles.profile__label}>Fitness Level</span>
-                <span className={styles.profile__value}>
+                <span
+                  className={`${styles.profile__value} ${styles.capitalize}`}
+                >
                   {fitnessLevel || "N/A"}
                 </span>
               </div>
@@ -243,100 +261,117 @@ const ProfilePage: React.FC = () => {
       )}
 
       {isEditing && (
-        <div className={styles.profile__editFormWrap}>
-          <form className={styles.profile__form} onSubmit={handleSaveProfile}>
-            <div className={styles.profile__inputGroup}>
-              <label htmlFor="name" className={styles.profile__label}>
-                Name
-              </label>
-              <input
-                id="name"
-                type="text"
-                className={styles.profile__input}
-                value={tempName}
-                onChange={(e) => setTempName(e.target.value)}
-              />
-            </div>
+        <form className={styles.profile__form} onSubmit={handleSaveProfile}>
+          <div className={styles.profile__inputGroup}>
+            <label htmlFor="name" className={styles.profile__label}>
+              Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              className={styles.profile__input}
+              value={tempName}
+              onChange={(e) => setTempName(e.target.value)}
+            />
+          </div>
 
-            <div className={styles.profile__inputGroup}>
-              <label htmlFor="age" className={styles.profile__label}>
-                Age
-              </label>
-              <input
-                id="age"
-                type="number"
-                min={0}
-                className={styles.profile__input}
-                value={tempAge ?? ""}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setTempAge(value === "" ? undefined : Number(value));
-                }}
-              />
-            </div>
+          <div className={styles.profile__inputGroup}>
+            <label htmlFor="age" className={styles.profile__label}>
+              Age
+            </label>
+            <input
+              id="age"
+              type="number"
+              min={0}
+              className={styles.profile__input}
+              value={tempAge ?? ""}
+              onChange={(e) => {
+                const value = e.target.value;
+                setTempAge(value === "" ? undefined : Number(value));
+              }}
+            />
+          </div>
 
-            <div className={styles.profile__inputGroup}>
-              <label htmlFor="location" className={styles.profile__label}>
-                Location
-              </label>
-              <input
-                id="location"
-                type="text"
-                className={styles.profile__input}
-                value={tempLocation}
-                onChange={(e) => setTempLocation(e.target.value)}
-              />
-            </div>
+          <div className={styles.profile__inputGroup}>
+            <label htmlFor="location" className={styles.profile__label}>
+              Location
+            </label>
+            <input
+              id="location"
+              type="text"
+              className={styles.profile__input}
+              value={tempLocation}
+              onChange={(e) => setTempLocation(e.target.value)}
+            />
+          </div>
 
-            <div className={styles.profile__inputGroup}>
-              <label htmlFor="gender" className={styles.profile__label}>
-                Gender
-              </label>
-              <select
-                id="gender"
-                className={styles.profile__input}
-                value={tempGender}
-                onChange={(e) => setTempGender(e.target.value)}
-              >
-                <option value="">Select...</option>
-                <option value="male">male</option>
-                <option value="female">female</option>
-                <option value="non-binary">non-binary</option>
-                <option value="prefer not to say">prefer not to say</option>
-              </select>
-            </div>
+          <div className={styles.profile__inputGroup}>
+            <label htmlFor="gender" className={styles.profile__label}>
+              Gender
+            </label>
+            <select
+              id="gender"
+              className={styles.profile__input}
+              value={tempGender}
+              onChange={(e) => setTempGender(e.target.value)}
+            >
+              <option value="">Select...</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="non-binary">Non-binary</option>
+              <option value="prefer not to say">Prefer not to say</option>
+            </select>
+          </div>
 
-            <div className={styles.profile__inputGroup}>
-              <label htmlFor="fitness" className={styles.profile__label}>
-                Fitness Level
-              </label>
-              <select
-                id="fitness"
-                className={styles.profile__input}
-                value={tempFitnessLevel}
-                onChange={(e) => setTempFitnessLevel(e.target.value)}
-              >
-                <option value="">Select...</option>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
-              </select>
-            </div>
+          <div className={styles.profile__inputGroup}>
+            <label htmlFor="fitness" className={styles.profile__label}>
+              Fitness Level
+            </label>
+            <select
+              id="fitness"
+              className={styles.profile__input}
+              value={tempFitnessLevel}
+              onChange={(e) => setTempFitnessLevel(e.target.value)}
+            >
+              <option value="">Select...</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
 
-            <div className={styles.profile__buttonGroup}>
-              <Button variant="text" onClick={handleCancelClick}>
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                variant="secondary"
-                className={styles.profile__saveProfileButton}
-              >
-                {isLoading ? "Updating..." : "Save Profile"}
-              </Button>
-            </div>
-          </form>
-        </div>
+          <div className={styles.profile__buttonGroup}>
+            <Button
+              variant="text"
+              onClick={handleCancelClick}
+              className={styles.profile__cancel}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              variant="secondary"
+              className={styles.profile__saveProfileButton}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className={styles.loadingText}>
+                  <Image
+                    src={loadingSpinner}
+                    alt=""
+                    width={20}
+                    height={20}
+                    aria-hidden="true"
+                    className={styles.icon}
+                  />
+                  <span className={styles.text}>Updating</span>
+                </span>
+              ) : (
+                <span className={styles.text}>Save Profile</span>
+              )}
+            </Button>
+          </div>
+        </form>
       )}
 
       {!isEditing && (

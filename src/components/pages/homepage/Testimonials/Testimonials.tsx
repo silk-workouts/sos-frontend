@@ -8,24 +8,25 @@ import styles from "./Testimonials.module.scss";
 const testimonials = [
   {
     id: 1,
+    text: "There’s nothing like Michael’s workouts in New York - or anywhere really. His constantly creative, highly effective programming pushes both body and mind in a way that no other HIIT, boot camp, or spin class ever will.",
+    name: "Emily",
+  },
+  {
+    id: 2,
     text: "System of Silk clears my head and tests my limits. It’s been a life-changer.",
     name: "Jeff P",
   },
   {
-    id: 2,
-    text: "The real magic is Michael himself. He pushes people to reach further and deeper, and does so in a way that you really feel he wants the best for you.",
-    name: "Em",
-  },
-  {
     id: 3,
-    text: "I’ve been training with Mike/the Silk methodology for 10 years, and From the first workout, I could tell this program was different. The workouts challenge me physically, mentally, and emotionally, and I’ve noticed the benefits in other areas of my life—more energy, better focus, and greater endurance overall. There is a learning curve, but it’s been well worth the effort.",
+    text: "I’ve been training with Mike/the Silk methodology for 10 years, and from the first workout, I could tell this program was different. The workouts challenge me physically, mentally, and emotionally, and I’ve noticed the benefits in other areas of my life—more energy, better focus, and greater endurance overall. There is a learning curve, but it’s been well worth the effort.",
     name: "Danny",
   },
   {
     id: 4,
-    text: "There’s nothing like Michael’s workouts in New York - or anywhere really. His constantly creative, highly effective programming pushes both body and mind in a way that no other HIIT, boot camp, or spin class ever will.",
-    name: "Emily",
+    text: "The real magic is Michael himself. He pushes people to reach further and deeper, and does so in a way that you really feel he wants the best for you.",
+    name: "Em",
   },
+
   {
     id: 5,
     text: "In my 20+ years working with Michael, his spirit, his generosity, and his inspirational teaching has affected me profoundly. Not just in the athletic sense, but to spend time with his incredible, inspirational energy which is contagious to anyone working with him.",
@@ -49,7 +50,7 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
-  const scrollableContainerRef = useRef<HTMLDivElement>(null);
+  const scrollableContainerRef = useRef<HTMLUListElement>(null);
   const [scrollAmount, setScrollAmount] = useState(100);
   const [scrollIsAtStart, setScrollIsAtStart] = useState(true);
   const [scrollIsAtEnd, setScrollIsAtEnd] = useState(false);
@@ -73,8 +74,8 @@ export default function Testimonials() {
 
     //set scroll amount relative to the width of the videos
     setScrollAmount(
-      (scrollableContainerRef.current.children[0] as HTMLElement)
-        ?.offsetWidth || clientWidth
+      (scrollableContainerRef.current.children[0] as HTMLElement)?.offsetWidth *
+        1.5 || clientWidth
     );
   }
 
@@ -107,59 +108,69 @@ export default function Testimonials() {
 
   return (
     <section className={styles.testimonialsSection}>
-      <h2 className={`h2-title ${styles.testimonialsHeader}`}>
-        <span className="bold">The</span> Testimonials
-      </h2>
-      <div className={styles.carousel} ref={scrollableContainerRef}>
-        {testimonials.map((testimonial) => (
-          <div key={testimonial.id} className={styles.testimonialCard}>
-            <p className={styles.testimonialText}>
-              {truncate(testimonial.text)}
-            </p>
-            <div className={styles.testimonialAuthor}>
-              <Image
-                className={styles.testimonialImg}
-                src={smallS}
-                alt="small S for Silk icon"
-              />
-              <p>{testimonial.name}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className={styles.scrollbar}>
-        <button
-          className={`${styles.scrollbar__button} ${
-            scrollIsAtStart ? styles["scrollbar__button--disabled"] : ""
-          }`}
-          aria-controls="scroll-area"
-          onClick={() => scroll("left")}
-          disabled={scrollIsAtStart}
-          aria-label="Click to view previous videos"
+      <div className={styles["testimonialsSection--wrapper"]}>
+        <h2 className={`h2-title ${styles.testimonialsHeader}`}>
+          The <span className="bold">Testimonials</span>
+        </h2>
+        <ul
+          className={styles.carousel}
+          ref={scrollableContainerRef}
+          role="list"
         >
-          <Image
-            src={chevronIcon}
-            aria-hidden="true"
-            alt=""
-            className={styles.scrollbar__icon}
-          />
-        </button>
-        <button
-          className={`${styles.scrollbar__button} ${
-            scrollIsAtEnd ? styles["scrollbar__button--disabled"] : ""
-          }`}
-          aria-controls="scroll-area"
-          onClick={() => scroll("right")}
-          disabled={scrollIsAtEnd}
-          aria-label="Click to view next videos"
-        >
-          <Image
-            src={chevronIcon}
-            aria-hidden="true"
-            alt=""
-            className={`${styles.scrollbar__icon} ${styles["scrollbar__icon--right"]}`}
-          />
-        </button>
+          {testimonials.map((testimonial) => (
+            <li
+              key={testimonial.id}
+              className={styles.testimonialCard}
+              role="listitem"
+            >
+              <p className={styles.testimonialText}>
+                {truncate(testimonial.text)}
+              </p>
+              <div className={styles.testimonialAuthor}>
+                <Image
+                  className={styles.testimonialImg}
+                  src={smallS}
+                  alt="small S for Silk icon"
+                />
+                <p>{testimonial.name}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div className={styles.scrollbar}>
+          <button
+            className={`${styles.scrollbar__button} ${
+              scrollIsAtStart ? styles["scrollbar__button--disabled"] : ""
+            }`}
+            aria-controls="scroll-area"
+            onClick={() => scroll("left")}
+            disabled={scrollIsAtStart}
+            aria-label="Click to view previous videos"
+          >
+            <Image
+              src={chevronIcon}
+              aria-hidden="true"
+              alt=""
+              className={styles.scrollbar__icon}
+            />
+          </button>
+          <button
+            className={`${styles.scrollbar__button} ${
+              scrollIsAtEnd ? styles["scrollbar__button--disabled"] : ""
+            }`}
+            aria-controls="scroll-area"
+            onClick={() => scroll("right")}
+            disabled={scrollIsAtEnd}
+            aria-label="Click to view next videos"
+          >
+            <Image
+              src={chevronIcon}
+              aria-hidden="true"
+              alt=""
+              className={`${styles.scrollbar__icon} ${styles["scrollbar__icon--right"]}`}
+            />
+          </button>
+        </div>
       </div>
     </section>
   );

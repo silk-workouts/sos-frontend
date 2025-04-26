@@ -12,7 +12,6 @@ export default function Home() {
     <div className={styles.container}>
       <HomeHero />
       <Philosophy />
-
       <About />
       <WhatsSOS />
       <HomeElements />

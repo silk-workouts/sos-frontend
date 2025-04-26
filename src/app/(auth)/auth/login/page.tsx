@@ -188,14 +188,13 @@ export default function LoginPage() {
                 <span>
                   <Image
                     src={loadingSpinner}
-                    alt={`List of playlists is loading`}
+                    alt=""
                     width={20}
                     height={20}
+                    aria-hidden="true"
                     className={styles.icon}
                   />
-                  <span className={styles.button__buttonText}>
-                    Logging in...
-                  </span>
+                  <span className={styles.button__buttonText}>Logging in</span>
                 </span>
               ) : (
                 <span className={styles.button__buttonText}>Log In</span>

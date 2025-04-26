@@ -1,5 +1,4 @@
 "use client";
-import { JSX } from "react";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useParams, useRouter } from "next/navigation";
