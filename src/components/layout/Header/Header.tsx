@@ -250,7 +250,7 @@ export default function Header() {
             </div>
           ) : (
             <Button>
-              <Link href="/auth/login">Sign up/Log in</Link>
+              <Link href="/auth/signup">Sign up/Log in</Link>
             </Button>
           )}
         </nav>
