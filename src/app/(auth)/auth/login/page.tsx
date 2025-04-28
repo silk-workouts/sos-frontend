@@ -5,6 +5,8 @@ import Image from "next/image";
 import leftArrow from "public/assets/icons/arrow-left.svg";
 import whiteS from "public/assets/images/large-S-white-dropshad.svg";
 import loadingSpinner from "/public/assets/gifs/spinner.svg";
+import eyeOpen from "public/assets/icons/eye.svg";
+import eyeClosed from "public/assets/icons/eye-off.svg";
 import { Toaster, toast } from "react-hot-toast";
 import {
   isValidEmail,
@@ -20,6 +22,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
 
