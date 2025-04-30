@@ -188,7 +188,7 @@
       text-transform: capitalize;
     }
 
-    input {
+    .input {
       height: 2.8125rem;
       border-radius: 1rem;
       background-color: #f5f5f5;
@@ -205,6 +205,40 @@
       &.error {
         border: 1px solid $color-red;
         outline: 1px solid $color-red;
+      }
+    }
+
+    .password-container {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      button {
+        position: absolute;
+        right: 0;
+        padding: 0.5rem 1rem 0.5rem 0.5rem;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        opacity: 0.5;
+      }
+
+      .input {
+        flex: 1;
+        padding-right: 3rem;
+
+        &:active,
+        &:focus {
+          + button {
+            opacity: 1;
+          }
+        }
+      }
+
+      img {
+        height: 1.25rem;
+        width: 1.25rem;
+        vertical-align: middle;
       }
     }
 

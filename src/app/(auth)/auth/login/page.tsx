@@ -144,7 +144,9 @@ export default function LoginPage() {
                     setEmail(e.target.value);
                     setErrors({ ...errors, email: "" });
                   }}
-                  className={errors.email ? styles.error : ""}
+                  className={`${styles.input} ${
+                    errors.email ? styles.error : ""
+                  }`}
                 />
                 {errors.email && (
                   <span className={styles.errorMessage}>{errors.email}</span>
@@ -154,17 +156,36 @@ export default function LoginPage() {
               {/* ✅ Password input field */}
               <div className={styles.inputGroup}>
                 <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    setErrors({ ...errors, password: "" });
-                  }}
-                  className={errors.password ? styles.error : ""}
-                />
+                <div className={styles["password-container"]}>
+                  <input
+                    id="password"
+                    type={isPasswordVisible ? "text" : "password"}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setErrors({ ...errors, password: "" });
+                    }}
+                    className={`${styles.input} ${
+                      errors.password ? styles.error : ""
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    aria-label={
+                      isPasswordVisible
+                        ? "Hide password text"
+                        : "Show password text"
+                    }
+                    onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  >
+                    {isPasswordVisible ? (
+                      <Image src={eyeOpen} alt="" aria-hidden="true" />
+                    ) : (
+                      <Image src={eyeClosed} alt="" aria-hidden="true" />
+                    )}
+                  </button>
+                </div>
                 {errors.password && (
                   <span
                     className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
