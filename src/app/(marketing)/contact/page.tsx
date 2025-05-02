@@ -107,9 +107,9 @@ export default function Contact() {
             </section>
           </div>
           <div className={styles.contact}>
-            <h2 className={`${styles.contact__title}`}>
+            <h3 className={`${styles.contact__title}`}>
               Still looking for answers?
-            </h2>
+            </h3>
             <a href="mailto:michaelolajidejr@gmail.com">
               <Button>Contact Us</Button>
             </a>

@@ -415,12 +415,12 @@ const ProfilePage: React.FC = () => {
             >
               FAQ
             </Link>
-            <span
+            <button
               className={styles.profile__link}
               onClick={() => setShowDeleteModal(true)}
             >
               Delete Account
-            </span>
+            </button>
           </div>
         </div>
       )}

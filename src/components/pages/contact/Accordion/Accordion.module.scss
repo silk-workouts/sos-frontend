@@ -3,10 +3,11 @@
 
 .accordionItem {
   border-top: 1px solid $color-red;
-  padding: 1.25rem 0;
 }
 
 .accordion-button {
+  width: 100%;
+  padding: 1.25rem 0;
   background-color: $color-white;
   border: none;
   cursor: pointer;
@@ -44,7 +45,7 @@
 
   &.expanded {
     display: block;
-    margin-top: 1rem;
+    margin-bottom: 1.25rem;
     max-height: 62.5rem;
     opacity: 1;
     pointer-events: auto;

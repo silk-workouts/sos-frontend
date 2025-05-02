@@ -113,6 +113,7 @@ export default function Testimonials() {
           The <span className="bold">Testimonials</span>
         </h2>
         <ul
+          id="scroll-area"
           className={styles.carousel}
           ref={scrollableContainerRef}
           role="list"
@@ -130,7 +131,8 @@ export default function Testimonials() {
                 <Image
                   className={styles.testimonialImg}
                   src={smallS}
-                  alt="small S for Silk icon"
+                  alt=""
+                  aria-hidden="true"
                 />
                 <p>{testimonial.name}</p>
               </div>

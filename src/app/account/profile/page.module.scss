@@ -139,6 +139,8 @@
   font-size: 1rem;
   color: $color-primary !important;
   cursor: pointer;
+  border: none;
+  background-color: transparent;
 
   &:hover {
     text-decoration-line: underline !important;
