@@ -5,13 +5,12 @@
 .forgotPasswordContainer {
   background: $color-red;
   color: $color-white;
-  margin-top: 4rem; // compensate for header
-  padding: 1.875rem 1rem;
+  padding: 5.875rem 1rem 1.875rem; //compensate for header in padding-top
   min-height: 100vh;
   transition: all 0.3s ease-in-out;
 
   @include tablet {
-    padding: 3rem 1.5rem;
+    padding: 7rem 1.5rem 3rem;
   }
 
   &-wrapper {
@@ -117,7 +116,7 @@
   gap: 2.5rem;
   color: $color-black;
   transition: all 0.3s ease-in-out;
-  max-width: 40.125rem;
+  max-width: 30rem;
   width: 100%;
   margin: 0 auto;
 
@@ -125,6 +124,7 @@
     padding: 3.5rem 2rem;
     gap: 4.5rem;
     flex-grow: 1;
+    max-width: 35rem;
     height: max-content;
   }
 
@@ -157,7 +157,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  max-width: 30.25rem;
+  max-width: 25rem;
   width: 100%;
   margin: 0 auto;
 
@@ -229,11 +229,5 @@
       color: $color-white;
       font-weight: 600;
     }
-  }
-
-  .error {
-    margin-top: -1rem;
-    font-size: 0.875rem;
-    color: $color-red;
   }
 }

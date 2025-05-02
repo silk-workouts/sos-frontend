@@ -11,6 +11,8 @@ import {
 } from "src/utils/authInputUtils";
 import whiteS from "public/assets/images/large-S-white-dropshad.svg";
 import leftArrow from "public/assets/icons/arrow-left.svg";
+import eyeOpen from "public/assets/icons/eye.svg";
+import eyeClosed from "public/assets/icons/eye-off.svg";
 import loadingSpinner from "/public/assets/gifs/spinner.svg";
 import Button from "@/components/ui/Button/Button";
 import Link from "next/link";
@@ -20,6 +22,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isSigningUp, setIsSigningUp] = useState(false);
 
   async function handleSignup(event: React.FormEvent) {
@@ -166,7 +169,7 @@ export default function SignupPage() {
                 <div className={styles.tooltipContainer}>
                   <input
                     id="password"
-                    type="password"
+                    type={isPasswordVisible ? "text" : "password"}
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => {
@@ -176,6 +179,21 @@ export default function SignupPage() {
                     aria-describedby="passwordTooltip"
                     className={errors.password ? styles.error : ""}
                   />
+                  <button
+                    type="button"
+                    aria-label={
+                      isPasswordVisible
+                        ? "Hide password text"
+                        : "Show password text"
+                    }
+                    onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  >
+                    {isPasswordVisible ? (
+                      <Image src={eyeOpen} alt="" aria-hidden="true" />
+                    ) : (
+                      <Image src={eyeClosed} alt="" aria-hidden="true" />
+                    )}
+                  </button>
                   <span className={styles.tooltip} id="passwordTooltip">
                     Password must be at least 8 characters, contain one
                     uppercase letter, one lowercase letter, and one number.
