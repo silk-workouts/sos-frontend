@@ -13,7 +13,6 @@ import styles from "./Navigation.module.scss";
 
 export default function Navigation() {
   const path = usePathname()!;
-  const pathSegment = path.split("/");
   const isPlayerPage = path.includes("player");
 
   return (
@@ -37,11 +36,17 @@ export default function Navigation() {
           <Link
             href="/dashboard"
             className={`${styles.nav__link} ${
-              path === "/dashboard" ? styles["nav__link--active"] : ""
+              path === "/dashboard" || path.includes("videos")
+                ? styles["nav__link--active"]
+                : ""
             }`}
           >
             <Image
-              src={path === "/dashboard" ? weights_filled : weightsIcon}
+              src={
+                path === "/dashboard" || path.includes("videos")
+                  ? weights_filled
+                  : weightsIcon
+              }
               alt=""
               className={styles.icon}
             />

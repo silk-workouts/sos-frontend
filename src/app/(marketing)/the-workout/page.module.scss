@@ -2,51 +2,37 @@
 @use "@/styles/partials/mixins" as *;
 
 .hero {
-  margin-top: 4rem;
-  height: 40vh;
-  min-height: 11.25rem;
-  max-height: 48.75rem;
-  position: relative;
+  height: 50vh;
+  padding: 4rem 1rem 1rem;
+  min-height: 12.5rem;
   display: flex;
   align-items: center;
-  padding: $padding-small;
+  background: url("/assets/images/workouts-hero-background.png") no-repeat
+    center;
+  background-size: cover;
+  /* Dark overlay */
+  background-blend-mode: multiply;
+  background-color: rgba($color-black, 0.5);
   transition: all 0.3s ease-in-out;
 
   @include tablet {
-    height: 95vh;
-    min-height: 16.25rem;
-    padding: 1.5rem;
+    height: 100vh;
+    min-height: 26.875rem;
+    padding: 4rem 1.5rem 1.5rem;
   }
 
   @include desktop {
     padding: $padding-xl;
-    min-height: 26.25rem;
-    margin: 0 auto;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url("/assets/images/workouts-hero-background.png") no-repeat
-      center center;
-    background-size: cover;
-    z-index: 1;
-
-    /* Dark overlay */
-    background-blend-mode: multiply;
-    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 35rem;
   }
 }
 
 .hero__title {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 2rem;
+  font-size: 3rem;
   text-transform: uppercase;
   color: $color-white;
-  z-index: 2;
-  transition: all 0.3s ease-in-out;
+  transition: font-size 0.3s ease-in-out;
+  animation: 0.5s slideIn ease-out forwards;
 
   @include tablet {
     font-size: 6rem;
@@ -56,6 +42,15 @@
     width: 90rem;
     margin: 0 auto;
   }
+
+  @keyframes slideIn {
+    0% {
+      transform: translateY(20%) scale(0.9);
+    }
+    100% {
+      transform: translateY(0) scale(1);
+    }
+  }
 }
 
 .container {
@@ -64,7 +59,7 @@
   gap: 4rem;
 
   @include tablet {
-    gap: 4.5rem;
+    gap: 5rem;
   }
 
   @include desktop {
@@ -78,7 +73,7 @@
   color: $color-white;
 
   @include tablet {
-    padding: 4rem 1.5rem;
+    padding: 5rem 1.5rem;
   }
 
   @include desktop {
@@ -88,11 +83,24 @@
   &-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 4.5rem;
+    gap: 4rem;
+    animation: 0.3s slideInFromBottom ease-out 0.3s forwards;
+    opacity: 0;
 
     @include desktop {
       max-width: $content-container-maximum;
       margin: 0 auto;
+    }
+
+    @keyframes slideInFromBottom {
+      0% {
+        transform: translateY(1%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   }
 
@@ -115,17 +123,17 @@
   &-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 4.5rem;
+    gap: 3.5rem;
+
+    @include tablet {
+      gap: 5rem;
+    }
 
     @include desktop {
+      gap: 6rem;
       max-width: $content-container-maximum;
       margin: 0 auto;
     }
-  }
-
-  &__tagline {
-    font-weight: 500;
-    text-shadow: 0 0 1px black;
   }
 }
 
@@ -137,20 +145,24 @@
 .equipments {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 4.5rem;
 
-  @include desktop {
-    gap: 4rem;
+  @include tablet {
+    gap: 6.5rem;
   }
 }
 
 .elementCards {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 5rem;
 
   @include tablet {
-    gap: 4.5rem;
+    gap: 5.5rem;
+  }
+
+  @include tablet {
+    gap: 6.5rem;
   }
 }
 
@@ -160,7 +172,7 @@
   padding: 4rem $padding-small;
 
   @include tablet {
-    padding: 4rem 1.5rem;
+    padding: 5rem 1.5rem;
   }
 
   @include desktop {
@@ -170,7 +182,7 @@
   &-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 4.5rem;
+    gap: 5rem;
 
     @include desktop {
       max-width: $content-container-maximum;
@@ -184,6 +196,10 @@
 
   &__button {
     margin-top: 1.25rem;
+
+    @include tablet {
+      margin-top: 2rem;
+    }
   }
 }
 

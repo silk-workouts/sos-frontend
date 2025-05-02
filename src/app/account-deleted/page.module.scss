@@ -1,11 +1,26 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
 .accountDeleted {
-  height: 100vh;
+  margin-top: 4rem;
+  height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+
+  @include tablet {
+    padding: 1.5rem;
+  }
+
   h2 {
     font-weight: 400;
+    font-size: 1.25rem;
+    text-align: center;
+    line-height: 1.875rem;
+    max-width: 37.5rem;
   }
 }
 
@@ -15,25 +30,20 @@
   inset: 0;
   background-image: url("/assets/images/large-S.png");
   background-size: contain;
+  background-position: top 30% left 0%;
   background-repeat: no-repeat;
 
   opacity: 0.15; // makes the image itself see-through
   z-index: -1;
-  //   background-position: center calc(50% - 4rem);
-}
-
-.accountDeleted * {
-  padding: 1rem;
 }
 
 .accountDeleted {
   .homepageLink {
-    color: #b21a16 !important;
+    color: $color-red !important;
     font-weight: 600;
 
     &:hover {
       text-decoration: underline;
-      text-decoration-color: #b21a16;
     }
   }
 }

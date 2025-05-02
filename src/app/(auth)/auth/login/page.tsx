@@ -5,6 +5,8 @@ import Image from "next/image";
 import leftArrow from "public/assets/icons/arrow-left.svg";
 import whiteS from "public/assets/images/large-S-white-dropshad.svg";
 import loadingSpinner from "/public/assets/gifs/spinner.svg";
+import eyeOpen from "public/assets/icons/eye.svg";
+import eyeClosed from "public/assets/icons/eye-off.svg";
 import { Toaster, toast } from "react-hot-toast";
 import {
   isValidEmail,
@@ -20,6 +22,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
 
@@ -141,7 +144,9 @@ export default function LoginPage() {
                     setEmail(e.target.value);
                     setErrors({ ...errors, email: "" });
                   }}
-                  className={errors.email ? styles.error : ""}
+                  className={`${styles.input} ${
+                    errors.email ? styles.error : ""
+                  }`}
                 />
                 {errors.email && (
                   <span className={styles.errorMessage}>{errors.email}</span>
@@ -151,17 +156,36 @@ export default function LoginPage() {
               {/* ✅ Password input field */}
               <div className={styles.inputGroup}>
                 <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    setErrors({ ...errors, password: "" });
-                  }}
-                  className={errors.password ? styles.error : ""}
-                />
+                <div className={styles["password-container"]}>
+                  <input
+                    id="password"
+                    type={isPasswordVisible ? "text" : "password"}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setErrors({ ...errors, password: "" });
+                    }}
+                    className={`${styles.input} ${
+                      errors.password ? styles.error : ""
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    aria-label={
+                      isPasswordVisible
+                        ? "Hide password text"
+                        : "Show password text"
+                    }
+                    onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  >
+                    {isPasswordVisible ? (
+                      <Image src={eyeOpen} alt="" aria-hidden="true" />
+                    ) : (
+                      <Image src={eyeClosed} alt="" aria-hidden="true" />
+                    )}
+                  </button>
+                </div>
                 {errors.password && (
                   <span
                     className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
@@ -188,14 +212,13 @@ export default function LoginPage() {
                 <span>
                   <Image
                     src={loadingSpinner}
-                    alt={`List of playlists is loading`}
+                    alt=""
                     width={20}
                     height={20}
+                    aria-hidden="true"
                     className={styles.icon}
                   />
-                  <span className={styles.button__buttonText}>
-                    Logging in...
-                  </span>
+                  <span className={styles.button__buttonText}>Logging in</span>
                 </span>
               ) : (
                 <span className={styles.button__buttonText}>Log In</span>

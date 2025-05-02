@@ -11,9 +11,7 @@ export default function GetStarted() {
           <span className="bold">Start your</span> 100% Silk{" "}
           <span className="bold"> journey today.</span>
         </h2>
-        <div className={styles.priceCardContainer}>
-          <PriceCard />
-        </div>
+        <PriceCard />
       </div>
     </section>
   );

@@ -2,171 +2,171 @@
 @use "@/styles/partials/mixins" as *;
 
 .footer {
-	background-color: $color-black;
-	color: $color-white;
-	padding: 1rem;
-	transition: all 0.3s ease-in-out;
+  background-color: $color-black;
+  color: $color-white;
+  padding: 1rem;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		padding: 1rem 1.5rem;
-	}
+  @include tablet {
+    padding: 1rem 1.5rem;
+  }
 
-	@include desktop {
-		padding: 1.5rem 2.5rem;
-		position: relative;
-	}
+  @include desktop {
+    padding: 1.5rem 2.5rem;
+    position: relative;
+  }
 }
 
 .footer-container {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 
-	@include tablet {
-		gap: 2rem;
-	}
+  @include tablet {
+    gap: 2rem;
+  }
 
-	@include desktop {
-		flex-direction: row-reverse;
-		justify-content: space-between;
-		align-items: center;
-		max-width: 90rem;
-		margin: 0 auto;
-	}
+  @include desktop {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    max-width: $content-container-maximum;
+    margin: 0 auto;
+  }
 }
 
 .logo-container {
-	display: flex;
-	flex-direction: row-reverse;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
 
-	@include desktop {
-		z-index: 2;
-		flex-direction: row;
-		gap: 1.5rem;
-	}
+  @include desktop {
+    z-index: 2;
+    flex-direction: row;
+    gap: 1.5rem;
+  }
 }
 
 .logo {
-	width: 5.25rem;
-	height: auto;
-	transition: all 0.3s ease-in-out;
+  width: 5.25rem;
+  height: auto;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		width: 8.125rem;
-	}
+  @include tablet {
+    width: 8.125rem;
+  }
 }
 
 .socials {
-	display: flex;
-	gap: 0.9rem;
+  display: flex;
+  gap: 0.9rem;
 
-	@include desktop {
-		position: absolute;
-		inset: 0;
-		justify-content: center;
-	}
+  @include desktop {
+    position: absolute;
+    inset: 0;
+    justify-content: center;
+  }
 
-	&__icon-container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 1.5rem;
-		height: 1.5rem;
-		border: 1px solid $color-white;
-		border-radius: 50%;
-		transition: all 0.3s ease-in-out;
+  &__icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid $color-white;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
 
-		@include tablet {
-			width: 2.25rem;
-			height: 2.25rem;
-		}
-	}
+    @include tablet {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+  }
 
-	&__link {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+  &__link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-	&__icon {
-		width: 0.9rem;
-		height: 0.9rem;
-		transition: all 0.3s ease-in-out;
+  &__icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    transition: all 0.3s ease-in-out;
 
-		@include tablet {
-			width: 1.35rem;
-			height: 1.35rem;
-		}
+    @include tablet {
+      width: 1.35rem;
+      height: 1.35rem;
+    }
 
-		&--twitter {
-			width: 0.525rem;
-			height: 0.525rem;
-			transition: all 0.3s ease-in-out;
+    &--twitter {
+      width: 0.525rem;
+      height: 0.525rem;
+      transition: all 0.3s ease-in-out;
 
-			@include tablet {
-				width: 0.7875rem;
-				height: 0.7875rem;
-			}
-		}
-	}
+      @include tablet {
+        width: 0.7875rem;
+        height: 0.7875rem;
+      }
+    }
+  }
 }
 
 .nav {
-	@include desktop {
-		z-index: 2;
-	}
+  @include desktop {
+    z-index: 2;
+  }
 
-	&__list {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		list-style: none;
-		text-transform: capitalize;
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+    text-transform: capitalize;
 
-		@include tablet {
-			gap: 1rem;
-		}
+    @include tablet {
+      gap: 1rem;
+    }
 
-		@include desktop {
-			flex-direction: row;
-			gap: 0;
-		}
-	}
+    @include desktop {
+      flex-direction: row;
+      gap: 0;
+    }
+  }
 
-	&__item {
-		@include desktop {
-			border-right: 1px solid $color-white;
-			padding: 0.5938rem 0.75rem;
+  &__item {
+    @include desktop {
+      border-right: 1px solid $color-white;
+      padding: 0.5938rem 0.75rem;
 
-			&:last-child {
-				border: none;
-				padding-right: 0;
-			}
-		}
-	}
+      &:last-child {
+        border: none;
+        padding-right: 0;
+      }
+    }
+  }
 
-	#nav__link {
-		font-size: 0.875rem;
-		transition: all 0.3s ease-in-out;
+  #nav__link {
+    font-size: 0.875rem;
+    transition: all 0.3s ease-in-out;
 
-		&:hover {
-			color: $color-red;
-		}
+    &:hover {
+      color: $color-red;
+    }
 
-		@include tablet {
-			font-size: 1rem;
-		}
-	}
+    @include tablet {
+      font-size: 1rem;
+    }
+  }
 }
 
 .copyright {
-	font-size: 0.625rem;
-	transition: all 0.3s ease-in-out;
+  font-size: 0.625rem;
+  transition: all 0.3s ease-in-out;
 
-	@include tablet {
-		align-self: center;
-		font-size: 0.75rem;
-	}
+  @include tablet {
+    align-self: center;
+    font-size: 0.75rem;
+  }
 }

@@ -2,8 +2,14 @@
 @use "@/styles/partials/mixins" as *;
 
 .container {
+  padding-bottom: 4.375rem;
+
+  @include tablet {
+    padding-bottom: 4.875rem;
+  }
   @include desktop {
     margin-top: 5rem;
+    padding: 0;
   }
 }
 
@@ -25,9 +31,8 @@
     border-radius: 0.75rem;
     position: fixed;
     top: 5rem;
-    left: 9.7813rem;
+    left: 10rem;
     bottom: 0;
-    min-height: 25rem;
     width: 22.5rem;
   }
 
@@ -53,7 +58,7 @@
       transition: all 0.3s ease-in-out;
 
       &:hover {
-        box-shadow: 0px 0px 12.9px 0px $color-white;
+        box-shadow: 0 0 0.8063rem 0 $color-white;
       }
 
       @include tablet {
@@ -221,12 +226,11 @@
 
   @include desktop {
     width: 100%;
-    padding: 0 1rem 1.5rem 33.25rem;
+    padding: 0 1rem 1.5rem 33.5rem;
   }
 }
 
 .list {
-  padding: 0 0 $padding-large;
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -234,10 +238,6 @@
 
   @include tablet {
     gap: 1.5rem;
-  }
-
-  @include desktop {
-    padding: 0;
   }
 }
 

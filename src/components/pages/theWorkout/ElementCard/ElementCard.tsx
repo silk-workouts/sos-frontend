@@ -22,7 +22,7 @@ export default function ElementCard({
         <Image
           src={imageSrc}
           alt={imageAlt}
-          className={`${styles.card__hideDesktop} ${styles.card__hideDesktop}`}
+          className={`${styles.card__image} ${styles.card__hideDesktop}`}
           unoptimized
         />
         <p className={styles.card__message}>{content}</p>

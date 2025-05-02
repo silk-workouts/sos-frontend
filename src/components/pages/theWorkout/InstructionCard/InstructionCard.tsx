@@ -24,7 +24,6 @@ export default function InstructionCard({
         <p>{content}</p>
       </div>
       <Image src={imageSrc} alt={imageAlt} className={styles.card__gif} />
-      {/* <div className={styles.card__image}></div> */}
     </article>
   );
 }

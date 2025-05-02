@@ -149,12 +149,13 @@ export default function EditPlaylistModal({
                   <span>
                     <Image
                       src={loadingSpinner}
-                      alt={`List of playlists is loading`}
+                      alt=""
                       width={20}
                       height={20}
+                      aria-hidden="true"
                       className={styles.icon}
                     />
-                    <span>saving...</span>
+                    <span>saving</span>
                   </span>
                 ) : (
                   <span>save</span>

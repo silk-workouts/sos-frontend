@@ -7,25 +7,21 @@ import styles from "./Philosophy.module.scss";
 export default function Philosophy() {
   return (
     <section className={styles.philosophy}>
-      <div className={styles.philosophy__logoCont}>
-        <Image src={DIDlogo} alt="do it different text logo" />
-      </div>
-      <article className={styles.philosophy__copyCont}>
-        <div className={styles.philoshopy__copy}></div>
-        <h3 className="h3_title h3_title--accent">our philosophy</h3>
+      <h3 className={`h3_title h3_title--accent ${styles.title}`}>
+        our philosophy
+      </h3>
 
-        <div className={styles.philosophy__par}>
-          <p className="body1">
-            When you think different, your results are different.
-          </p>
-          <p className="body1">
-            <span>They&#39;re greater.</span>
-          </p>
-          <p className="body1">
-            {" "}
-            Leave the machines behind. 100% Silk fitness is key.
-          </p>
-        </div>
+      <Image src={DIDlogo} alt="do it different text logo" />
+
+      <article className={styles.philosophy__copyCont}>
+        <h3 className={`h3_title h3_title--accent ${styles.title}`}>
+          our philosophy
+        </h3>
+        <p className={styles.message}>
+          <span> When you think different, your results are different.</span>
+          <span className={styles.emphasis}>They&#39;re greater.</span>{" "}
+          <span>Leave the machines behind. 100% Silk fitness is key.</span>
+        </p>
       </article>
     </section>
   );
