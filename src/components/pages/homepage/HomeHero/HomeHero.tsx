@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Button from "@/components/ui/Button/Button";
 import { useRouter } from "next/navigation"; // For navigation
@@ -14,6 +14,24 @@ export default function HomeHero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Give time for DOM paint
+    setTimeout(() => {
+      video
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((err) => {
+          console.warn("Autoplay failed, user may need to interact", err);
+          setIsPlaying(false);
+        });
+    }, 100);
+  }, []);
+
   const toggleVideoPlayback = () => {
     if (!videoRef.current) return;
 
@@ -23,7 +41,15 @@ export default function HomeHero() {
       videoRef.current.play();
     }
 
-    setIsPlaying(!isPlaying);
+    const willPlay = !isPlaying;
+    setIsPlaying(willPlay);
+    if (willPlay) {
+      videoRef.current
+        .play()
+        .catch((e) => console.warn("Manual play failed", e));
+    } else {
+      videoRef.current.pause();
+    }
   };
 
   const handleNavigate = () => {
