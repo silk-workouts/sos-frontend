@@ -144,11 +144,13 @@
 
 .supportText {
   font-size: 0.9rem;
+  line-height: 1.35rem;
   color: #666;
 }
 
 .supportLink {
   color: $color-red !important;
+  font-weight: bold;
 
   &:hover {
     text-decoration: underline !important;

@@ -282,7 +282,11 @@ export default function VideoList({ video, type }: VideoListProps) {
                 <span>{duration}</span>
               </span>
             </div>
-            <button className={styles.button} onClick={handleShowVideoList}>
+            <button
+              className={styles.button}
+              onClick={handleShowVideoList}
+              aria-label="View all videos"
+            >
               <Image
                 src={rightArrow}
                 alt=""
