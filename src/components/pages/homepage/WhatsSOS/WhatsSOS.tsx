@@ -16,7 +16,7 @@ export default function WhatsSOS() {
           <div className={styles.about__imageWrap}>
             <Image
               src={michaelBoxing}
-              alt="A headshot of Michael `Silk` Olajide"
+              alt="A picture of Michael 'Silk' Olajide holding two gloved hands in a fight stance"
               className={styles.about__image}
             />
           </div>
@@ -31,13 +31,13 @@ export default function WhatsSOS() {
           </div>
         </div>
         <div className={styles.about__textContainer}>
-          <h3 className="h3_title h3_title--accent">how it works</h3>
+          <h2 className="h3_title h3_title--accent">how it works</h2>
           <div className={styles.about__info}>
-            <h4 className={`h2-title ${styles.about__subHeading}`}>
+            <h3 className={`h2-title ${styles.about__subHeading}`}>
               What <span style={{ textTransform: "lowercase" }}>is the</span>
               <br></br>
               <span className="bold">System of Silk?</span>
-            </h4>
+            </h3>
             <p className={`body1 ${styles.about__message}`}>
               Break free from boring workouts. SOS challenges both pros and
               beginners with 90 mix-and-match workouts across six disciplines,

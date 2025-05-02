@@ -7,19 +7,19 @@ import styles from "./Philosophy.module.scss";
 export default function Philosophy() {
   return (
     <section className={styles.philosophy}>
-      <h3 className={`h3_title h3_title--accent ${styles.title}`}>
+      <h2 className={`h3_title h3_title--accent ${styles.title}`}>
         our philosophy
-      </h3>
+      </h2>
 
-      <Image src={DIDlogo} alt="do it different text logo" />
+      <Image src={DIDlogo} alt="Do It Different — brand slogan" />
 
       <article className={styles.philosophy__copyCont}>
-        <h3 className={`h3_title h3_title--accent ${styles.title}`}>
+        <h2 className={`h3_title h3_title--accent ${styles.title}`}>
           our philosophy
-        </h3>
+        </h2>
         <p className={styles.message}>
           <span> When you think different, your results are different.</span>
-          <span className={styles.emphasis}>They&#39;re greater.</span>{" "}
+          <strong className={styles.emphasis}>They&#39;re greater.</strong>{" "}
           <span>Leave the machines behind. 100% Silk fitness is key.</span>
         </p>
       </article>

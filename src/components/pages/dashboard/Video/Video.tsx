@@ -116,7 +116,7 @@ export default function Video({
             type === "player" ? styles.player : ""
           }`}
           onClick={() => setIsModalOpen(!isModalOpen)}
-          aria-label="Add Menu"
+          aria-label={`Add ${chapterVideo.title} to playlist`}
         >
           <Image
             src={

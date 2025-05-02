@@ -110,7 +110,7 @@ export default function LoginPage() {
           <Image
             className={styles.panelLeft__img}
             src={whiteS}
-            alt="small S for silk logo"
+            alt="Silk logo"
           />
         </div>
 
@@ -130,14 +130,18 @@ export default function LoginPage() {
               </span>
             </p>
           </div>
-          <form onSubmit={handleLogin} className={styles.loginForm}>
+          <form
+            onSubmit={handleLogin}
+            className={styles.loginForm}
+            aria-busy={isLoggingIn}
+          >
             <div className={styles["loginForm__input-container"]}>
               {/* ✅ Email input field */}
               <div className={styles.inputGroup}>
                 <label htmlFor="email">Email</label>
                 <input
                   id="email"
-                  type="tex†"
+                  type="text"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => {
@@ -149,7 +153,9 @@ export default function LoginPage() {
                   }`}
                 />
                 {errors.email && (
-                  <span className={styles.errorMessage}>{errors.email}</span>
+                  <span className={styles.errorMessage} role="alert">
+                    {errors.email}
+                  </span>
                 )}
               </div>
 
@@ -189,6 +195,7 @@ export default function LoginPage() {
                 {errors.password && (
                   <span
                     className={`${styles.errorMessage} ${styles.pwErrorMessage}`}
+                    role="alert"
                   >
                     {errors.password}
                   </span>

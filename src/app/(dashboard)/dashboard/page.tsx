@@ -97,11 +97,11 @@ export default function DashboardPage() {
     >
       <div className={styles.container}>
         <div className={styles["tab-container"]}>
-          <Link href="/dashboard">
+          <Link href="/dashboard" className={styles.link}>
             <Image
               src={logo}
               width={300}
-              alt="System of Silk logo"
+              alt="Go back to dashboard"
               className={styles.container__logo}
             />
           </Link>

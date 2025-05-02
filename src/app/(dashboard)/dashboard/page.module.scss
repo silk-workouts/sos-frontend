@@ -34,10 +34,9 @@
   }
 }
 
-.tab-container::before {
-  content: "";
-  display: block;
-  height: 1rem; // spacing above before stickiness kicks in
+.link {
+  padding-top: 1rem;
+  display: inline-block;
 }
 
 .tabContent {

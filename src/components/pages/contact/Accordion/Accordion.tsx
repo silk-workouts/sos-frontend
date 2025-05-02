@@ -32,23 +32,20 @@ export default function Accordion({
           onClick={handleOnClick}
         >
           <span className={styles.accordion__title}>
-            <span className={styles.accordion__icon}>
-              {isExpanded ? (
-                <Image src={minusIcon} alt="An icon of a minus symbol " />
-              ) : (
-                <Image src={plusIcon} alt="An icon of a plus symbol " />
-              )}
-            </span>
+            {isExpanded ? (
+              <Image src={minusIcon} alt="An icon of a minus symbol " />
+            ) : (
+              <Image src={plusIcon} alt="An icon of a plus symbol " />
+            )}
             <span>{title}</span>
           </span>
         </button>
-        {/* </h3> */}
         <div
           id={`accordion-panel-${position}`}
           className={`${styles["accordion-panel"]} ${
             isExpanded ? styles.expanded : ""
           }`}
-          aria-labelledby="accordion-button"
+          aria-labelledby={`accordion-button-${position}`}
           aria-hidden={!isExpanded}
           role="region"
         >

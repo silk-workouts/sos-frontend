@@ -386,9 +386,12 @@ export default function PlayerPage() {
 
       {/* 📜 Chapter List */}
       <section className={styles.chapter}>
-        <h2 className={styles.chapterTitle}>Chapters</h2>
+        <h2 className={styles.chapterTitle} id="chapter-heading">
+          Chapters
+        </h2>
         <ul
           role="list"
+          aria-labelledby="chapter-heading"
           className={styles.chapterList}
           ref={scrollableContainerRef}
         >

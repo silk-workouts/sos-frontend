@@ -97,6 +97,7 @@ export default function CancelSubscription() {
               variant="text"
               onClick={() => router.push("/account/profile")}
               className={styles.keepButton}
+              disabled={isLoading}
             >
               Keep Subscription
             </Button>

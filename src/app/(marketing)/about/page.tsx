@@ -1,8 +1,15 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import accentImage from "/public/assets/images/about-ringwin-red-gloves.png";
 import featureImage from "/public/assets/images/about-speedbag-red.png";
 import newspaperImage from "/public/assets/images/about-newspaper-red-underline.png";
 import styles from "./page.module.scss";
+
+export const metadata: Metadata = {
+  title: "About Michael 'Silk' Olajide | System of Silk",
+  description:
+    "Discover the story behind System of Silk and its creator, Michael 'Silk' Olajide Jr. — the Godfather of Boxing for Fitness, championship boxer, and visionary trainer shaping the future of fitness and movement.",
+};
 
 export default function About() {
   return (
@@ -38,18 +45,20 @@ export default function About() {
         <Image
           className={styles.accentImage}
           src={accentImage}
-          alt="Accent Image"
+          alt="Michael Olajide with his gloved hands held in the air by a referee after winning a boxing match"
         />
-        {/* </div> */}
       </section>
       <section className={styles.featuredImage}>
-        <Image src={featureImage} alt="Featured Image" />
+        <Image
+          src={featureImage}
+          alt="Michael Olajide training in boxing gym"
+        />
       </section>
       <section className={styles.bioSection}>
         <Image
           className={styles.newsImage}
           src={newspaperImage}
-          alt="Newspaper Image"
+          alt="Newspaper clipping about Michael Olajide"
         />
         <div className={styles.textBlock}>
           <h2 className={`h2-title ${styles.title}`}>

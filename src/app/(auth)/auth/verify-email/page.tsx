@@ -42,14 +42,14 @@ export default function VerifyEmailPage() {
       <div className={styles["verifyContainer-wrapper"]}>
         {/* ✅ Left panel with branding */}
         <div className={styles.panelLeft}>
-          <Link href="/" className={styles.backLink} aria-label="Navigate back">
+          <Link href="/" className={styles.backLink}>
             <Image src={leftArrow} alt="" aria-hidden="true" />
             <span>Back to Site</span>
           </Link>
           <Image
             className={styles.panelLeft__img}
             src={whiteS}
-            alt="small S for silk logo"
+            alt="Silk logo"
           />
         </div>
 

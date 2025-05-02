@@ -26,7 +26,8 @@ export default function Navigation() {
       >
         <Image
           src={logoIcon}
-          alt="System of Silk logo"
+          alt=""
+          aria-hidden="true"
           className={styles.nav__logo}
         />
       </Link>

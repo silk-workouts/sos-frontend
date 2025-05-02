@@ -96,6 +96,7 @@ export default function ForgotPasswordPage() {
           <form
             onSubmit={handleForgotPassword}
             className={styles.forgotPasswordForm}
+            aria-busy={isResetting}
           >
             {/* ✅ Email input field */}
             <div className={styles.inputGroup}>
@@ -112,7 +113,9 @@ export default function ForgotPasswordPage() {
                 className={errors.email ? styles.error : ""}
               />
               {errors.email && (
-                <span className={styles.errorMessage}>{errors.email}</span>
+                <span className={styles.errorMessage} role="alert">
+                  {errors.email}
+                </span>
               )}
             </div>
 
@@ -140,7 +143,11 @@ export default function ForgotPasswordPage() {
                 </span>
               )}
             </Button>
-            {errors.general && <p className={styles.error}>{errors.general}</p>}
+            {errors.general && (
+              <p className={styles.error} role="alert">
+                {errors.general}
+              </p>
+            )}
           </form>
         </div>
         <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
