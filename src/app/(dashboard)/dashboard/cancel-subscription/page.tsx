@@ -1,21 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import loadingSpinner from "/public/assets/gifs/spinner.svg";
 import Button from "@/components/ui/Button/Button";
-import styles from "./page.module.scss"; // Import SCSS styles
+import styles from "./page.module.scss";
 
 export default function CancelSubscription() {
   const [isLoading, setIsLoading] = useState(false);
   const [reason, setReason] = useState("");
-  const [otherReason, setOtherReason] = useState("");
   const router = useRouter();
 
-  const handleCancel = async () => {
+  const handleCancel = async (event: React.FormEvent) => {
+    event.preventDefault();
     setIsLoading(true);
 
-    const finalReason = reason === "Other" ? otherReason : reason;
+    const finalReason = reason;
 
     try {
       const response = await fetch("/api/stripe/cancel-subscription", {
@@ -30,7 +32,7 @@ export default function CancelSubscription() {
           { position: "top-center" }
         );
         setTimeout(() => {
-          router.push("/dashboard/profile");
+          router.push("/account/profile");
         }, 1500);
       } else {
         toast.error("Failed to cancel. Please try again or contact support.");
@@ -38,68 +40,90 @@ export default function CancelSubscription() {
     } catch (error) {
       console.error("Error canceling subscription:", error);
       toast.error("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
     <div className={styles.container}>
       <section className={styles.container__modal}>
-        <h1 className={styles.title}>Are you sure you want to cancel?</h1>
-        <p className={styles.description}>
-          Your subscription will remain active until the end of your current
-          billing cycle.
-        </p>
-
-        <label className={styles.label} aria-labelledby="cancelReasons">
-          Why are you canceling? (Optional)
-        </label>
-
-        <div className={styles.radioGroup} id="cancelReasons">
-          {[
-            "Outside of my budget",
-            "Not Using It Enough",
-            "Technical Issues",
-            "Prefer a Different Service",
-            "Temporary Pause",
-            "Injury or Health Reasons",
-          ].map((option) => (
-            <label htmlFor={option} key={option} className={styles.radioLabel}>
-              <input
-                id={option}
-                type="radio"
-                name="reason"
-                value={option}
-                checked={reason === option}
-                onChange={(e) => setReason(e.target.value)}
-                className={styles.radioInput}
-              />
-              {option}
-            </label>
-          ))}
-
-          {/* {reason === "Other" && (
-            <textarea
-              className={styles.textarea}
-              placeholder="Let us know why"
-              value={otherReason}
-              onChange={(e) => setOtherReason(e.target.value)}
-            />
-          )} */}
+        <div className={styles.header}>
+          <h1 className={styles.title}>Are you sure you want to cancel?</h1>
+          <p className={styles.description}>
+            Your subscription will remain active until the end of your current
+            billing cycle.
+          </p>
         </div>
 
-        <div className={styles.buttonContainer}>
-          <Button
-            variant="text"
-            onClick={() => router.push("/dashboard/profile")}
-          >
-            Keep Subscription
-          </Button>
-          <Button type="submit" variant="secondary" onClick={handleCancel}>
-            {isLoading ? "Canceling..." : "Confirm Cancellation"}
-          </Button>
-        </div>
+        <form onSubmit={handleCancel} className={styles.form}>
+          <fieldset className={styles.fieldset}>
+            <legend className={styles.legend}>
+              Why are you canceling? (Optional)
+            </legend>
+            <div className={styles.radioGroup}>
+              {[
+                "Outside of my budget",
+                "Not Using It Enough",
+                "Technical Issues",
+                "Prefer a Different Service",
+                "Temporary Pause",
+                "Injury or Health Reasons",
+              ].map((option) => (
+                <label
+                  htmlFor={option}
+                  key={option}
+                  className={`${styles.radioLabel} ${
+                    reason === option ? styles.checked : ""
+                  }`}
+                >
+                  <input
+                    id={option}
+                    type="radio"
+                    name="reason"
+                    value={option}
+                    checked={reason === option}
+                    onChange={(e) => setReason(e.target.value)}
+                    className={styles.radioInput}
+                  />
+                  {option}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div className={styles.buttonContainer}>
+            <Button
+              variant="text"
+              onClick={() => router.push("/account/profile")}
+              className={styles.keepButton}
+            >
+              Keep Subscription
+            </Button>
+            <Button
+              type="submit"
+              variant="secondary"
+              disabled={isLoading}
+              className={styles.cancelButton}
+            >
+              {isLoading ? (
+                <span>
+                  <Image
+                    src={loadingSpinner}
+                    alt=""
+                    width={20}
+                    height={20}
+                    aria-hidden="true"
+                    className={styles.icon}
+                  />
+                  <span>Canceling</span>
+                </span>
+              ) : (
+                <span>Confirm Cancellation</span>
+              )}
+            </Button>
+          </div>
+        </form>
 
         <p className={styles.supportText}>
           Need help?{" "}

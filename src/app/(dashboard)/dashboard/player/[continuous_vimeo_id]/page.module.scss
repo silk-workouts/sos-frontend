@@ -9,7 +9,7 @@
   @include desktop {
     flex-direction: row;
     padding: 0 1.5rem 1.5rem;
-    max-width: 137.5rem;
+    max-width: $content-container-maximum + 47.5rem;
     margin: 0 auto;
   }
 }

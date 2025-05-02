@@ -1,5 +1,5 @@
 @use "@/styles/partials/_variables" as *;
-@use "@/styles/partials/_mixins" as *;
+@use "@/styles/partials/mixins" as *;
 
 .priceCard {
   display: flex;
@@ -8,82 +8,86 @@
   padding: 0;
   width: 18rem;
   height: auto;
-  background: $color-red;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 2.1875rem;
+  border-radius: 1.5rem;
+  flex-shrink: 0;
 
   &__header {
+    background-color: $color-red;
     display: flex;
     flex-direction: column;
-    align-items: left;
-    padding: 1.5rem;
-    gap: 1rem;
+    padding: 3rem 1.5rem 1.5rem;
+    gap: 1.5rem;
     width: 100%;
-    border-bottom: 0.5px solid #000000;
-    border-radius: 2.1875rem 2.1875rem 0 0;
+    border-bottom: 0.5px solid $color-white;
+    border-radius: 1.5rem 1.5rem 0 0;
+    color: $color-white;
   }
 
   &__plan {
-    font-weight: 400;
-    font-size: 1rem;
+    font-size: 1.25rem;
     line-height: 1.25rem;
     text-transform: uppercase;
-    color: $color-white;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   &__title {
-    font-weight: 800;
-    font-size: 2.25rem;
+    font-size: 3rem;
     line-height: 2.75rem;
-    color: $color-white;
     display: flex;
     align-items: center;
     text-align: center;
 
     &--small {
       font-weight: 400;
-      font-size: 1rem;
+      font-size: 1.25rem;
       line-height: 120%;
-      color: $color-white;
       margin-left: 0.5rem;
+      text-transform: lowercase;
     }
   }
 
   &__button {
     width: 100%;
     justify-content: space-between;
+
+    @include tablet {
+      padding: 0.375rem 0.625rem;
+      font-size: 1rem;
+    }
   }
 
   &__includedSection {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 3rem;
     gap: 1rem;
     width: 100%;
-    background: #ededed;
-    border-radius: 0 0 2.1875rem 2.1875rem;
+    background-color: #ededed;
+    color: $color-black;
+    border-radius: 0 0 1.5rem 1.5rem;
   }
 
   &__includedTitle {
     font-weight: 700;
-    font-size: 1rem;
-    color: #000000;
+    font-size: 1.25rem;
   }
 
   &__list {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 1rem;
     width: 100%;
+    padding: 0;
   }
 
   &__item {
     font-weight: 400;
-    font-size: 0.875rem;
+    font-size: 1rem;
     line-height: 1.125rem;
-    color: #000000;
     display: flex;
     align-items: center;
     gap: 0.5rem;

@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import profileIcon from "/public/assets/icons/profile-white-fill.svg";
@@ -17,11 +16,13 @@ export default function Header() {
   const [isProfileDesktopMenuOpen, setIsProfileDesktopMenuOpen] =
     useState(false);
   const [isProfileMobileMenuOpen, setIsProfileMobileMenuOpen] = useState(false);
+  const [scrolledPastHero, setScrolledPastHero] = useState(false);
   const pathname = usePathname()!;
+  const isPageWithHero =
+    pathname === "/" || pathname === "/the-workout" || pathname === "/about";
   const menuRef = useRef<HTMLDivElement | null>(null);
   const profileDesktopRef = useRef<HTMLDivElement | null>(null);
   const profileMobileRef = useRef<HTMLDivElement | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     async function checkAuthStatus() {
@@ -122,12 +123,34 @@ export default function Header() {
     };
   }, [isMobileMenuOpen, isProfileDesktopMenuOpen, isProfileMobileMenuOpen]);
 
+  //Makes sure header is transparent on the video in homepage
+  useEffect(() => {
+    if (!isPageWithHero) return;
+
+    function handleScroll() {
+      if (window.scrollY > 64) {
+        setScrolledPastHero(true);
+      } else {
+        setScrolledPastHero(false);
+      }
+    }
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isPageWithHero]);
+
   if (pathname.startsWith("/dashboard")) {
     return null;
   }
 
   return (
-    <header className={styles.header}>
+    <header
+      className={`${styles.header} ${
+        isPageWithHero && !scrolledPastHero ? styles.hero : ""
+      }`}
+    >
       <div className={styles.headerContent}>
         <div className={styles.logo}>
           <Link href="/">
@@ -171,7 +194,9 @@ export default function Header() {
           >
             Shop
           </a>
-          {isLoggedIn ? (
+          {isLoading ? (
+            <div></div>
+          ) : isLoggedIn ? (
             <div className={styles.profileMenu}>
               <button
                 onClick={() =>
@@ -231,7 +256,7 @@ export default function Header() {
         </nav>
 
         <div className={styles.mobileActions}>
-          {isLoggedIn ? (
+          {!isLoading && isLoggedIn ? (
             <div className={styles.profileMenu}>
               <button
                 onClick={(e) => {
@@ -281,9 +306,11 @@ export default function Header() {
               )}
             </div>
           ) : (
-            <Button variant="secondary">
-              <Link href="/auth/signup">30-day free trial</Link>
-            </Button>
+            !isLoading && (
+              <Button variant="secondary">
+                <Link href="/auth/signup">30-day free trial</Link>
+              </Button>
+            )
           )}
           <button
             id="menu"

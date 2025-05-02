@@ -1,8 +1,11 @@
 "use client";
+import axios from "axios";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import closeIcon from "/public/assets/icons/close.svg";
+import loadingSpinner from "/public/assets/gifs/spinner.svg";
 import Button from "@/components/ui/Button/Button";
 import { usePlaylists } from "../../(dashboard)/dashboard/context/PlaylistContext";
 import styles from "./DeleteAccountModal.module.scss";
@@ -72,20 +75,33 @@ export default function DeleteAccountModal({ onClose }: Props) {
   };
 
   return createPortal(
-    <div className={styles.overlay}>
+    <div className={styles.overlay} role="dialog" aria-labelledby="dialogTitle">
       <div className={styles.modal}>
-        <h2>Delete Your Account?</h2>
-        <p>
+        <div className={styles.header}>
+          <h1 id="dialogTitle" className={styles.title}>
+            Delete Your Account?
+          </h1>
+
+          <button
+            className={styles.closeButton}
+            aria-label="Cancel delete"
+            onClick={onClose}
+          >
+            <Image
+              src={closeIcon}
+              alt=""
+              className={styles.icon}
+              aria-hidden="true"
+            />
+          </button>
+        </div>
+        <p className={styles.message}>
           This action is <strong>permanent</strong>.<br />
           Your account, and all related data will be deleted and cannot be
           recovered.
         </p>
         <div className={styles.deleteButtons}>
-          <Button
-            variant="secondary"
-            className={styles.cancel}
-            onClick={onClose}
-          >
+          <Button variant="text" className={styles.cancel} onClick={onClose}>
             Cancel
           </Button>
           <Button
@@ -94,7 +110,21 @@ export default function DeleteAccountModal({ onClose }: Props) {
             onClick={handleDelete}
             disabled={isDeleting}
           >
-            {isDeleting ? "Deleting..." : "Delete Account"}
+            {isDeleting ? (
+              <span>
+                <Image
+                  src={loadingSpinner}
+                  alt=""
+                  width={20}
+                  height={20}
+                  aria-hidden="true"
+                  className={styles.icon}
+                />
+                <span>Deleting</span>
+              </span>
+            ) : (
+              <span>Delete</span>
+            )}
           </Button>
         </div>
       </div>
