@@ -81,9 +81,9 @@ export default function HomeHero() {
         muted
         loop
         playsInline
-        aria-label="Background video of the System of Silk experience"
         onWaiting={() => setIsLoading(true)}
         onCanPlayThrough={() => setIsLoading(false)}
+        role="presentation"
       />
 
       <div
@@ -95,7 +95,7 @@ export default function HomeHero() {
           <h1 className={`homehero_title ${styles.hero__title}`}>
             System of Silk
           </h1>
-          <Image src={Logo} alt="Logo" />
+          <Image src={Logo} alt="" aria-hidden="true" />
         </div>
         <Button
           variant="homeHero"

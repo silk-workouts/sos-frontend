@@ -129,7 +129,7 @@ export default function PlayListCard({
         <button
           id="menu"
           className={styles.button}
-          aria-label="Open to view playlist actions "
+          aria-label={`View options for ${playlist.title} playlist`}
           onClick={() => setIsOpenModal(!isOpenModal)}
         >
           <Image

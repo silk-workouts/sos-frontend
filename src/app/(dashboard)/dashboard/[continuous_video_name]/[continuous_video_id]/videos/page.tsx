@@ -246,9 +246,9 @@ export default function SingleContinuousVideoPage() {
               </button>
             </div>
           ) : (
-            <h2 className={styles.hero__element}>
+            <h1 className={styles.hero__element}>
               <Element name={continuousVideoName} />
-            </h2>
+            </h1>
           )}
 
           {loading || !continuousVideo ? (

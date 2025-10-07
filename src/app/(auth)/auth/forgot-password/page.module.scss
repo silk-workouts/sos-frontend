@@ -50,6 +50,7 @@
     gap: 0.25rem;
     position: relative;
     margin-left: 0.625rem;
+    padding: 0.5938rem 0;
 
     @include tablet {
       font-size: 1.25rem;
@@ -137,9 +138,11 @@
 
   &__subtitle {
     font-size: 1rem;
+    line-height: 1.5rem;
 
     @include tablet {
       font-size: 1.25rem;
+      line-height: 1.875rem;
     }
   }
 

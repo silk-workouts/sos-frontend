@@ -5,7 +5,7 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  min-height: 30.9375rem;
+  min-height: 35.3125rem;
 
   @include tablet {
     min-height: 32.5rem;
@@ -16,23 +16,19 @@
   }
 
   &__videoToggleButton {
-    opacity: 0.7;
     position: absolute;
     bottom: 0.5rem;
     right: 0.5rem;
-    border-radius: 2.1875rem;
-    background-color: rgba($color-black, 0.8);
-    color: $color-white;
+    background-color: rgba($color-black, 0.6);
     border: none;
-    padding: 0.25rem 0.5rem;
-    margin-top: 1rem;
     cursor: pointer;
-    font-size: 0.75rem;
     border-radius: 0.25rem;
     z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
 
     &:hover,
     &:focus {

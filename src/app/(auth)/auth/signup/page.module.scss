@@ -68,6 +68,7 @@
   position: relative;
   margin-left: 0.625rem;
   color: $color-white !important;
+  padding: 0.5938rem 0;
 
   @include tablet {
     font-size: 1.25rem;
@@ -163,9 +164,11 @@
 
   &__subtitle {
     font-size: 1rem;
+    line-height: 1.5rem;
 
     @include tablet {
       font-size: 1.25rem;
+      line-height: 1.875rem;
     }
   }
 
@@ -262,7 +265,7 @@
       button {
         position: absolute;
         right: 0;
-        padding: 0.5rem 1rem 0.5rem 0.5rem;
+        padding: 0.75rem 1rem 0.75rem 0.5rem;
         border: none;
         background-color: transparent;
         cursor: pointer;

@@ -4,7 +4,6 @@
 .testimonialsSection {
   padding: 3.5rem 0rem 4rem;
   margin-top: 1rem;
-  // background: url("/assets/images/large-S.png"), rgba($color-white, 0.75);
   background: url("/assets/images/large-S.png"),
     linear-gradient(to bottom, rgba($color-white, 0.7), rgba(#dbdbdb, 1));
 
@@ -106,9 +105,11 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    line-height: 1.5rem;
 
     @include tablet {
       font-size: 1.125rem;
+      line-height: 1.6875rem;
     }
   }
 }
@@ -129,13 +130,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 2rem;
-    height: 2rem;
-
-    @include desktop {
-      width: 2.5rem;
-      height: 2.5rem;
-    }
+    width: 2.75rem;
+    height: 2.75rem;
 
     &:hover {
       border-width: 2px;
@@ -157,16 +153,11 @@
   }
 
   &__icon {
-    width: 0.625rem;
-    height: 0.625rem;
+    width: 0.75rem;
+    height: 0.75rem;
 
     &--right {
       transform: rotate(180deg);
-    }
-
-    @include desktop {
-      width: 0.75rem;
-      height: 0.75rem;
     }
   }
 }

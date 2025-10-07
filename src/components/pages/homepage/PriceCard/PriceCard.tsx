@@ -8,7 +8,7 @@ export default function PriceCard() {
   const router = useRouter();
 
   return (
-    <article className={styles.priceCard}>
+    <div className={styles.priceCard}>
       <div className={styles.priceCard__header}>
         <h3 className={styles.priceCard__plan}>
           <span>Premium Plan</span>{" "}
@@ -35,6 +35,6 @@ export default function PriceCard() {
           <li className={styles.priceCard__item}>No commitments</li>
         </ul>
       </div>
-    </article>
+    </div>
   );
 }

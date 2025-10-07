@@ -142,7 +142,11 @@ export default function SignupPage() {
               </span>
             </p>
           </div>
-          <form onSubmit={handleSignup} className={styles.signupForm}>
+          <form
+            onSubmit={handleSignup}
+            className={styles.signupForm}
+            aria-busy={isSigningUp}
+          >
             <div className={styles["signupForm__input-container"]}>
               {/* ✅ Email input field */}
               <div className={styles.inputGroup}>
@@ -159,7 +163,9 @@ export default function SignupPage() {
                   className={errors.email ? styles.error : ""}
                 />
                 {errors.email && (
-                  <span className={styles.errorMessage}>{errors.email}</span>
+                  <span className={styles.errorMessage} role="alert">
+                    {errors.email}
+                  </span>
                 )}
               </div>
 
@@ -200,7 +206,9 @@ export default function SignupPage() {
                   </span>
                 </div>
                 {errors.password && (
-                  <span className={styles.errorMessage}>{errors.password}</span>
+                  <span className={styles.errorMessage} role="alert">
+                    {errors.password}
+                  </span>
                 )}
               </div>
             </div>
