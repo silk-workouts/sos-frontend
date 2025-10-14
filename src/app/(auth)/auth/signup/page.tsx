@@ -213,6 +213,13 @@ export default function SignupPage() {
               </div>
             </div>
 
+            {/* shows general signup errors */}
+            {errors.general && (
+              <div className={styles["errorMessage--general"]} role="alert">
+                {errors.general}
+              </div>
+            )}
+
             {/* ✅ Sign Up button */}
             <Button
               type="submit"

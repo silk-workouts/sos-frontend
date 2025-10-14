@@ -90,7 +90,7 @@
     @include tablet {
       display: flex;
       position: absolute;
-      top: 0;
+      top: -0.5938rem;
       left: 0;
     }
   }
@@ -113,14 +113,14 @@
   &::before {
     content: "[";
     left: -0.875rem;
-    top: 0.6563rem;
+    top: 1.1875rem;
     transform: translateY(-50%);
   }
 
   &::after {
     content: "]";
     right: -0.875rem;
-    top: 0.6563rem;
+    top: 1.1875rem;
     transform: translateY(-50%);
   }
 
@@ -318,6 +318,17 @@
         border-style: solid;
         border-color: #333 transparent transparent transparent;
       }
+    }
+  }
+
+  .errorMessage--general {
+    position: absolute;
+    bottom: 7.1875rem;
+    color: $color-red;
+    font-size: 0.8125rem;
+
+    @include tablet {
+      font-size: 0.875rem;
     }
   }
 

@@ -18,7 +18,7 @@ export default function Philosophy() {
           our philosophy
         </h2>
         <p className={styles.message}>
-          <span> When you think different, your results are different.</span>
+          <span> When you do it different, your results are different.</span>
           <strong className={styles.emphasis}>They&#39;re greater.</strong>{" "}
           <span>Leave the machines behind. 100% Silk fitness is key.</span>
         </p>

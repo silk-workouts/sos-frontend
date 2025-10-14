@@ -70,11 +70,11 @@ export default function About() {
             teaching non-boxers how to box, Michael is the boxing choreographer
             helping to bring “ALI THE MUSICAL” to Broadway in 2025. But it was
             at 16 years of age that Michael “Silk” Olajide Jr. began his career
-            as a PROFESSIONAL BOXER.
+            as a professional boxer.
           </p>
           <p className={`body2 ${styles.copy}`}>
             He was a highly respected championship boxer whose fights were
-            televised internationally. In 1991, Michael STOPPED BOXING. Since
+            televised internationally. In 1991, Michael stopped boxing. Since
             then, he has choreographed major film and theater projects, working
             with some of today’s top directors, actors, and producers.
           </p>
