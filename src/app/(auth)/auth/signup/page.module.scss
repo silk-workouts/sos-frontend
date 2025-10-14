@@ -321,6 +321,17 @@
     }
   }
 
+  .errorMessage--general {
+    position: absolute;
+    bottom: 7.1875rem;
+    color: $color-red;
+    font-size: 0.8125rem;
+
+    @include tablet {
+      font-size: 0.875rem;
+    }
+  }
+
   .button {
     span {
       display: flex;
