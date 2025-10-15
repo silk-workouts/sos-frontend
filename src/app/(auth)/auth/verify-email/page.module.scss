@@ -50,9 +50,11 @@
     gap: 0.25rem;
     position: relative;
     margin-left: 0.625rem;
+    padding: 0.5938rem 0;
 
     @include tablet {
       font-size: 1.25rem;
+      top: -0.5938rem;
     }
 
     img {
@@ -76,14 +78,14 @@
     &::before {
       content: "[";
       left: -0.875rem;
-      top: 0.6563rem;
+      top: 1.1875rem;
       transform: translateY(-50%);
     }
 
     &::after {
       content: "]";
       right: -0.875rem;
-      top: 0.6563rem;
+      top: 1.1875rem;
       transform: translateY(-50%);
     }
 

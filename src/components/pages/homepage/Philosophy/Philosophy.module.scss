@@ -47,6 +47,7 @@
   &__copyCont {
     display: flex;
     flex-direction: column;
+    line-height: 2.25rem;
 
     @include tablet {
       gap: 2.8125rem;

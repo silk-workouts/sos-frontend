@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import profileIcon from "/public/assets/icons/profile-white-fill.svg";
@@ -23,6 +23,7 @@ export default function Header() {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const profileDesktopRef = useRef<HTMLDivElement | null>(null);
   const profileMobileRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     async function checkAuthStatus() {
@@ -203,11 +204,13 @@ export default function Header() {
                   setIsProfileDesktopMenuOpen(!isProfileDesktopMenuOpen)
                 }
                 id="profile-menu-button-desktop"
+                aria-label="View menu options for logged in user"
                 className={styles.dashboardLink}
               >
                 <Image
                   src={profileIcon}
-                  alt="Avatar for logged in user"
+                  alt=""
+                  aria-hidden="true"
                   className={styles.icon}
                 />{" "}
               </button>
@@ -235,7 +238,7 @@ export default function Header() {
                     >
                       Profile
                     </Link>
-                    <span
+                    <button
                       onClick={async () => {
                         await fetch("/api/auth/logout", { method: "GET" });
                         window.location.href = "/";
@@ -243,14 +246,14 @@ export default function Header() {
                       className={styles.menuItem}
                     >
                       Log Out
-                    </span>
+                    </button>
                   </div>
                 </nav>
               )}
             </div>
           ) : (
-            <Button>
-              <Link href="/auth/signup">Sign up/Log in</Link>
+            <Button onClick={() => router.push("/auth/signup")}>
+              Sign up/Log in
             </Button>
           )}
         </nav>
@@ -292,7 +295,7 @@ export default function Header() {
                     >
                       Profile
                     </Link>
-                    <span
+                    <button
                       onClick={async () => {
                         await fetch("/api/auth/logout", { method: "GET" });
                         window.location.href = "/";
@@ -300,15 +303,18 @@ export default function Header() {
                       className={styles.menuItem}
                     >
                       Log Out
-                    </span>
+                    </button>
                   </div>
                 </nav>
               )}
             </div>
           ) : (
             !isLoading && (
-              <Button variant="secondary">
-                <Link href="/auth/signup">30-day free trial</Link>
+              <Button
+                variant="secondary"
+                onClick={() => router.push("/auth/signup")}
+              >
+                30-day free trial
               </Button>
             )
           )}
@@ -317,6 +323,7 @@ export default function Header() {
             className={styles.hamburger}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav"
             aria-label="Toggle navigation menu"
           >
             ☰
@@ -324,7 +331,7 @@ export default function Header() {
         </div>
 
         {isMobileMenuOpen && (
-          <nav ref={menuRef} className={styles.mobileMenu}>
+          <nav ref={menuRef} className={styles.mobileMenu} id="mobile-nav">
             <div className={styles.menuContainer}>
               <Link
                 href="/the-workout"

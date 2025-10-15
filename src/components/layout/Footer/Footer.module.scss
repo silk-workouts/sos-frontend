@@ -46,6 +46,14 @@
     flex-direction: row;
     gap: 1.5rem;
   }
+
+  a {
+    padding: 5.5px 0;
+
+    @include desktop {
+      padding: 0;
+    }
+  }
 }
 
 .logo {
@@ -59,57 +67,29 @@
 }
 
 .socials {
-  display: flex;
-  gap: 0.9rem;
-
-  @include desktop {
-    position: absolute;
-    inset: 0;
-    justify-content: center;
-  }
-
   &__icon-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border: 1px solid $color-white;
     border-radius: 50%;
-    transition: all 0.3s ease-in-out;
-
-    @include tablet {
-      width: 2.25rem;
-      height: 2.25rem;
-    }
   }
 
   &__link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include desktop {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   &__icon {
-    width: 0.9rem;
-    height: 0.9rem;
-    transition: all 0.3s ease-in-out;
-
-    @include tablet {
-      width: 1.35rem;
-      height: 1.35rem;
-    }
-
-    &--twitter {
-      width: 0.525rem;
-      height: 0.525rem;
-      transition: all 0.3s ease-in-out;
-
-      @include tablet {
-        width: 0.7875rem;
-        height: 0.7875rem;
-      }
-    }
+    width: 1.5625rem;
+    height: 1.5625rem;
   }
 }
 
@@ -121,7 +101,6 @@
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     list-style: none;
     text-transform: capitalize;
 
@@ -136,6 +115,8 @@
   }
 
   &__item {
+    padding: 0.85rem 0;
+
     @include desktop {
       border-right: 1px solid $color-white;
       padding: 0.5938rem 0.75rem;
@@ -147,16 +128,19 @@
     }
   }
 
-  #nav__link {
-    font-size: 0.875rem;
-    transition: all 0.3s ease-in-out;
+  #nav__links {
+    a {
+      font-size: 0.875rem;
+      padding: 0.85rem 0;
+      transition: all 0.3s ease-in-out;
 
-    &:hover {
-      color: $color-red;
-    }
+      &:hover {
+        color: $color-red;
+      }
 
-    @include tablet {
-      font-size: 1rem;
+      @include tablet {
+        font-size: 1rem;
+      }
     }
   }
 }
