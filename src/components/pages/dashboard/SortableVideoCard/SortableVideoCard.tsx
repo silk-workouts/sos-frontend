@@ -52,14 +52,14 @@ export default function SortableVideoCard({
         </button>
 
         <div className={styles.card__header}>
-          <h3 className={styles.card__title}>
+          <h2 className={styles.card__title}>
             {video.title
               .toLowerCase()
               .toLowerCase()
               .replace(/\brd\.?\s*/gi, "round ")
               .split(":")[0]
               .trim()}
-          </h3>
+          </h2>
           <div className={styles["card__thumbnail-container"]}>
             <Image
               src={video.thumbnail_url}
