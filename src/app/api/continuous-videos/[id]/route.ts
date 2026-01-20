@@ -67,7 +67,7 @@ export async function GET(req: NextRequest) {
       WHERE continuous_vimeo_id = ?
         AND title NOT LIKE '%warmup%'
         AND title NOT LIKE '%cooldown%'
-      ORDER BY id ASC
+      ORDER BY start_time ASC
     `,
       [continuousVideoId]
     );
