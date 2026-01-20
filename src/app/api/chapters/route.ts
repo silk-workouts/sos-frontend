@@ -33,9 +33,8 @@ export async function GET(req: Request): Promise<NextResponse> {
       [continuousVimeoId]
     );
 
-    const chapters = rows as Chapter[];
-
-    return NextResponse.json(chapters, { status: 200 });
+    // Return raw DB rows (no dedupe)
+    return NextResponse.json(rows as Chapter[], { status: 200 });
   } catch (error) {
     console.error("❌ Error fetching chapters:", error);
     return NextResponse.json(
