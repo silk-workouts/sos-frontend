@@ -206,30 +206,62 @@ export default function PlayerPage() {
     }
   }, [activeChapterIndex, isDesktop]);
 
-  // 1. Build a map of thumbnails using real_vimeo_video_id
+  // Check for duplicate real_vimeo_video_id in videoThumbnails
+  useEffect(() => {
+    if (!videoThumbnails.length) return;
+
+    const counts = new Map<string, number>();
+    for (const v of videoThumbnails) {
+      const key = String(v.real_vimeo_video_id ?? "");
+      if (!key) continue;
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+
+    const dups = Array.from(counts.entries()).filter(([, n]) => n > 1);
+    if (dups.length) {
+      console.warn(
+        "[PlayerPage] Duplicate real_vimeo_video_id(s) in videoThumbnails:",
+        dups
+      );
+      console.warn(
+        "[PlayerPage] Example duplicated rows:",
+        videoThumbnails.filter(
+          (v) => String(v.real_vimeo_video_id) === dups[0][0]
+        )
+      );
+    }
+  }, [videoThumbnails]);
+
+  // Build thumbnail lookup by real_vimeo_video_id (stable join key)
   const thumbnailMap = new Map<string, VideoThumbnails>();
   videoThumbnails.forEach((item) => {
-    if (item.real_vimeo_video_id) {
-      thumbnailMap.set(item.real_vimeo_video_id, item);
+    if (item?.real_vimeo_video_id) {
+      thumbnailMap.set(String(item.real_vimeo_video_id), item);
     }
   });
 
-  //  Merge chapters with thumbnails
-  const mergedData = chapters.map((chapter, index) => {
-    const meta = videoThumbnails[index] || {};
+  // Merge chapters with thumbnails/descriptions by real_vimeo_video_id (NOT array index)
+  const mergedData: VideoItem[] = chapters.map((chapter) => {
+    const meta = chapter.real_vimeo_video_id
+      ? thumbnailMap.get(String(chapter.real_vimeo_video_id))
+      : undefined;
+
     return {
       ...chapter,
-      ...meta,
-      video_description:
-        meta.video_description ||
-        continuousVideo.video_description || // Get from continuousVideo if not in chapter
-        "",
-      title: chapter.title || meta.corresponding_video_title || "Untitled",
+      ...(meta ?? {}),
+      title: chapter.title || meta?.corresponding_video_title || "Untitled",
       thumbnail_url: meta?.thumbnail_url?.startsWith("http")
         ? meta.thumbnail_url
         : "/assets/images/default-thumbnail.jpg",
-      real_vimeo_video_id:
-        chapter.real_vimeo_video_id || meta.real_vimeo_video_id,
+      video_description:
+        meta?.video_description || continuousVideo.video_description || "",
+      real_vimeo_video_id: String(
+        chapter.real_vimeo_video_id || meta?.real_vimeo_video_id || ""
+      ),
+      chapter_id: meta?.chapter_id ?? "",
+      chapter_title: meta?.chapter_title ?? "",
+      corresponding_video_title: meta?.corresponding_video_title ?? "",
+      created_at: meta?.created_at ?? "",
     };
   });
 
