@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useSearchParams, useParams, useRouter } from "next/navigation";
 import backArrowIcon from "/public/assets/icons/arrow-left.svg";
 import Player from "@vimeo/player";
@@ -43,6 +43,7 @@ export default function PlayerPage() {
     ? parseInt(searchParams.get("start_time") as string, 10)
     : 0;
   const autoplay = searchParams.get("autoplay") === "1";
+
   const [continuousVideo, setContinuousVideo] = useState({
     continuous_video_id: "",
     continuous_video_title: "",
@@ -58,6 +59,52 @@ export default function PlayerPage() {
 
   const playerContainerRef = useRef<HTMLDivElement | null>(null);
   const vimeoPlayerRef = useRef<Player | null>(null);
+
+  // Build thumbnail lookup by real_vimeo_video_id (stable join key)
+  const thumbnailMap = useMemo(() => {
+    const m = new Map<string, VideoThumbnails>();
+    videoThumbnails.forEach((item) => {
+      const key = String(item?.real_vimeo_video_id ?? "").trim();
+      if (key) m.set(key, item);
+    });
+    return m;
+  }, [videoThumbnails]);
+
+  // Merge chapters with thumbnails/descriptions by real_vimeo_video_id (NOT array index)
+  const mergedData: VideoItem[] = useMemo(() => {
+    return chapters
+      .slice()
+      .sort((a, b) => a.start_time - b.start_time)
+      .map((chapter) => {
+        const chapterKey = String(chapter.real_vimeo_video_id ?? "").trim();
+        const meta = chapterKey ? thumbnailMap.get(chapterKey) : undefined;
+
+        return {
+          ...chapter,
+          ...(meta ?? {}),
+          id: chapter.id, // prevent meta.id from overwriting chapters.id
+          title: chapter.title || meta?.corresponding_video_title || "Untitled",
+          thumbnail_url: meta?.thumbnail_url?.startsWith("http")
+            ? meta.thumbnail_url
+            : "/assets/images/default-thumbnail.jpg",
+          video_description:
+            meta?.video_description || continuousVideo.video_description || "",
+          real_vimeo_video_id: String(
+            chapter.real_vimeo_video_id || meta?.real_vimeo_video_id || ""
+          ).trim(),
+          chapter_id: meta?.chapter_id ?? "",
+          chapter_title: meta?.chapter_title ?? "",
+          corresponding_video_title: meta?.corresponding_video_title ?? "",
+          created_at: meta?.created_at ?? "",
+        };
+      });
+  }, [chapters, thumbnailMap, continuousVideo.video_description]);
+
+  // Keep latest mergedData accessible to the Vimeo event handler (avoid stale closure)
+  const mergedDataRef = useRef<VideoItem[]>([]);
+  useEffect(() => {
+    mergedDataRef.current = mergedData;
+  }, [mergedData]);
 
   //Check if the screen is a desktop
   useEffect(() => {
@@ -93,7 +140,7 @@ export default function PlayerPage() {
       }
     }
     fetchData();
-  }, [continuous_vimeo_id]);
+  }, [continuous_vimeo_id, router]);
 
   //  Fetch video thumbnails
   useEffect(() => {
@@ -120,6 +167,8 @@ export default function PlayerPage() {
   useEffect(() => {
     if (!playerContainerRef.current || vimeoPlayerRef.current) return;
 
+    let isMounted = true;
+
     const player = new Player(playerContainerRef.current, {
       id: parseInt(continuous_vimeo_id, 10),
       responsive: true,
@@ -128,30 +177,64 @@ export default function PlayerPage() {
 
     vimeoPlayerRef.current = player;
 
-    player.ready().then(async () => {
-      setPlayerReady(true);
-      if (initialStartTime > 0) {
-        await player.setCurrentTime(initialStartTime).catch(console.error);
-        try {
-          await player.play();
-        } catch (err) {
-          console.warn("Autoplay blocked (expected in some browsers):", err);
-        }
-      }
+    const onTimeUpdate = (data: { seconds: number }) => {
+      const list = mergedDataRef.current;
+      if (!list.length) return;
 
-      player.on("timeupdate", (data) => {
-        const currentTime = data.seconds;
-        const index =
-          chapters.filter((c) => c.start_time <= currentTime).length - 1;
-        if (index !== activeChapterIndex) setActiveChapterIndex(index);
+      const t = data.seconds;
+
+      let idx = list.findIndex((c, i) => {
+        const start = c.start_time;
+        const nextStart = list[i + 1]?.start_time ?? Number.POSITIVE_INFINITY;
+        return t >= start && t < nextStart;
       });
-    });
+
+      if (idx === -1) idx = 0;
+      setActiveChapterIndex((prev) => (prev === idx ? prev : idx));
+    };
+
+    player
+      .ready()
+      .then(async () => {
+        if (!isMounted) return;
+
+        setPlayerReady(true);
+
+        if (initialStartTime > 0) {
+          await player.setCurrentTime(initialStartTime).catch(console.error);
+          try {
+            await player.play();
+          } catch (err) {
+            console.warn("Autoplay blocked (expected in some browsers):", err);
+          }
+        }
+
+        player.on("timeupdate", onTimeUpdate);
+      })
+      .catch((err) => {
+        const msg = String(err?.message ?? err);
+        if (msg.includes("Unknown player") || msg.includes("unloaded")) return;
+        console.error("Vimeo player ready() failed:", err);
+      });
 
     return () => {
-      player.destroy().catch(console.error);
+      isMounted = false;
+
+      try {
+        player.off("timeupdate", onTimeUpdate);
+      } catch {
+        // ignore
+      }
+
+      player.destroy().catch((err) => {
+        const msg = String(err?.message ?? err);
+        if (msg.includes("Unknown player") || msg.includes("unloaded")) return;
+        console.error(err);
+      });
+
       vimeoPlayerRef.current = null;
     };
-  }, [continuous_vimeo_id, chapters, initialStartTime]);
+  }, [continuous_vimeo_id, initialStartTime]);
 
   //  Autoplay logic
   useEffect(() => {
@@ -166,7 +249,7 @@ export default function PlayerPage() {
         console.warn("Autoplay blocked by browser:", err);
       });
     }
-  }, [autoplay, playerReady, chapters]);
+  }, [autoplay, playerReady, chapters, initialStartTime]);
 
   //  Clean up injected Vimeo styles
   useEffect(() => {
@@ -194,8 +277,8 @@ export default function PlayerPage() {
   useEffect(() => {
     if (
       isDesktop &&
-      activeChapterIndex &&
-      activeChapterIndex > -1 &&
+      typeof activeChapterIndex === "number" &&
+      activeChapterIndex >= 0 &&
       scrollableContainerRef.current
     ) {
       const activeChapter = Array.from(
@@ -206,66 +289,9 @@ export default function PlayerPage() {
     }
   }, [activeChapterIndex, isDesktop]);
 
-  // Check for duplicate real_vimeo_video_id in videoThumbnails
-  useEffect(() => {
-    if (!videoThumbnails.length) return;
+  // NOTE: removed debug-only duplicate logging for production cleanliness
 
-    const counts = new Map<string, number>();
-    for (const v of videoThumbnails) {
-      const key = String(v.real_vimeo_video_id ?? "");
-      if (!key) continue;
-      counts.set(key, (counts.get(key) ?? 0) + 1);
-    }
-
-    const dups = Array.from(counts.entries()).filter(([, n]) => n > 1);
-    if (dups.length) {
-      console.warn(
-        "[PlayerPage] Duplicate real_vimeo_video_id(s) in videoThumbnails:",
-        dups
-      );
-      console.warn(
-        "[PlayerPage] Example duplicated rows:",
-        videoThumbnails.filter(
-          (v) => String(v.real_vimeo_video_id) === dups[0][0]
-        )
-      );
-    }
-  }, [videoThumbnails]);
-
-  // Build thumbnail lookup by real_vimeo_video_id (stable join key)
-  const thumbnailMap = new Map<string, VideoThumbnails>();
-  videoThumbnails.forEach((item) => {
-    if (item?.real_vimeo_video_id) {
-      thumbnailMap.set(String(item.real_vimeo_video_id), item);
-    }
-  });
-
-  // Merge chapters with thumbnails/descriptions by real_vimeo_video_id (NOT array index)
-  const mergedData: VideoItem[] = chapters.map((chapter) => {
-    const meta = chapter.real_vimeo_video_id
-      ? thumbnailMap.get(String(chapter.real_vimeo_video_id))
-      : undefined;
-
-    return {
-      ...chapter,
-      ...(meta ?? {}),
-      title: chapter.title || meta?.corresponding_video_title || "Untitled",
-      thumbnail_url: meta?.thumbnail_url?.startsWith("http")
-        ? meta.thumbnail_url
-        : "/assets/images/default-thumbnail.jpg",
-      video_description:
-        meta?.video_description || continuousVideo.video_description || "",
-      real_vimeo_video_id: String(
-        chapter.real_vimeo_video_id || meta?.real_vimeo_video_id || ""
-      ),
-      chapter_id: meta?.chapter_id ?? "",
-      chapter_title: meta?.chapter_title ?? "",
-      corresponding_video_title: meta?.corresponding_video_title ?? "",
-      created_at: meta?.created_at ?? "",
-    };
-  });
-
-  const handleChapterClick = (
+  const handleChapterClick = async (
     chapter: VideoItem,
     index: number,
     event: React.MouseEvent<HTMLLIElement>
@@ -279,13 +305,22 @@ export default function PlayerPage() {
       return;
     }
 
-    if (vimeoPlayerRef.current) {
-      vimeoPlayerRef.current.setCurrentTime(chapter.start_time).then(() => {
-        vimeoPlayerRef.current?.play().catch((err) => {
-          console.warn("Autoplay blocked on chapter click:", err);
-        });
-        setActiveChapterIndex(index);
+    const player = vimeoPlayerRef.current;
+    if (!player) return;
+
+    // Optimistically set highlight immediately
+    setActiveChapterIndex(index);
+
+    try {
+      // Nudge forward by a tiny epsilon so boundary conditions won't snap to prior chapter
+      const target = Math.max(0, Number(chapter.start_time) + 0.01);
+      await player.setCurrentTime(target);
+
+      player.play().catch((err) => {
+        console.warn("Autoplay blocked on chapter click:", err);
       });
+    } catch (e) {
+      console.error("Failed to seek to chapter:", e);
     }
   };
 
@@ -308,15 +343,12 @@ export default function PlayerPage() {
       fifteen: "15",
     };
 
-    // Normalize the input by trimming and converting to lowercase
     const normalizedTitle = continuousTitle.trim().toLowerCase();
 
-    // Check for 'Silk Continuous' using lowercase comparison
     if (normalizedTitle.includes("silk continuous")) {
       return continuousTitle.replace(/silk continuous/i, "").trim();
     }
 
-    // Check for 'Silk Workout' using lowercase comparison
     if (normalizedTitle.includes("silk workout")) {
       const words = continuousTitle
         .replace(/silk workout/i, "")
@@ -331,13 +363,12 @@ export default function PlayerPage() {
       return `100% Prescription Program ${words.join(" ")}`;
     }
 
-    // log in non production mode, title that don't need formatting
-    if (process.env.NEXT_PUBLIC_APP_URL !== "https://systemofsilk.com") {
+    if (process.env.NODE_ENV === "development") {
       console.info(
         `formatSilkTitle skipped unformatted title: ${continuousTitle}`
       );
     }
-    // Return the input unchanged if no conditions are met
+
     return continuousTitle;
   }
 
@@ -430,7 +461,7 @@ export default function PlayerPage() {
           {mergedData.map((item, index) => {
             return (
               <li
-                key={item.id || index}
+                key={`${item.continuous_vimeo_id}:${item.start_time}:${item.real_vimeo_video_id}`}
                 role="listitem"
                 onClick={(event) => handleChapterClick(item, index, event)}
                 className={`${styles.chapterItem} ${
